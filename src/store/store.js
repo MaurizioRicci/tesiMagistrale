@@ -9,6 +9,7 @@ const serverURLsStore = {
     login: '/login.php',
     aggiungiBene: '/aggiungiBene.php',
     filtraBeni: '/filtraBeni.php',
+    dettagliBene: '/dettagliBene.php',
     aggiungiRelazione: '/aggiungiRelazione.php',
     getDizionario: '/getDictionary.php'
   },
@@ -17,6 +18,7 @@ const serverURLsStore = {
     loginURL: state => state.serverURL + state.login,
     aggiungiBeneURL: state => state.serverURL + state.aggiungiBene,
     filtraBeniURL: state => state.serverURL + state.filtraBeni,
+    dettagliBeneURL: state => state.serverURL + state.dettagliBene,
     aggiungiRelazioneURL: state => state.serverURL + state.aggiungiRelazione,
     getDizionario: state => state.serverURL + state.getDizionario
   },

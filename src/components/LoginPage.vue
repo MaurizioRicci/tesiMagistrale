@@ -84,7 +84,7 @@ export default {
               setCookie('userData', JSON.stringify(this.formData), 2)
             }
             this.$store.commit('registerUser', this.formData)
-            this.$router.push('aggiungiBene')
+            this.$router.push('bene')
           } else {
             this.errorMsg = resp.data.msg
           }

@@ -28,7 +28,7 @@
           <div class="autocomplete-items">
             <div v-for="sugg in arr"
              v-bind:key="sugg.id"
-             v-on:click="updateValue(sugg.value)">
+             v-on:click="updateValue(sugg) || onSuggestionPicked()">
               <span>{{sugg.value}}</span>
               <input type="hidden"
               :value="sugg.value">
@@ -54,7 +54,7 @@ export default {
   },
   data () {
     return {
-      currVal: '',
+      currVal: {},
       bs_input: null,
       loading: false,
       error: false,
@@ -67,13 +67,18 @@ export default {
     }
   },
   methods: {
+    hide: function () {
+      this.state.listClosed = true
+    },
     addEventListener: function (event, func) {
       this.listeners[event] = func
     },
     updateValue: function (value) {
       this.currVal = value
-      this.bs_input.value = value
-      this.$emit('input', value)
+      this.$emit('input', value.value)
+    },
+    onSuggestionPicked: function () {
+      this.$emit('suggestion-picked', this.currVal)
     },
     getCurrentValue: function () { return this.currVal },
     validate: function () {
