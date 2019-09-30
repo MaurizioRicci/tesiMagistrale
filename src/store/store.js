@@ -8,6 +8,7 @@ const serverURLsStore = {
     serverURL: 'http://myserverapp',
     login: '/login.php',
     aggiungiBene: '/aggiungiBene.php',
+    filtraBeni: '/filtraBeni.php',
     aggiungiRelazione: '/aggiungiRelazione.php',
     getDizionario: '/getDictionary.php'
   },
@@ -15,6 +16,7 @@ const serverURLsStore = {
     serverURL: state => state.serverURL,
     loginURL: state => state.serverURL + state.login,
     aggiungiBeneURL: state => state.serverURL + state.aggiungiBene,
+    filtraBeniURL: state => state.serverURL + state.filtraBeni,
     aggiungiRelazioneURL: state => state.serverURL + state.aggiungiRelazione,
     getDizionario: state => state.serverURL + state.getDizionario
   },

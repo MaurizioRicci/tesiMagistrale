@@ -3,28 +3,31 @@
     <b-row>
       <b-col>
         <h2>Aggiungi un bene</h2>
-<!--         <b-alert :show="showError" variant="danger">
-          <p>Not logged in. <router-link to="/">Login</router-link></p>
-        </b-alert> -->
       </b-col>
     </b-row>
     <b-row align-h="center">
       <b-col cols="6">
         <b-form @submit="onSubmit" @reset="onReset" :novalidate="true" :validated="sendBtnClicked" ref="form_bene">
-          <b-form-group id="input-group-1" label="Lotto:" label-for="input-lotto" label-cols="2">
+<!--           <b-form-group id="input-group-1" label="Lotto:" label-for="input-lotto" label-cols="2">
             <b-col cols="12">
               <b-form-input id="input-lotto" v-model="form.lotto" type="number" required placeholder=""></b-form-input>
             </b-col>
-          </b-form-group>
+          </b-form-group> -->
           <b-form-group id="input-group-1" label="Identificazione:" label-for="input-identificazione" label-cols="2">
             <b-col cols="12">
-              <b-form-input
-                id="input-identificazione"
-                v-model="form.identificazione"
-                type="text"
-                required
-                placeholder=""
-              ></b-form-input>
+              <remote-contextual-suggestion :waitTime="1000"
+              :suggestionsPromise="queryIdentificazione">
+                <my-autocomplete-input v-model="form.identificazione">
+                  <b-form-input
+                    id="input-identificazione"
+                    v-model="form.identificazione"
+                    type="text"
+                    required
+                    placeholder=""
+                    autocomplete="off"
+                  ></b-form-input>
+                </my-autocomplete-input>
+              </remote-contextual-suggestion>
             </b-col>
           </b-form-group>
           <b-form-group id="input-group-1" label="Descrizione:" label-for="input-descrizione" label-cols="2">
@@ -116,10 +119,16 @@
 <script>
 import * as dict from '@/assets/js/loadDict'
 import myAutocompleteInput from '@/components/MyAutocompleteInput'
+import remoteContextualSugg from '@/components/RemoteContextualSuggestions'
+
+const axios = require('axios')
 
 export default {
   name: 'AggiungiBene',
-  components: {'my-autocomplete-input': myAutocompleteInput},
+  components: {
+    'my-autocomplete-input': myAutocompleteInput,
+    'remote-contextual-suggestion': remoteContextualSugg
+  },
   data () {
     return {
       form: this.getModel(),
@@ -129,6 +138,11 @@ export default {
   computed: {
     showError () {
       return !this.$store.getters.loggedIn
+    },
+    queryIdentificazione () {
+      return () => axios.get(this.$store.getters.filtraBeniURL, {
+        params: this.form
+      })
     }
   },
   methods: {
@@ -156,7 +170,6 @@ export default {
     getDictFuncs () { return dict }
   },
   mounted () {
-    // dict.loadDescr(this)
   }
 }
 </script>

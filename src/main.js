@@ -11,8 +11,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { store } from './store/store'
 
 import Unicon from 'vue-unicons'
-import { uniConstructor, uniCarWash, uniLock, uniExclamationOctagon } from 'vue-unicons/src/icons'
-Unicon.add([uniConstructor, uniCarWash, uniLock, uniExclamationOctagon])
+import { uniLock, uniExclamationOctagon } from 'vue-unicons/src/icons'
+Unicon.add([uniLock, uniExclamationOctagon])
 
 Vue.config.productionTip = false
 
