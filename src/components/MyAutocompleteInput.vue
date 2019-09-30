@@ -1,31 +1,40 @@
 <template>
-  <div class="autocomplete">
+  <div class="my-autocomplete">
     <span ref="input_container">
       <b-input-group>
         <slot></slot>
-          <!-- Mentre carica i suggerimenti -->
-          <span  v-if="loading && !error" class="input-group-text">
-            <b-spinner class="m-1" small
-            variant="primary" label="Loading">
-            </b-spinner>
-          </span>
-        <template v-if="!loading && !error" v-slot:append>
+        <template v-slot:append>
+            <!-- Mentre carica i suggerimenti -->
+            <span  v-if="loading && !error" class="input-group-text">
+              <b-spinner class="m-1" small
+              variant="primary" label="Loading">
+              </b-spinner>
+            </span>
             <!-- Dopo aver caricato i suggerimenti -->
-            <icon-msg
+            <icon-msg v-if="!loading && !error && icon_name"
             class="input-group-text"
             :icon_name="icon_name"
             :icon_msg="icon_msg"
             ></icon-msg>
-        </template>
-        <template v-if="error" v-slot:append>
             <!-- In caso di errore durante il caricamento -->
-            <icon-msg
+            <icon-msg v-if="error"
             class="input-group-text"
             icon_name="exclamation-octagon"
             icon_msg="Impossibile ottenere i suggerimenti"
             ></icon-msg>
         </template>
       </b-input-group>
+      <div class="autocomplete" v-if="!state.listClosed && arr.length > 0">
+          <div class="autocomplete-items">
+            <div v-for="sugg in arr"
+             v-bind:key="sugg.id"
+             v-on:click="updateValue(sugg.value)">
+              <span>{{sugg.value}}</span>
+              <input type="hidden"
+              :value="sugg.value">
+            </div>
+          </div>
+      </div>
     </span>
   </div>
 </template>
@@ -46,7 +55,6 @@ export default {
   data () {
     return {
       currVal: '',
-      currentFocus: -1,
       bs_input: null,
       loading: false,
       error: false,
@@ -64,142 +72,16 @@ export default {
     },
     updateValue: function (value) {
       this.currVal = value
+      this.bs_input.value = value
       this.$emit('input', value)
     },
-    suggestionPicked: function (value) {
-      this.$emit('picked', value)
-    },
     getCurrentValue: function () { return this.currVal },
-    autocomplete: function (arr) {
-      var T = this
-      this.arr = arr
-      if (this.state.activeInput) { this.queryForSuggestions(arr) }
-      /* the autocomplete function takes two arguments,
-      the text field element and an array of possible autocompleted values: */
-      /* execute a function when someone writes in the text field: */
-      T.bs_input.addEventListener('input', function (e) {
-        var val = this.value
-        /* close any already open lists of autocompleted values */
-        T.closeAllLists()
-        T.updateValue(val)
-        if (val) {
-          // Valida l'input
-          T.validate(arr)
-          T.currentFocus = -1
-          T.queryForSuggestions(T.arr, val)
-        }
-        T.listeners['input'] && T.listeners['input'](this.value)
-      })
-      /* execute a function presses a key on the keyboard: */
-      T.bs_input.addEventListener('keydown', function (e) {
-        var x = document.getElementById(this.id + 'autocomplete-list')
-        if (x) x = x.getElementsByTagName('div')
-        if (e.keyCode === 40) {
-        /* If the arrow DOWN key is pressed,
-        increase the currentFocus variable: */
-          T.currentFocus++
-          /* and and make the current item more visible: */
-          T.addActive(x)
-        } else if (e.keyCode === 38) { // up
-        /* If the arrow UP key is pressed,
-        decrease the currentFocus variable: */
-          T.currentFocus--
-          /* and and make the current item more visible: */
-          T.addActive(x)
-        } else if (e.keyCode === 13) {
-        /* If the ENTER key is pressed, prevent the form from being submitted, */
-          e.preventDefault()
-          if (T.currentFocus > -1) {
-          /* and simulate a click on the "active" item: */
-            if (x) x[T.currentFocus].click()
-          }
-        } else if (e.keyCode === 27) {
-          // esc key
-          T.closeAllLists()
-          T.state.activeInput = false
-        }
-        T.listeners['keydown'] && T.listeners['keydown'](this.value)
-      })
-      T.bs_input.addEventListener('click', function (e) {
-        // se ci sono altri autocompleteInput aperti li chiudo
-        T.closeAllLists()
-        if (this.value === '') { T.queryForSuggestions(T.arr) }
-        T.state.activeInput = true
-        T.listeners['click'] && T.listeners['click'](this.value)
-      })
-    },
-    queryForSuggestions: function (arr, val) {
-      this.closeAllLists()
-      const T = this
-      /* create a DIV element that will contain the items (values): */
-      let a = document.createElement('DIV')
-      a.setAttribute('id', this.id + 'autocomplete-list')
-      a.setAttribute('class', 'autocomplete-items')
-      let b, i
-      /* for each item in the array... */
-      let matchNumber = 0
-      for (i = 0; i < arr.length; i++) {
-        /* check if the item starts with the same letters as the text field value: */
-        // if (arr[i].substr(0, val.length).toUpperCase() === val.toUpperCase()) {
-        if (!val || arr[i].value.toUpperCase().includes(val.toUpperCase())) {
-          matchNumber++
-          /* create a DIV element for each matching element: */
-          b = document.createElement('DIV')
-          b.innerHTML += arr[i].value
-          /* insert a input field that will hold the current array item's value: */
-          b.innerHTML += "<input type='hidden' value='" + arr[i].value + "'>"
-          /* execute a function when someone clicks on the item value (DIV element): */
-          b.addEventListener('click', function (e) {
-            let pickedSuggestion = this.getElementsByTagName('input')[0].value
-            /* insert the value for the autocomplete text field: */
-            T.bs_input.value = pickedSuggestion
-            T.updateValue(pickedSuggestion)
-            T.suggestionPicked(pickedSuggestion)
-            T.validate(arr)
-            /* close the list of autocompleted values,
-              (or any other open lists of autocompleted values: */
-            T.closeAllLists()
-          })
-          a.appendChild(b)
-        }
-        this.state.listClosed = false
-      }
-      /* append the DIV element as a child of the autocomplete container: */
-      if (matchNumber) { T.bs_input.parentNode.appendChild(a) }
-    },
-    addActive: function (x) {
-      const T = this
-      /* a function to classify an item as "active": */
-      if (!x) return false
-      /* start by removing the "active" class on all items: */
-      T.removeActive(x)
-      if (T.currentFocus >= x.length) T.currentFocus = 0
-      if (T.currentFocus < 0) T.currentFocus = (x.length - 1)
-      /* add class "autocomplete-active": */
-      x[T.currentFocus].classList.add('autocomplete-active')
-    },
-    removeActive: function (x) {
-    /* a function to remove the "active" class from all autocomplete items: */
-      for (var i = 0; i < x.length; i++) {
-        x[i].classList.remove('autocomplete-active')
-      }
-    },
-    closeAllLists: function (elmnt) {
-    /* close all autocomplete lists in the document,
-    except the one passed as an argument: */
-      var x = document.getElementsByClassName('autocomplete-items')
-      for (var i = 0; i < x.length; i++) {
-        if (elmnt !== x[i] && elmnt !== this.bs_input) {
-          x[i].parentNode.removeChild(x[i])
-        }
-      }
-      this.state.listClosed = true
-    },
-    validate: function (arr) {
+    validate: function () {
       if (this.closedDictionary) {
         // se si accetta un dizionario controllato occorre controllare
         // che sia stato scaricato correttamente prima di validare l'input
-        if (arr.includes(this.bs_input.value) && !this.error) {
+        if (this.arr.map(el => el.value)
+          .includes(this.bs_input.value) && !this.error) {
           this.bs_input.setCustomValidity('')
         } else {
           this.bs_input.setCustomValidity('Invalid choice')
@@ -210,7 +92,6 @@ export default {
       const T = this
       return T.resolveSuggestions(suggestions, suggestionsPromise)
         .then((ok) => { T.arr = ok }, fail => { T.arr = [] })
-        .finally(() => T.queryForSuggestions(T.arr))
     },
     resolveSuggestions: function (suggestions, suggestionsPromise) {
       return new Promise((resolve, reject) => {
@@ -229,13 +110,32 @@ export default {
           resolve(suggestions)
         } else { reject(new Error()) }
       })
+    },
+    onInputClick: function (evt) {
+      this.state.listClosed = false
+      this.listeners['click'] && this.listeners['click'](evt)
+    },
+    onInputKeyDown: function (evt) {
+      // esc key pressed
+      if (evt.keyCode === 27) { this.state.listClosed = true } else if (evt.keyCode === 13) {
+        /* If the ENTER key is pressed, prevent the form from being submitted, */
+        evt.preventDefault()
+        /* and simulate a click on the "active" item: */
+        // if (x) x[this.state.currentFocus].click()
+      }
+      this.listeners['keydown'] && this.listeners['keydown'](evt)
+    },
+    onInput: function (evt) {
+      this.validate()
+      this.listeners['input'] && this.listeners['input'](evt)
     }
   },
   mounted () {
     this.bs_input = this.$refs.input_container.querySelector('input')
-    this.resolveSuggestions(this.suggestions, this.suggestionsPromise)
-      .then((ok) => this.autocomplete(ok),
-        () => this.autocomplete(this.suggestions || []))
+    this.bs_input.addEventListener('input', this.onInput)
+    this.bs_input.addEventListener('click', this.onInputClick)
+    this.bs_input.addEventListener('keydown', this.onInputKeyDown)
+    this.updateSuggestions(this.suggestions, this.suggestionsPromise)
   }
 }
 </script>
@@ -243,6 +143,7 @@ export default {
 .autocomplete {
   /*the container must be positioned relative:*/
   position: relative;
+  width: 100%;
 }
 .autocomplete >>> .autocomplete-items {
   position: absolute;

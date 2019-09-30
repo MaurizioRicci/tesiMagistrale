@@ -20,7 +20,6 @@
                 <my-autocomplete-input v-model="form.identificazione">
                   <b-form-input
                     id="input-identificazione"
-                    v-model="form.identificazione"
                     type="text"
                     required
                     placeholder=""
@@ -39,7 +38,6 @@
                icon_msg="Campo vincolato a un dizionario">
                 <b-form-input
                   id="input-descrizione"
-                  v-model="form.descrizione"
                   type="text"
                   required
                   placeholder=""
