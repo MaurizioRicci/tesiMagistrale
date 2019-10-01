@@ -28,7 +28,7 @@
           <div class="autocomplete-items">
             <div v-for="sugg in arr"
              v-bind:key="sugg.id"
-             v-on:click="updateValue(sugg) || onSuggestionPicked()">
+             v-on:click="updateValue(sugg) || onSuggestionPicked() || hide()">
               <span>{{sugg.value}}</span>
               <input type="hidden"
               :value="sugg.value">
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import IconMsg from '@/components/IconMsg'
+import IconMsg from '@/components/ui/IconMsg'
 
 export default {
   name: 'MyAutocompleteInput',
@@ -69,6 +69,9 @@ export default {
   methods: {
     hide: function () {
       this.state.listClosed = true
+    },
+    show: function () {
+      this.state.listClosed = false
     },
     addEventListener: function (event, func) {
       this.listeners[event] = func
@@ -131,6 +134,7 @@ export default {
       this.listeners['keydown'] && this.listeners['keydown'](evt)
     },
     onInput: function (evt) {
+      this.show()
       this.validate()
       this.listeners['input'] && this.listeners['input'](evt)
     }

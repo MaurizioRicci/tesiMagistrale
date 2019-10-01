@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import LoginWarning from '@/components/LoginWarning'
-import LoginPage from '@/components/LoginPage'
-import Bene from '@/components/AddEditBene'
+import LoginWarning from '@/components/ui/LoginWarning'
+import LoginPage from '@/components/pages/Login/LoginPage'
+import Bene from '@/components/pages/Bene/AddEditBene'
+import ViewBene from '@/components/pages/Bene/ViewBene'
 
 Vue.use(Router)
 
@@ -20,8 +21,13 @@ export default new Router({
         name: 'LoginWarningBene',
         components: { 'LoginWarning': LoginWarning, 'bene': Bene },
         template: '<LoginWarning><bene></bene></LoginWarning>'
-      },
-      props: { newsletterPopup: false }
+      }
+    },
+    {
+      path: '/dettagliBene/:id',
+      name: 'DettagliBene',
+      component: ViewBene,
+      props: true
     }
   ]
 })
