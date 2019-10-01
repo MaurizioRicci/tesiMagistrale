@@ -78,18 +78,17 @@ export default {
         headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
       })
         .then(function (resp) {
-          if (resp.data.ok) {
-            // se c'è il flag salviamo un cookie con username e password
-            if (this.rememberMe !== 'no') {
-              setCookie('userData', JSON.stringify(this.formData), 2)
-            }
-            this.$store.commit('registerUser', this.formData)
-            this.$router.push('bene')
-          } else {
-            this.errorMsg = resp.data.msg
+          // se c'è il flag salviamo un cookie con username e password
+          if (this.rememberMe !== 'no') {
+            setCookie('userData', JSON.stringify(this.formData), 2)
           }
+          this.formData.role = resp.data.role
+          this.$store.commit('registerUser', this.formData)
+          this.$router.push('bene')
         }.bind(this))
-        .catch(function (error) { this.errorMsg = error.message }.bind(this))
+        .catch(function (error) {
+          this.errorMsg = error.response.data.msg || error.message
+        }.bind(this))
     }
   },
   mounted () {
