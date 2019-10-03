@@ -26,12 +26,17 @@
       </b-input-group>
       <div class="autocomplete" v-if="!state.listClosed && arr.length > 0">
           <div class="autocomplete-items">
+            <div>
+              <slot name="suggestions-header" :all-suggestions="arr"></slot>
+            </div>
             <div v-for="sugg in arr"
              v-bind:key="sugg.id"
              v-on:click="updateValue(sugg) || onSuggestionPicked() || hide()">
-              <span>{{sugg.value}}</span>
-              <input type="hidden"
-              :value="sugg.value">
+              <slot name="suggestion-row" :curr-suggestion="sugg">
+                <span>{{sugg.value}}</span>
+                <input type="hidden"
+                :value="sugg.value">
+              </slot>
             </div>
           </div>
       </div>
