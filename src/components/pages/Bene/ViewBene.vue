@@ -116,16 +116,25 @@ export default {
         schedatore: '',
         note: ''
       }
+    },
+    fetchData () {
+      this.form = this.getModel()
+      const T = this
+      // fare richiesta dati del bene con id nella url
+      axios.get(this.$store.getters.dettagliBeneURL, {
+        params: { 'id': this.id }
+      }).then((ok) => {
+        T.form = ok.data[0]
+      })
     }
   },
   created () {
-    const T = this
-    // fare richiesta dati del bene con id nella url
-    axios.get(this.$store.getters.dettagliBeneURL, {
-      params: { 'id': this.id }
-    }).then((ok) => {
-      T.form = ok.data[0]
-    })
+    this.fetchData()
+  },
+  watch: {
+    $route (to, from) {
+      this.fetchData()
+    }
   }
 }
 </script>

@@ -24,7 +24,7 @@ export default new Router({
       }
     },
     {
-      path: '/dettagliBene/:id',
+      path: '/dettagli_bene/:id',
       name: 'DettagliBene',
       component: ViewBene,
       props: true
