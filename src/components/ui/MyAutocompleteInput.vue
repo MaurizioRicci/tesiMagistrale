@@ -26,11 +26,11 @@
       </b-input-group>
       <div class="autocomplete" v-if="!state.listClosed && arr.length > 0">
           <div class="autocomplete-items">
-            <div>
+            <div class="suggestions-header">
               <slot name="suggestions-header" :all-suggestions="arr"></slot>
             </div>
             <div v-for="sugg in arr"
-             v-bind:key="sugg.id"
+             v-bind:key="sugg.id" class="suggestion-row"
              v-on:click="updateValue(sugg) || onSuggestionPicked() || hide()">
               <slot name="suggestion-row" :curr-suggestion="sugg">
                 <span>{{sugg.value}}</span>
@@ -182,6 +182,10 @@ export default {
   cursor: pointer;
   background-color: #fff;
   border-bottom: 1px solid #d4d4d4;
+}
+.autocomplete >>> .autocomplete-items .suggestions-header {
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 .autocomplete >>> .autocomplete-items div:hover {
   /*when hovering an item:*/
