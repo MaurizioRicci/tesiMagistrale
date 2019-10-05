@@ -88,6 +88,7 @@ export default {
     onSuggestionPicked: function () {
       this.$emit('suggestion-picked', this.currVal)
     },
+    // valore scelto dall'utente cliccando sul suggerimento
     getCurrentValue: function () { return this.currVal },
     validate: function () {
       if (this.closedDictionary) {
