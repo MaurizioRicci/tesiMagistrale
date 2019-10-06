@@ -53,13 +53,22 @@ export default {
     return {
       errorMsg: '',
       formData: this.getUserModel(),
-      rememberMe: 'no'
+      rememberMe: 'no',
+      // previus page wich linked to login page
+      prevPagePath: ''
     }
   },
   computed: {
     showError () {
       return this.errorMsg.trim() !== ''
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+    // access to component instance via `vm`
+    // controllo che from non sia uguale alla route corrente
+      vm.prevPagePath = from === this.$route.path ? 'bene' : from
+    })
   },
   methods: {
     getUserModel () {
@@ -84,7 +93,7 @@ export default {
           }
           this.formData.role = resp.data.role
           this.$store.commit('registerUser', this.formData)
-          this.$router.push('bene')
+          this.$router.push(this.prevPagePath.path)
         }.bind(this))
         .catch(function (error) {
           this.errorMsg = error.response.data.msg || error.message
