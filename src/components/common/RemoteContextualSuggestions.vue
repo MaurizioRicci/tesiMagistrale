@@ -8,9 +8,6 @@
 <script>
 export default {
   name: 'RemoteContextualSuggestions',
-  data () {
-    return { }
-  },
   props: {
     waitTime: Number,
     suggestionsPromise: Function
