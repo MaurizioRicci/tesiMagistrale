@@ -2,6 +2,7 @@
   <b-container fluid>
     <b-row>
       <b-col>
+        <login-warning/>
         <h2>Aggiungi/Modifica un bene</h2>
       </b-col>
     </b-row>
@@ -144,6 +145,7 @@
 
 <script>
 import * as dict from '@/assets/js/loadDict'
+import LoginWarning from '@/components/ui/LoginWarning'
 import myAutocompleteInput from '@/components/ui/MyAutocompleteInput'
 import remoteContextualSugg from '@/components/common/RemoteContextualSuggestions'
 import dettagliBene from '@/components/pages/Bene/ViewBene'
@@ -153,6 +155,7 @@ const axios = require('axios')
 export default {
   name: 'AggiungiModificaBene',
   components: {
+    'login-warning': LoginWarning,
     'my-autocomplete-input': myAutocompleteInput,
     'remote-contextual-suggestion': remoteContextualSugg,
     'dettagli-bene': dettagliBene

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Error404 from '@/components/pages/Errors/Error404'
-import LoginWarning from '@/components/ui/LoginWarning'
 import LoginPage from '@/components/pages/Login/LoginPage'
 import Bene from '@/components/pages/Bene/AddEditBene'
 import ViewBene from '@/components/pages/Bene/ViewBene'
@@ -18,11 +17,7 @@ export default new Router({
     {
       path: '/bene',
       name: 'bene',
-      component: {
-        name: 'LoginWarningBene',
-        components: { 'LoginWarning': LoginWarning, 'bene': Bene },
-        template: '<LoginWarning><bene></bene></LoginWarning>'
-      }
+      component: Bene
     },
     {
       path: '/dettagli_bene/:id',
