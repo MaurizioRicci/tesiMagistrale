@@ -9,6 +9,14 @@
       <b-row align-h="center">
         <b-col cols="6">
           <b-form @submit="onSubmit" @reset="onReset" :novalidate="true" :validated="sendBtnClicked" ref="form_bene">
+            <b-form-group id="input-group-1" label="ID:" label-for="input-id" label-cols-sm="6" label-cols-md="2">
+              <b-form-input
+                id="input-id"
+                v-model="form.id"
+                type="text"
+                required
+                placeholder=""></b-form-input>
+            </b-form-group>
             <b-form-group id="input-group-1" label="Identificazione:"
             label-for="input-identificazione" label-cols-sm="6" label-cols-md="2">
               <remote-contextual-suggestion :waitTime="1000"
@@ -187,7 +195,7 @@ export default {
   methods: {
     getModel () {
       return {
-        lotto: '',
+        id: '',
         identificazione: '',
         descrizione: '',
         macroEpocaOrig: '',

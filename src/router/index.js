@@ -27,7 +27,11 @@ export default new Router({
     {
       path: '/dettagli_bene/:id',
       name: 'DettagliBene',
-      component: ViewBene,
+      component: {
+        name: 'PageVediBene',
+        components: { MasterPage, ViewBene },
+        template: '<MasterPage><ViewBene/></MasterPage>'
+      },
       props: true
     },
     {

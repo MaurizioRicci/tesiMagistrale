@@ -8,6 +8,17 @@
       <b-row align-h="center">
         <b-col cols="12">
           <b-form :novalidate="true" ref="form_bene">
+            <b-form-group id="input-group-1" label="ID:"
+            label-for="input-id" label-cols-sm="6" label-cols-md="2">
+              <b-form-input
+                    id="input-id"
+                    type="text"
+                    v-model="form.id"
+                    disabled
+                    placeholder=""
+                    autocomplete="off"
+                  ></b-form-input>
+            </b-form-group>
             <b-form-group id="input-group-1" label="Identificazione:"
             label-for="input-identificazione" label-cols-sm="6" label-cols-md="2">
               <b-form-input
@@ -105,7 +116,7 @@ export default {
   methods: {
     getModel () {
       return {
-        lotto: '',
+        id: '',
         identificazione: '',
         descrizione: '',
         macroEpocaOrig: '',
