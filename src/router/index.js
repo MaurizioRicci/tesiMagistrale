@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Error404 from '@/components/pages/Errors/Error404'
+import MasterPage from '@/components/pages/Master/MasterPage'
 import LoginPage from '@/components/pages/Login/LoginPage'
 import Bene from '@/components/pages/Bene/AddEditBene'
 import ViewBene from '@/components/pages/Bene/ViewBene'
@@ -17,7 +18,11 @@ export default new Router({
     {
       path: '/bene',
       name: 'bene',
-      component: Bene
+      component: {
+        name: 'PageBene',
+        components: { MasterPage, Bene },
+        template: '<MasterPage><Bene/></MasterPage>'
+      }
     },
     {
       path: '/dettagli_bene/:id',

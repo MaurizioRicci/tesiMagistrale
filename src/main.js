@@ -19,6 +19,8 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(Unicon)
 
+Vue.prototype.$vueEventBus = new Vue()
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -96,7 +96,7 @@ export default {
           this.$router.push(this.prevPagePath.path)
         }.bind(this))
         .catch(function (error) {
-          this.errorMsg = error.response.data.msg || error.message
+          this.errorMsg = (error.response && error.response.data.msg) || error.message
         }.bind(this))
     }
   },

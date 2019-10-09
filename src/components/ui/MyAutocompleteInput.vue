@@ -146,7 +146,7 @@ export default {
     }
   },
   mounted () {
-    this.bs_input = this.$refs.input_container.querySelector('input')
+    this.bs_input = this.$refs.input_container.querySelector('input, textarea')
     this.bs_input.addEventListener('input', this.onInput)
     this.bs_input.addEventListener('click', this.onInputClick)
     this.bs_input.addEventListener('keydown', this.onInputKeyDown)
