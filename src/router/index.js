@@ -14,7 +14,7 @@ export default new Router({
       path: '/',
       name: 'login',
       component: {
-        name: 'LoginPagee',
+        name: 'PageLogin',
         components: { MasterPage, LoginPage },
         template: '<MasterPage><LoginPage/></MasterPage>'
       }
