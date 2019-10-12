@@ -22,7 +22,7 @@ const serverURLsStore = {
     filtraBeniURL: state => state.serverURL + state.filtraBeni,
     filtraToponimoURL: state => state.serverURL + state.filtraToponimo,
     filtraComuneURL: state => state.serverURL + state.filtraComune,
-    dettagliBeneURL: state => state.serverURL + state.dettagliBene,
+    dettagliBeneURL: state => state.serverURL + 'visualizza/beni' + state.dettagliBene,
     aggiungiRelazioneURL: state => state.serverURL + state.aggiungiRelazione,
     getDizionario: state => state.serverURL + state.getDizionario
   },

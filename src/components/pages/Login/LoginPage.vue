@@ -67,7 +67,7 @@ export default {
     next(vm => {
     // access to component instance via `vm`
     // controllo che from non sia uguale alla route corrente
-      vm.prevPagePath = from === this.$route.path ? 'bene' : from
+      vm.prevPagePath = from === vm.$route.path ? 'bene' : from
     })
   },
   methods: {

@@ -12,8 +12,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'LoginPage',
-      component: LoginPage
+      name: 'login',
+      component: {
+        name: 'LoginPagee',
+        components: { MasterPage, LoginPage },
+        template: '<MasterPage><LoginPage/></MasterPage>'
+      }
     },
     {
       path: '/bene',
