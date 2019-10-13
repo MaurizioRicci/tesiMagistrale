@@ -12,10 +12,13 @@ export const errorHandlerResponse = (error, vueApp) => {
   }
   if (isHandlerEnabled(error.config) && error.response) {
     // Handle errors
-    if (error.response.status === 401) {
-      vueApp.$vueEventBus.$emit('master-page-show-error', ['Error', 'Invalid credentials'])
-    } else if (error.response.status === 503) {
-      vueApp.$vueEventBus.$emit('master-page-show-error', ['Error', 'System offline'])
+    switch (error.response.status) {
+      case 401:
+        vueApp.$vueEventBus.$emit('master-page-show-error', ['Error', 'Invalid credentials'])
+        break
+      case 503:
+        vueApp.$vueEventBus.$emit('master-page-show-error', ['Error', 'System offline'])
+        break
     }
   }
   return Promise.reject(error)
