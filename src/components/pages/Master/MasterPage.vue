@@ -3,8 +3,7 @@
     <slot>
     </slot>
     <!-- Modal per mostrare possibili errori all'utente -->
-    <b-modal ref="master-page-show-error"
-     :title="errorData.title" ok-only>
+    <b-modal :title="errorData.title" ok-only v-model="modalShow">
         <p class="my-2">{{errorData.message}}</p>
     </b-modal>
 
@@ -16,6 +15,7 @@ export default {
   name: 'MasterPage',
   data () {
     return {
+      modalShow: false,
       errorData: {
         title: '',
         message: ''
@@ -25,9 +25,14 @@ export default {
   methods: {
     // assegnamento di destrutturazione array con valori di default
     showError: function ([title = '', msg = '']) {
-      this.errorData.title = title
-      this.errorData.message = msg
-      this.$refs['master-page-show-error'].show()
+      // evito di mostrare più volte stesso messaggio se già aperto
+      // se non è aperto apro. Se è aperto apro solo se title & message sono diversi
+      if (!this.modalShow || (this.modalShow && this.errorData.title !== title &&
+       this.errorData.message !== msg)) {
+        this.errorData.title = title
+        this.errorData.message = msg
+        this.modalShow = true
+      }
     }
   },
   created () {

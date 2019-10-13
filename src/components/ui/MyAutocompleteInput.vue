@@ -146,7 +146,7 @@ export default {
     }
   },
   mounted () {
-    this.bs_input = this.$slots.default[0].componentInstance
+    this.bs_input = this.$slots.default[0].componentInstance.$el
     this.bs_input.addEventListener('input', this.onInput)
     this.bs_input.addEventListener('click', this.onInputClick)
     this.bs_input.addEventListener('keydown', this.onInputKeyDown)
