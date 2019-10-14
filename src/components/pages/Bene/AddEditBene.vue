@@ -133,6 +133,9 @@
             <b-button type="reset" variant="danger" v-on:click="onReset">Reset</b-button>
           </b-form>
         </b-col>
+        <b-col>
+          <MyMap/>
+        </b-col>
       </b-row>
       <b-button v-b-modal.modalViewBene>Show Modal</b-button>
       <b-modal title="Dettagli bene" id="modalViewBene"
@@ -155,6 +158,7 @@
 import * as dict from '@/assets/js/loadDict'
 import LoginWarning from '@/components/ui/LoginWarning'
 import MyAutocompleteInput from '@/components/ui/MyAutocompleteInput'
+import MyMap from '@/components/ui/Map'
 import RemoteContextualSugg from '@/components/common/RemoteContextualSuggestions'
 import DettagliBene from '@/components/pages/Bene/ViewBene'
 
@@ -166,7 +170,8 @@ export default {
     LoginWarning,
     'my-autocomplete-input': MyAutocompleteInput,
     'remote-contextual-suggestion': RemoteContextualSugg,
-    DettagliBene
+    DettagliBene,
+    MyMap
   },
   data () {
     return {
