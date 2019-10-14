@@ -1,0 +1,72 @@
+<template>
+    <l-map :zoom="zoom" :center="center" @click="addPoint"
+    v-bind:style="{ width, height }">
+      <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+      <!-- <l-marker :lat-lng="marker"></l-marker> -->
+        <l-polygon @click="removePoint"
+      :lat-lngs="polygon.latlngs.toArray()"
+      :color="polygon.color">
+      </l-polygon>
+    </l-map>
+</template>
+
+<script>
+import { LMap, LTileLayer, LPolygon } from 'vue2-leaflet'
+import { DomEvent } from 'leaflet'
+import { Polygon } from '@/assets/js/multiPolygonModel'
+
+export default {
+  name: 'Map',
+  components: {
+    'l-map': LMap,
+    'l-tile-layer': LTileLayer,
+    'l-polygon': LPolygon
+  },
+  model: {
+    prop: 'polygon_latlngs',
+    event: 'change'
+  },
+  props: {
+    center: {type: Array, default: () => [47.413220, -1.319482]},
+    zoom: {type: Number, default: 13},
+    width: {default: '100%'},
+    height: {default: '500px'},
+    pointRemoveThreshold: {type: Number, default: 0.01},
+    polygon_latlngs: {type: Polygon, default: () => new Polygon()},
+    polygon_color: {type: String, default: 'green'}
+  },
+  methods: {
+    twoPointDist: function (x1, y1, x2, y2) {
+      return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
+    },
+    addPoint: function (evt) {
+      let lat = evt.latlng.lat
+      let lng = evt.latlng.lng
+      this.polygon.latlngs.addVertex(lat, lng)
+      // attenzione non c'è copia non alterare i dati restituiti
+      this.$emit('change', this.polygon.latlngs)
+    },
+    removePoint: function (evt) {
+      let K = this.pointRemoveThreshold
+      let latP = evt.latlng.lat
+      let lngP = evt.latlng.lng
+      this.polygon.latlngs = this.polygon.latlngs.filter(
+        (currLat, currLng) =>
+          this.twoPointDist(latP, lngP, currLat, currLng) > K
+      )
+      DomEvent.stopPropagation(evt)
+      this.$emit('change', this.polygon.latlngs)
+    }
+  },
+  data () {
+    return {
+      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      polygon: {
+        latlngs: this.polygon_latlngs,
+        color: this.polygon_color
+      }
+    }
+  }
+}
+</script>
