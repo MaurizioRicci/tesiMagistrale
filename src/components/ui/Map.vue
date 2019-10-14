@@ -1,6 +1,6 @@
 <template>
     <l-map :zoom="zoom" :center="center" @click="addPoint"
-    v-bind:style="{ width, height }">
+    v-bind:style="{ width, height }" :crs="CRS.EPSG4326">
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <!-- <l-marker :lat-lng="marker"></l-marker> -->
         <l-polygon @click="removePoint"
@@ -12,7 +12,8 @@
 
 <script>
 import { LMap, LTileLayer, LPolygon } from 'vue2-leaflet'
-import { DomEvent } from 'leaflet'
+// eslint-disable-next-line no-unused-vars
+import { DomEvent, CRS } from 'leaflet' // CRS è usato nel template
 import { Polygon } from '@/assets/js/multiPolygonModel'
 
 export default {
