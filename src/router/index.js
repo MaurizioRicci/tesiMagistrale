@@ -5,7 +5,7 @@ import MasterPage from '@/components/pages/Master/MasterPage'
 import LoginPage from '@/components/pages/Login/LoginPage'
 import Bene from '@/components/pages/Bene/AddEditBene'
 import ViewBene from '@/components/pages/Bene/ViewBene'
-import Map from '@/components/ui/Map'
+import MyMap from '@/components/pages/Map/MapPage'
 
 Vue.use(Router)
 
@@ -44,8 +44,8 @@ export default new Router({
       name: 'mappa',
       component: {
         name: 'PageMap',
-        components: { MasterPage, Map },
-        template: '<MasterPage><Map/></MasterPage>'
+        components: { MasterPage, MyMap },
+        template: '<MasterPage><MyMap/></MasterPage>'
       }
     },
     {

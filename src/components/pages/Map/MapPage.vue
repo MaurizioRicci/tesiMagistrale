@@ -1,0 +1,47 @@
+<template>
+  <b-container fluid>
+      <b-row>
+        <b-col>
+          <h2>Mappa</h2>
+        </b-col>
+      </b-row>
+      <b-row align-h="center">
+        <b-col cols="12">
+            <MyMap v-model="polygonChoosen"></MyMap>
+        </b-col>
+        <b-col cols="6">
+            <b-list-group>
+                <p class="m-auto">Punti scelti</p>
+                <b-list-group-item v-for="(point, index) in polygonChoosen.toArray()"
+                v-bind:key="index">
+                <b-row align-h="center">
+                    <b-col cols="6">{{index + 1}}) {{point[0]}}, {{point[1]}}</b-col>
+                </b-row>
+                </b-list-group-item>
+            </b-list-group>
+        </b-col>
+      </b-row>
+  </b-container>
+</template>
+
+<script>
+import MyMap from '@/components/ui/Map'
+import { Polygon } from '@/assets/js/multiPolygonModel'
+
+export default {
+  name: 'MapPage',
+  components: { MyMap },
+  data () {
+    return {
+      polygonChoosen: new Polygon()
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.list-group {
+    text-align: left
+}
+</style>

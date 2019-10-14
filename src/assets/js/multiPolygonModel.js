@@ -20,6 +20,7 @@ Polygon.prototype.toString = function () {
 }
 
 Polygon.prototype.toArray = function () { return this.latlngArr }
+Polygon[Symbol.iterator] = function () { return this.latlngArr[Symbol.iterator]() }
 
 const MultiPolygon = function (PolygonArr = []) {
   this.polygonArr = PolygonArr
@@ -43,6 +44,6 @@ MultiPolygon.prototype.removePolygon = function (polygonID = '') {
   this.polygonArr = this.filter(polygon => polygon.id !== polygonID)
 }
 
-MultiPolygon[Symbol.iterator] = function () { return this.polygonArr }
+MultiPolygon[Symbol.iterator] = function () { return this.polygonArr[Symbol.iterator]() }
 
 export { Polygon, MultiPolygon }

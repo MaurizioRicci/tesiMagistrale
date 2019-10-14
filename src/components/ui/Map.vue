@@ -4,8 +4,8 @@
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <!-- <l-marker :lat-lng="marker"></l-marker> -->
         <l-polygon @click="removePoint"
-      :lat-lngs="polygon.latlngs.toArray()"
-      :color="polygon.color">
+      :lat-lngs="currPolygon.toArray()"
+      :color="polygon_color">
       </l-polygon>
     </l-map>
 </template>
@@ -23,7 +23,7 @@ export default {
     'l-polygon': LPolygon
   },
   model: {
-    prop: 'polygon_latlngs',
+    prop: 'polygon',
     event: 'change'
   },
   props: {
@@ -32,7 +32,7 @@ export default {
     width: {default: '100%'},
     height: {default: '500px'},
     pointRemoveThreshold: {type: Number, default: 0.01},
-    polygon_latlngs: {type: Polygon, default: () => new Polygon()},
+    polygon: {type: Polygon, default: () => new Polygon()},
     polygon_color: {type: String, default: 'green'}
   },
   methods: {
@@ -42,30 +42,27 @@ export default {
     addPoint: function (evt) {
       let lat = evt.latlng.lat
       let lng = evt.latlng.lng
-      this.polygon.latlngs.addVertex(lat, lng)
+      this.currPolygon.addVertex(lat, lng)
       // attenzione non c'è copia non alterare i dati restituiti
-      this.$emit('change', this.polygon.latlngs)
+      this.$emit('change', this.currPolygon)
     },
     removePoint: function (evt) {
       let K = this.pointRemoveThreshold
       let latP = evt.latlng.lat
       let lngP = evt.latlng.lng
-      this.polygon.latlngs = this.polygon.latlngs.filter(
+      this.currPolygon = this.currPolygon.filter(
         (currLat, currLng) =>
           this.twoPointDist(latP, lngP, currLat, currLng) > K
       )
       DomEvent.stopPropagation(evt)
-      this.$emit('change', this.polygon.latlngs)
+      this.$emit('change', this.currPolygon)
     }
   },
   data () {
     return {
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      polygon: {
-        latlngs: this.polygon_latlngs,
-        color: this.polygon_color
-      }
+      currPolygon: this.polygon
     }
   }
 }
