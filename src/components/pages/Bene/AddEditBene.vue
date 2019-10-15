@@ -9,7 +9,7 @@
       <b-row align-h="center">
         <b-col cols="6">
           <b-form @submit="onSubmit" @reset="onReset" :novalidate="true" :validated="sendBtnClicked" ref="form_bene">
-            <b-form-group id="input-group-1" label="ID:" label-for="input-id" label-cols-sm="6" label-cols-md="2">
+            <b-form-group id="input-group-1" label="ID:" label-for="input-id" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
               <b-form-input
                 id="input-id"
                 v-model="form.id"
@@ -18,7 +18,7 @@
                 placeholder=""></b-form-input>
             </b-form-group>
             <b-form-group id="input-group-1" label="Identificazione:"
-            label-for="input-identificazione" label-cols-sm="6" label-cols-md="2">
+            label-for="input-identificazione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
               <remote-contextual-suggestion :waitTime="1000"
               :suggestionsPromise="queryIdentificazione">
                 <my-autocomplete-input v-model="form.identificazione"
@@ -35,7 +35,7 @@
               </remote-contextual-suggestion>
             </b-form-group>
             <b-form-group id="input-group-1" label="Descrizione:"
-              label-for="input-descrizione" label-cols-sm="6" label-cols-md="2">
+              label-for="input-descrizione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
               <my-autocomplete-input v-model="form.descrizione"
                 :suggestionsPromise="getDictFuncs().loadDescr"
                 closedDictionaryy
@@ -52,7 +52,7 @@
               </my-autocomplete-input>
             </b-form-group>
             <b-form-group id="input-group-1" label="MacroEpocaOrig:"
-              label-for="input-macro-epoca-orig" label-cols-sm="6" label-cols-md="2">
+              label-for="input-macro-epoca-orig" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
                 <my-autocomplete-input v-model="form.macroEpocaOrig"
                 :suggestionsPromise="getDictFuncs().loadMacroEpocaOrig"
                 closedDictionary
@@ -69,7 +69,7 @@
                 </my-autocomplete-input>
             </b-form-group>
             <b-form-group id="input-group-1" label="MacroEpocaCar:"
-              label-for="input-macro-epoca-car" label-cols-sm="6" label-cols-md="2">
+              label-for="input-macro-epoca-car" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
                 <my-autocomplete-input v-model="form.macroEpocaCar"
                 :suggestionsPromise="getDictFuncs().loadMacroEpocaCar"
                 closedDictionary
@@ -85,7 +85,7 @@
                   ></b-form-input>
                 </my-autocomplete-input>
             </b-form-group>
-            <b-form-group id="input-group-1" label="Toponimo:" label-for="input-toponimo" label-cols-sm="6" label-cols-md="2">
+            <b-form-group id="input-group-1" label="Toponimo:" label-for="input-toponimo" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
               <remote-contextual-suggestion :waitTime="1000"
               :suggestionsPromise="queryToponimo">
                 <my-autocomplete-input v-model="form.toponimo">
@@ -100,10 +100,10 @@
                 </my-autocomplete-input>
               </remote-contextual-suggestion>
             </b-form-group>
-            <b-form-group id="input-group-1" label="Esistenza:" label-for="input-esistenza" label-cols-sm="6" label-cols-md="2">
+            <b-form-group id="input-group-1" label="Esistenza:" label-for="input-esistenza" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
               <b-form-input id="input-esistenza" v-model="form.esistenza" type="text" required placeholder=""></b-form-input>
             </b-form-group>
-            <b-form-group id="input-group-1" label="Comune:" label-for="input-comune" label-cols-sm="6" label-cols-md="2">
+            <b-form-group id="input-group-1" label="Comune:" label-for="input-comune" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
               <remote-contextual-suggestion :waitTime="1000"
               :suggestionsPromise="queryComune">
                 <my-autocomplete-input v-model="form.comune">
@@ -118,7 +118,7 @@
                 </my-autocomplete-input>
               </remote-contextual-suggestion>
             </b-form-group>
-            <b-form-group id="input-group-1" label="Bibliografia:" label-for="input-bibliografia" label-cols-sm="6" label-cols-md="2">
+            <b-form-group id="input-group-1" label="Bibliografia:" label-for="input-bibliografia" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
               <b-form-textarea
                 id="input-bibliografia"
                 v-model="form.bibliografia"
@@ -126,7 +126,7 @@
                 required
                 placeholder=""></b-form-textarea>
             </b-form-group>
-            <b-form-group id="input-group-1" label="Note:" label-for="input-note" label-cols-sm="6" label-cols-md="2">
+            <b-form-group id="input-group-1" label="Note:" label-for="input-note" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
               <b-form-textarea id="input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
             </b-form-group>
             <b-button type="submit" variant="primary">Submit</b-button>
@@ -139,7 +139,7 @@
       </b-row>
       <b-button v-b-modal.modalViewBene>Show Modal</b-button>
       <b-modal title="Dettagli bene" id="modalViewBene"
-        size="xl" v-on:ok="onModalClosedOK">
+        size="huge" v-on:ok="onModalClosedOK">
         <Dettagli-bene :id="idBeneDaVisualizzare">
         </Dettagli-bene>
         <template v-slot:modal-footer="{ ok, cancel }">
@@ -161,6 +161,7 @@ import MyAutocompleteInput from '@/components/ui/MyAutocompleteInput'
 import MyMap from '@/components/ui/Map'
 import RemoteContextualSugg from '@/components/common/RemoteContextualSuggestions'
 import DettagliBene from '@/components/pages/Bene/ViewBene'
+import '@/assets/css/hugeModal.css'
 
 const axios = require('axios')
 
@@ -242,4 +243,5 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+</style>
