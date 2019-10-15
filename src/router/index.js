@@ -34,19 +34,22 @@ export default new Router({
       name: 'DettagliBene',
       component: {
         name: 'PageVediBene',
+        props: {id: String},
         components: { MasterPage, ViewBene },
-        template: '<MasterPage><ViewBene/></MasterPage>'
+        template: '<MasterPage><ViewBene :id="id"/></MasterPage>'
       },
       props: true
     },
     {
-      path: '/mappa',
+      path: '/mappa/:id',
       name: 'mappa',
       component: {
         name: 'PageMap',
+        props: {id: String},
         components: { MasterPage, MyMap },
-        template: '<MasterPage><MyMap/></MasterPage>'
-      }
+        template: '<MasterPage><MyMap :id="id"/></MasterPage>'
+      },
+      props: true
     },
     {
       path: '*',
