@@ -17,8 +17,8 @@ Polygon.prototype.clone = function () {
   return new Polygon(this.latlngArr.slice(), this.id)
 }
 
-Polygon.prototype.toArray = function () { return this.latlngArr }
-// Polygon[Symbol.iterator] = function () { return this.latlngArr[Symbol.iterator]() }
+Polygon.prototype.getLatlngs = function () { return this.latlngArr }
+Polygon.prototype.toString = function () { return JSON.stringify(this.latlngArr) }
 
 export const MultiPolygon = function (PolygonArr = []) {
   this.polygonArr = PolygonArr

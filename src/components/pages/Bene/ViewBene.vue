@@ -92,11 +92,14 @@
             <b-form-group id="input-group-1" label="Note:" label-for="input-note" label-cols-sm="6" label-cols-md="2">
               <b-form-textarea disabled id="input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
             </b-form-group>
+            <b-form-group id="input-group-1" label="Geometria:" label-for="input-geometria" label-cols-sm="6" label-cols-md="2">
+              <b-form-textarea disabled id="input-geometria" v-model="polygonStr" type="text" placeholder=""></b-form-textarea>
+            </b-form-group>
           </b-form>
         </b-col>
         <b-col cols="6">
           <MyMap locked v-if="mapCenter" v-model="form.polygon"
-           :center="mapCenter"/>
+           :center="mapCenter" :zoom="17"/>
         </b-col>
       </b-row>
   </b-container>
@@ -115,6 +118,9 @@ export default {
       form: this.getModel(),
       mapCenter: null
     }
+  },
+  computed: {
+    polygonStr: function () { return this.form.polygon.toString() }
   },
   props: {
     id: String

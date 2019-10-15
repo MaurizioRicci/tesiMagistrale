@@ -4,7 +4,7 @@
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <!-- <l-marker :lat-lng="marker"></l-marker> -->
         <l-polygon v-if="currPolygon" @click="removePoint"
-      :lat-lngs="currPolygon.toArray()"
+      :lat-lngs="currPolygon.getLatlngs()"
       :color="polygon_color">
       </l-polygon>
     </l-map>
