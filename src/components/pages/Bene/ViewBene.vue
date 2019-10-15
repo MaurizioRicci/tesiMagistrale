@@ -6,7 +6,7 @@
         </b-col>
       </b-row>
       <b-row align-h="center">
-        <b-col cols="6">
+        <b-col cols="8">
           <b-form :novalidate="true" ref="form_bene">
             <b-form-group id="input-group-1" label="ID:"
             label-for="input-id" label-cols-sm="6" label-cols-md="2">
@@ -97,7 +97,7 @@
             </b-form-group>
           </b-form>
         </b-col>
-        <b-col cols="6">
+        <b-col cols="4">
           <MyMap locked v-if="mapCenter" v-model="form.polygon"
            :center="mapCenter" :zoom="17"/>
         </b-col>

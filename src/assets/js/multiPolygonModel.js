@@ -17,7 +17,8 @@ Polygon.prototype.clone = function () {
   return new Polygon(this.latlngArr.slice(), this.id)
 }
 
-Polygon.prototype.getLatlngs = function () { return this.latlngArr }
+Polygon.prototype.getLatLngs = function () { return this.latlngArr }
+Polygon.prototype.countVertex = function () { return this.latlngArr.length }
 Polygon.prototype.toString = function () { return JSON.stringify(this.latlngArr) }
 
 export const MultiPolygon = function (PolygonArr = []) {

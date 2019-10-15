@@ -9,10 +9,10 @@
         <b-col cols="12">
             <MyMap v-model="polygonChoosen"></MyMap>
         </b-col>
-        <b-col cols="6">
+        <b-col cols="6" v-if="polygonChoosen.countVertex()">
             <b-list-group>
                 <p class="m-auto">Punti scelti</p>
-                <b-list-group-item v-for="(point, index) in polygonChoosen.toArray()"
+                <b-list-group-item v-for="(point, index) in polygonChoosen.getLatLngs()"
                 v-bind:key="index">
                 <b-row align-h="center">
                     <b-col cols="6">{{index + 1}}) {{point[0]}}, {{point[1]}}</b-col>
