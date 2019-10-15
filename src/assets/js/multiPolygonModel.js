@@ -1,4 +1,4 @@
-const Polygon = function (latlngArr = [], id = '') {
+export const Polygon = function (latlngArr = [], id = '') {
   this.id = id
   this.latlngArr = latlngArr
 }
@@ -13,16 +13,14 @@ Polygon.prototype.filter = function (filterF) {
   )
 }
 
-Polygon.prototype.toString = function () {
-  let str = this.id + ': '
-  this.latlngArr.forEach(el => { str += el })
-  return str
+Polygon.prototype.clone = function () {
+  return new Polygon(this.latlngArr.slice(), this.id)
 }
 
 Polygon.prototype.toArray = function () { return this.latlngArr }
-Polygon[Symbol.iterator] = function () { return this.latlngArr[Symbol.iterator]() }
+// Polygon[Symbol.iterator] = function () { return this.latlngArr[Symbol.iterator]() }
 
-const MultiPolygon = function (PolygonArr = []) {
+export const MultiPolygon = function (PolygonArr = []) {
   this.polygonArr = PolygonArr
 }
 
@@ -30,9 +28,13 @@ MultiPolygon.prototype.filter = function (filterF) {
   return new MultiPolygon(this.polygonArr.filter(polygon => filterF(polygon)))
 }
 
-MultiPolygon.prototype.findPolygon = function (id) {
-  let res = this.filter(polygon => polygon.id === id)
+MultiPolygon.prototype.findPolygonByID = function (id) {
+  let res = this.polygonArr.filter(polygon => polygon.id === id)
   return res.length > 0 ? res[0] : null
+}
+
+MultiPolygon.prototype.findPolygonByIndex = function (index) {
+  return this.polygonArr.length > index ? this.polygonArr[index] : null
 }
 
 MultiPolygon.prototype.addPolygon = function (polygon) {
@@ -44,6 +46,16 @@ MultiPolygon.prototype.removePolygon = function (polygonID = '') {
   this.polygonArr = this.filter(polygon => polygon.id !== polygonID)
 }
 
-MultiPolygon[Symbol.iterator] = function () { return this.polygonArr[Symbol.iterator]() }
-
-export { Polygon, MultiPolygon }
+MultiPolygon.prototype.buildFromGeoJSON = function (GeoJSON) {
+  let multipoly = new MultiPolygon()
+  if (GeoJSON) {
+    let polygons = GeoJSON.coordinates
+    for (let c = 0; c < polygons.length; c++) {
+      // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
+      // occorre fare lo scambio
+      let swapped = polygons[c][0].map(el => [el[1], el[0]])
+      multipoly.addPolygon(new Polygon(swapped, c))
+    }
+  }
+  return multipoly
+}

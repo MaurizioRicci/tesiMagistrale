@@ -6,7 +6,7 @@
         </b-col>
       </b-row>
       <b-row align-h="center">
-        <b-col cols="12">
+        <b-col cols="6">
           <b-form :novalidate="true" ref="form_bene">
             <b-form-group id="input-group-1" label="ID:"
             label-for="input-id" label-cols-sm="6" label-cols-md="2">
@@ -94,25 +94,31 @@
             </b-form-group>
           </b-form>
         </b-col>
+        <b-col cols="6">
+          <MyMap locked v-if="mapCenter" v-model="form.polygon"
+           :center="mapCenter"/>
+        </b-col>
       </b-row>
   </b-container>
 </template>
 
 <script>
+import MyMap from '@/components/ui/Map'
+import {Polygon, MultiPolygon} from '@/assets/js/multiPolygonModel'
 const axios = require('axios')
 
 export default {
   name: 'VisualizzaBene',
-  components: {},
+  components: { MyMap },
   data () {
     return {
-      form: this.getModel()
+      form: this.getModel(),
+      mapCenter: null
     }
   },
   props: {
     id: String
   },
-  computed: {},
   methods: {
     getModel () {
       return {
@@ -126,7 +132,8 @@ export default {
         comune: '',
         bibliografia: '',
         schedatore: '',
-        note: ''
+        note: '',
+        polygon: new Polygon()
       }
     },
     fetchData () {
@@ -138,7 +145,16 @@ export default {
       }).then(ok => {
         if (ok.data.length <= 0) {
           this.$vueEventBus.$emit('master-page-show-error', ['Info', 'No result found'])
-        } else T.form = ok.data[0]
+        } else {
+          T.form = ok.data[0]
+          let geojson = ok.data[0].geojson
+          T.form.polygon = new MultiPolygon()
+            .buildFromGeoJSON(geojson).findPolygonByIndex(0)
+          T.mapCenter = ok.data[0].centroid.coordinates
+          // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
+          // occorre fare lo scambio
+          T.mapCenter = [T.mapCenter[1], T.mapCenter[0]]
+        }
       }).catch(error => {
         let msg = (error.response && error.response.data.msg) || error.message
         this.$vueEventBus.$emit('master-page-show-error', ['Error', msg])
