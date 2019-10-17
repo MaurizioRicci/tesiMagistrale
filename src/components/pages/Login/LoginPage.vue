@@ -67,7 +67,7 @@ export default {
     next(vm => {
     // access to component instance via `vm`
     // controllo che from non sia uguale alla route corrente
-      vm.prevPagePath = from === vm.$route.path ? 'bene' : from
+      vm.prevPagePath = from === vm.$route.path ? 'home' : from
     })
   },
   methods: {
@@ -93,7 +93,10 @@ export default {
           }
           this.formData.role = resp.data.role
           this.$store.commit('registerUser', this.formData)
-          this.$router.push(this.prevPagePath.path)
+          if (this.prevPagePath) {
+            // se c'è manda alla pagina precedente, altrimenti alla home
+            this.$router.push(this.prevPagePath.path)
+          } else this.$router.push({name: 'home'})
         }.bind(this))
         .catch(function (error) {
           this.errorMsg = (error.response && error.response.data.msg) || error.message

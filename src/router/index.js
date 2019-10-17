@@ -21,6 +21,15 @@ export default new Router({
       }
     },
     {
+      path: '/home',
+      name: 'home',
+      component: {
+        name: 'PageHome',
+        components: { MasterPage },
+        template: '<MasterPage><h1>Home</h1></MasterPage>'
+      }
+    },
+    {
       path: '/bene',
       name: 'bene',
       component: {
