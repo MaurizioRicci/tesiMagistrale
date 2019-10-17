@@ -40,6 +40,12 @@ export default {
     polygon: {type: Polygon},
     polygon_color: {type: String, default: 'green'}
   },
+  computed: {
+    // serve poi se l'utene vuole modificarlo
+    currPolygon: function () {
+      return this.polygon ? this.polygon.clone() : new Polygon()
+    }
+  },
   methods: {
     twoPointDist: function (x1, y1, x2, y2) {
       return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
@@ -68,9 +74,7 @@ export default {
   data () {
     return {
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      // serve poi se l'utene vuole modificarlo
-      currPolygon: this.polygon ? this.polygon.clone() : new Polygon()
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }
   }
 }
