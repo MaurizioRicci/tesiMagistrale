@@ -81,10 +81,10 @@
                 disabled
                 placeholder=""></b-form-textarea>
             </b-form-group>
-            <b-form-group id="input-group-1" label="Schedatore:" label-for="input-schedatore" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+            <b-form-group id="input-group-1" label="Schedatori:" label-for="input-schedatori" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
               <b-form-textarea
-                id="input-schedatore"
-                v-model="form.schedatore"
+                id="input-schedatori"
+                v-model="form.schedatori_iniziali"
                 type="text"
                 disabled
                 placeholder=""></b-form-textarea>
@@ -137,7 +137,7 @@ export default {
         esitenza: '',
         comune: '',
         bibliografia: '',
-        schedatore: '',
+        schedatori_iniziali: '',
         note: '',
         polygon: new Polygon()
       }
@@ -154,12 +154,16 @@ export default {
         } else {
           T.form = ok.data[0]
           let geojson = ok.data[0].geojson
-          T.form.polygon = new MultiPolygon()
+          // T.form.polygon
+          let newPolygon = new MultiPolygon()
             .buildFromGeoJSON(geojson).findPolygonByIndex(0)
+          // T.form.polygon = Object.assign({}, T.form.polygon)
+
           T.mapCenter = ok.data[0].centroid.coordinates
           // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
           // occorre fare lo scambio
           T.mapCenter = [T.mapCenter[1], T.mapCenter[0]]
+          T.$set(T.form, 'polygon', newPolygon)
         }
       }).catch(error => {
         let msg = (error.response && error.response.data.msg) || error.message
