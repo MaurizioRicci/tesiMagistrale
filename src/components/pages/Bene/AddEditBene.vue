@@ -236,9 +236,9 @@ export default {
       axios.get(this.$store.getters.dettagliBeneURL, {
         params: { 'id': this.idBeneDaVisualizzare }
       }).then((ok) => {
-        delete ok.data[0].schedatore
+        delete ok.data.schedatore
         T.$refs.identificazioneAutoCompleteInput.hide()
-        T.form = ok.data[0]
+        T.form = ok.data
       })
     },
     ingrandisciMappa () {

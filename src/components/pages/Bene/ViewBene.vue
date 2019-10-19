@@ -149,6 +149,7 @@ export default {
     },
     fetchData (overrideIDProp) {
       let requiredID = overrideIDProp || this.id
+      if (!requiredID) return
       this.form = this.getModel()
       const T = this
       // fare richiesta dati del bene con id nella url
@@ -158,14 +159,14 @@ export default {
         if (ok.data.length <= 0) {
           this.$vueEventBus.$emit('master-page-show-error', ['Info', 'No result found'])
         } else {
-          T.form = ok.data[0]
-          let geojson = ok.data[0].geojson
+          T.form = ok.data
+          let geojson = ok.data.geojson
           // T.form.polygon
           let newPolygon = new MultiPolygon()
             .buildFromGeoJSON(geojson).findPolygonByIndex(0)
           // T.form.polygon = Object.assign({}, T.form.polygon)
 
-          T.mapCenter = ok.data[0].centroid.coordinates
+          T.mapCenter = ok.data.centroid.coordinates
           // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
           // occorre fare lo scambio
           T.mapCenter = [T.mapCenter[1], T.mapCenter[0]]
