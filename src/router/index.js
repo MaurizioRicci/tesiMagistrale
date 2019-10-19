@@ -39,15 +39,24 @@ export default new Router({
       }
     },
     {
-      path: '/dettagli_bene/:id',
-      name: 'DettagliBene',
-      component: {
-        name: 'PageVediBene',
-        props: {id: String},
-        components: { MasterPage, ViewBene },
-        template: '<MasterPage><ViewBene :id="id"/></MasterPage>'
-      },
-      props: true
+      path: '/dettagli_bene',
+      component: {components: {MasterPage}, template: '<MasterPage/>'},
+      children: [
+        {path: '',
+          component: {
+            components: { MasterPage, ViewBene },
+            template: '<ViewBene/>'
+          }
+        },
+        {path: ':id',
+          component: {
+            props: {id: String},
+            components: { MasterPage, ViewBene },
+            template: '<ViewBene :id="id"/>'
+          },
+          props: true
+        }
+      ]
     },
     {
       path: '/mappa/:id',

@@ -15,9 +15,9 @@
                     id="input-id"
                     type="text"
                     v-model="form.id"
-                    disabled
                     placeholder=""
                     autocomplete="off"
+                    @keyup.enter="() => fetchData(form.id)"
                   ></b-form-input>
             </b-form-group>
             <b-form-group id="input-group-1" label="Identificazione:"
@@ -147,12 +147,13 @@ export default {
         polygon: new Polygon()
       }
     },
-    fetchData () {
+    fetchData (overrideIDProp) {
+      let requiredID = overrideIDProp || this.id
       this.form = this.getModel()
       const T = this
       // fare richiesta dati del bene con id nella url
       axios.get(this.$store.getters.dettagliBeneURL, {
-        params: { 'id': this.id }
+        params: { 'id': requiredID }
       }).then(ok => {
         if (ok.data.length <= 0) {
           this.$vueEventBus.$emit('master-page-show-error', ['Info', 'No result found'])

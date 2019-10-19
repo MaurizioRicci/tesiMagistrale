@@ -1,6 +1,6 @@
 <template>
   <b-container fluid class="p-0">
-    <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar toggleable="lg" type="dark" variant="info" class="mb-1">
       <b-navbar-brand to="home">Home</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
@@ -8,10 +8,10 @@
         <b-navbar-nav class="w-100">
           <b-col cols="4">
           <b-nav-item-dropdown text="Beni" class="d-inline-block">
-            <b-dropdown-item href="#">Aggiungi un bene</b-dropdown-item>
-            <b-dropdown-item href="#">Modifica un bene</b-dropdown-item>
-            <b-dropdown-item href="#">Visualizza un bene</b-dropdown-item>
-            <b-dropdown-item href="#">Visualizza beni</b-dropdown-item>
+            <b-dropdown-item to="/bene">Aggiungi un bene</b-dropdown-item>
+            <b-dropdown-item to="/bene">Modifica un bene</b-dropdown-item>
+            <b-dropdown-item to="/dettagli_bene">Visualizza un bene</b-dropdown-item>
+            <b-dropdown-item href="#">Ricerca beni</b-dropdown-item>
           </b-nav-item-dropdown>
           </b-col>
 
@@ -20,7 +20,7 @@
             <b-dropdown-item href="#">Aggiungi una funzione</b-dropdown-item>
             <b-dropdown-item href="#">Modifica una funzione</b-dropdown-item>
             <b-dropdown-item href="#">Visualizza una funzione</b-dropdown-item>
-            <b-dropdown-item href="#">Visualizza funzioni</b-dropdown-item>
+            <b-dropdown-item href="#">Ricerca funzioni</b-dropdown-item>
           </b-nav-item-dropdown>
           </b-col>
 
@@ -34,8 +34,11 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+<!--     Possiede sia uno slot che un router-view in base a come si vogliono passare i dati;
+    se nel modo tradizionale di Vue oppure se si è definita una route con Vue-Router -->
     <slot>
     </slot>
+    <router-view></router-view>
     <!-- Modal per mostrare possibili errori all'utente -->
     <b-modal :title="errorData.title" ok-only v-model="modalShow">
         <p class="my-2">{{errorData.message}}</p>
