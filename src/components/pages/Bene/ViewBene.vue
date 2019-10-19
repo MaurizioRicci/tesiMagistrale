@@ -6,7 +6,8 @@
         </b-col>
       </b-row>
       <b-row align-h="center">
-        <b-col cols="8">
+        <transition name="slide-fade" v-on:leave="mapCols = 12">
+        <b-col cols="8" v-show="12-mapCols > 0">
           <b-form :novalidate="true" ref="form_bene">
             <b-form-group id="input-group-1" label="ID:"
             label-for="input-id" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
@@ -97,9 +98,11 @@
             </b-form-group>
           </b-form>
         </b-col>
-        <b-col cols="4">
-          <MyMap locked v-if="mapCenter" v-model="form.polygon"
-           :center="mapCenter" :zoom="17"/>
+        </transition>
+        <b-col :cols="mapCols">
+          <MyMap ref="myMap" locked v-if="mapCenter" v-model="form.polygon"
+           :center="mapCenter" :zoom="17" @ingrandisci-mappa="ingrandisciMappa"
+           @rimpicciolisci-mappa="rimpicciolisciMappa"/>
         </b-col>
       </b-row>
   </b-container>
@@ -108,6 +111,7 @@
 <script>
 import MyMap from '@/components/ui/Map'
 import {Polygon, MultiPolygon} from '@/assets/js/multiPolygonModel'
+import '@/assets/css/slideFadeTransition.css'
 const axios = require('axios')
 
 export default {
@@ -115,6 +119,7 @@ export default {
   components: { MyMap },
   data () {
     return {
+      mapCols: 4,
       form: this.getModel(),
       mapCenter: null
     }
@@ -169,6 +174,14 @@ export default {
         let msg = (error.response && error.response.data.msg) || error.message
         this.$vueEventBus.$emit('master-page-show-error', ['Error', msg])
       })
+    },
+    ingrandisciMappa () {
+      this.mapCols = 12
+      this.$nextTick(() => this.$refs.myMap.invalidateSize())
+    },
+    rimpicciolisciMappa () {
+      this.mapCols = 4
+      this.$nextTick(() => this.$refs.myMap.invalidateSize())
     }
   },
   created () {
@@ -183,4 +196,5 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+</style>

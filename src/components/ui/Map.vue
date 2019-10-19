@@ -1,18 +1,26 @@
 <template>
     <l-map :zoom="zoom" :center="center" @click="addPoint"
-    v-bind:style="{ width, height }">
+    v-bind:style="{ width, height }" ref="myMap">
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <!-- <l-marker :lat-lng="marker"></l-marker> -->
         <l-polygon v-if="currPolygon" @click="removePoint"
       :lat-lngs="currPolygon.getLatLngs()"
       :color="polygon_color">
       </l-polygon>
+      <l-control position="bottomleft">
+        <b-button @click="ingrandisci" v-show="!state.mappaIngrandita">
+          Ingrandisci
+        </b-button>
+        <b-button @click="rimpicciolisci" v-show="state.mappaIngrandita">
+          Rimpicciolisci
+        </b-button>
+      </l-control>
     </l-map>
 </template>
 
 <script>
 // Leaflet nonostante usi EPSG3857 accetta anche punti in 4326 facendo la conversione automatica
-import { LMap, LTileLayer, LPolygon } from 'vue2-leaflet'
+import { LMap, LTileLayer, LPolygon, LControl } from 'vue2-leaflet'
 // eslint-disable-next-line no-unused-vars
 import { DomEvent, CRS } from 'leaflet' // CRS è usato nel template
 import { Polygon } from '@/assets/js/multiPolygonModel'
@@ -22,7 +30,8 @@ export default {
   components: {
     'l-map': LMap,
     'l-tile-layer': LTileLayer,
-    'l-polygon': LPolygon
+    'l-polygon': LPolygon,
+    'l-control': LControl
   },
   model: {
     prop: 'polygon',
@@ -69,12 +78,24 @@ export default {
       )
       DomEvent.stopPropagation(evt)
       this.$emit('change', this.currPolygon)
+    },
+    ingrandisci: function (evt) {
+      this.state.mappaIngrandita = true
+      this.$emit('ingrandisci-mappa')
+    },
+    rimpicciolisci: function (evt) {
+      this.state.mappaIngrandita = false
+      this.$emit('rimpicciolisci-mappa')
+    },
+    invalidateSize: function () {
+      this.$refs.myMap.mapObject.invalidateSize()
     }
   },
   data () {
     return {
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      state: { mappaIngrandita: false }
     }
   }
 }
