@@ -45,9 +45,9 @@ const userDataStore = {
   mutations: {
     registerUser (state, userData) {
       let {username, password, role} = userData
-      state.currUserData.username = username
-      state.currUserData.password = password
-      state.currUserData.role = role
+      state.currUserData.username = username || ''
+      state.currUserData.password = password || ''
+      state.currUserData.role = role || ''
     }
   }
 }
