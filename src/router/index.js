@@ -17,7 +17,15 @@ export default new Router({
       component: {
         name: 'PageLogin',
         components: { MasterPage, LoginPage },
-        template: '<MasterPage><LoginPage/></MasterPage>'
+        data () { return {prevPath: ''} },
+        beforeRouteEnter (to, from, next) {
+          next(vm => {
+            // access to component instance via `vm`
+            // controllo che from non sia uguale alla route corrente
+            vm.prevPath = from.path === to.path ? 'home' : from
+          })
+        },
+        template: '<MasterPage><LoginPage :go-to="prevPath"/></MasterPage>'
       }
     },
     {
