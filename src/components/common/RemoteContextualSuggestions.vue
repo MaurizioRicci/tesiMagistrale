@@ -18,10 +18,10 @@ export default {
     let inAttesa = false
     let input = this.$slots.default[0].componentInstance
 
-    input.addEventListener('input', function (e) {
+    input.addEventListener('input', async function (e) {
       if (!inAttesa) {
         // aspetta waitTime prima di fare richiesta di suggerimenti
-        new Promise((resolve, reject) => {
+        await new Promise((resolve, reject) => {
           inAttesa = true
           setTimeout(() => {
             resolve(true)
