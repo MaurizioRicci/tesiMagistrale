@@ -18,6 +18,7 @@
                     placeholder=""
                     autocomplete="off"
                     @keyup.enter="() => fetchData(form.id)"
+                    :disabled="this.disallowIDChange"
                   ></b-form-input>
             </b-form-group>
             <b-form-group id="input-group-1" label="Identificazione:"
@@ -129,7 +130,9 @@ export default {
     polygonStr: function () { return this.form.polygon.toString() }
   },
   props: {
-    id: String
+    id: String,
+    cercaInRevisione: Boolean,
+    disallowIDChange: Boolean
   },
   methods: {
     getModel () {
@@ -142,7 +145,7 @@ export default {
       const T = this
       // fare richiesta dati del bene con id nella url
       axios.get(this.$store.getters.dettagliBeneURL, {
-        params: { 'id': requiredID }
+        params: { 'id': requiredID, 'tmp_db': this.cercaInRevisione }
       }).then(ok => {
         if (ok.data.length <= 0) {
           this.$vueEventBus.$emit('master-page-show-error', ['Info', 'No result found'])
@@ -152,7 +155,6 @@ export default {
           // T.form.polygon
           let newPolygon = new MultiPolygon()
             .buildFromGeoJSON(geojson).findPolygonByIndex(0)
-          // T.form.polygon = Object.assign({}, T.form.polygon)
 
           T.mapCenter = ok.data.centroid.coordinates
           // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
