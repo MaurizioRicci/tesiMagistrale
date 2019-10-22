@@ -110,7 +110,8 @@
 
 <script>
 import MyMap from '@/components/ui/Map'
-import {Polygon, MultiPolygon} from '@/assets/js/multiPolygonModel'
+import {MultiPolygon} from '@/assets/js/multiPolygonModel'
+import getModelloBene from '@/assets/js/Models/beneModel'
 import '@/assets/css/slideFadeTransition.css'
 const axios = require('axios')
 
@@ -132,20 +133,7 @@ export default {
   },
   methods: {
     getModel () {
-      return {
-        id: '',
-        identificazione: '',
-        descrizione: '',
-        macroEpocaOrig: '',
-        macroEpocaCar: '',
-        toponimo: '',
-        esitenza: '',
-        comune: '',
-        bibliografia: '',
-        schedatori_iniziali: '',
-        note: '',
-        polygon: new Polygon()
-      }
+      return getModelloBene()
     },
     fetchData (overrideIDProp) {
       let requiredID = overrideIDProp || this.id

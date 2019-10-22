@@ -158,6 +158,7 @@
 </template>
 
 <script>
+import getModelloBene from '@/assets/js/Models/beneModel'
 import * as dict from '@/assets/js/loadDict'
 import LoginWarning from '@/components/ui/LoginWarning'
 import MyAutocompleteInput from '@/components/ui/MyAutocompleteInput'
@@ -204,18 +205,7 @@ export default {
   },
   methods: {
     getModel () {
-      return {
-        id: '',
-        identificazione: '',
-        descrizione: '',
-        macroEpocaOrig: '',
-        macroEpocaCar: '',
-        toponimo: '',
-        esitenza: '',
-        comune: '',
-        bibliografia: '',
-        note: ''
-      }
+      return getModelloBene()
     },
     onReset (evt) {
       evt.preventDefault()
