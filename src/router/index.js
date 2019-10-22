@@ -49,6 +49,7 @@ export default new Router({
     {
       path: '/dettagli_bene',
       component: {components: {MasterPage}, template: '<MasterPage/>'},
+      name: 'DettagliBenePage',
       children: [
         {path: '',
           component: {

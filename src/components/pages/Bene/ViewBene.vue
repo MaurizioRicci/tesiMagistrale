@@ -17,7 +17,7 @@
                     v-model="form.id"
                     placeholder=""
                     autocomplete="off"
-                    @keyup.enter="() => fetchData(form.id)"
+                    @keyup.enter="() => fetchDataByID(form.id)"
                     :disabled="this.disallowIDChange"
                   ></b-form-input>
             </b-form-group>
@@ -130,16 +130,21 @@ export default {
     polygonStr: function () { return this.form.polygon.toString() }
   },
   props: {
+    // specifica l'id del bene da visualizzare.
+    // se viene specificato anche showBeneModel, quest'ultimo verrà usato
     id: String,
+    // se cercare l'id in archivio temporaneo. Default: archivio definitivo
     cercaInRevisione: Boolean,
-    disallowIDChange: Boolean
+    // possibilità di scrivere un id da cercare
+    disallowIDChange: Boolean,
+    // mostra direttamente un bene a partire dal suo modello
+    showBeneModel: Object
   },
   methods: {
     getModel () {
       return getModelloBene()
     },
-    fetchData (overrideIDProp) {
-      let requiredID = overrideIDProp || this.id
+    fetchDataByID (requiredID) {
       if (!requiredID) return
       this.form = this.getModel()
       const T = this
@@ -177,11 +182,14 @@ export default {
     }
   },
   created () {
-    this.fetchData()
+    // il modello del bene già passato ha la precedenza su ID
+    if (!this.beneModel) {
+      this.fetchDataByID(this.id)
+    }
   },
   watch: {
     $route (to, from) {
-      this.fetchData()
+      this.fetchDataByID(this.id)
     }
   }
 }
