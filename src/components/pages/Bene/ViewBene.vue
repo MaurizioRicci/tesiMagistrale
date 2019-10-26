@@ -111,19 +111,16 @@
 
 <script>
 import MyMap from '@/components/ui/Map'
-import {MultiPolygon} from '@/assets/js/multiPolygonModel'
-import getModelloBene from '@/assets/js/Models/beneModel'
+import dettagliBeneMixin from '@/components/mixins/DettagliBene'
 import '@/assets/css/slideFadeTransition.css'
-const axios = require('axios')
 
 export default {
   name: 'VisualizzaBene',
   components: { MyMap },
+  mixins: [ dettagliBeneMixin ],
   data () {
     return {
-      mapCols: 4,
-      form: this.getModel(),
-      mapCenter: null
+      mapCols: 4
     }
   },
   computed: {
@@ -141,37 +138,6 @@ export default {
     showBeneModel: Object
   },
   methods: {
-    getModel () {
-      return getModelloBene()
-    },
-    fetchDataByID (requiredID) {
-      if (!requiredID) return
-      this.form = this.getModel()
-      const T = this
-      // fare richiesta dati del bene con id nella url
-      axios.get(this.$store.getters.dettagliBeneURL, {
-        params: { 'id': requiredID, 'tmp_db': this.cercaInRevisione }
-      }).then(ok => {
-        if (ok.data.length <= 0) {
-          this.$vueEventBus.$emit('master-page-show-error', ['Info', 'No result found'])
-        } else {
-          T.form = ok.data
-          let geojson = ok.data.geojson
-          // T.form.polygon
-          let newPolygon = new MultiPolygon()
-            .buildFromGeoJSON(geojson).findPolygonByIndex(0)
-
-          T.mapCenter = ok.data.centroid.coordinates
-          // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
-          // occorre fare lo scambio
-          T.mapCenter = [T.mapCenter[1], T.mapCenter[0]]
-          T.$set(T.form, 'polygon', newPolygon)
-        }
-      }).catch(error => {
-        let msg = (error.response && error.response.data.msg) || error.message
-        this.$vueEventBus.$emit('master-page-show-error', ['Error', msg])
-      })
-    },
     ingrandisciMappa () {
       this.mapCols = 12
       this.$nextTick(() => this.$refs.myMap.invalidateSize())

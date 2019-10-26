@@ -48,8 +48,11 @@ export default new Router({
     },
     {
       path: '/dettagli_bene',
-      component: {components: {MasterPage}, template: '<MasterPage/>'},
-      name: 'DettagliBenePage',
+      component: {
+        name: 'PageDettagliBene',
+        components: {MasterPage},
+        template: '<MasterPage/>'
+      },
       children: [
         {path: '',
           component: {

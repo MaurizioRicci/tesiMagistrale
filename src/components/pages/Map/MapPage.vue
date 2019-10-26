@@ -7,14 +7,14 @@
       </b-row>
       <b-row align-h="center">
         <b-col cols="12">
-            <MyMap v-if="mapCenter" :zoom="16" height="700px"
+            <MyMap v-if="mapCenter" :zoom="17" height="700px"
             :center="mapCenter" locked
-            v-model="polygonChoosen"></MyMap>
+            v-model="form.polygon"></MyMap>
         </b-col>
-        <b-col cols="6" v-if="polygonChoosen.countVertex()">
+        <b-col cols="6" v-if="form.polygon.countVertex()">
             <b-list-group>
                 <p class="m-auto">Punti scelti</p>
-                <b-list-group-item v-for="(point, index) in polygonChoosen.getLatLngs()"
+                <b-list-group-item v-for="(point, index) in form.polygon.getLatLngs()"
                 v-bind:key="index">
                 <b-row align-h="center">
                     <b-col cols="6">{{index + 1}}) {{point[0]}}, {{point[1]}}</b-col>
@@ -28,8 +28,7 @@
 
 <script>
 import MyMap from '@/components/ui/Map'
-import { Polygon, MultiPolygon } from '@/assets/js/multiPolygonModel'
-const axios = require('axios')
+import dettagliBeneMixin from '@/components/mixins/DettagliBene'
 
 export default {
   name: 'MapPage',
@@ -37,42 +36,14 @@ export default {
   props: {
     id: String
   },
-  data () {
-    return {
-      polygonChoosen: new Polygon(),
-      mapCenter: null
-    }
-  },
-  methods: {
-    fetchData () {
-      const T = this
-      // fare richiesta dati del bene con id nella url
-      axios.get(this.$store.getters.dettagliBeneURL, {
-        params: { 'id': this.id }
-      }).then(ok => {
-        if (ok.data.length <= 0) {
-          this.$vueEventBus.$emit('master-page-show-error', ['Info', 'No result found'])
-        } else {
-          let geojson = ok.data[0].geojson
-          T.polygonChoosen = new MultiPolygon()
-            .buildFromGeoJSON(geojson).findPolygonByIndex(0)
-          T.mapCenter = ok.data[0].centroid.coordinates
-          // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
-          // occorre fare lo scambio
-          T.mapCenter = [T.mapCenter[1], T.mapCenter[0]]
-        }
-      }).catch(error => {
-        let msg = (error.response && error.response.data.msg) || error.message
-        this.$vueEventBus.$emit('master-page-show-error', ['Error', msg])
-      })
-    }
-  },
+  mixins: [dettagliBeneMixin],
+  methods: {},
   created () {
-    this.fetchData()
+    this.fetchDataByID(this.id)
   },
   watch: {
     $route (to, from) {
-      this.fetchData()
+      this.fetchDataByID(this.id)
     }
   }
 }

@@ -158,13 +158,13 @@
 </template>
 
 <script>
-import getModelloBene from '@/assets/js/Models/beneModel'
+import dettagliBeneMixin from '@/components/mixins/DettagliBene'
 import * as dict from '@/assets/js/loadDict'
 import LoginWarning from '@/components/ui/LoginWarning'
 import MyAutocompleteInput from '@/components/ui/MyAutocompleteInput'
 import MyMap from '@/components/ui/Map'
 import RemoteContextualSugg from '@/components/common/RemoteContextualSuggestions'
-import DettagliBene from '@/components/pages/Bene/ViewBene'
+import DettagliBene from '@/components/pages/Bene/ViewBene' // questo poi andrà tolto
 import '@/assets/css/hugeModal.css'
 import '@/assets/css/slideFadeTransition.css'
 const axios = require('axios')
@@ -178,10 +178,10 @@ export default {
     DettagliBene,
     MyMap
   },
+  mixins: [dettagliBeneMixin],
   data () {
     return {
       mapCols: 4,
-      form: this.getModel(),
       sendBtnClicked: false,
       idBeneDaVisualizzare: ''
     }
@@ -204,9 +204,6 @@ export default {
     }
   },
   methods: {
-    getModel () {
-      return getModelloBene()
-    },
     onReset (evt) {
       evt.preventDefault()
       this.form = this.getModel()
