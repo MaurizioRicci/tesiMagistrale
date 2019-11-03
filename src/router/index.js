@@ -6,6 +6,7 @@ import LoginPage from '@/components/pages/Login/LoginPage'
 import Bene from '@/components/pages/Bene/AddEditBene'
 import ViewBene from '@/components/pages/Bene/ViewBene'
 import MyMap from '@/components/pages/Map/MapPage'
+import BeniAggiuntiInRevisione from '@/components/pages/Bene/BeniAggiuntiInRevisione'
 
 Vue.use(Router)
 
@@ -80,6 +81,15 @@ export default new Router({
         template: '<MasterPage><MyMap :id="id"/></MasterPage>'
       },
       props: true
+    },
+    {
+      path: '/ricerca_beni',
+      name: 'ricerca_beni',
+      component: {
+        name: 'PageRicercaBeniRevisione',
+        components: { MasterPage, BeniAggiuntiInRevisione },
+        template: '<MasterPage><h1>Beni in revisione</h1><BeniAggiuntiInRevisione/></MasterPage>'
+      }
     },
     {
       path: '*',

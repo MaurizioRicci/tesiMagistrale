@@ -1,6 +1,7 @@
 <template>
   <span v-b-popover.hover="icon_msg">
-    <unicon :name="icon_name" fill="royalblue" />
+    <i :class="{ 'fas': true, [icon_name]: true }" :style="{fill: 'royalblue'}"></i>
+    <!-- <i :name="icon_name" fill="royalblue" /> -->
   </span>
 </template>
 

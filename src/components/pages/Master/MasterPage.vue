@@ -11,7 +11,7 @@
             <b-dropdown-item to="/bene">Aggiungi un bene</b-dropdown-item>
             <b-dropdown-item to="/bene">Modifica un bene</b-dropdown-item>
             <b-dropdown-item to="/dettagli_bene">Visualizza un bene</b-dropdown-item>
-            <b-dropdown-item href="#">Ricerca beni</b-dropdown-item>
+            <b-dropdown-item to="/ricerca_beni">Ricerca beni</b-dropdown-item>
           </b-nav-item-dropdown>
           </b-col>
 

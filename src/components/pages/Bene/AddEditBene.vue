@@ -40,7 +40,7 @@
                 <my-autocomplete-input v-model="form.descrizione"
                   :suggestionsPromise="getDictFuncs().loadDescr"
                   closedDictionaryy
-                  icon_name="lock"
+                  icon_name="fa-lock"
                   icon_msg="Campo vincolato a un dizionario">
                   <b-form-textarea
                   id="input-descrizione"
@@ -57,7 +57,7 @@
                   <my-autocomplete-input v-model="form.macroEpocaOrig"
                   :suggestionsPromise="getDictFuncs().loadMacroEpocaOrig"
                   closedDictionary
-                  icon_name="lock"
+                  icon_name="fa-lock"
                   icon_msg="Campo vincolato a un dizionario">
                     <b-form-input
                       id="input-macro-epoca-orig"
@@ -74,7 +74,7 @@
                   <my-autocomplete-input v-model="form.macroEpocaCar"
                   :suggestionsPromise="getDictFuncs().loadMacroEpocaCar"
                   closedDictionary
-                  icon_name="lock"
+                  icon_name="fa-lock"
                   icon_msg="Campo vincolato a un dizionario">
                     <b-form-input
                       id="input-macro-epoca-car"
@@ -136,7 +136,8 @@
           </b-col>
         </transition>
         <b-col :cols="mapCols">
-          <MyMap ref="myMap" @ingrandisci-mappa="ingrandisciMappa"
+          <MyMap ref="myMap" v-if="mapCenter" @ingrandisci-mappa="ingrandisciMappa"
+          v-model="form.polygon" :center="mapCenter" :zoom="17"
            @rimpicciolisci-mappa="rimpicciolisciMappa"/>
         </b-col>
       </b-row>
@@ -185,6 +186,10 @@ export default {
       sendBtnClicked: false,
       idBeneDaVisualizzare: ''
     }
+  },
+  props: {
+    id: String,
+    cercaInRevisione: Boolean
   },
   computed: {
     queryIdentificazione () {
@@ -237,7 +242,11 @@ export default {
       this.$nextTick(() => this.$refs.myMap.invalidateSize())
     }
   },
-  mounted () {}
+  mounted () {
+    if (this.id) {
+      this.fetchDataByID(this.id)
+    }
+  }
 }
 </script>
 

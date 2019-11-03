@@ -4,26 +4,29 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+// BootstrapVue
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+// Vuex store del progetto
 import { store } from './store/store'
 
-import Unicon from 'vue-unicons'
-import { uniLock, uniExclamationOctagon } from 'vue-unicons/src/icons'
+// Icone FontAwesome
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
+
+// Axios
 import Axios from 'axios'
 import { successHandlerResponse, errorHandlerResponse } from '@/assets/js/axiosInterceptors'
 
+// Leaflet
 import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-
-Unicon.add([uniLock, uniExclamationOctagon])
 
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
-Vue.use(Unicon)
 
 Vue.prototype.$vueEventBus = new Vue()
 
