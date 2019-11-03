@@ -1,6 +1,13 @@
+import { getCookie, existCookie } from '@/assets/js/cookie'
+
+let userData
+if (existCookie('userData')) {
+  userData = JSON.parse(getCookie('userData'))
+}
+
 const userDataStore = {
   state: {
-    currUserData: {
+    currUserData: userData || {
       username: '',
       password: '',
       role: ''
