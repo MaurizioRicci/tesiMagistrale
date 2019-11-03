@@ -88,7 +88,7 @@ export default new Router({
       component: {
         name: 'PageRicercaBeniRevisione',
         components: { MasterPage, BeniAggiuntiInRevisione },
-        template: '<MasterPage><h1>Beni in revisione</h1><BeniAggiuntiInRevisione/></MasterPage>'
+        template: '<MasterPage><h1>Gestione beni utente</h1><BeniAggiuntiInRevisione/></MasterPage>'
       }
     },
     {
