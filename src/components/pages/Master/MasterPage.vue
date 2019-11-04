@@ -6,8 +6,8 @@
       <b-collapse id="nav-collapse" is-nav>
 
         <b-navbar-nav class="w-100">
-          <b-container>
-          <b-row align-h="center">
+          <b-container fluid>
+          <b-row>
             <b-col>
             <b-nav-item-dropdown text="Beni" class="d-inline-block">
               <b-dropdown-item to="/bene">Aggiungi un bene</b-dropdown-item>
@@ -31,6 +31,16 @@
               <b-dropdown-item to="#">Valida un bene</b-dropdown-item>
               <b-dropdown-item to="#">Valida una funzione</b-dropdown-item>
             </b-nav-item-dropdown>
+            </b-col>
+
+            <b-col cols="1" class="ml-auto">
+              <b-navbar-nav>
+                <b-nav-item to="/">
+                  <span style="color:white;">
+                  User: {{$store.getters.getUserData.username}}
+                  </span>
+                </b-nav-item>
+              </b-navbar-nav>
             </b-col>
           </b-row>
           </b-container>
