@@ -3,11 +3,13 @@
       <b-row>
         <b-col>
           <LoginWarning/>
+          <b-alert variant="success" :show="serverRespOk">Bene creato/aggiunto</b-alert>
           <h2>Aggiungi/Modifica un bene</h2>
         </b-col>
       </b-row>
       <b-row align-h="center">
         <transition name="slide-fade" v-on:leave="mapCols = 12">
+          <!-- 12-mapCols > 0 => se la mappa occupa 12 colonne allora il form è nascosto -->
           <b-col cols="8" v-show="12-mapCols > 0">
             <b-form @submit="onSubmit" @reset="onReset" :novalidate="true" :validated="sendBtnClicked" ref="form_bene">
               <b-form-group id="input-group-1" label="ID:" label-for="input-id" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
@@ -184,7 +186,8 @@ export default {
     return {
       mapCols: 4,
       sendBtnClicked: false,
-      idBeneDaVisualizzare: ''
+      idBeneDaVisualizzare: '', // da cancellare
+      serverRespOk: false // serve per innescare il messaggio di bene creato/modificato
     }
   },
   props: {
@@ -214,15 +217,18 @@ export default {
       this.form = this.getModel()
     },
     onSubmit (evt) {
-      this.sendBtnClicked = true
+      this.sendBtnClicked = true // serve a innescare la validazione del form
       evt.preventDefault()
+      if (this.$refs.form_bene.checkValidity()) {
+        // invio dati al server
+      }
     },
     getDictFuncs () { return dict },
     mostraDettagliBene (evt) {
       this.idBeneDaVisualizzare = evt.id
       this.$bvModal.show('modalViewBene')
     },
-    onModalClosedOK () {
+    onModalClosedOK () { // da cancellare poi insieme al modal
       const T = this
       // fare richiesta dati del bene con id nella url
       axios.get(this.$store.getters.dettagliBeneURL, {
