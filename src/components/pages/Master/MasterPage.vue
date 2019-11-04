@@ -36,8 +36,9 @@
             <b-col cols="1" class="ml-auto">
               <b-navbar-nav>
                 <b-nav-item to="/">
-                  <span style="color:white;">
-                  User: {{$store.getters.getUserData.username}}
+                  <span style="color:white;" :class="{'text-warning': !currUsername}"
+                  v-b-popover.hover.bottom="loginTooltip">
+                  User: {{currUsername || '???'}}
                   </span>
                 </b-nav-item>
               </b-navbar-nav>
@@ -71,6 +72,14 @@ export default {
         title: '',
         message: ''
       }
+    }
+  },
+  computed: {
+    currUsername: function () {
+      return this.$store.getters.getUserData.username
+    },
+    loginTooltip: function () {
+      return this.currUsername ? 'Ciao ' + this.currUsername : 'login'
     }
   },
   methods: {
