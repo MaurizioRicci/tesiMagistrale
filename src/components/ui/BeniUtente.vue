@@ -147,7 +147,7 @@ export default {
               let dataObj = qs.parse(data)
               dataObj.username = this.$store.getters.getUserData.username
               dataObj.password = this.$store.getters.getUserData.password
-              dataObj.switch_bene = this.cercaInRevisione ? 'revisione' : 'aggiunti'
+              dataObj.switch_bene = this.cercaInRevisione ? 'miei_revisione' : 'miei_aggiunti'
               return qs.stringify(dataObj)
             }
           ]
