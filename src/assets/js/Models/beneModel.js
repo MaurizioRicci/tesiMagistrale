@@ -1,4 +1,4 @@
-import {Polygon} from '@/assets/js/multiPolygonModel'
+import {Polygon} from '@/assets/js/Models/multiPolygonModel'
 
 export default () => {
   return {

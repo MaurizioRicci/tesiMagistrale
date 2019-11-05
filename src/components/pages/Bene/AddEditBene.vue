@@ -18,7 +18,9 @@
                   v-model="form.id"
                   type="text"
                   required
-                  placeholder=""></b-form-input>
+                  placeholder=""
+                  @keyup.enter="() => fetchDataByID(form.id)">
+                  </b-form-input>
               </b-form-group>
               <b-form-group id="input-group-1" label="Identificazione:"
               label-for="input-identificazione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">

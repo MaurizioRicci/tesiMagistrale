@@ -23,7 +23,7 @@
 import { LMap, LTileLayer, LPolygon, LControl } from 'vue2-leaflet'
 // eslint-disable-next-line no-unused-vars
 import { DomEvent, CRS } from 'leaflet' // CRS è usato nel template
-import { Polygon } from '@/assets/js/multiPolygonModel'
+import { Polygon } from '@/assets/js/Models/multiPolygonModel'
 
 export default {
   name: 'Map',

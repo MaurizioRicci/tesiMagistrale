@@ -1,4 +1,4 @@
-import {MultiPolygon} from '@/assets/js/multiPolygonModel'
+import {MultiPolygon} from '@/assets/js/Models/multiPolygonModel'
 import getModelloBene from '@/assets/js/Models/beneModel'
 const axios = require('axios')
 
