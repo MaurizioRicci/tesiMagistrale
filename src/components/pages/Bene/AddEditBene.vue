@@ -159,6 +159,18 @@
           </b-button>
         </template>
       </b-modal>
+
+      <b-toast id="confirm-toast" title="Richiesta conferma" solid no-auto-hide
+      toaster="b-toaster-bottom-full" variant="secondary" v-model="waitUserConfirmation">
+      <div class="">
+        <div class="row justify-content-center">
+        <p>Fintanto che il bene sarà in attesa revisione non potrai modificarlo</p>
+        </div>
+        <div class="row justify-content-center">
+        <b-button @click="sendData">Conferma</b-button>
+        </div>
+      </div>
+    </b-toast>
   </b-container>
 </template>
 
@@ -189,7 +201,8 @@ export default {
       mapCols: 4,
       sendBtnClicked: false,
       idBeneDaVisualizzare: '', // da cancellare
-      serverRespOk: false // serve per innescare il messaggio di bene creato/modificato
+      serverRespOk: false, // serve per innescare il messaggio di bene creato/modificato,
+      waitUserConfirmation: false // apre il messaggio: sei sicuro di inviare il bene?
     }
   },
   props: {
@@ -219,11 +232,16 @@ export default {
       this.form = this.getModel()
     },
     onSubmit (evt) {
+      // quando si preme invio sul form
       this.sendBtnClicked = true // serve a innescare la validazione del form
       evt.preventDefault()
       if (this.$refs.form_bene.checkValidity()) {
-        // invio dati al server
+        // se il form è ok, chiedo la conferma
+        this.waitUserConfirmation = true
       }
+    },
+    sendData () {
+      // invio effettivo dei dati al server. form ok & utente è sicuro di quello che fa
     },
     getDictFuncs () { return dict },
     mostraDettagliBene (evt) {
