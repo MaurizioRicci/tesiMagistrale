@@ -28,7 +28,7 @@ export default {
         if (ok.data.length <= 0) {
           this.$vueEventBus.$emit('master-page-show-error', ['Info', 'No result found'])
         } else {
-          T.form = ok.data
+          // T.form = ok.data
           let geojson = ok.data.geojson
           // T.form.polygon
           let newPolygon = new MultiPolygon()
@@ -38,7 +38,11 @@ export default {
           // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
           // occorre fare lo scambio
           T.mapCenter = [T.mapCenter[1], T.mapCenter[0]]
-          T.$set(T.form, 'polygon', newPolygon)
+          // T.$set(T.form, 'polygon', newPolygon)
+          for (let k in T.form) {
+            T.form[k] = ok.data[k]
+          }
+          T.form.polygon = newPolygon
           return T.form
         }
       }).catch(error => {
