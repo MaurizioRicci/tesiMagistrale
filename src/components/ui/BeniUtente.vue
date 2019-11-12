@@ -2,34 +2,25 @@
 oppure quelli che ha in revisione -->
 <template>
 <div>
-    <vue-bootstrap-table
-            class="m-2 table-sm"
-            :columns="columns"
-            :selectable="false"
-            :show-filter="true"
-            :show-column-picker="true"
-            :sortable="true"
-            :paginated="true"
-            :multi-column-sortable="true"
-            :filter-case-sensitive="false"
-            :ajax="ajax"
-            @cellDataModifiedEvent="onCellDataModifiedEvent">
+  <v-client-table :columns="columns" v-model="tableData" :options="options">
 
-        <template v-slot:status="{value}">
-          <div :class="{'bg-warning': value.status === '0',
-          'bg-danger': value.status === '1'}"
+        <template v-slot:status="{row}">
+          <div :class="{'bg-warning': row.status === '0',
+          'bg-danger': row.status === '1'}"
           class="mt-1">
-          <span v-if="value.status === '0'">In revisione</span>
-          <span v-if="value.status === '1'" class="text-light">Da rivedere</span>
+          <span v-if="row.status === '0'">In revisione</span>
+          <span v-if="row.status === '1'" class="text-light">Da rivedere</span>
           </div>
         </template>
 
-        <template v-slot:azioni="{value}">
-            <b-button @click="() => openModalView(value.id)" class="pt-1">Vedi dettagli</b-button>
-            <b-button @click="() => openModalEdit(value.id)" class="pt-1"
-             v-if="!cercaInRevisione || value.status === '1'">Modifica</b-button>
+        <template v-slot:azioni="{row}">
+          <b-button-group vertical>
+            <b-button @click="() => openModalView(row.id)" class="pt-1">Vedi dettagli</b-button>
+            <b-button @click="() => openModalEdit(row.id)" class="pt-1"
+             v-if="!cercaInRevisione || row.status === '1'">Modifica</b-button>
+          </b-button-group>
         </template>
-    </vue-bootstrap-table>
+    </v-client-table>
 
   <b-modal title="Dettagli" size="huge"
   :cancel-disabled="true" v-model="modalShowView">
@@ -45,16 +36,15 @@ oppure quelli che ha in revisione -->
 </template>
 
 <script>
-import VueBootstrapTable from 'vue2-bootstrap-table2'
 import DettagliBene from '@/components/pages/Bene/ViewBene'
 import EditBene from '@/components/pages/Bene/AddEditBene'
 import '@/assets/css/hugeModal.css'
 const qs = require('qs')
+const axios = require('axios')
 
 export default {
   name: 'BeniUtente',
   components: {
-    VueBootstrapTable: VueBootstrapTable,
     DettagliBene: DettagliBene,
     EditBene: EditBene
   },
@@ -68,11 +58,13 @@ export default {
       this.idBene = id
       this.modalShowView = true
     },
-    onCellDataModifiedEvent: function (originalValue, newValue, columnTitle, entry) {
-      console.log('cellDataModifiedEvent - Original Value : ' + originalValue +
-                                         ' | New Value : ' + newValue +
-                                         ' | Column : ' + columnTitle +
-                                         ' | Complete Entry : ' + entry)
+    getData: function () {
+      return axios.post(this.$store.getters.beniAggiuntiRevisioneURL,
+        qs.stringify({
+          username: this.$store.getters.getUserData.username,
+          password: this.$store.getters.getUserData.password,
+          switch_bene: this.cercaInRevisione ? 'miei_revisione' : 'miei_aggiunti'
+        })).then(function (resp) { this.tableData = resp.data }.bind(this))
     }
   },
   data: function () {
@@ -81,79 +73,29 @@ export default {
       modalShowView: false,
       modalShowEdit: false,
       columns: [
-        {
-          title: 'id'
-        },
-        {
-          title: 'status',
-          visible: this.cercaInRevisione
-        },
-        {
-          title: 'azioni'
-        },
-        {
-          title: 'identificazione',
-          visible: true,
-          filterable: true
-        },
-        {
-          title: 'descrizione',
-          visible: true
-        },
-        {
-          title: 'comune',
-          visible: true,
-          sortable: false
-        },
-        {
-          title: 'macroEpocaCar',
-          visible: true,
-          sortable: false
-        },
-        {
-          title: 'macroEpocaOrig',
-          visible: true,
-          sortable: false
-        },
-        {
-          title: 'bibliografia',
-          visible: true,
-          sortable: false
-        },
-        {
-          title: 'note',
-          visible: true,
-          sortable: false
-        },
-        {
-          title: 'toponimo',
-          visible: true,
-          sortable: false
-        },
-        {
-          name: 'msg_validatore',
-          title: 'msg_validatore',
-          visible: this.cercaInRevisione
-        }
+        'id',
+        'status',
+        // visible: this.cercaInRevisione
+        'azioni',
+        'identificazione',
+        'descrizione',
+        'comune',
+        'macroEpocaCar',
+        'macroEpocaOrig',
+        'bibliografia',
+        'note',
+        'toponimo',
+        'msg_validatore'
       ],
-      ajax: {
-        enabled: true,
-        url: this.$store.getters.beniAggiuntiRevisioneURL,
-        method: 'POST',
-        delegate: false,
-        axiosConfig: {
-          transformRequest: [
-            (data, headers) => {
-              let dataObj = qs.parse(data)
-              dataObj.username = this.$store.getters.getUserData.username
-              dataObj.password = this.$store.getters.getUserData.password
-              dataObj.switch_bene = this.cercaInRevisione ? 'miei_revisione' : 'miei_aggiunti'
-              return qs.stringify(dataObj)
-            }
-          ]
-        }
+      tableData: [],
+      options: {
+        filterable: true,
+        filterByColumn: true
       }
     }
+  },
+  mounted () {
+    this.getData()
   }
 }
 </script>

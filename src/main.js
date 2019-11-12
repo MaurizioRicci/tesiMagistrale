@@ -24,6 +24,9 @@ import { successHandlerResponse, errorHandlerResponse } from '@/assets/js/axiosI
 import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
+// vue-tables-2
+import {ClientTable} from 'vue-tables-2'
+
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
@@ -37,6 +40,8 @@ Icon.Default.mergeOptions({
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 })
+
+Vue.use(ClientTable, {}, false, 'bootstrap4')
 
 /* eslint-disable no-new */
 const myApp = new Vue({
