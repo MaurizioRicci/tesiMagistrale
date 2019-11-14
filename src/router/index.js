@@ -26,9 +26,20 @@ export default new Router({
     },
     {
       path: '/bene',
-      name: 'benePage',
       // addEditBene
-      component: Bene
+      component: {
+        name: 'PageBene',
+        template: '<router-view/>'
+      },
+      children: [
+        {path: '',
+          component: Bene
+        },
+        {path: ':id',
+          component: Bene,
+          props: true
+        }
+      ]
     },
     {
       path: '/dettagli_bene',

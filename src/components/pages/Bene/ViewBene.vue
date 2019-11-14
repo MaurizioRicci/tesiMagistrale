@@ -99,6 +99,10 @@
               <b-form-textarea disabled id="input-geometria" v-model="polygonStr" type="text" placeholder=""></b-form-textarea>
             </b-form-group>
           </b-form>
+          <b-button type="submit" variant="primary" @click="goBack">Indietro</b-button>
+          <!-- si modificano solo beni definitivi -->
+          <b-button type="reset" variant="danger" @click="onEdit"
+            v-if="!cercaInRevisione">Modifica</b-button>
         </b-col>
         </transition>
         <b-col :cols="mapCols">
@@ -148,13 +152,13 @@ export default {
     rimpicciolisciMappa () {
       this.mapCols = 4
       this.$nextTick(() => this.$refs.myMap.invalidateSize())
+    },
+    onEdit () {
+      this.$router.push('/bene/' + this.formRetrived.id)
     }
   },
   created () {
-    // il modello del bene già passato ha la precedenza su ID
-    if (!this.beneModel) {
-      this.fetchDataByID(this.id)
-    }
+    this.fetchDataByID(this.id)
   },
   watch: {
     $route (to, from) {
