@@ -1,8 +1,9 @@
 <template>
   <b-container fluid>
       <b-row>
+        <b-col cols="12" v-if="!noMenu"><Menu/></b-col>
         <b-col>
-          <h2>Visualizza bene</h2>
+          <h2 v-if="!noTitle">{{title || 'Visualizza un bene'}}</h2>
         </b-col>
       </b-row>
       <b-row align-h="center">
@@ -110,14 +111,16 @@
 </template>
 
 <script>
+import Menu from '@/components/ui/Menu'
 import MyMap from '@/components/ui/Map'
+import pageCommonMixin from '@/components/mixins/PageCommon'
 import dettagliBeneMixin from '@/components/mixins/DettagliBene'
 import '@/assets/css/slideFadeTransition.css'
 
 export default {
   name: 'VisualizzaBene',
-  components: { MyMap },
-  mixins: [ dettagliBeneMixin ],
+  components: { Menu, MyMap },
+  mixins: [pageCommonMixin, dettagliBeneMixin],
   data () {
     return {
       mapCols: 4

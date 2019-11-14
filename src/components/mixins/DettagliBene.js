@@ -1,12 +1,14 @@
 import {MultiPolygon} from '@/assets/js/Models/multiPolygonModel'
 import getModelloBene from '@/assets/js/Models/beneModel'
+import lodashclonedeep from 'lodash.clonedeep'
 const axios = require('axios')
 
 // define a mixin object
 export default {
   data () {
     return {
-      form: getModelloBene(),
+      form: getModelloBene(), // form con dati modificabili da utente
+      formRetrived: getModelloBene(), // form con i dati originali del server sul bene
       mapCenter: null
     }
   },
@@ -43,6 +45,9 @@ export default {
             T.form[k] = ok.data[k]
           }
           T.form.polygon = newPolygon
+          // faccio una deep copy dei valori resi dal server
+          // salvo cosi due copie: originale e versione modificabile da utente
+          T.formRetrived = lodashclonedeep(T.form)
           return T.form
         }
       }).catch(error => {

@@ -1,10 +1,11 @@
 <template>
   <b-container fluid>
       <b-row>
+        <b-col cols="12" v-if="!noMenu"><Menu/></b-col>
         <b-col>
           <LoginWarning/>
           <b-alert variant="success" :show="serverRespOk">Bene creato/aggiunto</b-alert>
-          <h2>Aggiungi/Modifica un bene</h2>
+          <h2 v-if="!noTitle">{{title || 'Aggiungi/Modifica un bene'}}</h2>
         </b-col>
       </b-row>
       <b-row align-h="center">
@@ -43,7 +44,7 @@
                 label-for="input-descrizione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
                 <my-autocomplete-input v-model="form.descrizione"
                   :suggestionsPromise="getDictFuncs().loadDescr"
-                  closedDictionaryy
+                  closedDictionary
                   icon_name="fa-lock"
                   icon_msg="Campo vincolato a un dizionario">
                   <b-form-textarea
@@ -98,7 +99,6 @@
                       id="input-toponimo"
                       type="text"
                       v-model="form.toponimo"
-                      required
                       placeholder=""
                       autocomplete="off"
                     ></b-form-input>
@@ -116,7 +116,6 @@
                       id="input-comune"
                       type="text"
                       v-model="form.comune"
-                      required
                       placeholder=""
                       autocomplete="off"
                     ></b-form-input>
@@ -128,7 +127,6 @@
                   id="input-bibliografia"
                   v-model="form.bibliografia"
                   type="text"
-                  required
                   placeholder=""></b-form-textarea>
               </b-form-group>
               <b-form-group id="input-group-1" label="Note:" label-for="input-note" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
@@ -175,8 +173,10 @@
 </template>
 
 <script>
+import pageCommonMixin from '@/components/mixins/PageCommon'
 import dettagliBeneMixin from '@/components/mixins/DettagliBene'
 import * as dict from '@/assets/js/loadDict'
+import Menu from '@/components/ui/Menu'
 import LoginWarning from '@/components/ui/LoginWarning'
 import MyAutocompleteInput from '@/components/ui/MyAutocompleteInput'
 import MyMap from '@/components/ui/Map'
@@ -189,13 +189,14 @@ const axios = require('axios')
 export default {
   name: 'AggiungiModificaBene',
   components: {
+    Menu,
     LoginWarning,
     'my-autocomplete-input': MyAutocompleteInput,
     'remote-contextual-suggestion': RemoteContextualSugg,
     DettagliBene,
     MyMap
   },
-  mixins: [dettagliBeneMixin],
+  mixins: [pageCommonMixin, dettagliBeneMixin],
   data () {
     return {
       mapCols: 4,
