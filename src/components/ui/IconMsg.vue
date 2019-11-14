@@ -1,5 +1,5 @@
 <template>
-  <span v-b-popover.hover="icon_msg">
+  <span v-b-tooltip.hover="icon_msg">
     <i class="fas fa-lg" :class="{ [icon_name]: true }"
     style="color: royalblue;"></i>
   </span>

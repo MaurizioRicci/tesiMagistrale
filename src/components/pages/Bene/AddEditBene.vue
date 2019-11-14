@@ -9,11 +9,16 @@
         </b-col>
       </b-row>
       <b-row align-h="center">
+        <BeneToolTip/>
         <transition name="slide-fade" v-on:leave="mapCols = 12">
           <!-- 12-mapCols > 0 => se la mappa occupa 12 colonne allora il form è nascosto -->
           <b-col cols="8" v-show="12-mapCols > 0">
-            <b-form @submit="onSubmit" @reset="onReset" :novalidate="true" :validated="sendBtnClicked" ref="form_bene">
-              <b-form-group id="input-group-1" label="ID:" label-for="input-id" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+              <b-form @submit="onSubmit" @reset="onReset" :novalidate="true" :validated="sendBtnClicked" ref="form_bene">
+              <b-form-checkbox v-model="form.bozza" name="check-button-bozza" switch
+                id="checkbox-bozza" size="lg" class="mb-1">
+                  Aggiungi alle bozze
+              </b-form-checkbox>
+              <b-form-group id="input-group-id" label="ID:" label-for="input-id" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
                 <b-form-input
                   id="input-id"
                   v-model="form.id"
@@ -28,8 +33,7 @@
               label-for="input-identificazione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
                 <remote-contextual-suggestion :waitTime="1000"
                 :suggestionsPromise="queryIdentificazione">
-                  <my-autocomplete-input v-model="form.identificazione"
-                  v-on:suggestion-picked="mostraDettagliBene">
+                  <my-autocomplete-input v-model="form.identificazione">
                     <b-form-input
                       id="input-identificazione"
                       type="text"
@@ -110,7 +114,7 @@
                 <my-autocomplete-input v-model="form.esistenza" closedDictionary
                 :suggestionsPromise="getDictFuncs().loadEsistenza">
                     <b-form-input
-                      id="input-esitenza"
+                      id="input-esistenza"
                       type="text"
                       v-model="form.esistenza"
                       placeholder=""
@@ -155,21 +159,6 @@
            @rimpicciolisci-mappa="rimpicciolisciMappa"/>
         </b-col>
       </b-row>
-      <b-button v-b-modal.modalViewBene>Show Modal</b-button>
-      <b-modal title="Dettagli bene" id="modalViewBene"
-        size="huge" v-on:ok="onModalClosedOK">
-        <Dettagli-bene :id="idBeneDaVisualizzare">
-        </Dettagli-bene>
-        <template v-slot:modal-footer="{ ok, cancel }">
-          <b-button size="md" variant="outline-primary" @click="cancel()">
-            Cancel
-          </b-button>
-          <b-button size="md" variant="danger" @click="ok()" >
-            Modifica bene
-          </b-button>
-        </template>
-      </b-modal>
-
       <b-toast id="confirm-toast" title="Richiesta conferma" solid no-auto-hide
       toaster="b-toaster-bottom-full" variant="secondary" v-model="waitUserConfirmation">
       <div class="">
@@ -186,6 +175,7 @@
 
 <script>
 import pageCommonMixin from '@/components/mixins/PageCommon'
+import BeneToolTip from '@/components/ui/BeneToolTip'
 import dettagliBeneMixin from '@/components/mixins/DettagliBene'
 import * as dict from '@/assets/js/loadDict'
 import Menu from '@/components/ui/Menu'
@@ -206,14 +196,14 @@ export default {
     'my-autocomplete-input': MyAutocompleteInput,
     'remote-contextual-suggestion': RemoteContextualSugg,
     DettagliBene,
-    MyMap
+    MyMap,
+    BeneToolTip
   },
   mixins: [pageCommonMixin, dettagliBeneMixin],
   data () {
     return {
       mapCols: 4,
       sendBtnClicked: false,
-      idBeneDaVisualizzare: '', // da cancellare
       serverRespOk: false, // serve per innescare il messaggio di bene creato/modificato,
       waitUserConfirmation: false // apre il messaggio: sei sicuro di inviare il bene?
     }
@@ -251,7 +241,8 @@ export default {
     // @vuese
     // quando si preme invio sul form
     onSubmit (evt) {
-      this.sendBtnClicked = true // serve a innescare la validazione del form
+      // serve a innescare la validazione del form. Vedi <form...> a inizio
+      this.sendBtnClicked = true
       evt.preventDefault()
       if (this.$refs.form_bene.checkValidity()) {
         // se il form è ok, chiedo la conferma
@@ -263,21 +254,6 @@ export default {
     sendData () {
     },
     getDictFuncs () { return dict },
-    mostraDettagliBene (evt) {
-      this.idBeneDaVisualizzare = evt.id
-      this.$bvModal.show('modalViewBene')
-    },
-    onModalClosedOK () { // da cancellare poi insieme al modal
-      const T = this
-      // fare richiesta dati del bene con id nella url
-      axios.get(this.$store.getters.dettagliBeneURL, {
-        params: { 'id': this.idBeneDaVisualizzare }
-      }).then((ok) => {
-        delete ok.data.schedatore
-        T.$refs.identificazioneAutoCompleteInput.hide()
-        T.form = ok.data
-      })
-    },
     ingrandisciMappa () {
       this.mapCols = 12
       this.$nextTick(() => this.$refs.myMap.invalidateSize())

@@ -2,6 +2,7 @@ import {Polygon} from '@/assets/js/Models/multiPolygonModel'
 
 export default () => {
   return {
+    bozza: false,
     id: '',
     identificazione: '',
     descrizione: '',

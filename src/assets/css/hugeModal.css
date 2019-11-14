@@ -1,4 +1,5 @@
 @media (min-width: 992px) {
+  /* Poi nel modal occorre impostare size="huge" */
   .modal .modal-huge {
      max-width: 90% !important; width: 90% !important;
      }

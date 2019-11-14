@@ -86,6 +86,7 @@ export default {
       this.$emit('input', value.value)
     },
     onSuggestionPicked: function () {
+      // evento lanciato quando l'utente seleziona dalla lista un suggerimento
       this.$emit('suggestion-picked', this.currVal)
     },
     // valore scelto dall'utente cliccando sul suggerimento
