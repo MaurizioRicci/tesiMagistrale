@@ -3,8 +3,6 @@
       <b-row>
         <b-col cols="12" v-if="!noMenu"><Menu/></b-col>
         <b-col>
-          <LoginWarning/>
-          <b-alert variant="success" :show="serverRespOk">Bene creato/aggiunto</b-alert>
           <h2 v-if="!noTitle">{{title || 'Aggiungi/Modifica un bene'}}</h2>
         </b-col>
       </b-row>

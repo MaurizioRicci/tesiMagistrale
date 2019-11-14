@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Error404 from '@/components/pages/Errors/Error404'
-import LoginPage from '@/components/pages/Login/LoginPage'
+import Login from '@/components/pages/Login/Login'
+import Home from '@/components/pages/Home/Home'
 import Bene from '@/components/pages/Bene/AddEditBene'
 import ViewBene from '@/components/pages/Bene/ViewBene'
 import MyMap from '@/components/pages/Map/MapPage'
@@ -14,15 +15,12 @@ export default new Router({
     {
       path: '/',
       name: 'loginPage',
-      component: LoginPage
+      component: Login
     },
     {
       path: '/home',
       name: 'homePage',
-      component: {
-        name: 'PageHome',
-        template: '<h1>Home</h1>'
-      }
+      component: Home
     },
     {
       path: '/bene',
