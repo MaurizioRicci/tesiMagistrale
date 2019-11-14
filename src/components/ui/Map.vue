@@ -82,11 +82,12 @@ export default {
       this.$emit('rimpicciolisci-mappa')
     },
     invalidateSize: function () {
-      this.$refs.myMap.mapObject.invalidateSize()
+      this.leafletMapObject.invalidateSize()
     }
   },
   data () {
     return {
+      leafletMapObject: null,
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       state: { mappaIngrandita: false },
@@ -100,6 +101,9 @@ export default {
       deep: true,
       handler (val) { this.currPolygon = val }
     }
+  },
+  mounted () {
+    this.$nextTick(() => { this.leafletMapObject = this.$refs.myMap.mapObject })
   }
 }
 </script>

@@ -3,7 +3,6 @@
       <b-row>
         <b-col cols="12" v-if="!noMenu"><Menu/></b-col>
         <b-col>
-          <LoginWarning/>
           <h2 v-if="!noTitle">{{title || 'Gestione beni'}}</h2>
         </b-col>
       </b-row>

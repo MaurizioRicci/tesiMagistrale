@@ -12,7 +12,7 @@
             <b-nav-item-dropdown text="Beni" class="d-inline-block">
               <b-dropdown-item to="/bene/aggiungi">Aggiungi un bene</b-dropdown-item>
               <b-dropdown-item to="/dettagli_bene">Visualizza un bene</b-dropdown-item>
-              <b-dropdown-item to="/ricerca_beni">I miei beni</b-dropdown-item>
+              <b-dropdown-item to="/home">Ricerca beni</b-dropdown-item>
             </b-nav-item-dropdown>
             </b-col>
 
@@ -26,7 +26,7 @@
 
             <b-col>
             <b-nav-item-dropdown text="Il mio lavoro" class="d-inline-block">
-              <b-dropdown-item to="#">I miei beni</b-dropdown-item>
+              <b-dropdown-item to="/mio_lavoro_beni">I miei beni</b-dropdown-item>
               <b-dropdown-item to="#">Le mie funzioni</b-dropdown-item>
             </b-nav-item-dropdown>
             </b-col>

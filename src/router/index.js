@@ -73,8 +73,8 @@ export default new Router({
       props: true
     },
     {
-      path: '/ricerca_beni',
-      name: 'ricercaBeniPage',
+      path: '/mio_lavoro_beni',
+      name: 'mioLavoroBeniPage',
       component: BeniAggiuntiInRevisione
     },
     {
