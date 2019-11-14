@@ -21,11 +21,12 @@
 </template>
 
 <script>
+import Menu from '@/components/ui/Menu'
 import pageCommonMixin from '@/components/mixins/PageCommon'
 import BeniUtente from '@/components/ui/BeniUtente'
 export default {
   name: 'BeniAggiuntiInRevisione',
   mixins: [pageCommonMixin],
-  components: { BeniUtente }
+  components: { Menu, BeniUtente }
 }
 </script>
