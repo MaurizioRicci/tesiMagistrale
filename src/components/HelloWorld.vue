@@ -1,15 +1,24 @@
 <template>
-  <div>
-    <b-button>Button</b-button>
-    <b-button variant="danger">Button</b-button>
-    <b-button variant="success">Button</b-button>
-    <b-button variant="outline-primary">Button</b-button>
-  </div>
+  <b-container fluid>
+      <b-row>
+        <b-col cols="12" v-if="!noMenu"><Menu/></b-col>
+        <b-col>
+          <LoginWarning/>
+          <b-alert variant="success" :show="serverRespOk">Bene creato/aggiunto</b-alert>
+          <h2 v-if="!noTitle">{{title || 'Aggiungi/Modifica un bene'}}</h2>
+        </b-col>
+      </b-row>
+  </b-container>
 </template>
 
 <script>
+import pageCommonMixin from '@/components/mixins/PageCommon'
+import Menu from '@/components/ui/Menu'
+
 export default {
   name: 'HelloWorld',
+  components: {Menu},
+  mixins: [pageCommonMixin],
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
