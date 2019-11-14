@@ -106,7 +106,16 @@
                 </remote-contextual-suggestion>
               </b-form-group>
               <b-form-group id="input-group-1" label="Esistenza:" label-for="input-esistenza" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-                <b-form-input id="input-esistenza" v-model="form.esistenza" type="text" required placeholder=""></b-form-input>
+                <my-autocomplete-input v-model="form.esistenza" closedDictionary
+                :suggestionsPromise="getDictFuncs().loadEsistenza">
+                    <b-form-input
+                      id="input-esitenza"
+                      type="text"
+                      v-model="form.esistenza"
+                      placeholder=""
+                      autocomplete="off"
+                    ></b-form-input>
+                  </my-autocomplete-input>
               </b-form-group>
               <b-form-group id="input-group-1" label="Comune:" label-for="input-comune" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
                 <remote-contextual-suggestion :waitTime="1000"

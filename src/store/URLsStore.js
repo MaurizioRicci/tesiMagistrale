@@ -20,7 +20,7 @@ const serverURLsStore = {
     filtraComuneURL: state => state.serverURL + state.filtraComune,
     dettagliBeneURL: state => state.serverURL + state.dettagliBene,
     aggiungiRelazioneURL: state => state.serverURL + state.aggiungiRelazione,
-    getDizionario: state => state.serverURL + state.getDizionario,
+    getDizionarioURL: state => state.serverURL + state.getDizionario,
     beniAggiuntiRevisioneURL: state => state.serverURL + state.beniAggiuntiRevisione
   },
   mutations: {}
