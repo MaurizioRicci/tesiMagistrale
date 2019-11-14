@@ -62,9 +62,10 @@ export default {
     next(vm => {
       // access to component instance via `vm`
       // controllo che from non sia uguale alla route corrente
+      // controllo che from sia una pagina esistente => loop altrimenti
       // se from==to utente ha navigato direttamente a /login => si manda alla home
       // altrimenti sarebbe andato alla pagina precedente al login
-      vm.prevPagePath = from.path === to.path ? 'home' : from
+      vm.prevPagePath = from.path === to.path || from.name === 'PageNotFound' ? 'home' : from
     })
   },
   computed: {

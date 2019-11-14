@@ -1,4 +1,6 @@
 <template functional>
+<!-- aggiunge i tooltip con le spiegazioni sulle varie parti dei beni
+i vari attributi target sono id di elementi presenti nella pagina -->
     <div>
         <b-tooltip target="checkbox-bozza" triggers="hover click">Specifica se il bene è una bozza o se è pronto per essere inviato (su richiesta dell'utente)</b-tooltip>
         <b-tooltip target="input-id" triggers="hover click">ID del bene</b-tooltip>
