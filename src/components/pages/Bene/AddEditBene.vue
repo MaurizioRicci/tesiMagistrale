@@ -19,6 +19,7 @@
                   v-model="form.id"
                   type="text"
                   required
+                  disabled
                   placeholder=""
                   @keyup.enter="() => fetchDataByID(form.id)">
                   </b-form-input>
@@ -141,8 +142,10 @@
               <b-form-group id="input-group-1" label="Note:" label-for="input-note" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
                 <b-form-textarea id="input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
               </b-form-group>
-              <b-button type="submit" variant="primary">Submit</b-button>
+              <b-button variant="primary" @click="goBack">Indietro</b-button>
               <b-button type="reset" variant="danger" v-on:click="onReset">Reset</b-button>
+              <b-button type="submit" variant="primary">Invia</b-button>
+              <b-button v-if="!editMode" type="submit" variant="primary">Invia e acquisisci altro bene</b-button>
             </b-form>
           </b-col>
         </transition>
@@ -217,7 +220,8 @@ export default {
   },
   props: {
     id: String,
-    cercaInRevisione: Boolean
+    cercaInRevisione: Boolean,
+    editMode: Boolean
   },
   computed: {
     queryIdentificazione () {
@@ -239,7 +243,7 @@ export default {
   methods: {
     onReset (evt) {
       evt.preventDefault()
-      this.form = this.getModel()
+      this.form = this.formRetrived
     },
     onSubmit (evt) {
       // quando si preme invio sul form
@@ -279,7 +283,7 @@ export default {
     }
   },
   mounted () {
-    if (this.id) {
+    if (this.id && this.editMode) {
       this.fetchDataByID(this.id)
     }
   }

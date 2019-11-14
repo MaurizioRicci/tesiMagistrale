@@ -10,8 +10,7 @@
           <b-row>
             <b-col>
             <b-nav-item-dropdown text="Beni" class="d-inline-block">
-              <b-dropdown-item to="/bene">Aggiungi un bene</b-dropdown-item>
-              <b-dropdown-item to="/bene">Modifica un bene</b-dropdown-item>
+              <b-dropdown-item to="/bene/aggiungi">Aggiungi un bene</b-dropdown-item>
               <b-dropdown-item to="/dettagli_bene">Visualizza un bene</b-dropdown-item>
               <b-dropdown-item to="/ricerca_beni">I miei beni</b-dropdown-item>
             </b-nav-item-dropdown>
@@ -20,16 +19,15 @@
             <b-col>
             <b-nav-item-dropdown text="Funzioni" class="d-inline-block">
               <b-dropdown-item to="#">Aggiungi una funzione</b-dropdown-item>
-              <b-dropdown-item to="#">Modifica una funzione</b-dropdown-item>
               <b-dropdown-item to="#">Visualizza una funzione</b-dropdown-item>
               <b-dropdown-item to="#">Ricerca funzioni</b-dropdown-item>
             </b-nav-item-dropdown>
             </b-col>
 
             <b-col>
-            <b-nav-item-dropdown text="Valida" class="d-inline-block">
-              <b-dropdown-item to="#">Valida un bene</b-dropdown-item>
-              <b-dropdown-item to="#">Valida una funzione</b-dropdown-item>
+            <b-nav-item-dropdown text="Il mio lavoro" class="d-inline-block">
+              <b-dropdown-item to="#">I miei beni</b-dropdown-item>
+              <b-dropdown-item to="#">Le mie funzioni</b-dropdown-item>
             </b-nav-item-dropdown>
             </b-col>
 

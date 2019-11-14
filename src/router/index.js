@@ -32,12 +32,20 @@ export default new Router({
         template: '<router-view/>'
       },
       children: [
-        {path: '',
-          component: Bene
-        },
-        {path: ':id',
+        {path: 'aggiungi',
           component: Bene,
-          props: true
+          props: (route) => ({
+            title: 'Aggiungi un bene',
+            id: route.query.id
+          })
+        },
+        {path: 'modifica/:id',
+          component: Bene,
+          props: (route) => ({
+            title: 'Modifica Bene',
+            id: route.query.id,
+            editMode: true
+          })
         }
       ]
     },
@@ -53,7 +61,10 @@ export default new Router({
         },
         {path: ':id',
           component: ViewBene,
-          props: true
+          props: (route) => ({
+            id: route.query.id,
+            disallowIDChange: true
+          })
         }
       ]
     },

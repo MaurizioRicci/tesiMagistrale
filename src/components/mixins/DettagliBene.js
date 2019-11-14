@@ -9,7 +9,7 @@ export default {
     return {
       form: getModelloBene(), // form con dati modificabili da utente
       formRetrived: getModelloBene(), // form con i dati originali del server sul bene
-      mapCenter: null
+      mapCenter: [43.7086433, 10.3891619] // valore di default per la mappa
     }
   },
   methods: {
