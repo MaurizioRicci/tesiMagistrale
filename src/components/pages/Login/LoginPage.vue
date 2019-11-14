@@ -58,7 +58,15 @@ export default {
       prevPagePath: ''
     }
   },
-  props: [ 'goTo' ],
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      // access to component instance via `vm`
+      // controllo che from non sia uguale alla route corrente
+      // se from==to utente ha navigato direttamente a /login => si manda alla home
+      // altrimenti sarebbe andato alla pagina precedente al login
+      vm.prevPagePath = from.path === to.path ? 'home' : from
+    })
+  },
   computed: {
     showError () {
       return this.errorMsg.trim() !== ''
@@ -87,7 +95,7 @@ export default {
             setCookie('userData', JSON.stringify(this.formData), 2)
           }
           this.$store.commit('registerUser', this.formData)
-          this.$router.push(this.goTo)
+          this.$router.push(this.prevPagePath)
         }.bind(this))
         .catch(function (error) {
           this.errorMsg = (error.response && error.response.data.msg) || error.message

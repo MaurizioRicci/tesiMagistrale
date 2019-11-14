@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Error404 from '@/components/pages/Errors/Error404'
-import MasterPage from '@/components/pages/Master/MasterPage'
 import LoginPage from '@/components/pages/Login/LoginPage'
 import Bene from '@/components/pages/Bene/AddEditBene'
 import ViewBene from '@/components/pages/Bene/ViewBene'
@@ -14,82 +13,49 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: {
-        name: 'PageLogin',
-        components: { MasterPage, LoginPage },
-        data () { return {prevPath: ''} },
-        beforeRouteEnter (to, from, next) {
-          next(vm => {
-            // access to component instance via `vm`
-            // controllo che from non sia uguale alla route corrente
-            vm.prevPath = from.path === to.path ? 'home' : from
-          })
-        },
-        template: '<MasterPage><LoginPage :go-to="prevPath"/></MasterPage>'
-      }
+      name: 'loginPage',
+      component: LoginPage
     },
     {
       path: '/home',
-      name: 'home',
+      name: 'homePage',
       component: {
         name: 'PageHome',
-        components: { MasterPage },
-        template: '<MasterPage><h1>Home</h1></MasterPage>'
+        template: '<h1>Home</h1>'
       }
     },
     {
       path: '/bene',
-      name: 'bene',
-      component: {
-        name: 'PageBene',
-        components: { MasterPage, Bene },
-        template: '<MasterPage><Bene/></MasterPage>'
-      }
+      name: 'benePage',
+      // addEditBene
+      component: Bene
     },
     {
       path: '/dettagli_bene',
       component: {
         name: 'PageDettagliBene',
-        components: {MasterPage},
-        template: '<MasterPage/>'
+        template: '<router-view/>'
       },
       children: [
         {path: '',
-          component: {
-            components: { MasterPage, ViewBene },
-            template: '<ViewBene/>'
-          }
+          component: ViewBene
         },
         {path: ':id',
-          component: {
-            props: {id: String},
-            components: { MasterPage, ViewBene },
-            template: '<ViewBene :id="id"/>'
-          },
+          component: ViewBene,
           props: true
         }
       ]
     },
     {
       path: '/mappa/:id',
-      name: 'mappa',
-      component: {
-        name: 'PageMap',
-        props: {id: String},
-        components: { MasterPage, MyMap },
-        template: '<MasterPage><MyMap :id="id"/></MasterPage>'
-      },
+      name: 'mappaPage',
+      component: MyMap,
       props: true
     },
     {
       path: '/ricerca_beni',
-      name: 'ricerca_beni',
-      component: {
-        name: 'PageRicercaBeniRevisione',
-        components: { MasterPage, BeniAggiuntiInRevisione },
-        template: '<MasterPage><h1>Gestione beni utente</h1><BeniAggiuntiInRevisione/></MasterPage>'
-      }
+      name: 'ricercaBeniPage',
+      component: BeniAggiuntiInRevisione
     },
     {
       path: '*',
