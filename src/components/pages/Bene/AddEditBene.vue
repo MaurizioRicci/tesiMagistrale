@@ -221,7 +221,7 @@ export default {
   props: {
     id: String,
     cercaInRevisione: Boolean,
-    editMode: Boolean
+    editMode: Boolean // se vero modifica il bene, altrimenti aggiunge un nuovo bene
   },
   computed: {
     queryIdentificazione () {
@@ -241,12 +241,16 @@ export default {
     }
   },
   methods: {
+    // @vuese
+    // quando l'utente preme reset. Se modifica un bene torna ai dettagli originali.
+    // Se aggiunge un bene pulisce tutti i campi
     onReset (evt) {
       evt.preventDefault()
       this.form = this.formRetrived
     },
+    // @vuese
+    // quando si preme invio sul form
     onSubmit (evt) {
-      // quando si preme invio sul form
       this.sendBtnClicked = true // serve a innescare la validazione del form
       evt.preventDefault()
       if (this.$refs.form_bene.checkValidity()) {
@@ -254,8 +258,9 @@ export default {
         this.waitUserConfirmation = true
       }
     },
+    // @vuese
+    // invio effettivo dei dati al server. form ok & utente è sicuro di quello che fa
     sendData () {
-      // invio effettivo dei dati al server. form ok & utente è sicuro di quello che fa
     },
     getDictFuncs () { return dict },
     mostraDettagliBene (evt) {

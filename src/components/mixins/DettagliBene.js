@@ -7,15 +7,19 @@ const axios = require('axios')
 export default {
   data () {
     return {
-      form: getModelloBene(), // form con dati modificabili da utente
-      formRetrived: getModelloBene(), // form con i dati originali del server sul bene
-      mapCenter: [43.7086433, 10.3891619] // valore di default per la mappa
+      // form con dati modificabili da utente
+      form: getModelloBene(),
+      // form con i dati originali del server sul bene
+      formRetrived: getModelloBene(),
+      // valore di default per la mappa
+      mapCenter: [43.7086433, 10.3891619]
     }
   },
   methods: {
     getModel () {
       return getModelloBene()
     },
+    // @vuese
     // Restituisce una promessa in ogni caso, il valore dipende:
     // null se non viene eseguita la richiesta o se non va a buon fine
     // I dettagli del bene se la richiesta va a buon fine

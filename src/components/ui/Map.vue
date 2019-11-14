@@ -44,7 +44,9 @@ export default {
     zoom: {type: Number, default: 15},
     width: {default: '100%'},
     height: {default: '500px'},
+    // vero se l'utente non può modificare il poligono
     locked: {type: Boolean},
+    // distanza dal click entro la quale cercare il vertice da rimuovere
     pointRemoveThreshold: {type: Number, default: 0.001},
     polygon: {type: Polygon},
     polygon_color: {type: String, default: 'green'}
@@ -75,12 +77,16 @@ export default {
     },
     ingrandisci: function (evt) {
       this.state.mappaIngrandita = true
+      // quando si preme ingrandisci mappa
       this.$emit('ingrandisci-mappa')
     },
     rimpicciolisci: function (evt) {
       this.state.mappaIngrandita = false
+      // quando si preme rimpicciolisci mappa
       this.$emit('rimpicciolisci-mappa')
     },
+    // @vuese
+    // chiama invalidateSize() di Leaflet
     invalidateSize: function () {
       this.leafletMapObject.invalidateSize()
     }

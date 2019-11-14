@@ -6,6 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 .history/
 
+#vuese documentation folder
+/website
+
 # Editor directories and files
 .idea
 .vscode
