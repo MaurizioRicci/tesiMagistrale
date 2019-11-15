@@ -15,6 +15,12 @@ export default {
       mapCenter: [43.7086433, 10.3891619]
     }
   },
+  props: {
+    // specifica l'id del bene da visualizzare
+    id: String,
+    // se cercare l'id in archivio temporaneo. Default: archivio definitivo
+    cercaInRevisione: Boolean
+  },
   methods: {
     getModel () {
       return getModelloBene()

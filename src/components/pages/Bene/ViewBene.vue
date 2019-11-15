@@ -134,15 +134,8 @@ export default {
     polygonStr: function () { return this.form.polygon.toString() }
   },
   props: {
-    // specifica l'id del bene da visualizzare.
-    // se viene specificato anche showBeneModel, quest'ultimo verrà usato
-    id: String,
-    // se cercare l'id in archivio temporaneo. Default: archivio definitivo
-    cercaInRevisione: Boolean,
     // possibilità di scrivere un id da cercare
-    disallowIDChange: Boolean,
-    // mostra direttamente un bene a partire dal suo modello
-    showBeneModel: Object
+    disallowIDChange: Boolean
   },
   methods: {
     ingrandisciMappa () {

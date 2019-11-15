@@ -209,8 +209,6 @@ export default {
     }
   },
   props: {
-    id: String,
-    cercaInRevisione: Boolean,
     editMode: Boolean // se vero modifica il bene, altrimenti aggiunge un nuovo bene
   },
   computed: {
