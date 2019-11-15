@@ -28,26 +28,38 @@
           </b-col>
           <b-col cols="12">
                 <v-client-table :columns="columns" v-model="tableData" :options="options"
-                    @update="updateRow">
+                    @update="updateRow" ref="myTable">
                     <template v-for="colName in columns"
                         v-slot:[colName]="{row, update, setEditing, isEditing, revertValue}">
                         <div :key="colName"
                           :class="{'border rounded border-danger': colonnaVuota(row, colName, row[colName])
-                            || userCollide(row, colName, row[colName])}">
-                            <span @click="options.editableColumns.includes(colName) && setEditing(true)"
+                            || userCollide(row, colName, row[colName]) || checkIniziali(row, colName, row[colName])}">
+                            <span :id="colName + row.gid" @click="options.editableColumns.includes(colName) && setEditing(true)"
                                 v-if="!options.editableColumns.includes(colName) || !isEditing()">
                                 <!-- class="d-inline-block w-100" da spessore per la modifica della cella
                                 anche se la cella ha come contenuto stringa vuota (utente appena aggiunto) -->
                                 <a class="d-inline-block w-100">{{row[colName]}}</a>
                             </span>
-                            <span v-else>
-                                <input type="text" v-model="row[colName]" v-if="colName !== 'role'">
+                            <span :id="colName + row.gid" v-else>
+                                <input type="text" v-model="row[colName]" v-if="colName !== 'role'" class="w-100">
                                 <b-form-select v-else v-model="row[colName]" :options="rolesOption"></b-form-select>
                                 <b-button variant="primary"
                                     @click="update(row[colName]); setEditing(false)">Ok</b-button>
                                 <b-button type="button"
                                     @click="revertValue(); setEditing(false)">Annulla</b-button>
                             </span>
+                            <b-tooltip :target="colName + row.gid" triggers="hover"
+                              v-if="colonnaVuota(row, colName, row[colName])">
+                                Compila il campo
+                            </b-tooltip>
+                            <b-tooltip :target="colName + row.gid" triggers="hover"
+                              v-if="checkIniziali(row, colName, row[colName])">
+                                Le iniziali devono essere maiuscole
+                            </b-tooltip>
+                            <b-tooltip :target="colName + row.gid" triggers="hover"
+                              v-if="userCollide(row, colName, row[colName])">
+                                Stesso username/password di un altro utente
+                            </b-tooltip>
                         </div>
                     </template>
                 </v-client-table>
@@ -68,6 +80,11 @@ export default {
   mixins: [pageCommonMixin],
   data () {
     return {
+      errors: {
+        unique: false,
+        iniziali: false,
+        empty: false
+      },
       tableData: [],
       columns: ['gid', 'username', 'password', 'role', 'iniziali',
         'nome', 'cognome', 'id_min', 'id_max'],
@@ -149,10 +166,19 @@ export default {
     nextGID: function () {
       // la tabella vuole un id per ogni riga, sicchè devo calcolare un id sequenziale
       // trovo il massimo tra tutti gli id (gid) degli utenti
-      // ATTENZIONE: è fragile questa cosa, si pensi al caso in cui un utente viene eliminato
-      return Math.max.apply(Math, this.tableData.map((el) => Number(el.gid)))
+      // Si noti che si considera l'id massimo tra tutti gli utenti, anche tra quelli da aggiungere
+      // questo meccanismo non dovrebbe mai dare errore
+      return Math.max.apply(Math, this.wholeUsers.map((el) => Number(el.gid)))
     },
     convalida: function () {
+      // controllo se i dati sono errati prima di mandare
+      if (this.erroriRilevati()) {
+        this.$vueEventBus.$emit('master-page-show-msg',
+          ['Errore',
+            'Dati inseriti non corretti. I dati non corretti sono quelli in rosso, correggere grazie.'])
+        return
+      }
+
       axios.post(this.$store.getters.gestioneUtentiURL, qs.stringify({
         username: this.$store.getters.getUserData.username,
         password: this.$store.getters.getUserData.password,
@@ -173,22 +199,42 @@ export default {
     },
     // dice se la colonna corrente è vuota o no
     colonnaVuota: function (row, colName, valoreCella) {
-      return !valoreCella
+      let res = !valoreCella
+      this.errors.empty = this.errors.empty || res
+      return res
     },
     // dice se le credenziali di un utente collidono con quelle di un altro
     userCollide: function (row, colName, valoreCella) {
-      return (colName === 'username' || colName === 'password') &&
+      let res = (colName === 'username' || colName === 'password') &&
         this.collidingUsers.includes(row.gid)
+      this.errors.unique = this.errors.unique || res
+      return res
+    },
+    // dice se le iniziali non sono scritte in maiuscolo
+    checkIniziali: function (row, colName, valoreCella) {
+      let res = valoreCella !== valoreCella.toUpperCase() &&
+        colName === 'iniziali'
+      this.errors.iniziali = this.errors.iniziali || res
+      return res
+    },
+    erroriRilevati: function () {
+      // un piccolo hack veloce per dire se sono presenti degli errori
+      // se ci sono nella tabella qualche campo avra un bordo rosso
+      // niente paura se fallisce ci pensa il db a controllare
+      return this.$refs.myTable.$el
+        .querySelector('.border-danger')
     }
   },
   computed: {
+    wholeUsers: function () {
+      return this.tableData.concat(this.users.ins).concat(this.users.mod)
+    },
     // computa la lista di id di utenti i cui username e password collidono
     collidingUsers: function () {
-      let copy = this.tableData.concat(this.users.ins).concat(this.users.mod)
+      let copy = this.wholeUsers
       let colliding = []
       copy.forEach(el => {
         copy.forEach(el2 => {
-          // console.log(el + ' ' + el2)
           if (el.gid !== el2.gid && el.username === el2.username &&
              el.password === el2.password) { colliding.push(el.gid) }
         })
