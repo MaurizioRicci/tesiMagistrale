@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <!-- Modal per mostrare possibili errori all'utente -->
-    <b-modal :title="errorData.title" ok-only v-model="modalShow">
-        <p class="my-2">{{errorData.message}}</p>
+    <b-modal :title="msgData.title" ok-only v-model="modalShow">
+        <p class="my-2">{{msgData.message}}</p>
     </b-modal>
     <router-view/>
   </div>
@@ -14,7 +14,7 @@ export default {
   data () {
     return {
       modalShow: false,
-      errorData: {
+      msgData: {
         title: '',
         message: ''
       }
@@ -22,19 +22,19 @@ export default {
   },
   methods: {
     // assegnamento di destrutturazione array con valori di default
-    showError: function ([title = '', msg = '']) {
+    showMsg: function ([title = '', msg = '']) {
       // evito di mostrare più volte stesso messaggio se già aperto
       // se non è aperto apro. Se è aperto apro solo se title & message sono diversi
-      if (!this.modalShow || (this.modalShow && this.errorData.title !== title &&
-       this.errorData.message !== msg)) {
-        this.errorData.title = title
-        this.errorData.message = msg
+      if (!this.modalShow || (this.modalShow && this.msgData.title !== title &&
+       this.msgData.message !== msg)) {
+        this.msgData.title = title
+        this.msgData.message = msg
         this.modalShow = true
       }
     }
   },
   created () {
-    this.$vueEventBus.$on('master-page-show-error', this.showError)
+    this.$vueEventBus.$on('master-page-show-msg', this.showMsg)
   }
 }
 </script>

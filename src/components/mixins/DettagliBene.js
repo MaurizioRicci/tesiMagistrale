@@ -32,7 +32,7 @@ export default {
       }).then(ok => {
         this.form = this.getModel()
         if (ok.data.length <= 0) {
-          this.$vueEventBus.$emit('master-page-show-error', ['Info', 'No result found'])
+          this.$vueEventBus.$emit('master-page-show-msg', ['Info', 'No result found'])
         } else {
           // T.form = ok.data
           let geojson = ok.data.geojson
@@ -55,8 +55,10 @@ export default {
           return T.form
         }
       }).catch(error => {
+        // se è presente un messaggio di risposta dal server uso quello
+        // altrimenti viene usato un messaggio di axios relativo al codice d'errore
         let msg = (error.response && error.response.data.msg) || error.message
-        this.$vueEventBus.$emit('master-page-show-error', ['Error', msg])
+        this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
       })
     }
   }

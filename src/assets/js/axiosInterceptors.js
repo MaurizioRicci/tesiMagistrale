@@ -8,16 +8,16 @@ const isHandlerEnabled = (config = {}) => {
 // quando arriva la risposta
 export const errorHandlerResponse = (error, vueApp) => {
   if (isHandlerEnabled(error.config)) {
-    vueApp.$vueEventBus.$emit('master-page-show-error', ['Error', error])
+    vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error', error])
   }
   if (isHandlerEnabled(error.config) && error.response) {
     // Handle errors
     switch (error.response.status) {
       case 401:
-        vueApp.$vueEventBus.$emit('master-page-show-error', ['Error', 'Invalid credentials'])
+        vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error', 'Invalid credentials'])
         break
       case 503:
-        vueApp.$vueEventBus.$emit('master-page-show-error', ['Error', 'System offline'])
+        vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error', 'System offline'])
         break
     }
   }
