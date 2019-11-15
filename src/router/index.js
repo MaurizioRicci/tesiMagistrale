@@ -7,6 +7,7 @@ import Bene from '@/components/pages/Bene/AddEditBene'
 import ViewBene from '@/components/pages/Bene/ViewBene'
 import MyMap from '@/components/pages/Map/MapPage'
 import BeniAggiuntiInRevisione from '@/components/pages/Bene/BeniAggiuntiInRevisione'
+import manageUsers from '@/components/pages/Utente/GestisciUtenti'
 
 Vue.use(Router)
 
@@ -76,6 +77,11 @@ export default new Router({
       path: '/mio_lavoro_beni',
       name: 'mioLavoroBeniPage',
       component: BeniAggiuntiInRevisione
+    },
+    {
+      path: '/gestisci_utenti',
+      name: 'manageUsersPage',
+      component: manageUsers
     },
     {
       path: '*',

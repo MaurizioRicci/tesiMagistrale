@@ -1,5 +1,4 @@
-<!-- Beni Aggiunti o In Revisione, mostra i beni aggiunti dall'utente
-oppure quelli che ha in revisione -->
+<!-- Da fare! Ho fatto copia incolla da BeniUtente -->
 <template>
 <div>
   <v-client-table :columns="columns" v-model="tableData" :options="options">

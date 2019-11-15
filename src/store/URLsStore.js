@@ -9,7 +9,8 @@ const serverURLsStore = {
     dettagliBene: '/visualizza/beni/dettagliBene.php',
     aggiungiRelazione: '/aggiungiRelazione.php',
     getDizionario: '/getDictionary.php',
-    beniAggiuntiRevisione: '/visualizza/beni/beniAggiuntiRevisione.php'
+    beniAggiuntiRevisione: '/visualizza/beni/beniAggiuntiRevisione.php',
+    gestioneUtenti: '/manageUsers.php'
   },
   getters: {
     serverURL: state => state.serverURL,
@@ -21,7 +22,8 @@ const serverURLsStore = {
     dettagliBeneURL: state => state.serverURL + state.dettagliBene,
     aggiungiRelazioneURL: state => state.serverURL + state.aggiungiRelazione,
     getDizionarioURL: state => state.serverURL + state.getDizionario,
-    beniAggiuntiRevisioneURL: state => state.serverURL + state.beniAggiuntiRevisione
+    beniAggiuntiRevisioneURL: state => state.serverURL + state.beniAggiuntiRevisione,
+    gestioneUtentiURL: state => state.serverURL + state.gestioneUtenti
   },
   mutations: {}
 }
