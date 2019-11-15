@@ -22,6 +22,7 @@
                   <li>Username e Password devono essere unici, non possono esistere due utenti con stesso username
                     e stessa password. Altrimenti non è possibile discriminare un utente da un altro.</li>
                   <li>Le iniziali vanno scritte tutte in maiuscolo.</li>
+                  <li>Tutti i campi sono richiesti. In rosso quelli da riempire</li>
               </ul>
               <p>La violazione delle regole sopra citate comporterà necessariamente il fallimento dell'operazione di convalida.</p>
           </b-col>
@@ -30,7 +31,7 @@
                     @update="updateRow">
                     <template v-for="colName in columns"
                         v-slot:[colName]="{row, update, setEditing, isEditing, revertValue}">
-                        <div :key="colName">
+                        <div :key="colName" :class="{'border rounded border-danger': !row[colName]}">
                             <span @click="options.editableColumns.includes(colName) && setEditing(true)"
                                 v-if="!options.editableColumns.includes(colName) || !isEditing()">
                                 <!-- class="d-inline-block w-100" da spessore per la modifica della cella
@@ -140,6 +141,8 @@ export default {
       }
       this.tableData.push(user)
       this.users.ins.push(user)
+      // scroll to the bottom of page
+      window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight)
     },
     nextGID: function () {
       // la tabella vuole un id per ogni riga, sicchè devo calcolare un id sequenziale
