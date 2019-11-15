@@ -31,7 +31,9 @@
                     @update="updateRow">
                     <template v-for="colName in columns"
                         v-slot:[colName]="{row, update, setEditing, isEditing, revertValue}">
-                        <div :key="colName" :class="{'border rounded border-danger': !row[colName]}">
+                        <div :key="colName"
+                          :class="{'border rounded border-danger': colonnaVuota(row, colName, row[colName])
+                            || userCollide(row, colName, row[colName])}">
                             <span @click="options.editableColumns.includes(colName) && setEditing(true)"
                                 v-if="!options.editableColumns.includes(colName) || !isEditing()">
                                 <!-- class="d-inline-block w-100" da spessore per la modifica della cella
@@ -129,7 +131,7 @@ export default {
     },
     addUser: function () {
       let user = {
-        'gid': this.nextGID() + 1,
+        'gid': String(this.nextGID() + 1),
         'username': '',
         'password': '',
         'role': '',
@@ -168,6 +170,30 @@ export default {
           let msg = (error.response && error.response.data.msg) || error.message
           this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
         })
+    },
+    // dice se la colonna corrente è vuota o no
+    colonnaVuota: function (row, colName, valoreCella) {
+      return !valoreCella
+    },
+    // dice se le credenziali di un utente collidono con quelle di un altro
+    userCollide: function (row, colName, valoreCella) {
+      return (colName === 'username' || colName === 'password') &&
+        this.collidingUsers.includes(row.gid)
+    }
+  },
+  computed: {
+    // computa la lista di id di utenti i cui username e password collidono
+    collidingUsers: function () {
+      let copy = this.tableData.concat(this.users.ins).concat(this.users.mod)
+      let colliding = []
+      copy.forEach(el => {
+        copy.forEach(el2 => {
+          // console.log(el + ' ' + el2)
+          if (el.gid !== el2.gid && el.username === el2.username &&
+             el.password === el2.password) { colliding.push(el.gid) }
+        })
+      })
+      return colliding
     }
   },
   mounted () {
