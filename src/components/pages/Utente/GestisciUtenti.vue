@@ -73,6 +73,8 @@ import pageCommonMixin from '@/components/mixins/PageCommon'
 import Menu from '@/components/ui/Menu'
 const qs = require('qs')
 const axios = require('axios')
+const _mapValues = require('lodash.mapvalues')
+const _values = require('lodash.values')
 
 export default {
   name: 'GestisciUtenti',
@@ -170,32 +172,50 @@ export default {
       // questo meccanismo non dovrebbe mai dare errore
       return Math.max.apply(Math, this.wholeUsers.map((el) => Number(el.gid)))
     },
-    convalida: function () {
-      // controllo se i dati sono errati prima di mandare
-      if (this.erroriRilevati()) {
-        this.$vueEventBus.$emit('master-page-show-msg',
-          ['Errore',
-            'Dati inseriti non corretti. I dati non corretti sono quelli in rosso, correggere grazie.'])
-        return
+    // elimina le righe di utenti inserite lasciate vuote
+    discardEmptyRows: function () {
+      this.users.ins = this.users.ins.filter(el => {
+      // per ogni oggetto user ne mappo i valori in un array (scartando il campo gid)
+      // concateno tutti i valori dell'array in una stringa con join e poi guardo se non è vuota
+        let keep = _values(_mapValues(el, (subEl, key) => key === 'gid' ? '' : subEl))
+          .join('').trim() !== ''
+        if (!keep) {
+          this.tableData = this.tableData.filter(el2 => el2.gid !== el.gid)
+        }
+        return keep
       }
-
-      axios.post(this.$store.getters.gestioneUtentiURL, qs.stringify({
-        username: this.$store.getters.getUserData.username,
-        password: this.$store.getters.getUserData.password,
-        ins: this.users.ins,
-        mod: this.users.mod
-      }))
-        .then((resp) => {
+      )
+    },
+    convalida: function () {
+      this.discardEmptyRows()
+      // attendo l'aggiornamento delle righe nel dom prima di proseguire
+      this.$nextTick().then(() => {
+      // controllo se i dati sono errati prima di mandare
+        if (this.erroriRilevati()) {
           this.$vueEventBus.$emit('master-page-show-msg',
-            ['Info', 'Operazione completata'])
-          this.retriveUsers()
-        })
-        .catch((error) => {
-        // se è presente un messaggio di risposta dal server uso quello
-        // altrimenti viene usato un messaggio di axios relativo al codice d'errore
-          let msg = (error.response && error.response.data.msg) || error.message
-          this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
-        })
+            ['Errore',
+              'Dati inseriti non corretti. I dati non corretti sono quelli in rosso, correggere grazie.'])
+          return
+        }
+
+        axios.post(this.$store.getters.gestioneUtentiURL, qs.stringify({
+          username: this.$store.getters.getUserData.username,
+          password: this.$store.getters.getUserData.password,
+          ins: this.users.ins,
+          mod: this.users.mod
+        }))
+          .then((resp) => {
+            this.$vueEventBus.$emit('master-page-show-msg',
+              ['Info', 'Operazione completata'])
+            this.retriveUsers()
+          })
+          .catch((error) => {
+            // se è presente un messaggio di risposta dal server uso quello
+            // altrimenti viene usato un messaggio di axios relativo al codice d'errore
+            let msg = (error.response && error.response.data.msg) || error.message
+            this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
+          })
+      })
     },
     // dice se la colonna corrente è vuota o no
     colonnaVuota: function (row, colName, valoreCella) {
