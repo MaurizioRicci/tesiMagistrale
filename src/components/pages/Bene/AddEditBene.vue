@@ -14,7 +14,8 @@
           <!-- 12-mapCols > 0 => se la mappa occupa 12 colonne allora il form è nascosto -->
           <b-col cols="8" v-show="12-mapCols > 0">
               <b-form @submit="onSubmit" @reset="onReset" :novalidate="true" :validated="sendBtnClicked" ref="form_bene">
-              <b-form-checkbox v-model="form.bozza" name="check-button-bozza" switch
+              <b-form-checkbox @change="checked => form.status = checked ? 3 : 2"
+                name="check-button-bozza" switch
                 id="checkbox-bozza" size="lg" class="mb-1">
                   Aggiungi alle bozze
               </b-form-checkbox>

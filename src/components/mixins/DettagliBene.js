@@ -29,12 +29,18 @@ export default {
     // Restituisce una promessa in ogni caso, il valore dipende:
     // null se non viene eseguita la richiesta o se non va a buon fine
     // I dettagli del bene se la richiesta va a buon fine
-    fetchDataByID (requiredID) {
+    fetchDataByID (requiredID, idUtente) {
+      if (this.cercaInRevisione && typeof idUtente === 'undefined') {
+        throw new Error('Per cercare un bene in archivio temporaneo serve anche id utente')
+      }
+
       const T = this
       if (!requiredID) return Promise.resolve()
       // fare richiesta dati del bene con id nella url
       return axios.get(this.$store.getters.dettagliBeneURL, {
-        params: { 'id': requiredID, 'tmp_db': this.cercaInRevisione }
+        params: { 'id': requiredID,
+          'id_utente': idUtente,
+          'tmp_db': this.cercaInRevisione }
       }).then(ok => {
         this.form = this.getModel()
         if (ok.data.length <= 0) {
