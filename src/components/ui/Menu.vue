@@ -12,7 +12,7 @@
             <b-nav-item-dropdown text="Beni" class="d-inline-block">
               <b-dropdown-item to="/bene/aggiungi">Aggiungi un bene</b-dropdown-item>
               <b-dropdown-item to="/dettagli_bene">Visualizza un bene</b-dropdown-item>
-              <b-dropdown-item to="/home">Ricerca beni</b-dropdown-item>
+              <b-dropdown-item to="/home">Ricerca/Modifica beni</b-dropdown-item>
             </b-nav-item-dropdown>
             </b-col>
 
@@ -20,7 +20,7 @@
             <b-nav-item-dropdown text="Funzioni" class="d-inline-block">
               <b-dropdown-item to="#">Aggiungi una funzione</b-dropdown-item>
               <b-dropdown-item to="#">Visualizza una funzione</b-dropdown-item>
-              <b-dropdown-item to="#">Ricerca funzioni</b-dropdown-item>
+              <b-dropdown-item to="#">Ricerca/Modifica funzioni</b-dropdown-item>
             </b-nav-item-dropdown>
             </b-col>
 
