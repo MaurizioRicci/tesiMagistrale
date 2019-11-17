@@ -1,5 +1,7 @@
 import {MultiPolygon} from '@/assets/js/Models/multiPolygonModel'
-import getModelloBene from '@/assets/js/Models/beneModel'
+// statusBene è usato in AddEditBene, non cancellare
+// eslint-disable-next-line no-unused-vars
+import getModelloBene, {statusBene} from '@/assets/js/Models/beneModel'
 import lodashclonedeep from 'lodash.clonedeep'
 const axios = require('axios')
 

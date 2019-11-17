@@ -16,6 +16,14 @@ export default () => {
     bibliografia: '',
     schedatori_iniziali: '',
     note: '',
-    polygon: new Polygon()
+    polygon: new Polygon(),
+    isRev: () => this.status === 0,
+    isIncorrect: () => this.status === 1,
+    isReady: () => this.status === 2,
+    isIncomplete: () => this.status === 3,
+    setRev: function () { this.status = 0 },
+    setIncorrect: function () { this.status = 1 },
+    setReady: function () { this.status = 2 },
+    setIncomplete: function () { this.status = 3 }
   }
 }
