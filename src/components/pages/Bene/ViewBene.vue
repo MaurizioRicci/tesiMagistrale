@@ -106,7 +106,7 @@
         </b-col>
         </transition>
         <b-col :cols="mapCols">
-          <MyMap ref="myMap" locked v-if="mapCenter" v-model="form.polygon"
+          <MyMap ref="myMap" locked v-model="form.polygon"
            :center="mapCenter" :zoom="17" @ingrandisci-mappa="ingrandisciMappa"
            @rimpicciolisci-mappa="rimpicciolisciMappa"/>
         </b-col>

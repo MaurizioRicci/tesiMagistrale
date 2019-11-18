@@ -1,8 +1,8 @@
 <template>
     <l-map :zoom="zoom" :center="center" @click="addPoint"
+      @update:center="invalidateSize"
     v-bind:style="{ width, height }" ref="myMap">
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      <!-- <l-marker :lat-lng="marker"></l-marker> -->
         <l-polygon v-if="currPolygon" @click="removePoint"
       :lat-lngs="currPolygon.getLatLngs()"
       :color="polygon_color">
