@@ -19,7 +19,7 @@
             <!-- In caso di errore durante il caricamento -->
             <icon-msg v-if="error"
             class="input-group-text"
-            icon_name="fa-exclamation-circle"
+            icon_name="exclamation-circle"
             icon_msg="Impossibile ottenere i suggerimenti"
             ></icon-msg>
         </template>

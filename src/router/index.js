@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Error404 from '@/components/pages/Errors/Error404'
-import Login from '@/components/pages/Login/Login'
-import Home from '@/components/pages/Home/Home'
-import Bene from '@/components/pages/Bene/AddEditBene'
-import ViewBene from '@/components/pages/Bene/ViewBene'
-import RicercaBeniApprovati from '@/components/pages/Bene/BeniRicercaApprovati'
-import MyMap from '@/components/pages/Map/MapPage'
-import BeniAggiuntiTemp from '@/components/pages/Bene/BeniAggiuntiTemp'
-import manageUsers from '@/components/pages/Utente/GestisciUtenti'
+const Error404 = () => import('@/components/pages/Errors/Error404')
+const Login = () => import('@/components/pages/Login/Login')
+const Home = () => import('@/components/pages/Home/Home')
+const Bene = () => import('@/components/pages/Bene/AddEditBene')
+const ViewBene = () => import('@/components/pages/Bene/ViewBene')
+const RicercaBeniApprovati = () => import('@/components/pages/Bene/BeniRicercaApprovati')
+const MyMap = () => import('@/components/pages/Map/MapPage')
+const BeniAggiuntiTemp = () => import('@/components/pages/Bene/BeniAggiuntiTemp')
+const manageUsers = () => import('@/components/pages/Utente/GestisciUtenti')
 
 Vue.use(Router)
 

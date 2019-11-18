@@ -1,7 +1,7 @@
 <template>
   <span v-b-tooltip.hover="icon_msg">
-    <i class="fas fa-lg" :class="{ [icon_name]: true }"
-    style="color: royalblue;"></i>
+    <font-awesome-icon :icon="['fas', icon_name]"
+      :style="{ color: 'royalblue' }"/>
   </span>
 </template>
 
