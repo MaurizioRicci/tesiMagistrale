@@ -1,5 +1,6 @@
 import {Polygon} from '@/assets/js/Models/multiPolygonModel'
 
+// è una funzione perchè cosi è facilmente clonabile il modello
 export default () => {
   return {
     id: '',

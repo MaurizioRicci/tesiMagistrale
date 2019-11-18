@@ -151,11 +151,11 @@ export default {
     }
   },
   created () {
-    this.fetchDataByID(this.id)
+    this.fetchDataByID(this.idBene, this.idUtente)
   },
   watch: {
     $route (to, from) {
-      this.fetchDataByID(this.id)
+      this.fetchDataByID(this.idBene, this.idUtente)
     }
   }
 }

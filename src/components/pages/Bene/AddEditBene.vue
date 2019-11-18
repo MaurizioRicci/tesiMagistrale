@@ -263,8 +263,8 @@ export default {
     }
   },
   mounted () {
-    if (this.id && this.editMode) {
-      this.fetchDataByID(this.id)
+    if (this.idBene && this.editMode) {
+      this.fetchDataByID(this.idBene, this.idUtente)
     }
   }
 }

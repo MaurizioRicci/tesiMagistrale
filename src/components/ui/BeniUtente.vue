@@ -8,28 +8,29 @@ oppure quelli che ha in revisione -->
           <div :class="{'bg-warning': row.status === '0',
           'bg-danger': row.status === '1'}"
           class="mt-1">
-          <span v-if="row.status === '0'">In revisione</span>
-          <span v-if="row.status === '1'" class="text-light">Da rivedere</span>
+          <span v-if="BeneModel.isRev.call(row)">In revisione</span>
+          <span v-if="BeneModel.isIncomplete.call(row)" class="text-light">Da rivedere</span>
           </div>
         </template>
 
         <template v-slot:azioni="{row}">
           <b-button-group vertical>
-            <b-button @click="() => openModalView(row.id)" class="pt-1">Vedi dettagli</b-button>
-            <b-button @click="() => openModalEdit(row.id)" class="pt-1"
-             v-if="!cercaInRevisione || row.status === '1'">Modifica</b-button>
+            <b-button @click="() => openModalView(row.id, row.id_utente)" class="pt-1">Vedi dettagli</b-button>
+            <b-button @click="() => openModalEdit(row.id, row.id_utente)" class="pt-1"
+             v-if="!cercaInRevisione || BeneModel.isIncomplete.call(row)">Modifica</b-button>
           </b-button-group>
         </template>
     </v-client-table>
 
   <b-modal title="Dettagli" size="huge"
   :cancel-disabled="true" v-model="modalShowView">
-    <Dettagli-bene :id="idBene"
-    :cercaInRevisione="cercaInRevisione"/>
+    <Dettagli-bene :idBene="idBene"
+    :cercaInRevisione="cercaInRevisione"
+    :idUtente="idUtente"/>
   </b-modal>
   <b-modal title="Modifica" size="huge"
     :cancel-disabled="true" v-model="modalShowEdit">
-        <EditBene :id="idBene"
+        <EditBene :idBene="idBene"
           :cercaInRevisione="cercaInRevisione"/>
   </b-modal>
 </div>
@@ -38,6 +39,7 @@ oppure quelli che ha in revisione -->
 <script>
 import DettagliBene from '@/components/pages/Bene/ViewBene'
 import EditBene from '@/components/pages/Bene/AddEditBene'
+import BeneModel from '@/assets/js/Models/beneModel'
 import '@/assets/css/hugeModal.css'
 const qs = require('qs')
 const axios = require('axios')
@@ -48,14 +50,17 @@ export default {
     DettagliBene: DettagliBene,
     EditBene: EditBene
   },
+  computed: {BeneModel: () => BeneModel()},
   props: {cercaInRevisione: Boolean},
   methods: {
-    openModalEdit: function (id) {
-      this.idBene = id
+    openModalEdit: function (idBene, idUtente) {
+      this.idBene = idBene
+      this.idUtente = idUtente
       this.modalShowEdit = true
     },
-    openModalView: function (id) {
-      this.idBene = id
+    openModalView: function (idBene, idUtente) {
+      this.idBene = idBene
+      this.idUtente = idUtente
       this.modalShowView = true
     },
     getData: function () {
@@ -70,6 +75,7 @@ export default {
   data: function () {
     return {
       idBene: '',
+      idUtente: '',
       modalShowView: false,
       modalShowEdit: false,
       columns: [

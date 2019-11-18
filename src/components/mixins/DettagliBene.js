@@ -19,7 +19,9 @@ export default {
   },
   props: {
     // specifica l'id del bene da visualizzare
-    id: String,
+    idBene: String,
+    // specifica l'id utente del proprietario del bene in archivio temporaneo
+    idUtente: String,
     // se cercare l'id in archivio temporaneo. Default: archivio definitivo
     cercaInRevisione: Boolean
   },
