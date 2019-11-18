@@ -1,5 +1,6 @@
 const axios = require('axios')
 
+// carica le voci dei dizionari controllati
 let loadDescr = (T) => axios.get(T.$store.getters.getDizionarioURL + '?' + 'dict_name=descrizione')
 let loadEsistenza = (T) => axios.get(T.$store.getters.getDizionarioURL + '?' + 'dict_name=esistenza')
 let loadFunc = (T) => axios.get(T.$store.getters.getDizionarioURL + '?' + 'dict_name=funzione')

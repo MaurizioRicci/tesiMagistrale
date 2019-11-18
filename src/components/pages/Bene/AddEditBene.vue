@@ -214,7 +214,7 @@ export default {
   },
   computed: {
     queryIdentificazione () {
-      return () => axios.get(this.$store.getters.filtraBeniURL, {
+      return () => axios.get(this.$store.getters.filtraIdentURL, {
         params: this.form
       })
     },

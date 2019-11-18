@@ -1,29 +1,33 @@
+// Vuex store per le URL
 const serverURLsStore = {
   state: {
     serverURL: 'http://myserverapp',
     login: '/login.php',
+    gestioneUtenti: '/manageUsers.php',
+    // URL per i beni
     aggiungiBene: '/inserisci/bene/crea.php',
-    filtraBeni: '/filtraBeni.php',
+    filtraIdent: '/filtraIdent.php',
     filtraToponimo: '/filtraToponimi.php',
     filtraComune: '/filtraComuni.php',
     dettagliBene: '/visualizza/beni/dettagliBene.php',
-    aggiungiRelazione: '/aggiungiRelazione.php',
     getDizionario: '/getDictionary.php',
-    beniAggiuntiRevisione: '/visualizza/beni/beniAggiuntiRevisione.php',
-    gestioneUtenti: '/manageUsers.php'
+    beniAggiuntiRevisione: '/visualizza/beni/beniAggiuntiRevisione.php'
+    // URL per le funzioni
   },
   getters: {
     serverURL: state => state.serverURL,
     loginURL: state => state.serverURL + state.login,
+    gestioneUtentiURL: state => state.serverURL + state.gestioneUtenti,
+    // URL per i beni
     aggiungiBeneURL: state => state.serverURL + state.aggiungiBene,
-    filtraBeniURL: state => state.serverURL + state.filtraBeni,
+    filtraIdentURL: state => state.serverURL + state.filtraBeni,
     filtraToponimoURL: state => state.serverURL + state.filtraToponimo,
     filtraComuneURL: state => state.serverURL + state.filtraComune,
     dettagliBeneURL: state => state.serverURL + state.dettagliBene,
     aggiungiRelazioneURL: state => state.serverURL + state.aggiungiRelazione,
     getDizionarioURL: state => state.serverURL + state.getDizionario,
-    beniAggiuntiRevisioneURL: state => state.serverURL + state.beniAggiuntiRevisione,
-    gestioneUtentiURL: state => state.serverURL + state.gestioneUtenti
+    beniAggiuntiRevisioneURL: state => state.serverURL + state.beniAggiuntiRevisione
+    // URL per le funzioni
   },
   mutations: {}
 }
