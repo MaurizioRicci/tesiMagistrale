@@ -102,7 +102,7 @@
           <b-button type="submit" variant="primary" @click="goBack">Indietro</b-button>
           <!-- si modificano solo beni definitivi -->
           <b-button type="reset" variant="danger" @click="onEdit"
-            v-if="!cercaInRevisione">Modifica</b-button>
+            v-if="!cercaInArchivioTemp">Modifica</b-button>
         </b-col>
         </transition>
         <b-col :cols="mapCols">

@@ -11,8 +11,9 @@
       <b-tab title="Beni aggiunti" active>
         <BeniUtente/>
         </b-tab>
-      <b-tab title="Beni in revisione">
-          <BeniUtente cercaInRevisione/>
+      <b-tab title="Altri Beni utente">
+          <p>Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
+          <BeniUtente cercaInArchivioTemp/>
       </b-tab>
     </b-tabs>
       </b-row>

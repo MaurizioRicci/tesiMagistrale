@@ -5,7 +5,7 @@ oppure quelli che ha in revisione -->
   <v-client-table :columns="columns" v-model="tableData" :options="options">
 
         <template v-slot:status="{row}">
-          <div :class="{'bg-warning': BeneModel.isRev.call(row),
+          <div :class="{'bg-warning': BeneModel.isIncomplete.call(row),
           'bg-danger': BeneModel.isIncorrect.call(row)}"
           class="mt-1">
           <span v-if="BeneModel.isRev.call(row)">In revisione</span>
@@ -17,7 +17,7 @@ oppure quelli che ha in revisione -->
           <b-button-group vertical>
             <b-button @click="() => openModalView(row.id, row.id_utente)" class="pt-1">Vedi dettagli</b-button>
             <b-button @click="() => openModalEdit(row.id, row.id_utente)" class="pt-1"
-             v-if="!cercaInRevisione || BeneModel.isIncomplete.call(row)">Modifica</b-button>
+             v-if="BeneModel.isIncomplete.call(row) || BeneModel.isIncorrect.call(row)">Modifica</b-button>
           </b-button-group>
         </template>
     </v-client-table>
@@ -25,13 +25,13 @@ oppure quelli che ha in revisione -->
   <b-modal title="Dettagli" size="huge"
   :cancel-disabled="true" v-model="modalShowView">
     <Dettagli-bene :idBene="idBene"
-    :cercaInRevisione="cercaInRevisione"
+    :cercaInArchivioTemp="cercaInArchivioTemp"
     :idUtente="idUtente"/>
   </b-modal>
   <b-modal title="Modifica" size="huge"
     :cancel-disabled="true" v-model="modalShowEdit">
         <EditBene :idBene="idBene"
-          :cercaInRevisione="cercaInRevisione"/>
+          :cercaInArchivioTemp="cercaInArchivioTemp"/>
   </b-modal>
 </div>
 </template>
@@ -51,7 +51,7 @@ export default {
     EditBene: EditBene
   },
   computed: {BeneModel: () => BeneModel()},
-  props: {cercaInRevisione: Boolean},
+  props: {cercaInArchivioTemp: Boolean},
   methods: {
     openModalEdit: function (idBene, idUtente) {
       this.idBene = idBene
@@ -64,11 +64,11 @@ export default {
       this.modalShowView = true
     },
     getData: function () {
-      return axios.post(this.$store.getters.beniAggiuntiRevisioneURL,
+      return axios.post(this.$store.getters.beniAggiuntiTempURL,
         qs.stringify({
           username: this.$store.getters.getUserData.username,
           password: this.$store.getters.getUserData.password,
-          switch_bene: this.cercaInRevisione ? 'miei_revisione' : 'miei_aggiunti'
+          switch_bene: this.cercaInArchivioTemp ? 'miei_temp' : 'miei_aggiunti'
         })).then(function (resp) { this.tableData = resp.data }.bind(this))
     }
   },
@@ -81,7 +81,7 @@ export default {
       columns: [
         'id',
         'status',
-        // visible: this.cercaInRevisione
+        // visible: this.cercaInArchivioTemp
         'azioni',
         'identificazione',
         'descrizione',

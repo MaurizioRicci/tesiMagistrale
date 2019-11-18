@@ -23,7 +23,7 @@ export default {
     // specifica l'id utente del proprietario del bene in archivio temporaneo
     idUtente: String,
     // se cercare l'id in archivio temporaneo. Default: archivio definitivo
-    cercaInRevisione: Boolean
+    cercaInArchivioTemp: Boolean
   },
   methods: {
     getModel () {
@@ -34,7 +34,7 @@ export default {
     // null se non viene eseguita la richiesta o se non va a buon fine
     // I dettagli del bene se la richiesta va a buon fine
     fetchDataByID (requiredID, idUtente) {
-      if (this.cercaInRevisione && typeof idUtente === 'undefined') {
+      if (this.cercaInArchivioTemp && typeof idUtente === 'undefined') {
         throw new Error('Per cercare un bene in archivio temporaneo serve anche id utente')
       }
 
@@ -44,7 +44,7 @@ export default {
       return axios.get(this.$store.getters.dettagliBeneURL, {
         params: { 'id': requiredID,
           'id_utente': idUtente,
-          'tmp_db': this.cercaInRevisione }
+          'tmp_db': this.cercaInArchivioTemp }
       }).then(ok => {
         this.form = this.getModel()
         if (ok.data.length <= 0) {
