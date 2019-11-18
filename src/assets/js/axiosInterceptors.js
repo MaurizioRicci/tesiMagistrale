@@ -7,9 +7,6 @@ const isHandlerEnabled = (config = {}) => {
 
 // quando arriva la risposta
 export const errorHandlerResponse = (error, vueApp) => {
-  if (isHandlerEnabled(error.config)) {
-    vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error', error])
-  }
   if (isHandlerEnabled(error.config) && error.response) {
     // Handle errors
     switch (error.response.status) {
@@ -17,8 +14,11 @@ export const errorHandlerResponse = (error, vueApp) => {
         vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error', 'Invalid credentials'])
         break
       case 503:
-        vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error', 'System offline'])
+        vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error',
+          'Il sistema è offline, si prega di riprovare più tardi.'])
         break
+      default:
+        vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error', error])
     }
   }
   return Promise.reject(error)
