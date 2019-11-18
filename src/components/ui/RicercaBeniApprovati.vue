@@ -6,23 +6,28 @@
         <template v-slot:azioni="{row}">
           <b-button-group vertical>
             <b-button @click="() => openModalView(row.id, row.id_utente)" class="pt-1">Vedi dettagli</b-button>
-            <b-button @click="() => openModalEdit(row.id, row.id_utente)" class="pt-1"
-             v-if="!cercaInRevisione || BeneModel.isIncomplete.call(row)">Modifica</b-button>
+            <b-button @click="() => openModalEdit(row.id, row.id_utente)" class="pt-1">Modifica</b-button>
           </b-button-group>
         </template>
 
+      <template v-slot:bibliografia="{row}">
+        <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
+        {{row.bibliografia | ellipsizeLongText()}}
+      </template>
+
+      <template v-slot:note="{row}">
+        <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
+        {{row.note | ellipsizeLongText()}}
+      </template>
     </v-server-table>
 
   <b-modal title="Dettagli" size="huge"
   :cancel-disabled="true" v-model="modalShowView">
-    <Dettagli-bene :idBene="idBene"
-    :cercaInRevisione="cercaInRevisione"
-    :idUtente="idUtente"/>
+    <Dettagli-bene :idBene="idBene" no-menu/>
   </b-modal>
   <b-modal title="Modifica" size="huge"
     :cancel-disabled="true" v-model="modalShowEdit">
-        <EditBene :idBene="idBene"
-          :cercaInRevisione="cercaInRevisione"/>
+        <EditBene :idBene="idBene" no-menu :editMode="true"/>
   </b-modal>
 </div>
 </template>
@@ -31,6 +36,7 @@
 import DettagliBene from '@/components/pages/Bene/ViewBene'
 import EditBene from '@/components/pages/Bene/AddEditBene'
 import BeneModel from '@/assets/js/Models/beneModel'
+import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 import '@/assets/css/hugeModal.css'
 window.axios = require('axios')
 
@@ -40,8 +46,9 @@ export default {
     DettagliBene: DettagliBene,
     EditBene: EditBene
   },
+  filters: {ellipsizeLongText: ellipsize},
   computed: {BeneModel: () => BeneModel()},
-  props: {cercaInRevisione: Boolean},
+  props: {},
   methods: {
     openModalEdit: function (idBene, idUtente) {
       this.idBene = idBene
@@ -74,6 +81,8 @@ export default {
         'schedatori_iniziali'
       ],
       options: {
+        caption: 'Questa tabella contiene tutti i beni approvati.',
+        perPage: 25,
         filterable: true,
         filterByColumn: true,
         sendEmptyFilters: true,
@@ -86,4 +95,5 @@ export default {
 
 <style>
     .VueTables__table { table-layout: fixed; }
+    caption { caption-side: top; }
 </style>

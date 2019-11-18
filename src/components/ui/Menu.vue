@@ -35,7 +35,7 @@
               <b-navbar-nav>
                 <b-nav-item to="/">
                   <span style="color:white;" :class="{'text-warning': !currUsername}"
-                  v-b-popover.hover.bottom="loginTooltip">
+                  v-b-tooltip.hover.bottom="loginTooltip">
                   User: {{currUsername || '???'}}
                   </span>
                 </b-nav-item>

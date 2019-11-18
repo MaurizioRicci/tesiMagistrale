@@ -3,12 +3,13 @@
       <b-row>
         <b-col cols="12" v-if="!noMenu"><Menu/></b-col>
         <b-col>
-          <h2 v-if="!noTitle">{{title || 'Aggiungi/Modifica un bene'}}</h2>
+          <h2 v-if="!noTitle">{{title || 'Ricerca/Modifica beni'}}</h2>
         </b-col>
       </b-row>
       <b-row>
-        <b-col>
-        </b-col>
+          <b-col>
+              <ricerca-beni-approvati/>
+          </b-col>
       </b-row>
   </b-container>
 </template>
@@ -16,15 +17,14 @@
 <script>
 import pageCommonMixin from '@/components/mixins/PageCommon'
 import Menu from '@/components/ui/Menu'
+import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 
 export default {
-  name: 'HelloWorld',
-  components: {Menu},
+  name: 'BeniRicercaApprovati',
+  components: {Menu, RicercaBeniApprovati},
   mixins: [pageCommonMixin],
   data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+    return {}
   }
 }
 </script>
