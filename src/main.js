@@ -25,7 +25,7 @@ import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
 // vue-tables-2
-import {ClientTable} from 'vue-tables-2'
+import {ClientTable, ServerTable} from 'vue-tables-2'
 
 Vue.config.productionTip = false
 
@@ -42,6 +42,7 @@ Icon.Default.mergeOptions({
 })
 
 Vue.use(ClientTable, {}, false, 'bootstrap4')
+Vue.use(ServerTable, {}, false, 'bootstrap4')
 
 /* eslint-disable no-new */
 const myApp = new Vue({

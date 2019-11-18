@@ -5,6 +5,7 @@ import Login from '@/components/pages/Login/Login'
 import Home from '@/components/pages/Home/Home'
 import Bene from '@/components/pages/Bene/AddEditBene'
 import ViewBene from '@/components/pages/Bene/ViewBene'
+import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 import MyMap from '@/components/pages/Map/MapPage'
 import BeniAggiuntiInRevisione from '@/components/pages/Bene/BeniAggiuntiInRevisione'
 import manageUsers from '@/components/pages/Utente/GestisciUtenti'
@@ -44,6 +45,12 @@ export default new Router({
             title: 'Modifica Bene',
             id: route.query.id,
             editMode: true
+          })
+        },
+        {path: 'ricerca',
+          component: RicercaBeniApprovati,
+          props: (route) => ({
+            title: 'Ricerca/Modifica beni'
           })
         }
       ]

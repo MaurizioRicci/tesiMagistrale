@@ -11,7 +11,8 @@ const serverURLsStore = {
     filtraComune: '/filtraComuni.php',
     dettagliBene: '/visualizza/beni/dettagliBene.php',
     getDizionario: '/getDictionary.php',
-    beniAggiuntiRevisione: '/visualizza/beni/beniAggiuntiRevisione.php'
+    beniAggiuntiRevisione: '/visualizza/beni/beniAggiuntiRevisione.php',
+    beniAggiuntiApprovati: '/visualizza/beni/beniAggiuntiApprovati.php'
     // URL per le funzioni
   },
   getters: {
@@ -26,7 +27,8 @@ const serverURLsStore = {
     dettagliBeneURL: state => state.serverURL + state.dettagliBene,
     aggiungiRelazioneURL: state => state.serverURL + state.aggiungiRelazione,
     getDizionarioURL: state => state.serverURL + state.getDizionario,
-    beniAggiuntiRevisioneURL: state => state.serverURL + state.beniAggiuntiRevisione
+    beniAggiuntiRevisioneURL: state => state.serverURL + state.beniAggiuntiRevisione,
+    beniAggiuntiApprovatiURL: state => state.serverURL + state.beniAggiuntiApprovati
     // URL per le funzioni
   },
   mutations: {}

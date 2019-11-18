@@ -1,5 +1,8 @@
 import {Polygon} from '@/assets/js/Models/multiPolygonModel'
 
+// piccola scorciatoia
+const exist = el => typeof el !== 'undefined' && el.trim() !== ''
+
 // è una funzione perchè cosi è facilmente clonabile il modello
 export default () => {
   return {
@@ -19,10 +22,10 @@ export default () => {
     note: '',
     polygon: new Polygon(),
     // Number() nel caso fosse una stringa
-    isRev: function () { return Number(this.status) === 0 },
-    isIncorrect: function () { return Number(this.status) === 1 },
-    isReady: function () { return Number(this.status) === 2 },
-    isIncomplete: function () { return Number(this.status) === 3 },
+    isRev: function () { return exist(this.status) && Number(this.status) === 0 },
+    isIncorrect: function () { return exist(this.status) && Number(this.status) === 1 },
+    isReady: function () { return exist(this.status) && Number(this.status) === 2 },
+    isIncomplete: function () { return exist(this.status) && Number(this.status) === 3 },
     setRev: function () { this.status = 0 },
     setIncorrect: function () { this.status = 1 },
     setReady: function () { this.status = 2 },

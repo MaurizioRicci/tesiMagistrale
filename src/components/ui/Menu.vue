@@ -12,7 +12,7 @@
             <b-nav-item-dropdown text="Beni" class="d-inline-block">
               <b-dropdown-item to="/bene/aggiungi">Aggiungi un bene</b-dropdown-item>
               <b-dropdown-item to="/dettagli_bene">Visualizza un bene</b-dropdown-item>
-              <b-dropdown-item to="/home">Ricerca/Modifica beni</b-dropdown-item>
+              <b-dropdown-item to="/bene/ricerca">Ricerca/Modifica beni</b-dropdown-item>
             </b-nav-item-dropdown>
             </b-col>
 
