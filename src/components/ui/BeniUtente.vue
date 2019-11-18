@@ -5,11 +5,11 @@ oppure quelli che ha in revisione -->
   <v-client-table :columns="columns" v-model="tableData" :options="options">
 
         <template v-slot:status="{row}">
-          <div :class="{'bg-warning': row.status === '0',
-          'bg-danger': row.status === '1'}"
+          <div :class="{'bg-warning': BeneModel.isRev.call(row),
+          'bg-danger': BeneModel.isIncorrect.call(row)}"
           class="mt-1">
           <span v-if="BeneModel.isRev.call(row)">In revisione</span>
-          <span v-if="BeneModel.isIncomplete.call(row)" class="text-light">Da rivedere</span>
+          <span v-if="BeneModel.isIncorrect.call(row)" class="text-light">Da rivedere</span>
           </div>
         </template>
 
