@@ -1,12 +1,17 @@
+<!-- Una mappa che mostra un poligono, l'utente può essere abilitato o meno alla modifica di tale poligono con
+la proprietà locked; se presente disabilita la modifica -->
 <template>
     <l-map :zoom="zoom" :center="center" @click="addPoint"
       @update:center="invalidateSize"
-    v-bind:style="{ width, height }" ref="myMap">
+      v-bind:style="{ width, height }" ref="myMap">
+
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+
         <l-polygon v-if="currPolygon" @click="removePoint"
       :lat-lngs="currPolygon.getLatLngs()"
       :color="polygon_color">
       </l-polygon>
+
       <l-control position="bottomleft">
         <b-button @click="ingrandisci" v-show="!state.mappaIngrandita">
           Ingrandisci
@@ -15,25 +20,21 @@
           Rimpicciolisci
         </b-button>
       </l-control>
+
     </l-map>
 </template>
 
 <script>
 // Leaflet nonostante usi EPSG3857 accetta anche punti in 4326 facendo la conversione automatica
 import { LMap, LTileLayer, LPolygon, LControl } from 'vue2-leaflet'
-// eslint-disable-next-line no-unused-vars
-import { DomEvent, CRS } from 'leaflet' // CRS è usato nel template
+import { DomEvent } from 'leaflet' // CRS è usato nel template
 import { Polygon } from '@/assets/js/Models/multiPolygonModel'
 
 export default {
   name: 'Map',
-  components: {
-    'l-map': LMap,
-    'l-tile-layer': LTileLayer,
-    'l-polygon': LPolygon,
-    'l-control': LControl
-  },
+  components: { LMap, LTileLayer, LPolygon, LControl },
   model: {
+    // imposto v-model collegato alla proprietà polygon
     prop: 'polygon',
     event: 'change'
   },

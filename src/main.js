@@ -14,7 +14,7 @@ import { store } from './store/store'
 
 // Icone FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faLock, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { faLock, faExclamationCircle, faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // Axios
@@ -28,23 +28,25 @@ import 'leaflet/dist/leaflet.css'
 // vue-tables-2
 import {ClientTable, ServerTable} from 'vue-tables-2'
 
-library.add(faLock, faExclamationCircle)
+library.add(faLock, faExclamationCircle, faSort, faSortUp, faSortDown)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 
+// BootstrapVue
 Vue.use(BootstrapVue)
 
 Vue.prototype.$vueEventBus = new Vue()
 
+// Leaflet
 delete Icon.Default.prototype._getIconUrl
-
 Icon.Default.mergeOptions({
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 })
 
+// Vue tables 2
 Vue.use(ClientTable, {}, false, 'bootstrap4')
 Vue.use(ServerTable, {}, false, 'bootstrap4')
 

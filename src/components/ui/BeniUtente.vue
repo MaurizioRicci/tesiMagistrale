@@ -2,14 +2,16 @@
 oppure quelli che ha in revisione -->
 <template>
 <div>
-  <v-client-table :columns="columns" v-model="tableData" :options="options">
+  <v-client-table ref="myTable" :columns="columns" v-model="tableData" :options="options">
 
         <template v-slot:status="{row}">
-          <div :class="{'bg-warning': BeneModel.isIncomplete.call(row),
-          'bg-danger': BeneModel.isIncorrect.call(row)}"
-          class="mt-1">
+          <div :class="{
+            'bg-warning': BeneModel.isIncomplete.call(row),
+            'bg-danger': BeneModel.isIncorrect.call(row)
+            }" class="mt-1">
           <span v-if="BeneModel.isRev.call(row)">In revisione</span>
-          <span v-if="BeneModel.isIncorrect.call(row)" class="text-light">Da rivedere</span>
+          <span v-else-if="BeneModel.isIncorrect.call(row)" class="text-light">Da rivedere</span>
+          <span v-else-if="BeneModel.isIncomplete.call(row)" class="text-light">Bozza</span>
           </div>
         </template>
 
@@ -105,3 +107,8 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+    .myTable >>> table { table-layout: fixed; }
+    .myTable >>> caption { caption-side: top; }
+</style>

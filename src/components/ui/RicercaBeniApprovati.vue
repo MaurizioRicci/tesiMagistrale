@@ -1,3 +1,4 @@
+<!--Mostra una tabella con tutti i beni approvati di tutti gli utenti -->
 <template>
 <div>
   <v-server-table :columns="columns" :options="options" class="myTable"
@@ -50,12 +51,12 @@ export default {
   computed: {BeneModel: () => BeneModel()},
   props: {},
   methods: {
-    openModalEdit: function (idBene, idUtente) {
+    openModalEdit (idBene, idUtente) {
       this.idBene = idBene
       this.idUtente = idUtente
       this.modalShowEdit = true
     },
-    openModalView: function (idBene, idUtente) {
+    openModalView (idBene, idUtente) {
       this.idBene = idBene
       this.idUtente = idUtente
       this.modalShowView = true
@@ -86,6 +87,12 @@ export default {
         filterable: true,
         filterByColumn: true,
         sendEmptyFilters: true,
+        sortIcon: {
+          base: 'fas',
+          is: 'fa-sort',
+          up: 'fa-sort-up',
+          down: 'fa-sort-down'
+        },
         texts: {limit: 'Risultati per pagina'}
       }
     }
@@ -93,7 +100,7 @@ export default {
 }
 </script>
 
-<style>
-    .VueTables__table { table-layout: fixed; }
-    caption { caption-side: top; }
+<style scoped>
+    .myTable >>> table { table-layout: fixed; }
+    .myTable >>> caption { caption-side: top; }
 </style>
