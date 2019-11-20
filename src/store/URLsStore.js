@@ -4,6 +4,7 @@ const serverURLsStore = {
     serverURL: 'http://myserverapp',
     login: '/login.php',
     gestioneUtenti: '/manageUsers.php',
+    userStats: '/userStats.php',
     // URL per i beni
     aggiungiBene: '/inserisci/bene/crea.php',
     filtraIdent: '/filtraIdent.php',
@@ -19,6 +20,7 @@ const serverURLsStore = {
     serverURL: state => state.serverURL,
     loginURL: state => state.serverURL + state.login,
     gestioneUtentiURL: state => state.serverURL + state.gestioneUtenti,
+    userStatsURL: state => state.serverURL + state.userStats,
     // URL per i beni
     aggiungiBeneURL: state => state.serverURL + state.aggiungiBene,
     filtraIdentURL: state => state.serverURL + state.filtraBeni,

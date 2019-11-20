@@ -51,8 +51,12 @@ export default {
   name: 'MyAutocompleteInput',
   components: { 'icon-msg': IconMsg },
   props: {
+    // è possibile passare dei suggerimenti come array
     suggestions: Array,
+    // è possibile ricevere suggerimenti come una funzione, una volta
+    // eseguita restituisce una promessa, essa una volta risolta rende un array di suggerimenti
     suggestionsPromise: Function,
+    // l'utente può scegliere di inserire liberamente se closedDictionary=false
     closedDictionary: Boolean,
     icon_name: String,
     icon_msg: String
@@ -92,9 +96,12 @@ export default {
     // valore scelto dall'utente cliccando sul suggerimento
     getCurrentValue: function () { return this.currVal },
     validate: function () {
+      // se non è un dizionario chiuso la validazione è lasciata all'input
+      // passato nello slot principale
+      // se è un dizionario chiuso
       if (this.closedDictionary) {
         // se si accetta un dizionario controllato occorre controllare
-        // che sia stato scaricato correttamente prima di validare l'input
+        // che l'input sia nel dizionario
         if (this.arr.map(el => el.value)
           .includes(this.bs_input.value) && !this.error) {
           this.bs_input.setCustomValidity('')
@@ -116,8 +123,8 @@ export default {
             this.loading = false
             resolve(ret.data)
           }, onRejected => {
-            // se non trova suggerimenti metto lista vuota
-            // l'utente può scegliere di inserire liberamente se closedDictionary=false
+            // se non trova suggerimenti segno che c'è stato
+            // un errore di caricamento e metto lista vuota
             this.error = true
             reject(new Error())
           })
