@@ -54,6 +54,10 @@
               <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
               {{data.n_funzioni_incomplete | formatFunzioni}}
                incomplete.</p>
+            <hr/>
+            <b-col class="text-center">
+              <b-button @click="logout">Logout</b-button>
+            </b-col>
           </b-col>
       </b-row>
   </b-container>
@@ -62,6 +66,7 @@
 <script>
 import pageCommonMixin from '@/components/mixins/PageCommon'
 import Menu from '@/components/ui/Menu'
+import {deleteCookie} from '@/assets/js/cookie'
 import axios from 'axios'
 import qs from 'qs'
 
@@ -95,6 +100,14 @@ export default {
           password: this.$store.getters.getUserData.password,
           switch_bene: this.cercaInArchivioTemp ? 'miei_temp' : 'miei_aggiunti'
         })).then(function (resp) { this.data = resp.data }.bind(this))
+    },
+    logout () {
+      // cancello il cookie con i dati utente (se presente)
+      deleteCookie('userData')
+      // dico a Vuex di cancellare i dati utente
+      this.$store.commit('registerUser', {})
+      // mando l'utente alla pagina di login
+      this.$router.push('/')
     }
   },
   mounted () {

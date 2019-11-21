@@ -31,7 +31,7 @@
             id="checkbox-1"
             v-model="rememberMe"
             name="checkbox-1"
-            value="true"
+            value="si"
             unchecked-value="no"
           >
       Remember me
@@ -65,7 +65,7 @@ export default {
       // controllo che from sia una pagina esistente => loop altrimenti
       // se from==to utente ha navigato direttamente a /login => si manda alla home
       // altrimenti sarebbe andato alla pagina precedente al login
-      vm.prevPagePath = from.path === to.path || from.name === 'PageNotFound' ? 'home' : from
+      vm.prevPagePath = from.path === to.path || from.name === 'PageNotFound' ? '/home' : from
     })
   },
   computed: {
@@ -92,8 +92,9 @@ export default {
         .then(function (resp) {
           this.formData.role = resp.data.role
           // se c'è il flag salviamo un cookie con username e password
-          if (this.rememberMe !== 'no') {
-            setCookie('userData', JSON.stringify(this.formData), 2)
+          if (this.rememberMe === 'si') {
+            // imposto un cookie di 6 mesi circa
+            setCookie('userData', JSON.stringify(this.formData), 31 * 6)
           }
           this.$store.commit('registerUser', this.formData)
           this.$router.push(this.prevPagePath)

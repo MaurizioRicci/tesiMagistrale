@@ -25,4 +25,8 @@ function existCookie (cname) {
   return getCookie(cname).trim().length > 0
 }
 
-export {setCookie, getCookie, existCookie}
+function deleteCookie (cname) {
+  document.cookie = `${cname}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+}
+
+export {setCookie, getCookie, existCookie, deleteCookie}
