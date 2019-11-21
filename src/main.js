@@ -28,6 +28,7 @@ import 'leaflet/dist/leaflet.css'
 // vue-tables-2
 import {ClientTable, ServerTable} from 'vue-tables-2'
 
+// Icone FontAwesome
 library.add(faLock, faExclamationCircle, faSort, faSortUp, faSortDown)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
