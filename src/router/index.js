@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import {store} from '@/store/store'
 const Error404 = () => import('@/components/pages/Errors/Error404')
 const Login = () => import('@/components/pages/Login/Login')
 const Home = () => import('@/components/pages/Home/Home')
@@ -10,9 +11,11 @@ const MyMap = () => import('@/components/pages/Map/MapPage')
 const BeniAggiuntiTemp = () => import('@/components/pages/Bene/BeniAggiuntiTemp')
 const manageUsers = () => import('@/components/pages/Utente/GestisciUtenti')
 
+const isAuthenticated = () => store.getters.loggedIn
+
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -98,3 +101,12 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach(function (to, from, next) {
+  let {path} = to
+  // se vengo già dalla pagina di login si ha un loop
+  if (path !== '/' && !isAuthenticated()) next('/')
+  else next()
+})
+
+export default router
