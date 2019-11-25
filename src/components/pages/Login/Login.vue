@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { setCookie, getCookie, existCookie } from '@/assets/js/cookie'
+import { setCookie, getCookie, existCookie, deleteCookie } from '@/assets/js/cookie'
 const qs = require('qs')
 const axios = require('axios')
 
@@ -90,6 +90,8 @@ export default {
         headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
       })
         .then(function (resp) {
+          // in ogni caso elimino il vecchio cookie (se presente)
+          deleteCookie('userData')
           this.formData.role = resp.data.role
           // se c'è il flag salviamo un cookie con username e password
           if (this.rememberMe === 'si') {

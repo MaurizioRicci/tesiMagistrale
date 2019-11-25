@@ -156,7 +156,7 @@
         </transition>
         <b-col :cols="mapCols">
           <MyMap ref="myMap" @ingrandisci-mappa="ingrandisciMappa"
-          v-model="form.polygon" :center="mapCenter" :zoom="17"
+          v-model="form.polygon" :zoom="edit ? 17 : 10"
            @rimpicciolisci-mappa="rimpicciolisciMappa"/>
         </b-col>
       </b-row>

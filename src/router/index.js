@@ -8,6 +8,7 @@ const Bene = () => import('@/components/pages/Bene/AddEditBene')
 const ViewBene = () => import('@/components/pages/Bene/ViewBene')
 const RicercaBeniApprovati = () => import('@/components/pages/Bene/BeniRicercaApprovati')
 const MyMap = () => import('@/components/pages/Map/MapPage')
+const MyMapOptions = () => import('@/components/pages/Options/MapOptions')
 const BeniAggiuntiTemp = () => import('@/components/pages/Bene/BeniAggiuntiTemp')
 const manageUsers = () => import('@/components/pages/Utente/GestisciUtenti')
 
@@ -93,6 +94,19 @@ const router = new Router({
       path: '/gestisci_utenti',
       name: 'manageUsersPage',
       component: manageUsers
+    },
+    {
+      path: '/options',
+      component: {
+        name: 'optionsPage',
+        template: '<router-view/>'
+      },
+      children: [
+        {
+          path: 'map',
+          component: MyMapOptions
+        }
+      ]
     },
     {
       path: '*',

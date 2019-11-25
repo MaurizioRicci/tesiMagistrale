@@ -14,7 +14,8 @@ import { store } from './store/store'
 
 // Icone FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faLock, faExclamationCircle, faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { faLock, faExclamationCircle, faSort, faSortUp, faSortDown, faCog }
+  from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // Axios
@@ -29,7 +30,7 @@ import 'leaflet/dist/leaflet.css'
 import {ClientTable, ServerTable} from 'vue-tables-2'
 
 // Icone FontAwesome
-library.add(faLock, faExclamationCircle, faSort, faSortUp, faSortDown)
+library.add(faLock, faExclamationCircle, faSort, faSortUp, faSortDown, faCog)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

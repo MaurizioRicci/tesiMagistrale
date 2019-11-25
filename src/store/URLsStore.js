@@ -5,6 +5,7 @@ const serverURLsStore = {
     login: '/login.php',
     gestioneUtenti: '/manageUsers.php',
     userStats: '/userStats.php',
+    elencoProvince: '/options/map/elencoProvince.php', // per settare il centro della mappa di default
     // URL per i beni
     aggiungiBene: '/inserisci/bene/crea.php',
     filtraIdent: '/filtraIdent.php',
@@ -21,6 +22,7 @@ const serverURLsStore = {
     loginURL: state => state.serverURL + state.login,
     gestioneUtentiURL: state => state.serverURL + state.gestioneUtenti,
     userStatsURL: state => state.serverURL + state.userStats,
+    elencoProvinceURL: state => state.serverURL + state.elencoProvince,
     // URL per i beni
     aggiungiBeneURL: state => state.serverURL + state.aggiungiBene,
     filtraIdentURL: state => state.serverURL + state.filtraBeni,

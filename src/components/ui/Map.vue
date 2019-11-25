@@ -19,6 +19,9 @@ la proprietà locked; se presente disabilita la modifica -->
         <b-button @click="rimpicciolisci" v-show="state.mappaIngrandita">
           Rimpicciolisci
         </b-button>
+        <b-button to="/options/map">
+              <font-awesome-icon :icon="['fas', 'cog']" style="color:white"/>
+        </b-button>
       </l-control>
 
     </l-map>
@@ -41,7 +44,7 @@ export default {
   props: {
     // default map center su Pisa. Non sembra essere reactive center in vue-leaflet
     // meglio essere sicuri del centro e poi instanziare questo componente
-    center: {type: Array, default: () => [43.717039, 10.397445]},
+    center: {type: Array, default: function () { return this.$store.getters.getDefaultMapCenter }},
     zoom: {type: Number, default: 15},
     width: {default: '100%'},
     height: {default: '500px'},
