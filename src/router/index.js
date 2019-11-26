@@ -39,9 +39,8 @@ const router = new Router({
         {path: 'aggiungi',
           // addEditBene
           component: Bene,
-          props: (route) => ({
-            title: 'Aggiungi un bene',
-            id: route.query.id
+          props: () => ({
+            title: 'Aggiungi un bene'
           })
         },
         {path: 'modifica/:id',
@@ -49,7 +48,7 @@ const router = new Router({
           component: Bene,
           props: (route) => ({
             title: 'Modifica Bene',
-            id: route.query.id,
+            idBene: route.params.id,
             editMode: true
           })
         },
@@ -58,23 +57,15 @@ const router = new Router({
           props: (route) => ({
             title: 'Ricerca/Modifica beni'
           })
-        }
-      ]
-    },
-    {
-      path: '/dettagli_bene',
-      component: {
-        name: 'PageDettagliBene',
-        template: '<router-view/>'
-      },
-      children: [
-        {path: '',
+        },
+        {
+          path: 'dettagli_bene',
           component: ViewBene
         },
-        {path: ':id',
+        {path: 'dettagli_bene/:id',
           component: ViewBene,
           props: (route) => ({
-            id: route.query.id,
+            idBene: route.params.id,
             disallowIDChange: true
           })
         }
