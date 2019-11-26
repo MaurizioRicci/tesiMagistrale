@@ -34,8 +34,6 @@
 </template>
 
 <script>
-import DettagliBene from '@/components/pages/Bene/ViewBene'
-import EditBene from '@/components/pages/Bene/AddEditBene'
 import BeneModel from '@/assets/js/Models/beneModel'
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 import '@/assets/css/hugeModal.css'
@@ -43,10 +41,7 @@ window.axios = require('axios')
 
 export default {
   name: 'BeniUtente',
-  components: {
-    DettagliBene: DettagliBene,
-    EditBene: EditBene
-  },
+  components: {},
   filters: {ellipsizeLongText: ellipsize},
   computed: {BeneModel: () => BeneModel()},
   props: {},
