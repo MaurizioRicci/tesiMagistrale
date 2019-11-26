@@ -1,8 +1,10 @@
+// eslint-disable-next-line no-unused-vars
 import { getCookie, existCookie } from '@/assets/js/cookie'
 
 let userData
 if (existCookie('userData')) {
-  userData = JSON.parse(getCookie('userData'))
+  // si passa sempre dal login lato server a ogni lancio dell'applicazione
+  // userData = JSON.parse(getCookie('userData'))
 }
 
 const userDataStore = {

@@ -27,7 +27,8 @@
           </b-form-group>
             <b-button type="submit" variant="primary">Submit</b-button>
           <b-button type="reset" variant="danger">Reset</b-button>
-          <b-form-checkbox
+          <!-- si passa sempre dal login lato server a ogni lancio dell'applicazione -->
+          <b-form-checkbox v-if="false"
             id="checkbox-1"
             v-model="rememberMe"
             name="checkbox-1"
@@ -66,6 +67,8 @@ export default {
       // se from==to utente ha navigato direttamente a /login => si manda alla home
       // altrimenti sarebbe andato alla pagina precedente al login
       vm.prevPagePath = from.path === to.path || from.name === 'PageNotFound' ? '/home' : from
+      // l'utente va sempre alla home
+      vm.prevPagePath = '/home'
     })
   },
   computed: {
