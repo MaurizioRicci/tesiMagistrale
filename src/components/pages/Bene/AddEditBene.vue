@@ -251,6 +251,8 @@ export default {
     // @vuese
     // invio effettivo dei dati al server. form ok & utente è sicuro di quello che fa
     sendData () {
+      // poi se va tutto bene bisogna incrementare l'id dell'ultimo bene usato
+      // this.$store.commit('incrementaBeneUltimoID')
     },
     getDictFuncs () { return dict },
     ingrandisciMappa () {
@@ -263,6 +265,10 @@ export default {
     }
   },
   mounted () {
+    if (!this.editMode) {
+      // se non si modifica allora si aggiunge e quindi diamo noi l'id del bene da creare
+      this.form.id = this.$store.getters.beneUltimoID + 1
+    }
     if (this.idBene && this.editMode) {
       this.fetchDataByID(this.idBene, this.idUtente)
     }

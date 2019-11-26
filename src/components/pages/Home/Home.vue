@@ -99,7 +99,11 @@ export default {
           username: this.$store.getters.getUserData.username,
           password: this.$store.getters.getUserData.password,
           switch_bene: this.cercaInArchivioTemp ? 'miei_temp' : 'miei_aggiunti'
-        })).then(function (resp) { this.data = resp.data }.bind(this))
+        })).then(function (resp) {
+        this.data = resp.data
+        // salvo nello store l'ultimo ID usato per un bene
+        this.$store.commit('acquisisciBeneUltimoID', resp.data.ultimo_id_bene)
+      }.bind(this))
     },
     logout () {
       // cancello il cookie con i dati utente (se presente)
