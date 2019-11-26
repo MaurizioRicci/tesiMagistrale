@@ -156,7 +156,7 @@
         </transition>
         <b-col :cols="mapCols">
           <MyMap ref="myMap" @ingrandisci-mappa="ingrandisciMappa"
-          v-model="form.polygon" :zoom="edit ? 17 : 10"
+          v-model="form.polygon" :zoom="editMode ? 17 : 10"
            @rimpicciolisci-mappa="rimpicciolisciMappa"/>
         </b-col>
       </b-row>
@@ -188,6 +188,7 @@ import DettagliBene from '@/components/pages/Bene/ViewBene' // questo poi andrà
 import '@/assets/css/hugeModal.css'
 import '@/assets/css/slideFadeTransition.css'
 const axios = require('axios')
+const qs = require('qs')
 
 export default {
   name: 'AggiungiModificaBene',
@@ -246,6 +247,9 @@ export default {
       if (this.$refs.form_bene.checkValidity()) {
         // se il form è ok, chiedo la conferma
         this.waitUserConfirmation = true
+      } else {
+        this.$vueEventBus.$emit('master-page-show-msg',
+          ['Attenzione', 'Non hai finito di compilare i campi richiesti.'])
       }
     },
     // @vuese
@@ -253,6 +257,13 @@ export default {
     sendData () {
       // poi se va tutto bene bisogna incrementare l'id dell'ultimo bene usato
       // this.$store.commit('incrementaBeneUltimoID')
+      let postData = Object.assign(this.form, this.$store.getters.getUserData)
+      axios.post(this.$store.getters.aggiungiBeneURL, qs.stringify(postData))
+        .then(ok => {
+          this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
+        }, fail => {
+          this.$vueEventBus.$emit('master-page-show-msg', ['Errore', fail.response.data.msg])
+        })
     },
     getDictFuncs () { return dict },
     ingrandisciMappa () {

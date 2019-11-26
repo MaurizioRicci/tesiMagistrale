@@ -7,7 +7,7 @@ const serverURLsStore = {
     userStats: '/userStats.php',
     elencoProvince: '/options/map/elencoProvince.php', // per settare il centro della mappa di default
     // URL per i beni
-    aggiungiBene: '/inserisci/bene/crea.php',
+    aggiungiBene: '/inserisci/beni/crea.php',
     filtraIdent: '/filtraIdent.php',
     filtraToponimo: '/filtraToponimi.php',
     filtraComune: '/filtraComuni.php',
@@ -25,7 +25,7 @@ const serverURLsStore = {
     elencoProvinceURL: state => state.serverURL + state.elencoProvince,
     // URL per i beni
     aggiungiBeneURL: state => state.serverURL + state.aggiungiBene,
-    filtraIdentURL: state => state.serverURL + state.filtraBeni,
+    filtraIdentURL: state => state.serverURL + state.filtraIdent,
     filtraToponimoURL: state => state.serverURL + state.filtraToponimo,
     filtraComuneURL: state => state.serverURL + state.filtraComune,
     dettagliBeneURL: state => state.serverURL + state.dettagliBene,

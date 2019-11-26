@@ -12,7 +12,8 @@ const MyMapOptions = () => import('@/components/pages/Options/MapOptions')
 const BeniAggiuntiTemp = () => import('@/components/pages/Bene/BeniAggiuntiTemp')
 const manageUsers = () => import('@/components/pages/Utente/GestisciUtenti')
 
-const isAuthenticated = () => store.getters.loggedIn
+// solo per il debug OR true
+const isAuthenticated = () => store.getters.loggedIn || true
 
 Vue.use(Router)
 

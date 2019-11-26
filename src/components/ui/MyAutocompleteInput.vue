@@ -63,12 +63,18 @@ export default {
   },
   data () {
     return {
+      // currVal memorizza sia gli attributi del suggerimento scelto (es: ID) sia
+      // il suggerimento come testo. Esso è l'output di v-model
       currVal: {},
       bs_input: null,
       loading: false,
       error: false,
       arr: [],
-      listeners: {},
+      listeners: {
+        'click': null,
+        'keydonw': null,
+        'input': null
+      },
       state: {
         listClosed: true,
         activeInput: false
@@ -82,11 +88,16 @@ export default {
     show: function () {
       this.state.listClosed = false
     },
+    // @vuese
+    // Si possono registrare listener sull'input gestito da questo componente.
+    // Gli input supportati sono click, keydown, input
     addEventListener: function (event, func) {
       this.listeners[event] = func
     },
     updateValue: function (value) {
       this.currVal = value
+      this.bs_input.value = value.value
+      this.validate()
       this.$emit('input', value.value)
     },
     onSuggestionPicked: function () {
