@@ -1,7 +1,7 @@
 <template>
   <b-container fluid class="p-0">
     <b-navbar toggleable="lg" type="dark" variant="info" class="mb-1">
-      <b-navbar-brand to="home">Home</b-navbar-brand>
+      <b-navbar-brand to="/home">Home</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
 

@@ -15,7 +15,7 @@ export default {
       // form con i dati originali del server sul bene
       formRetrived: getModelloBene(),
       // valore di default per la mappa
-      mapCenter: [43.7086433, 10.3891619]
+      mapCenter: this.$store.getters.getDefaultMapCenter
     }
   },
   props: {
@@ -27,6 +27,11 @@ export default {
     cercaInArchivioTemp: Boolean
   },
   methods: {
+    resetData () {
+      this.form = getModelloBene()
+      this.formRetrived = getModelloBene()
+      this.mapCenter = this.$store.getters.getDefaultMapCenter
+    },
     getModel () {
       return getModelloBene()
     },

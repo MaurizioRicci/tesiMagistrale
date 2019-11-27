@@ -156,7 +156,7 @@
         </transition>
         <b-col :cols="mapCols">
           <MyMap ref="myMap" @ingrandisci-mappa="ingrandisciMappa"
-          v-model="form.polygon" :zoom="editMode ? 17 : 10"
+          v-model="form.polygon" :zoom="editMode ? 17 : 10" :center="mapCenter"
            @rimpicciolisci-mappa="rimpicciolisciMappa"/>
         </b-col>
       </b-row>
@@ -255,11 +255,14 @@ export default {
     // @vuese
     // invio effettivo dei dati al server. form ok & utente è sicuro di quello che fa
     sendData () {
-      // poi se va tutto bene bisogna incrementare l'id dell'ultimo bene usato
-      // this.$store.commit('incrementaBeneUltimoID')
       let postData = Object.assign(this.form, this.$store.getters.getUserData)
-      axios.post(this.$store.getters.aggiungiBeneURL, qs.stringify(postData))
+      let storeGetters = this.$store.getters
+      // la url dipende se modifico un bene o se ne aggiungo uno
+      let url = this.editMode ? storeGetters.modificaBeneURL : storeGetters.aggiungiBeneURL
+      axios.post(url, qs.stringify(postData))
         .then(ok => {
+          // poi se va tutto bene bisogna incrementare l'id dell'ultimo bene usato
+          this.$store.commit('incrementaBeneUltimoID')
           this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
         }, fail => {
           this.$vueEventBus.$emit('master-page-show-msg', ['Errore', fail.response.data.msg])
@@ -273,15 +276,25 @@ export default {
     rimpicciolisciMappa () {
       this.mapCols = 4
       this.$nextTick(() => this.$refs.myMap.invalidateSize())
+    },
+    init () {
+      if (!this.editMode) {
+      // se non si modifica allora si aggiunge e quindi diamo noi l'id del bene da creare
+        this.form.id = this.$store.getters.beneUltimoID + 1
+      }
+      if (this.idBene && this.editMode) {
+        this.fetchDataByID(this.idBene, this.idUtente)
+      }
     }
   },
   mounted () {
-    if (!this.editMode) {
-      // se non si modifica allora si aggiunge e quindi diamo noi l'id del bene da creare
-      this.form.id = this.$store.getters.beneUltimoID + 1
-    }
-    if (this.idBene && this.editMode) {
-      this.fetchDataByID(this.idBene, this.idUtente)
+    // metterer tutto dentro init poichè non si può invocare nuovamente mounted
+    this.init()
+  },
+  watch: {
+    $route (to, from) {
+      this.resetData()
+      this.init()
     }
   }
 }
