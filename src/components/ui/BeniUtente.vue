@@ -7,11 +7,13 @@ oppure quelli che ha in revisione -->
         <template v-slot:status="{row}">
           <div :class="{
             'bg-warning': BeneModel.isIncomplete.call(row),
-            'bg-danger': BeneModel.isIncorrect.call(row)
-            }" class="mt-1">
+            'bg-danger': BeneModel.isIncorrect.call(row),
+            'bg-success': BeneModel.isReady.call(row)
+            }" class="mt-1 rounded">
           <span v-if="BeneModel.isRev.call(row)">In revisione</span>
           <span v-else-if="BeneModel.isIncorrect.call(row)" class="text-light">Da rivedere</span>
           <span v-else-if="BeneModel.isIncomplete.call(row)" class="text-light">Bozza</span>
+          <span v-else-if="BeneModel.isReady.call(row)" class="text-light">Pronto per invio</span>
           </div>
         </template>
 
