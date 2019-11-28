@@ -28,7 +28,7 @@
             <b-button type="submit" variant="primary">Submit</b-button>
           <b-button type="reset" variant="danger">Reset</b-button>
           <!-- si passa sempre dal login lato server a ogni lancio dell'applicazione -->
-          <b-form-checkbox v-if="false"
+          <b-form-checkbox v-if="true"
             id="checkbox-1"
             v-model="rememberMe"
             name="checkbox-1"

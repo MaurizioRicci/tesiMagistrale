@@ -24,6 +24,25 @@ oppure quelli che ha in revisione -->
              v-if="BeneModel.isIncomplete.call(row) || BeneModel.isIncorrect.call(row)">Modifica</b-button>
           </b-button-group>
         </template>
+
+        <div slot="msg_validatore" slot-scope="{row, update, setEditing, isEditing, revertValue}">
+          <!-- class="d-inline-block w-100" da spessore per la modifica della cella
+           anche se la cella ha come contenuto stringa vuota (utente appena aggiunto) -->
+          <span v-if="!editMsgValidatore">{{row.msg_validatore}}</span>
+          <div v-else>
+            <span @click="setEditing(true)" v-if="!isEditing()">
+              <a class="d-inline-block w-100">{{row.msg_validatore}}</a>
+            </span>
+            <span v-else>
+                <input type="text" v-model="row.msg_validatore">
+                <b-button type="button" class="btn btn-info btn-xs"
+                  @click="update(row.msg_validatore); setEditing(false); inviaSegnalazione(row);">Submit</b-button>
+                <button type="button" class="btn btn-default btn-xs"
+                  @click="revertValue(); setEditing(false)">Cancel</button>
+            </span>
+          </div>
+        </div>
+
     </v-client-table>
 
   <b-modal title="Dettagli" size="huge"
@@ -54,7 +73,12 @@ export default {
     DettagliBene: DettagliBene,
     EditBene: EditBene
   },
-  computed: {BeneModel: () => BeneModel()},
+  computed: {
+    BeneModel: () => BeneModel(),
+    editMsgValidatore: function () {
+      return this.$store.getters.getUserData.role === 'revisore'
+    }
+  },
   props: {cercaInArchivioTemp: Boolean},
   methods: {
     openModalEdit: function (idBene, idUtente) {
@@ -74,6 +98,29 @@ export default {
           password: this.$store.getters.getUserData.password,
           switch_bene: this.cercaInArchivioTemp ? 'miei_temp' : 'miei_aggiunti'
         })).then(function (resp) { this.tableData = resp.data }.bind(this))
+    },
+    getHiddenColums () {
+      // nasconde la colonna msg_validatore se si chiedono i beni approvati dell'utente
+      let res = []
+      if (this.cercaInArchivioTemp) res = []
+      else res = ['msg_validatore']
+      return res
+    },
+    inviaSegnalazione (row) {
+      if (!this.BeneModel.isRev.call(row)) {
+        this.$vueEventBus.$emit('master-page-show-msg',
+          ['Errore', 'Puoi segnalare solo i beni in revisione'])
+        return
+      }
+      let postData = Object.assign(row, this.$store.getters.getUserData)
+      axios.post(this.$store.getters.segnalaBeneURL, qs.stringify(postData))
+        .then(ok => this.$vueEventBus.$emit('master-page-show-msg',
+          ['Info', 'Bene segnalato correttamente']))
+        .catch(error => {
+          let msg = (error.response && error.response.data.msg) || error.message
+          this.$vueEventBus.$emit('master-page-show-msg',
+            ['Errore', msg])
+        })
     }
   },
   data: function () {
@@ -100,7 +147,9 @@ export default {
       tableData: [],
       options: {
         filterable: true,
-        filterByColumn: true
+        filterByColumn: true,
+        editableColumns: ['msg_validatore'],
+        hiddenColumns: this.getHiddenColums()
       }
     }
   },

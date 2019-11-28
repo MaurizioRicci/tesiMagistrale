@@ -9,6 +9,7 @@ const serverURLsStore = {
     // URL per i beni
     aggiungiBene: '/inserisci/beni/crea.php',
     modificaBene: '/modifica/beni/modifica.php',
+    segnalaBene: '/valida/beni/segnala.php',
     filtraIdent: '/filtraIdent.php',
     filtraToponimo: '/filtraToponimi.php',
     filtraComune: '/filtraComuni.php',
@@ -27,6 +28,7 @@ const serverURLsStore = {
     // URL per i beni
     aggiungiBeneURL: state => state.serverURL + state.aggiungiBene,
     modificaBeneURL: state => state.serverURL + state.modificaBene,
+    segnalaBeneURL: state => state.serverURL + state.segnalaBene,
     filtraIdentURL: state => state.serverURL + state.filtraIdent,
     filtraToponimoURL: state => state.serverURL + state.filtraToponimo,
     filtraComuneURL: state => state.serverURL + state.filtraComune,
