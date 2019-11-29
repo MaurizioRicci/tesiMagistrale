@@ -15,7 +15,7 @@ export default () => {
     macroEpocaOrig: '',
     macroEpocaCar: '',
     toponimo: '',
-    esitenza: '',
+    esistenza: '',
     comune: '',
     bibliografia: '',
     schedatori_iniziali: '',

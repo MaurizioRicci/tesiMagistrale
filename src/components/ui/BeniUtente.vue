@@ -50,11 +50,11 @@ oppure quelli che ha in revisione -->
   :cancel-disabled="true" v-model="modalShowView">
     <Dettagli-bene :idBene="idBene"
     :cercaInArchivioTemp="cercaInArchivioTemp"
-    :idUtente="idUtente"/>
+    :idUtente="idUtente" no-menu/>
   </b-modal>
   <b-modal title="Modifica" size="huge"
     :cancel-disabled="true" v-model="modalShowEdit">
-        <EditBene :idBene="idBene"
+        <EditBene :idBene="idBene" :idUtente="idUtente" edit-mode no-menu
           :cercaInArchivioTemp="cercaInArchivioTemp"/>
   </b-modal>
 </div>

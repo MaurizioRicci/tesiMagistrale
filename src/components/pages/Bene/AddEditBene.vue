@@ -149,8 +149,10 @@
               </b-form-group>
               <b-button variant="primary" @click="goBack">Indietro</b-button>
               <b-button type="reset" variant="danger" v-on:click="onReset">Reset</b-button>
-              <b-button type="submit" variant="primary">Invia</b-button>
-              <b-button v-if="!editMode" type="submit" variant="primary">Invia e acquisisci altro bene</b-button>
+              <b-button type="submit" variant="primary"
+                @click="() => this.leavePage = true">Invia</b-button>
+              <b-button v-if="!editMode" type="submit" variant="primary"
+                @click="() => this.leavePage = false">Invia e acquisisci altro bene</b-button>
             </b-form>
           </b-col>
         </transition>
@@ -207,7 +209,8 @@ export default {
       mapCols: 4,
       sendBtnClicked: false,
       serverRespOk: false, // serve per innescare il messaggio di bene creato/modificato,
-      waitUserConfirmation: false // apre il messaggio: sei sicuro di inviare il bene?
+      waitUserConfirmation: false, // apre il messaggio: sei sicuro di inviare il bene?
+      leavePage: true // decide se lasciare la pagina dopo aggiunta/modifica o se rimanere
     }
   },
   props: {
@@ -264,6 +267,10 @@ export default {
           // poi se va tutto bene bisogna incrementare l'id dell'ultimo bene usato
           this.$store.commit('incrementaBeneUltimoID')
           this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
+          if (this.leavePage) {
+            this.$vueEventBus.$once('master-page-show-msg-ok',
+              () => this.goBack())
+          }
         }, fail => {
           this.$vueEventBus.$emit('master-page-show-msg', ['Errore', fail.response.data.msg])
         })

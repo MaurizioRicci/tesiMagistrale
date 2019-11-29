@@ -3,6 +3,7 @@ import {MultiPolygon} from '@/assets/js/Models/multiPolygonModel'
 // eslint-disable-next-line no-unused-vars
 import getModelloBene, {statusBene} from '@/assets/js/Models/beneModel'
 import lodashclonedeep from 'lodash.clonedeep'
+import { Polygon } from '../../assets/js/Models/multiPolygonModel'
 const axios = require('axios')
 const qs = require('qs')
 
@@ -64,11 +65,14 @@ export default {
             // T.form.polygon
             let newPolygon = new MultiPolygon()
               .buildFromGeoJSON(geojson).findPolygonByIndex(0)
-
-            T.mapCenter = ok.data.centroid.coordinates
-            // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
-            // occorre fare lo scambio
-            T.mapCenter = [T.mapCenter[1], T.mapCenter[0]]
+            newPolygon = newPolygon || new Polygon()
+            let centroid = ok.data.centroid
+            if (centroid) {
+              T.mapCenter = centroid.coordinates
+              // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
+              // occorre fare lo scambio
+              T.mapCenter = [T.mapCenter[1], T.mapCenter[0]]
+            }
             // T.$set(T.form, 'polygon', newPolygon)
             for (let k in T.form) {
               T.form[k] = ok.data[k]

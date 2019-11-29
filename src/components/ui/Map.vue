@@ -109,7 +109,10 @@ export default {
     // se cambia la proprietà aggiorno anche la copia del dato
     polygon: {
       deep: true,
-      handler (val) { this.currPolygon = val }
+      handler (val) {
+        this.currPolygon = val
+        this.invalidateSize()
+      }
     }
   },
   mounted () {
