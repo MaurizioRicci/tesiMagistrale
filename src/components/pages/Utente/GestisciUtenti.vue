@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import pageCommonMixin from '@/components/mixins/PageCommon'
+import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
 const qs = require('qs')
 const axios = require('axios')
@@ -79,7 +79,7 @@ const _values = require('lodash.values')
 export default {
   name: 'GestisciUtenti',
   components: {Menu},
-  mixins: [pageCommonMixin],
+  mixins: [commonPageMixin],
   data () {
     return {
       errors: {

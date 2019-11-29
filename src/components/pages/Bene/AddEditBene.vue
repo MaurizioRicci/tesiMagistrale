@@ -175,7 +175,7 @@
 </template>
 
 <script>
-import pageCommonMixin from '@/components/mixins/PageCommon'
+import commonPageMixin from '@/components/mixins/CommonPage'
 import BeneToolTip from '@/components/ui/BeneToolTip'
 import dettagliBeneMixin from '@/components/mixins/DettagliBene'
 import * as dict from '@/assets/js/loadDict'
@@ -201,7 +201,7 @@ export default {
     MyMap,
     BeneToolTip
   },
-  mixins: [pageCommonMixin, dettagliBeneMixin],
+  mixins: [commonPageMixin, dettagliBeneMixin],
   data () {
     return {
       mapCols: 4,

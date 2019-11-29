@@ -22,11 +22,11 @@
 
 <script>
 import Menu from '@/components/ui/Menu'
-import pageCommonMixin from '@/components/mixins/PageCommon'
+import commonPageMixin from '@/components/mixins/CommonPage'
 import BeniUtente from '@/components/ui/BeniUtente'
 export default {
   name: 'BeniAggiuntiInRevisione',
-  mixins: [pageCommonMixin],
+  mixins: [commonPageMixin],
   components: { Menu, BeniUtente }
 }
 </script>

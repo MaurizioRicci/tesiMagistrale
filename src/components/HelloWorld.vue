@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import pageCommonMixin from '@/components/mixins/PageCommon'
+import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
 
 export default {
   name: 'HelloWorld',
   components: {Menu},
-  mixins: [pageCommonMixin],
+  mixins: [commonPageMixin],
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'

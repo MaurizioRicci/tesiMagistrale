@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import pageCommonMixin from '@/components/mixins/PageCommon'
+import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
 import { LMap, LTileLayer, LGeoJson, LMarker, LPopup } from 'vue2-leaflet'
 import axios from 'axios'
@@ -36,7 +36,7 @@ import axios from 'axios'
 export default {
   name: 'MapOptions',
   components: {Menu, LMap, LTileLayer, LGeoJson, LMarker, LPopup},
-  mixins: [pageCommonMixin],
+  mixins: [commonPageMixin],
   data () {
     return {
       zoom: 6,

@@ -117,14 +117,14 @@
 <script>
 import Menu from '@/components/ui/Menu'
 import MyMap from '@/components/ui/Map'
-import pageCommonMixin from '@/components/mixins/PageCommon'
+import commonPageMixin from '@/components/mixins/CommonPage'
 import dettagliBeneMixin from '@/components/mixins/DettagliBene'
 import '@/assets/css/slideFadeTransition.css'
 
 export default {
   name: 'VisualizzaBene',
   components: { Menu, MyMap },
-  mixins: [pageCommonMixin, dettagliBeneMixin],
+  mixins: [commonPageMixin, dettagliBeneMixin],
   data () {
     return {
       mapCols: 4

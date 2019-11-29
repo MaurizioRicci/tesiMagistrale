@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import pageCommonMixin from '@/components/mixins/PageCommon'
+import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 
 export default {
   name: 'BeniRicercaApprovati',
   components: {Menu, RicercaBeniApprovati},
-  mixins: [pageCommonMixin],
+  mixins: [commonPageMixin],
   data () {
     return {}
   }

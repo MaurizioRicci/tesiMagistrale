@@ -21,7 +21,8 @@ oppure quelli che ha in revisione -->
           <b-button-group vertical>
             <b-button @click="() => openModalView(row.id, row.id_utente)" class="pt-1">Vedi dettagli</b-button>
             <b-button @click="() => openModalEdit(row.id, row.id_utente)" class="pt-1"
-             v-if="BeneModel.isIncomplete.call(row) || BeneModel.isIncorrect.call(row)">Modifica</b-button>
+             v-if="BeneModel.isIncomplete.call(row) || BeneModel.isIncorrect.call(row) ||
+             BeneModel.isReady.call(row)">Modifica</b-button>
           </b-button-group>
         </template>
 

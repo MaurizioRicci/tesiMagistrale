@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import pageCommonMixin from '@/components/mixins/PageCommon'
+import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
 import {deleteCookie} from '@/assets/js/cookie'
 import axios from 'axios'
@@ -73,7 +73,7 @@ import qs from 'qs'
 export default {
   name: 'Home',
   components: {Menu},
-  mixins: [pageCommonMixin],
+  mixins: [commonPageMixin],
   data () {
     return {
       data: {}
