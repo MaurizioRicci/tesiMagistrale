@@ -18,6 +18,13 @@ Polygon.prototype.clone = function () {
 }
 
 Polygon.prototype.getLatLngs = function () { return this.latlngArr }
+
+Polygon.prototype.getLongLats = function () {
+  // inverto latitudine con longitudine
+  // leaflet vuole lat-long. PostGIS long-lat
+  return this.latlngArr.map(pairLatLng => [pairLatLng[1], pairLatLng[0]])
+}
+
 Polygon.prototype.countVertex = function () { return this.latlngArr.length }
 Polygon.prototype.toString = function () { return JSON.stringify(this.latlngArr) }
 

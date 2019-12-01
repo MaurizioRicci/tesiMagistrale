@@ -7,6 +7,7 @@
         </b-col>
       </b-row>
       <b-row>
+      <b-col>
     <b-tabs pills card align="center">
       <b-tab title="Beni aggiunti" active>
         <BeniUtente/>
@@ -16,6 +17,7 @@
           <BeniUtente cercaInArchivioTemp/>
       </b-tab>
     </b-tabs>
+      </b-col>
       </b-row>
   </b-container>
 </template>
@@ -25,7 +27,7 @@ import Menu from '@/components/ui/Menu'
 import commonPageMixin from '@/components/mixins/CommonPage'
 import BeniUtente from '@/components/ui/BeniUtente'
 export default {
-  name: 'BeniAggiuntiInRevisione',
+  name: 'BeniAggiuntiTemp',
   mixins: [commonPageMixin],
   components: { Menu, BeniUtente }
 }

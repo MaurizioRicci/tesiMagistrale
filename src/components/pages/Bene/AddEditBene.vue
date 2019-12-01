@@ -259,6 +259,8 @@ export default {
     // invio effettivo dei dati al server. form ok & utente è sicuro di quello che fa
     sendData () {
       let postData = Object.assign(this.form, this.$store.getters.getUserData)
+      // PostGIS vuole i punti come longitudine-latitudine
+      this.form.polygon = this.form.polygon.getLongLats()
       let storeGetters = this.$store.getters
       // la url dipende se modifico un bene o se ne aggiungo uno
       let url = this.editMode ? storeGetters.modificaBeneURL : storeGetters.aggiungiBeneURL

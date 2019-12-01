@@ -12,6 +12,9 @@
               <b-badge variant="info">{{$store.getters.getUserData.username}}</b-badge>
             </h5>
             <h5>Info e statistiche</h5>
+            <p>Il tuo ruolo è
+              <b-badge variant="info">{{$store.getters.getUserData.role}}</b-badge>
+            </p>
             <p>Gli ID a te riservati variano da
               <b-badge variant="info">{{data.id_min}}</b-badge>
               a
@@ -47,7 +50,7 @@
             <p>Hai
               <b-badge variant="info">{{data.n_beni_incompleti}}</b-badge>
               <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
-              {{data.n_beni_incompleti | formatBeni}}>
+              {{data.n_beni_incompleti | formatBeni}}
                incompleti.</p>
             <p>Hai
               <b-badge variant="info">{{data.n_funzioni_incomplete}}</b-badge>

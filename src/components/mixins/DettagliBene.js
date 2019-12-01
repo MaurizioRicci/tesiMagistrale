@@ -75,7 +75,10 @@ export default {
             }
             // T.$set(T.form, 'polygon', newPolygon)
             for (let k in T.form) {
-              T.form[k] = ok.data[k]
+              if (typeof ok.data[k] !== 'undefined' &&
+                ok.data[k] !== '') {
+                T.form[k] = ok.data[k]
+              }
             }
             T.form.polygon = newPolygon
             // faccio una deep copy dei valori resi dal server
