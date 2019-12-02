@@ -64,8 +64,6 @@ export default {
             let newPolygon = new MultiPolygon()
               .buildFromGeoJSON(geojson).findPolygonByIndex(0)
             newPolygon = newPolygon || new Polygon()
-            // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
-            newPolygon = newPolygon.flipCoordinates()
             let centroid = ok.data.centroid
             if (centroid) {
               T.mapCenter = centroid.coordinates

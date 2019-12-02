@@ -20,16 +20,22 @@ oppure quelli che ha in revisione -->
         <template v-slot:azioni="{row}">
           <b-button-group vertical>
             <b-button @click="() => openModalView(row.id, row.id_utente)" class="pt-1">Vedi dettagli</b-button>
+
             <b-button @click="() => openModalEdit(row.id, row.id_utente)" class="pt-1"
-             v-if="BeneModel.isIncomplete.call(row) || BeneModel.isIncorrect.call(row) ||
-             BeneModel.isReady.call(row)">Modifica</b-button>
+              v-if="!sonoRevisore && (BeneModel.isIncomplete.call(row) || BeneModel.isIncorrect.call(row) ||
+              BeneModel.isReady.call(row))">Modifica</b-button>
+
+            <b-button v-if="sonoRevisore" @click="openModalEdit(row.id, row.id_utente)"
+               class="pt-1">Modifica e approva</b-button>
+            <b-button v-if="sonoRevisore" @click="approvaBene(row)">Approva</b-button>
+
           </b-button-group>
         </template>
 
         <div slot="msg_validatore" slot-scope="{row, update, setEditing, isEditing, revertValue}">
           <!-- class="d-inline-block w-100" da spessore per la modifica della cella
            anche se la cella ha come contenuto stringa vuota (utente appena aggiunto) -->
-          <span v-if="!editMsgValidatore">{{row.msg_validatore}}</span>
+          <span v-if="!sonoRevisore">{{row.msg_validatore}}</span>
           <div v-else>
             <span @click="setEditing(true)" v-if="!isEditing()">
               <a class="d-inline-block w-100">{{row.msg_validatore}}</a>
@@ -76,7 +82,7 @@ export default {
   },
   computed: {
     BeneModel: () => BeneModel(),
-    editMsgValidatore: function () {
+    sonoRevisore: function () {
       return this.$store.getters.getUserData.role === 'revisore'
     }
   },
@@ -117,6 +123,17 @@ export default {
       axios.post(this.$store.getters.segnalaBeneURL, qs.stringify(postData))
         .then(ok => this.$vueEventBus.$emit('master-page-show-msg',
           ['Info', 'Bene segnalato correttamente']))
+        .catch(error => {
+          let msg = (error.response && error.response.data.msg) || error.message
+          this.$vueEventBus.$emit('master-page-show-msg',
+            ['Errore', msg])
+        })
+    },
+    approvaBene (row) {
+      let postData = Object.assign(row, this.$store.getters.getUserData)
+      axios.post(this.$store.getters.approvaBeneURL, qs.stringify(postData))
+        .then(ok => this.$vueEventBus.$emit('master-page-show-msg',
+          ['Info', 'Bene approvato correttamente']))
         .catch(error => {
           let msg = (error.response && error.response.data.msg) || error.message
           this.$vueEventBus.$emit('master-page-show-msg',
