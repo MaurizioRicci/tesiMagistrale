@@ -60,12 +60,12 @@ export default {
           if (ok.data.length <= 0) {
             this.$vueEventBus.$emit('master-page-show-msg', ['Info', 'No result found'])
           } else {
-          // T.form = ok.data
             let geojson = ok.data.geojson
-            // T.form.polygon
             let newPolygon = new MultiPolygon()
               .buildFromGeoJSON(geojson).findPolygonByIndex(0)
             newPolygon = newPolygon || new Polygon()
+            // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
+            newPolygon = newPolygon.flipCoordinates()
             let centroid = ok.data.centroid
             if (centroid) {
               T.mapCenter = centroid.coordinates
@@ -73,7 +73,6 @@ export default {
               // occorre fare lo scambio
               T.mapCenter = [T.mapCenter[1], T.mapCenter[0]]
             }
-            // T.$set(T.form, 'polygon', newPolygon)
             for (let k in T.form) {
               if (typeof ok.data[k] !== 'undefined' &&
                 ok.data[k] !== '') {
