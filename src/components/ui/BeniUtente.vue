@@ -1,5 +1,3 @@
-<!-- Beni Aggiunti o In Revisione, mostra i beni aggiunti dall'utente
-oppure quelli che ha in revisione -->
 <template>
 <div>
   <v-client-table ref="myTable" :columns="columns" v-model="tableData" :options="options">
@@ -74,6 +72,8 @@ import '@/assets/css/hugeModal.css'
 const qs = require('qs')
 const axios = require('axios')
 
+// Beni Aggiunti o In Revisione, mostra i beni aggiunti dall'utente
+// oppure quelli che ha in revisione
 export default {
   name: 'BeniUtente',
   components: {

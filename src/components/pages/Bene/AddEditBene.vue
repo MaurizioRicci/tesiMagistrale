@@ -192,6 +192,7 @@ import '@/assets/css/slideFadeTransition.css'
 const axios = require('axios')
 const qs = require('qs')
 
+// Aggiunge o Modifica un bene esistente
 export default {
   name: 'AggiungiModificaBene',
   components: {
@@ -214,7 +215,8 @@ export default {
     }
   },
   props: {
-    editMode: Boolean // se vero modifica il bene, altrimenti aggiunge un nuovo bene
+    // se vero modifica il bene, altrimenti aggiunge un nuovo bene
+    editMode: Boolean
   },
   computed: {
     queryIdentificazione () {
@@ -251,6 +253,7 @@ export default {
         // se il form è ok, chiedo la conferma
         this.waitUserConfirmation = true
       } else {
+        // mostra un messaggio in un modal con un certo titolo e testo
         this.$vueEventBus.$emit('master-page-show-msg',
           ['Attenzione', 'Non hai finito di compilare i campi richiesti.'])
       }

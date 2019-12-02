@@ -1,4 +1,3 @@
-<!--Mostra una tabella con tutti i beni approvati di tutti gli utenti -->
 <template>
 <div>
   <v-server-table :columns="columns" :options="options" class="myTable"
@@ -39,6 +38,7 @@ import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 import '@/assets/css/hugeModal.css'
 window.axios = require('axios')
 
+// Mostra una tabella con tutti i beni approvati di tutti gli utenti
 export default {
   name: 'BeniUtente',
   components: {},
