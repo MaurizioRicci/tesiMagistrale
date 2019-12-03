@@ -1,7 +1,8 @@
 import {Polygon} from '@/assets/js/Models/multiPolygonModel'
 
 // piccola scorciatoia
-const exist = el => typeof el !== 'undefined' && el.trim() !== ''
+const exist = el => (typeof el !== 'undefined' &&
+  typeof el === 'string' && el.trim() !== '') || typeof el === 'number'
 
 // è una funzione perchè cosi è facilmente clonabile il modello
 export default () => {

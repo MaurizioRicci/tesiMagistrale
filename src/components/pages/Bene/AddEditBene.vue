@@ -15,6 +15,7 @@
           <b-col cols="8" v-show="12-mapCols > 0">
               <b-form @submit="onSubmit" @reset="onReset" :novalidate="true" :validated="sendBtnClicked" ref="form_bene">
               <b-form-checkbox @change="checked => checked ? form.setIncomplete() : form.setReady()"
+                :checked="form.isIncomplete()"
                 name="check-button-bozza" switch
                 id="checkbox-bozza" size="lg" class="mb-1">
                   Aggiungi alle bozze
