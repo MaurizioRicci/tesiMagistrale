@@ -1,15 +1,17 @@
 <template>
   <b-container fluid>
-      <b-row>
-        <b-col cols="12" v-if="!noMenu"><Menu/></b-col>
-        <b-col>
-          <h2 v-if="!noTitle">{{title || 'Aggiungi/Modifica un bene'}}</h2>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col>
-        </b-col>
-      </b-row>
+    <b-row>
+      <b-col cols="12" v-if="!noMenu">
+        <Menu/>
+      </b-col>
+      <b-col>
+        <h2 v-if="!noTitle">{{title || 'Aggiungi/Modifica un bene'}}</h2>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 

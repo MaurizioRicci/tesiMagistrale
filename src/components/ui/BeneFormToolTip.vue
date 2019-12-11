@@ -23,5 +23,6 @@ i vari attributi target sono id di elementi presenti nella pagina -->
     position: relative;
     z-index: 1;
     right: 20px;
+    width: 25px;
   }
 </style>
