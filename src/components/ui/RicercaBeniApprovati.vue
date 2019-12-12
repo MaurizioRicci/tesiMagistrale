@@ -96,6 +96,5 @@ export default {
 </script>
 
 <style scoped>
-    .myTable >>> table { table-layout: fixed; }
     .myTable >>> caption { caption-side: top; }
 </style>

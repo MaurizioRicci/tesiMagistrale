@@ -32,7 +32,7 @@
             </b-nav-item-dropdown>
             </b-col>
 
-            <b-col cols="1" class="ml-auto">
+            <b-col >
               <b-navbar-nav>
                 <b-nav-item to="/">
                   <span style="color:white;" :class="{'text-warning': !currUsername}"

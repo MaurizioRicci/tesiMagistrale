@@ -7,7 +7,7 @@
         </b-col>
       </b-row>
       <b-row class="mt-3" align-h="center">
-          <b-col class="text-left" cols="3">
+          <b-col class="text-left" cols="12" md="3">
             <h5>Benvenuto
               <b-badge variant="info">{{$store.getters.getUserData.username}}</b-badge>
             </h5>
