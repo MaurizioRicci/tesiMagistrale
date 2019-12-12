@@ -17,13 +17,15 @@
 
         <template v-slot:azioni="{row}">
           <b-button-group vertical>
-            <b-button @click="() => openModalView(row.id, row.id_utente)" class="pt-1">Vedi dettagli</b-button>
+            <b-button :to="'/bene/dettagli_bene/' + row.id + '/' + row.id_utente"
+             class="pt-1">Vedi dettagli</b-button>
 
-            <b-button @click="() => openModalEdit(row.id, row.id_utente)" class="pt-1"
+            <b-button :to="'/bene/modifica/' + row.id + '/' + row.id_utente"
+              class="pt-1"
               v-if="!sonoRevisore && (BeneModel.isIncomplete.call(row) || BeneModel.isIncorrect.call(row) ||
               BeneModel.isReady.call(row))">Modifica</b-button>
 
-            <b-button v-if="sonoRevisore" @click="openModalEdit(row.id, row.id_utente)"
+            <b-button v-if="sonoRevisore" :to="'/bene/modifica/' + row.id + '/' + row.id_utente"
                class="pt-1">Modifica e approva</b-button>
             <b-button v-if="sonoRevisore" @click="approvaBene(row)">Approva</b-button>
 
@@ -50,17 +52,6 @@
 
     </v-client-table>
 
-  <b-modal title="Dettagli" size="huge"
-  :cancel-disabled="true" v-model="modalShowView">
-    <Dettagli-bene :idBene="idBene"
-    :cercaInArchivioTemp="cercaInArchivioTemp"
-    :idUtente="idUtente" no-menu/>
-  </b-modal>
-  <b-modal title="Modifica" size="huge"
-    :cancel-disabled="true" v-model="modalShowEdit">
-        <EditBene :idBene="idBene" :idUtente="idUtente" edit-mode no-menu
-          :cercaInArchivioTemp="cercaInArchivioTemp"/>
-  </b-modal>
 </div>
 </template>
 
@@ -88,16 +79,6 @@ export default {
   },
   props: {cercaInArchivioTemp: Boolean},
   methods: {
-    openModalEdit: function (idBene, idUtente) {
-      this.idBene = idBene
-      this.idUtente = idUtente
-      this.modalShowEdit = true
-    },
-    openModalView: function (idBene, idUtente) {
-      this.idBene = idBene
-      this.idUtente = idUtente
-      this.modalShowView = true
-    },
     getData: function () {
       return axios.post(this.$store.getters.beniAggiuntiTempURL,
         qs.stringify({

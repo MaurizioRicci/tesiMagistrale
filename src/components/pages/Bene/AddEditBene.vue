@@ -53,7 +53,6 @@ import BeneFormAddEdit from '@/components/ui/BeneFormAddEdit'
 import Menu from '@/components/ui/Menu'
 import LoginWarning from '@/components/ui/LoginWarning'
 import MyMap from '@/components/ui/Map'
-import '@/assets/css/hugeModal.css'
 import '@/assets/css/slideFadeTransition.css'
 const axios = require('axios')
 const qs = require('qs')
