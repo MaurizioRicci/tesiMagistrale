@@ -49,6 +49,7 @@
       <b-form-group id="input-group-1" label="Ruolo:" label-for="input-ruolo" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-input id="input-ruolo" v-for="(ruolo, index) in form.ruolo"
           :key="index" :value="ruolo" type="text" disabled placeholder=""></b-form-input>
+<!-- per sincronizzare ruolo con modello dati mettere un listener su @change e fare $set(this.form, index, newVal) -->
       </b-form-group>
       <b-form-group id="input-group-1" label="Funzione:" label-for="input-funzione" label-cols-sm="6"
         label-cols-md="3" label-cols-xl="2">

@@ -43,7 +43,8 @@ const router = new Router({
           // addEditBene
           component: AddEditBene,
           props: () => ({
-            title: 'Aggiungi un bene'
+            title: 'Aggiungi un bene',
+            backTo: '/home'
           })
         },
         {
@@ -53,7 +54,8 @@ const router = new Router({
           props: (route) => ({
             title: 'Modifica Bene',
             idBene: route.params.id,
-            editMode: true
+            editMode: true,
+            backTo: '/home'
           })
         },
         {
@@ -63,26 +65,32 @@ const router = new Router({
           props: (route) => ({
             idBene: route.params.id,
             idUtente: route.params.id_utente,
-            cercaInArchivioTemp: true
+            cercaInArchivioTemp: true,
+            backTo: '/home'
           })
         },
         {
           path: 'ricerca',
           component: RicercaBeniApprovati,
           props: (route) => ({
-            title: 'Ricerca/Modifica beni'
+            title: 'Ricerca/Modifica beni',
+            backTo: '/home'
           })
         },
         {
           path: 'dettagli_bene',
-          component: ViewBene
+          component: ViewBene,
+          props: () => ({
+            backTo: '/home'
+          })
         },
         {
           path: 'dettagli_bene/:id',
           component: ViewBene,
           props: (route) => ({
             idBene: route.params.id,
-            disallowIDChange: true
+            disallowIDChange: true,
+            backTo: '/home'
           })
         },
         {
@@ -92,7 +100,8 @@ const router = new Router({
             idBene: route.params.id,
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
-            disallowIDChange: true
+            disallowIDChange: true,
+            backTo: '/home'
           })
         }
       ]
@@ -110,7 +119,8 @@ const router = new Router({
           // addEditFunzione
           component: AddEditBene,
           props: () => ({
-            title: 'Aggiungi un bene'
+            title: 'Aggiungi un bene',
+            backTo: '/home'
           })
         },
         {
@@ -120,7 +130,8 @@ const router = new Router({
           props: (route) => ({
             title: 'Modifica Bene',
             idBene: route.params.id,
-            editMode: true
+            editMode: true,
+            backTo: '/home'
           })
         },
         {
@@ -130,26 +141,32 @@ const router = new Router({
           props: (route) => ({
             idBene: route.params.id,
             idUtente: route.params.id_utente,
-            cercaInArchivioTemp: true
+            cercaInArchivioTemp: true,
+            backTo: '/home'
           })
         },
         {
           path: 'ricerca',
           component: RicercaBeniApprovati,
           props: (route) => ({
-            title: 'Ricerca/Modifica beni'
+            title: 'Ricerca/Modifica beni',
+            backTo: '/home'
           })
         },
         {
           path: 'dettagli_funzione',
-          component: ViewFunzione
+          component: ViewFunzione,
+          props: () => ({
+            backTo: '/home'
+          })
         },
         {
           path: 'dettagli_funzione/:id',
           component: ViewFunzione,
           props: (route) => ({
             idFunzione: route.params.id,
-            disallowIDChange: true
+            disallowIDChange: true,
+            backTo: '/home'
           })
         },
         {
@@ -159,7 +176,8 @@ const router = new Router({
             idBene: route.params.id,
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
-            disallowIDChange: true
+            disallowIDChange: true,
+            backTo: '/home'
           })
         }
       ]
@@ -173,7 +191,10 @@ const router = new Router({
     {
       path: '/mio_lavoro_beni',
       name: 'mioLavoroBeniPage',
-      component: BeniAggiuntiTemp
+      component: BeniAggiuntiTemp,
+      props: () => ({
+        backTo: '/home'
+      })
     },
     {
       path: '/gestisci_utenti',
