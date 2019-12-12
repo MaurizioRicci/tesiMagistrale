@@ -6,6 +6,7 @@ const Login = () => import('@/components/pages/Login/Login')
 const Home = () => import('@/components/pages/Home/Home')
 const AddEditBene = () => import('@/components/pages/Bene/AddEditBene')
 const ViewBene = () => import('@/components/pages/Bene/ViewBene')
+const ViewFunzione = () => import('@/components/pages/Funzione/ViewFunzione')
 const RicercaBeniApprovati = () => import('@/components/pages/Bene/BeniRicercaApprovati')
 const MyMap = () => import('@/components/pages/Map/MapPage')
 const MyMapOptions = () => import('@/components/pages/Options/MapOptions')
@@ -29,6 +30,7 @@ const router = new Router({
       name: 'homePage',
       component: Home
     },
+    // path per i beni
     {
       path: '/bene',
       component: {
@@ -80,6 +82,73 @@ const router = new Router({
           component: ViewBene,
           props: (route) => ({
             idBene: route.params.id,
+            disallowIDChange: true
+          })
+        },
+        {
+          path: 'dettagli_bene/:id/id_utente',
+          component: ViewBene,
+          props: (route) => ({
+            idBene: route.params.id,
+            idUtente: route.params.id_utente,
+            cercaInArchivioTemp: true,
+            disallowIDChange: true
+          })
+        }
+      ]
+    },
+    // path per le funzioni
+    {
+      path: '/funzione',
+      component: {
+        name: 'PageFunzione',
+        template: '<router-view/>'
+      },
+      children: [
+        {
+          path: 'aggiungi',
+          // addEditFunzione
+          component: AddEditBene,
+          props: () => ({
+            title: 'Aggiungi un bene'
+          })
+        },
+        {
+          path: 'modifica/:id',
+          // addEditFunzione
+          component: AddEditBene,
+          props: (route) => ({
+            title: 'Modifica Bene',
+            idBene: route.params.id,
+            editMode: true
+          })
+        },
+        {
+          path: 'modifica/:id/id_utente',
+          // addEditFunzione
+          component: AddEditBene,
+          props: (route) => ({
+            idBene: route.params.id,
+            idUtente: route.params.id_utente,
+            cercaInArchivioTemp: true
+          })
+        },
+        {
+          path: 'ricerca',
+          component: RicercaBeniApprovati,
+          props: (route) => ({
+            title: 'Ricerca/Modifica beni'
+          })
+        },
+        {
+          path: 'dettagli_funzione',
+          component: ViewFunzione
+        },
+        {
+          path: 'dettagli_funzione/:id',
+          component: ViewFunzione,
+          props: (route) => ({
+            idFunzione: route.params.id,
             disallowIDChange: true
           })
         },

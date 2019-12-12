@@ -39,11 +39,11 @@ export default {
   mixins: [dettagliBeneMixin],
   methods: {},
   created () {
-    this.fetchDataByID(this.id)
+    this.fetchBeneDataByID(this.id)
   },
   watch: {
     $route (to, from) {
-      this.fetchDataByID(this.id)
+      this.fetchBeneDataByID(this.id)
     }
   }
 }

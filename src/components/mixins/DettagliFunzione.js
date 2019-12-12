@@ -1,7 +1,5 @@
-import {MultiPolygon} from '@/assets/js/Models/multiPolygonModel'
-import getModelloBene from '@/assets/js/Models/beneModel'
+import getModelloFunzione from '@/assets/js/Models/funzioneModel'
 import lodashclonedeep from 'lodash.clonedeep'
-import { Polygon } from '../../assets/js/Models/multiPolygonModel'
 const axios = require('axios')
 const qs = require('qs')
 
@@ -10,37 +8,37 @@ export default {
   data () {
     return {
       // form con dati modificabili da utente
-      form: getModelloBene(),
+      form: getModelloFunzione(),
       // form con i dati originali del server sul bene
-      formRetrived: getModelloBene(),
+      formRetrived: getModelloFunzione(),
       // valore di default per la mappa
       mapCenter: this.$store.getters.getDefaultMapCenter
     }
   },
   props: {
-    // specifica l'id del bene da visualizzare
-    idBene: String,
-    // specifica l'id utente del proprietario del bene in archivio temporaneo
+    // specifica l'id della funzione da visualizzare
+    idFunzione: String,
+    // specifica l'id utente del proprietario della funzione in archivio temporaneo
     idUtente: String,
     // se cercare l'id in archivio temporaneo. Default: archivio definitivo
     cercaInArchivioTemp: Boolean
   },
   methods: {
     resetData () {
-      this.form = getModelloBene()
-      this.formRetrived = getModelloBene()
+      this.form = getModelloFunzione()
+      this.formRetrived = getModelloFunzione()
       this.mapCenter = this.$store.getters.getDefaultMapCenter
     },
     getModel () {
-      return getModelloBene()
+      return getModelloFunzione()
     },
     // @vuese
     // Restituisce una promessa in ogni caso, il valore dipende:
     // null se non viene eseguita la richiesta o il valore d'errore non va a buon fine
     // I dettagli del bene se la richiesta va a buon fine
-    fetchBeneDataByID (requiredID, idUtente) {
+    fetchFunzioneDataByID (requiredID, idUtente) {
       if (this.cercaInArchivioTemp && typeof idUtente === 'undefined') {
-        throw new Error('Per cercare un bene in archivio temporaneo serve anche id utente')
+        throw new Error('Per cercare una funzione in archivio temporaneo serve anche id utente')
       }
 
       const T = this
@@ -52,16 +50,12 @@ export default {
         'tmp_db': this.cercaInArchivioTemp
       }
       postData = Object.assign(postData, this.$store.getters.getUserData)
-      return axios.post(this.$store.getters.dettagliBeneURL, qs.stringify(postData))
+      return axios.post(this.$store.getters.dettagliFunzioneURL, qs.stringify(postData))
         .then(ok => {
           this.form = this.getModel()
           if (ok.data.length <= 0) {
             this.$vueEventBus.$emit('master-page-show-msg', ['Info', 'No result found'])
           } else {
-            let geojson = ok.data.geojson
-            let newPolygon = new MultiPolygon()
-              .buildFromGeoJSON(geojson).findPolygonByIndex(0)
-            newPolygon = newPolygon || new Polygon()
             let centroid = ok.data.centroid
             if (centroid) {
               T.mapCenter = centroid.coordinates
@@ -75,7 +69,9 @@ export default {
                 T.form[k] = ok.data[k]
               }
             }
-            T.form.polygon = newPolygon
+            // i due ruoli sono in JSON devo parsarli
+            T.form.ruolo = ok.data.ruolo ? JSON.parse(ok.data.ruolo) : T.form.ruolo
+            T.form.ruolor = ok.data.ruolor ? JSON.parse(ok.data.ruolor) : T.form.ruolor
             // faccio una deep copy dei valori resi dal server
             // salvo cosi due copie: originale e versione modificabile da utente
             T.formRetrived = lodashclonedeep(T.form)

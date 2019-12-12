@@ -17,8 +17,15 @@ const serverURLsStore = {
     dettagliBene: '/visualizza/beni/dettagliBene.php',
     getDizionario: '/getDictionary.php',
     beniAggiuntiTemp: '/visualizza/beni/beniAggiuntiTemp.php',
-    beniAggiuntiApprovati: '/visualizza/beni/beniAggiuntiApprovati.php'
+    beniAggiuntiApprovati: '/visualizza/beni/beniAggiuntiApprovati.php',
     // URL per le funzioni
+    aggiungiFunzione: '/inserisci/funzioni/crea.php',
+    modificaFunzione: '/modifica/funzioni/modifica.php',
+    segnalaFunzione: '/valida/funzioni/segnala.php',
+    approvaFunzione: '/valida/funzioni/valida.php',
+    dettagliFunzione: '/visualizza/funzioni/dettagliFunzione.php',
+    funzioniAggiunteTemp: '/visualizza/funzioni/funzioniAggiunteTemp.php',
+    funzioniAggiunteApprovate: '/visualizza/funzioni/funzioniAggiunteApprovate.php'
   },
   getters: {
     serverURL: state => state.serverURL,
@@ -38,10 +45,16 @@ const serverURLsStore = {
     aggiungiRelazioneURL: state => state.serverURL + state.aggiungiRelazione,
     getDizionarioURL: state => state.serverURL + state.getDizionario,
     beniAggiuntiTempURL: state => state.serverURL + state.beniAggiuntiTemp,
-    beniAggiuntiApprovatiURL: state => state.serverURL + state.beniAggiuntiApprovati
+    beniAggiuntiApprovatiURL: state => state.serverURL + state.beniAggiuntiApprovati,
     // URL per le funzioni
-  },
-  mutations: {}
+    aggiungiFunzioneURL: state => state.serverURL + state.aggiungiFunzione,
+    modificaFunzioneURL: state => state.serverURL + state.modificaFunzione,
+    segnalaFunzioneURL: state => state.serverURL + state.segnalaFunzione,
+    approvaFunzioneURL: state => state.serverURL + state.approvaFunzione,
+    dettagliFunzioneURL: state => state.serverURL + state.dettagliFunzione,
+    funzioniAggiunteTempURL: state => state.serverURL + state.funzioniAggiunteTemp,
+    funzioniAggiunteApprovateURL: state => state.serverURL + state.funzioniAggiunteApprovate
+  }
 }
 
 export default serverURLsStore

@@ -6,7 +6,7 @@
         label-for="input-id" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-input
           id="input-id"
-          type="text"
+          type="number"
           v-model="form.id"
           placeholder=""
           autocomplete="off"
@@ -108,12 +108,6 @@ export default {
   },
   computed: {
     polygonStr: function () { return this.form.polygon.toString() }
-  },
-  watch: {
-    form: {
-      deep: true,
-      handler: function () { this.$emit('change', this.form) }
-    }
   }
 }
 </script>

@@ -140,7 +140,7 @@ export default {
         this.form.id = this.$store.getters.beneUltimoID + 1
       }
       if (this.idBene && this.editMode) {
-        this.fetchDataByID(this.idBene, this.idUtente)
+        this.fetchBeneDataByID(this.idBene, this.idUtente)
       }
     }
   },
