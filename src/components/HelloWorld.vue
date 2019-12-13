@@ -19,6 +19,7 @@
 import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
 
+// Io sono solo un componente da cui copiare il template ogni volta.
 export default {
   name: 'HelloWorld',
   components: {Menu},

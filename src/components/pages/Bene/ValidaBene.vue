@@ -47,6 +47,7 @@ import MyMap from '@/components/ui/Map'
 const axios = require('axios')
 const qs = require('qs')
 
+// Valida un bene mostrando il confronto con la versione in archivio definitivo
 export default {
   name: 'ValidaBene',
   components: {Menu, BeneFormView, BeneFormAddEdit, MyMap},
