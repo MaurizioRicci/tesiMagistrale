@@ -59,13 +59,14 @@ const router = new Router({
           })
         },
         {
-          path: 'modifica/:id/id_utente',
+          path: 'modifica/:id/:id_utente',
           // addEditBene
           component: AddEditBene,
           props: (route) => ({
             idBene: route.params.id,
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
+            editMode: true,
             backTo: '/home'
           })
         },
@@ -135,13 +136,14 @@ const router = new Router({
           })
         },
         {
-          path: 'modifica/:id/id_utente',
+          path: 'modifica/:id/:id_utente',
           // addEditFunzione
           component: AddEditBene,
           props: (route) => ({
             idBene: route.params.id,
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
+            editMode: true,
             backTo: '/home'
           })
         },

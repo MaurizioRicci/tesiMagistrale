@@ -32,17 +32,6 @@
           @rimpicciolisci-mappa="rimpicciolisciMappa"/>
       </b-col>
     </b-row>
-    <b-toast id="confirm-toast" title="Richiesta conferma" solid no-auto-hide
-      toaster="b-toaster-bottom-full" variant="secondary" v-model="waitUserConfirmation">
-      <div class="">
-        <div class="row justify-content-center">
-          <p>Fintanto che il bene sarà in attesa revisione non potrai modificarlo</p>
-        </div>
-        <div class="row justify-content-center">
-          <b-button @click="sendData">Conferma</b-button>
-        </div>
-      </div>
-    </b-toast>
   </b-container>
 </template>
 
@@ -72,7 +61,6 @@ export default {
       mapCols: 4,
       sendBtnClicked: false,
       serverRespOk: false, // serve per innescare il messaggio di bene creato/modificato,
-      waitUserConfirmation: false, // apre il messaggio: sei sicuro di inviare il bene?
       leavePage: true // decide se lasciare la pagina dopo aggiunta/modifica o se rimanere
     }
   },
@@ -95,8 +83,7 @@ export default {
       this.sendBtnClicked = true
       evt.preventDefault()
       if (this.$refs.form_bene.checkValidity()) {
-        // se il form è ok, chiedo la conferma
-        this.waitUserConfirmation = true
+        this.sendData()
       } else {
         // mostra un messaggio in un modal con un certo titolo e testo
         this.$vueEventBus.$emit('master-page-show-msg',

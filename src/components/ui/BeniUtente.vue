@@ -6,9 +6,10 @@
           <div :class="{
             'bg-warning': BeneModel.isIncomplete.call(row),
             'bg-danger': BeneModel.isIncorrect.call(row),
-            'bg-success': BeneModel.isReady.call(row)
+            'bg-success': BeneModel.isReady.call(row),
+            'bg-info': BeneModel.isRev.call(row)
             }" class="mt-1 rounded">
-          <span v-if="BeneModel.isRev.call(row)">In revisione</span>
+          <span v-if="BeneModel.isRev.call(row)" class="text-light">In revisione</span>
           <span v-else-if="BeneModel.isIncorrect.call(row)" class="text-light">Da rivedere</span>
           <span v-else-if="BeneModel.isIncomplete.call(row)" class="text-light">Bozza</span>
           <span v-else-if="BeneModel.isReady.call(row)" class="text-light">Pronto per invio</span>
@@ -77,7 +78,10 @@ export default {
       return this.$store.getters.getUserData.role === 'revisore'
     }
   },
-  props: {cercaInArchivioTemp: Boolean},
+  props: {
+    cercaInArchivioTemp: Boolean,
+    update: Boolean
+  },
   methods: {
     getData: function () {
       return axios.post(this.$store.getters.beniAggiuntiTempURL,
@@ -154,6 +158,9 @@ export default {
   },
   mounted () {
     this.getData()
+  },
+  watch: {
+    update: function (val) { this.getData() }
   }
 }
 </script>

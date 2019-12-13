@@ -18,6 +18,7 @@ const serverURLsStore = {
     getDizionario: '/getDictionary.php',
     beniAggiuntiTemp: '/visualizza/beni/beniAggiuntiTemp.php',
     beniAggiuntiApprovati: '/visualizza/beni/beniAggiuntiApprovati.php',
+    beniMettiInRevisione: '/modifica/beni/mettiInRev.php',
     // URL per le funzioni
     aggiungiFunzione: '/inserisci/funzioni/crea.php',
     modificaFunzione: '/modifica/funzioni/modifica.php',
@@ -25,7 +26,8 @@ const serverURLsStore = {
     approvaFunzione: '/valida/funzioni/valida.php',
     dettagliFunzione: '/visualizza/funzioni/dettagliFunzione.php',
     funzioniAggiunteTemp: '/visualizza/funzioni/funzioniAggiunteTemp.php',
-    funzioniAggiunteApprovate: '/visualizza/funzioni/funzioniAggiunteApprovate.php'
+    funzioniAggiunteApprovate: '/visualizza/funzioni/funzioniAggiunteApprovate.php',
+    funzioniMettiInRevisione: '/modifica/funzioni/mettiInRev.php'
   },
   getters: {
     serverURL: state => state.serverURL,
@@ -46,6 +48,7 @@ const serverURLsStore = {
     getDizionarioURL: state => state.serverURL + state.getDizionario,
     beniAggiuntiTempURL: state => state.serverURL + state.beniAggiuntiTemp,
     beniAggiuntiApprovatiURL: state => state.serverURL + state.beniAggiuntiApprovati,
+    beniMettiInRevisioneURL: state => state.serverURL + state.beniMettiInRevisione,
     // URL per le funzioni
     aggiungiFunzioneURL: state => state.serverURL + state.aggiungiFunzione,
     modificaFunzioneURL: state => state.serverURL + state.modificaFunzione,
@@ -53,7 +56,8 @@ const serverURLsStore = {
     approvaFunzioneURL: state => state.serverURL + state.approvaFunzione,
     dettagliFunzioneURL: state => state.serverURL + state.dettagliFunzione,
     funzioniAggiunteTempURL: state => state.serverURL + state.funzioniAggiunteTemp,
-    funzioniAggiunteApprovateURL: state => state.serverURL + state.funzioniAggiunteApprovate
+    funzioniAggiunteApprovateURL: state => state.serverURL + state.funzioniAggiunteApprovate,
+    funzioniMettiInRevisioneURL: state => state.serverURL + state.funzioniMettiInRevisione
   }
 }
 
