@@ -115,6 +115,7 @@ export default {
         })
     },
     approvaBene (row) {
+      this.$router.push('/bene/valida/' + row.id + '/' + row.id_utente)
       let postData = Object.assign(row, this.$store.getters.getUserData)
       axios.post(this.$store.getters.approvaBeneURL, qs.stringify(postData))
         .then(ok => this.$vueEventBus.$emit('master-page-show-msg',

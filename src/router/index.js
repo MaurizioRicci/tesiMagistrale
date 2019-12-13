@@ -6,6 +6,7 @@ const Login = () => import('@/components/pages/Login/Login')
 const Home = () => import('@/components/pages/Home/Home')
 const AddEditBene = () => import('@/components/pages/Bene/AddEditBene')
 const ViewBene = () => import('@/components/pages/Bene/ViewBene')
+const ValidaBene = () => import('@/components/pages/Bene/ValidaBene')
 const ViewFunzione = () => import('@/components/pages/Funzione/ViewFunzione')
 const RicercaBeniApprovati = () => import('@/components/pages/Bene/BeniRicercaApprovati')
 const MyMap = () => import('@/components/pages/Map/MapPage')
@@ -95,7 +96,7 @@ const router = new Router({
           })
         },
         {
-          path: 'dettagli_bene/:id/id_utente',
+          path: 'dettagli_bene/:id/:id_utente',
           component: ViewBene,
           props: (route) => ({
             idBene: route.params.id,
@@ -103,6 +104,14 @@ const router = new Router({
             cercaInArchivioTemp: true,
             disallowIDChange: true,
             backTo: '/home'
+          })
+        },
+        {
+          path: 'valida/:id/:id_utente',
+          component: ValidaBene,
+          props: (route) => ({
+            idBene: route.params.id,
+            idUtente: route.params.id_utente
           })
         }
       ]
@@ -172,7 +181,7 @@ const router = new Router({
           })
         },
         {
-          path: 'dettagli_bene/:id/id_utente',
+          path: 'dettagli_bene/:id/:id_utente',
           component: ViewBene,
           props: (route) => ({
             idBene: route.params.id,

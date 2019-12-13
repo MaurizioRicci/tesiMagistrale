@@ -4,7 +4,7 @@
     <b-form :novalidate="true" :validated="validated" ref="form_bene">
       <b-form-checkbox @change="checked => checked ? form.setIncomplete() : form.setReady()"
         :checked="form.isIncomplete()"
-        name="check-button-bozza" switch
+        name="check-button-bozza" switch v-if="!noDraft"
         id="checkbox-bozza" size="lg" class="mb-1">
         Aggiungi alle bozze
       </b-form-checkbox>
@@ -135,6 +135,9 @@
       <b-form-group id="input-group-1" label="Note:" label-for="input-note" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-textarea id="input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
       </b-form-group>
+      <b-form-group id="input-group-1" label="Geometria:" label-for="input-geometria" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        <b-form-textarea disabled id="input-geometria" :value="polygonStr" type="text" placeholder=""></b-form-textarea>
+      </b-form-group>
     </b-form>
   </div>
 </template>
@@ -156,7 +159,10 @@ export default {
   mixins: [],
   props: {
     validated: Boolean,
-    form: Object
+    form: Object,
+    // non mostra la possibilità di aggiungere alle bozze
+    // serve per la validazione
+    noDraft: Boolean
   },
   model: {
     prop: 'form',
@@ -167,6 +173,7 @@ export default {
     checkValidity () { return this.$refs.form_bene.checkValidity() }
   },
   computed: {
+    polygonStr: function () { return this.form.polygon.toString() },
     queryIdentificazione () {
       return () => axios.get(this.$store.getters.filtraIdentURL, {
         params: this.form

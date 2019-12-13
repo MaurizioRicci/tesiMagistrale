@@ -7,7 +7,7 @@
         </b-col>
       </b-row>
       <b-row class="mt-3" align-h="center">
-          <b-col class="text-left" cols="12" md="3">
+          <b-col class="text-left" cols="12" md="6" lg="3">
             <h5>Benvenuto
               <b-badge variant="info">{{$store.getters.getUserData.username}}</b-badge>
             </h5>
@@ -90,8 +90,8 @@ export default {
   computed: {
     IDInEsaurimento () {
       try {
-        return Number(this.data.ultimo_id_bene) /
-        Number(this.data.id_max) >= 0.7
+        return Number(this.data.id_max) -
+          Number(this.data.ultimo_id_bene) < 50
       } catch (err) { return false }
     }
   },

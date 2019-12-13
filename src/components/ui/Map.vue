@@ -13,13 +13,15 @@ la proprietà locked; se presente disabilita la modifica -->
       </l-polygon>
 
       <l-control position="bottomleft">
-        <b-button @click="ingrandisci" v-show="!state.mappaIngrandita">
-          Ingrandisci
-        </b-button>
-        <b-button @click="rimpicciolisci" v-show="state.mappaIngrandita">
-          Rimpicciolisci
-        </b-button>
-        <b-button to="/options/map">
+        <div v-if="controls.zoom">
+          <b-button @click="ingrandisci" v-show="!state.mappaIngrandita">
+            Ingrandisci
+          </b-button>
+          <b-button @click="rimpicciolisci" v-show="state.mappaIngrandita">
+            Rimpicciolisci
+          </b-button>
+        </div>
+        <b-button to="/options/map" v-if="controls.settings">
               <font-awesome-icon :icon="['fas', 'cog']" style="color:white"/>
         </b-button>
       </l-control>
@@ -45,6 +47,7 @@ export default {
     // default map center su Pisa. Non sembra essere reactive center in vue-leaflet
     // meglio essere sicuri del centro e poi instanziare questo componente
     center: {type: Array, default: function () { return this.$store.getters.getDefaultMapCenter }},
+    controls: {type: Object, default: function () { return {zoom: true, settings: true} }},
     zoom: {type: Number, default: 15},
     width: {default: '100%'},
     height: {default: '500px'},
