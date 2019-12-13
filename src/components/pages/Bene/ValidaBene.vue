@@ -102,6 +102,7 @@ export default {
         this.formBeneArchDef = lodashclonedeep(data)
         this.mapCenterArchDef = lodashclonedeep(this.mapCenter)
       })
+    this.cercaInArchivioTemp = true
     this.fetchBeneDataByID(this.idBene, this.idUtente)
   }
 }

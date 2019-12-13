@@ -40,6 +40,9 @@ export default {
       if (this.cercaInArchivioTemp && typeof idUtente === 'undefined') {
         throw new Error('Per cercare una funzione in archivio temporaneo serve anche id utente')
       }
+      if (!this.cercaInArchivioTemp && typeof idUtente !== 'undefined') {
+        throw new Error('Hai specificato un id utente ma non il flag per cercare in archivio temporaneo')
+      }
 
       const T = this
       if (!requiredID) return Promise.resolve()
