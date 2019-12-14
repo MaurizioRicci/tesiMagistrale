@@ -13,6 +13,7 @@ const RicercaFunzioniApprovate = () => import('@/components/pages/Funzione/Funzi
 const MyMap = () => import('@/components/pages/Map/MapPage')
 const MyMapOptions = () => import('@/components/pages/Options/MapOptions')
 const BeniAggiuntiTemp = () => import('@/components/pages/Bene/BeniAggiuntiTemp')
+const FunzioniAggiunteTemp = () => import('@/components/pages/Funzione/FunzioniAggiunteTemp')
 const manageUsers = () => import('@/components/pages/Utente/GestisciUtenti')
 
 // solo per il debug OR true
@@ -69,7 +70,8 @@ const router = new Router({
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
             editMode: true,
-            backTo: '/home'
+            backTo: '/home',
+            title: 'Modifica un bene temporaneo'
           })
         },
         {
@@ -103,7 +105,8 @@ const router = new Router({
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
             disallowIDChange: true,
-            backTo: '/home'
+            backTo: '/home',
+            title: 'Visualizza un bene temporaneo'
           })
         },
         {
@@ -153,7 +156,8 @@ const router = new Router({
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
             editMode: true,
-            backTo: '/home'
+            backTo: '/home',
+            title: 'Modifica una funzione temporanea'
           })
         },
         {
@@ -175,19 +179,18 @@ const router = new Router({
           component: ViewFunzione,
           props: (route) => ({
             idFunzione: route.params.id,
-            disallowIDChange: true,
             backTo: '/home'
           })
         },
         {
-          path: 'dettagli_bene/:id/:id_utente',
-          component: ViewBene,
+          path: 'dettagli_funzione/:id/:id_utente',
+          component: ViewFunzione,
           props: (route) => ({
-            idBene: route.params.id,
+            idFunzione: route.params.id,
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
-            disallowIDChange: true,
-            backTo: '/home'
+            backTo: '/home',
+            title: 'Visualizza una funzione temporanea'
           })
         }
       ]
@@ -209,7 +212,7 @@ const router = new Router({
     {
       path: '/mio_lavoro_funzioni',
       name: 'mioLavoroFunzioniPage',
-      component: BeniAggiuntiTemp,
+      component: FunzioniAggiunteTemp,
       props: () => ({
         backTo: '/home'
       })

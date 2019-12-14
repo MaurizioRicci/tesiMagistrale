@@ -5,18 +5,18 @@
         <Menu/>
       </b-col>
       <b-col>
-        <h2 v-if="!noTitle">{{title || 'Gestione beni'}}</h2>
+        <h2 v-if="!noTitle">{{title || 'Gestione funzioni'}}</h2>
       </b-col>
     </b-row>
     <b-row>
       <b-col>
         <b-tabs pills card align="center">
-          <b-tab title="Beni aggiunti" active>
-            <BeniUtente :update="update"/>
+          <b-tab title="Funzioni aggiunte" active>
+            <FunzioniUtente :update="update"/>
           </b-tab>
-          <b-tab title="Altri Beni utente">
-            <p>Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
-            <BeniUtente cercaInArchivioTemp :update="update"/>
+          <b-tab title="Altre funzioni utente">
+            <p>Qua ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
+            <FunzioniUtente cercaInArchivioTemp :update="update"/>
             <b-button @click="waitUserConfirmation=true">Invia per il controllo</b-button>
           </b-tab>
         </b-tabs>
@@ -26,8 +26,8 @@
       toaster="b-toaster-bottom-full" variant="secondary" v-model="waitUserConfirmation">
       <div class="">
         <div class="row justify-content-center">
-          <p>I beni pronti verranno inviati al controllo,
-            fintanto che saranno in attesa revisione non potrai modificarli
+          <p>Le funzioni pronte verranno inviate al controllo,
+            fintanto che saranno in attesa revisione non potrai modificarle
           </p>
         </div>
         <div class="row justify-content-center">
@@ -41,14 +41,14 @@
 <script>
 import Menu from '@/components/ui/Menu'
 import commonPageMixin from '@/components/mixins/CommonPage'
-import BeniUtente from '@/components/ui/BeniUtente'
+import FunzioniUtente from '@/components/ui/FunzioniUtente'
 const axios = require('axios')
 const qs = require('qs')
 
 export default {
-  name: 'BeniAggiuntiTemp',
+  name: 'FunzioniAggiunteTemp',
   mixins: [commonPageMixin],
-  components: { Menu, BeniUtente },
+  components: { Menu, FunzioniUtente },
   data: function () {
     return {
       waitUserConfirmation: false,
@@ -59,7 +59,7 @@ export default {
     mettiInRevisione () {
       let postData = this.$store.getters.getUserData
       let storeGetters = this.$store.getters
-      let url = storeGetters.beniMettiInRevisioneURL
+      let url = storeGetters.funzioniMettiInRevisioneURL
       axios.post(url, qs.stringify(postData))
         .then(ok => {
           this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
