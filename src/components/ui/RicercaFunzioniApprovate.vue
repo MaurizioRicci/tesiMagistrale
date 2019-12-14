@@ -1,14 +1,24 @@
 <template>
 <div>
   <v-server-table :columns="columns" :options="options" class="myTable"
-    :url="$store.getters.beniAggiuntiApprovatiURL">
+    :url="$store.getters.funzioniAggiunteApprovateURL">
 
         <template v-slot:azioni="{row}">
           <b-button-group vertical>
-            <b-button :to="'/bene/dettagli_bene/'.concat(row.id)" class="pt-1">Vedi dettagli</b-button>
-            <b-button :to="'/bene/modifica/'.concat(row.id)" row.id class="pt-1">Modifica</b-button>
+            <b-button :to="'/funzione/dettagli_funzione/'.concat(row.id)" class="pt-1">Vedi dettagli</b-button>
+            <b-button :to="'/funzione/modifica/'.concat(row.id)" row.id class="pt-1">Modifica</b-button>
           </b-button-group>
         </template>
+
+      <template v-slot:ruolo="{row}">
+        <!-- e' un array di ruoli, li separo con virgola -->
+        {{JSON.parse(row.ruolo).join(',')}}
+      </template>
+
+        <template v-slot:ruolor="{row}">
+        <!-- e' un array di ruoli, li separo con virgola -->
+        {{JSON.parse(row.ruolor).join(',')}}
+      </template>
 
       <template v-slot:bibliografia="{row}">
         <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
@@ -20,15 +30,6 @@
         {{row.note | ellipsizeLongText()}}
       </template>
     </v-server-table>
-
-  <b-modal title="Dettagli" size="huge"
-  :cancel-disabled="true" v-model="modalShowView">
-    <Dettagli-bene :idBene="idBene" no-menu/>
-  </b-modal>
-  <b-modal title="Modifica" size="huge"
-    :cancel-disabled="true" v-model="modalShowEdit">
-        <EditBene :idBene="idBene" no-menu :editMode="true"/>
-  </b-modal>
 </div>
 </template>
 
@@ -43,39 +44,31 @@ export default {
   components: {},
   filters: {ellipsizeLongText: ellipsize},
   props: {},
-  methods: {
-    openModalEdit (idBene, idUtente) {
-      this.idBene = idBene
-      this.idUtente = idUtente
-      this.modalShowEdit = true
-    },
-    openModalView (idBene, idUtente) {
-      this.idBene = idBene
-      this.idUtente = idUtente
-      this.modalShowView = true
-    }
-  },
+  methods: {},
   data: function () {
     return {
-      idBene: '',
-      idUtente: '',
       modalShowView: false,
       modalShowEdit: false,
       columns: [
         'id',
         'azioni',
-        'identificazione',
-        'descrizione',
-        'comune',
-        'macroEpocaCar',
-        'macroEpocaOrig',
+        'denominazione',
+        'denominazioner',
+        'data',
+        'tipodata',
+        'funzione',
+        'id_bene',
+        'id_utente_bene',
+        'ruolo',
+        'id_bener',
+        'id_utente_bener',
+        'ruolor',
         'bibliografia',
         'note',
-        'toponimo',
         'schedatori_iniziali'
       ],
       options: {
-        caption: 'Questa tabella contiene tutti i beni approvati.',
+        caption: 'Questa tabella contiene tutte le funzioni approvate.',
         perPage: 25,
         filterable: true,
         filterByColumn: true,

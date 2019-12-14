@@ -13,17 +13,20 @@ la proprietà locked; se presente disabilita la modifica -->
       </l-polygon>
 
       <l-control position="bottomleft">
-        <div v-if="controls.zoom">
-          <b-button @click="ingrandisci" v-show="!state.mappaIngrandita">
-            Ingrandisci
+        <b-button-group>
+          <span v-if="controls.zoom">
+            <b-button @click="ingrandisci" v-show="!state.mappaIngrandita">
+              Ingrandisci
+            </b-button>
+            <b-button @click="rimpicciolisci" v-show="state.mappaIngrandita">
+              Rimpicciolisci
+            </b-button>
+          </span>
+          <b-button to="/options/map" v-if="controls.settings">
+            <font-awesome-icon :icon="['fas', 'cog']" style="color:white"/>
           </b-button>
-          <b-button @click="rimpicciolisci" v-show="state.mappaIngrandita">
-            Rimpicciolisci
-          </b-button>
-        </div>
-        <b-button to="/options/map" v-if="controls.settings">
-              <font-awesome-icon :icon="['fas', 'cog']" style="color:white"/>
-        </b-button>
+        </b-button-group>
+
       </l-control>
 
     </l-map>

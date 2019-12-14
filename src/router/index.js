@@ -9,6 +9,7 @@ const ViewBene = () => import('@/components/pages/Bene/ViewBene')
 const ValidaBene = () => import('@/components/pages/Bene/ValidaBene')
 const ViewFunzione = () => import('@/components/pages/Funzione/ViewFunzione')
 const RicercaBeniApprovati = () => import('@/components/pages/Bene/BeniRicercaApprovati')
+const RicercaFunzioniApprovate = () => import('@/components/pages/Funzione/FunzioniRicercaApprovate')
 const MyMap = () => import('@/components/pages/Map/MapPage')
 const MyMapOptions = () => import('@/components/pages/Options/MapOptions')
 const BeniAggiuntiTemp = () => import('@/components/pages/Bene/BeniAggiuntiTemp')
@@ -74,8 +75,7 @@ const router = new Router({
         {
           path: 'ricerca',
           component: RicercaBeniApprovati,
-          props: (route) => ({
-            title: 'Ricerca/Modifica beni',
+          props: () => ({
             backTo: '/home'
           })
         },
@@ -129,7 +129,7 @@ const router = new Router({
           // addEditFunzione
           component: AddEditBene,
           props: () => ({
-            title: 'Aggiungi un bene',
+            title: 'Aggiungi una funzione',
             backTo: '/home'
           })
         },
@@ -138,7 +138,7 @@ const router = new Router({
           // addEditFunzione
           component: AddEditBene,
           props: (route) => ({
-            title: 'Modifica Bene',
+            title: 'Modifica una funzione',
             idBene: route.params.id,
             editMode: true,
             backTo: '/home'
@@ -158,9 +158,8 @@ const router = new Router({
         },
         {
           path: 'ricerca',
-          component: RicercaBeniApprovati,
+          component: RicercaFunzioniApprovate,
           props: (route) => ({
-            title: 'Ricerca/Modifica beni',
             backTo: '/home'
           })
         },
@@ -202,6 +201,14 @@ const router = new Router({
     {
       path: '/mio_lavoro_beni',
       name: 'mioLavoroBeniPage',
+      component: BeniAggiuntiTemp,
+      props: () => ({
+        backTo: '/home'
+      })
+    },
+    {
+      path: '/mio_lavoro_funzioni',
+      name: 'mioLavoroFunzioniPage',
       component: BeniAggiuntiTemp,
       props: () => ({
         backTo: '/home'
