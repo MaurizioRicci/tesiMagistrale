@@ -107,7 +107,7 @@ export default {
           if (this.leavePage) {
             this.$vueEventBus.$once('master-page-show-msg-ok',
               () => this.goBack())
-          }
+          } else { this.init() }
         }, fail => {
           this.$vueEventBus.$emit('master-page-show-msg', ['Errore', fail.response.data.msg])
         })
