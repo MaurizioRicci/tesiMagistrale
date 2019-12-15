@@ -123,6 +123,7 @@ export default {
     },
     updateSuggestions: function (suggestions, suggestionsPromise) {
       const T = this
+      // in presenza di errori metto lista vuota
       return T.resolveSuggestions(suggestions, suggestionsPromise)
         .then((ok) => { T.arr = ok }, fail => { T.arr = [] })
     },
@@ -141,7 +142,7 @@ export default {
           })
         } else if (suggestions) {
           resolve(suggestions)
-        } else { reject(new Error()) }
+        } else { reject(new Error('Nessun tipo di suggerimento specificato.')) }
       })
     },
     onInputClick: function (evt) {

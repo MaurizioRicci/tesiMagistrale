@@ -139,6 +139,20 @@ export default {
       this.resetData()
       this.init()
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    // called when the route that renders this component is about to
+    // be navigated away from.
+    // has access to `this` component instance.
+    let resp = true
+    // devo escludere il campo id dal confronto poichè è sicuramente diverso da
+    // quello restituito dal server dato che non c'è proprio
+    let formClone = Object.assign({}, this.form)
+    formClone.id = ''
+    if (JSON.stringify(formClone) !== JSON.stringify(this.formRetrived)) {
+      resp = window.confirm('Hai modifiche in sospeso, abbandonare la pagina?')
+    }
+    if (resp) next()
   }
 }
 </script>

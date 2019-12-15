@@ -6,7 +6,7 @@
       </b-col>
     </b-row>
         <b-row align-h="center">
-      <b-col cols="6">
+      <b-col cols="12" md="6" lg="3">
         <b-alert :show="showError" variant="danger">{{errorMsg}}</b-alert>
         <b-form @submit="onSubmit" @reset="onReset">
           <b-form-group id="input-group-1" label="Username:" label-for="input-username" label-cols="2">
