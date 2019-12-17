@@ -5,6 +5,7 @@ const Error404 = () => import('@/components/pages/Errors/Error404')
 const Login = () => import('@/components/pages/Login/Login')
 const Home = () => import('@/components/pages/Home/Home')
 const AddEditBene = () => import('@/components/pages/Bene/AddEditBene')
+const addEditFunzione = () => import('@/components/pages/Funzione/addEditFunzione')
 const ViewBene = () => import('@/components/pages/Bene/ViewBene')
 const ValidaBene = () => import('@/components/pages/Bene/ValidaBene')
 const ViewFunzione = () => import('@/components/pages/Funzione/ViewFunzione')
@@ -57,8 +58,7 @@ const router = new Router({
           props: (route) => ({
             title: 'Modifica Bene',
             idBene: route.params.id,
-            editMode: true,
-            backTo: '/home'
+            editMode: true
           })
         },
         {
@@ -70,7 +70,6 @@ const router = new Router({
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
             editMode: true,
-            backTo: '/home',
             title: 'Modifica un bene temporaneo'
           })
         },
@@ -78,14 +77,12 @@ const router = new Router({
           path: 'ricerca',
           component: RicercaBeniApprovati,
           props: () => ({
-            backTo: '/home'
           })
         },
         {
           path: 'dettagli_bene',
           component: ViewBene,
           props: () => ({
-            backTo: '/home'
           })
         },
         {
@@ -93,8 +90,7 @@ const router = new Router({
           component: ViewBene,
           props: (route) => ({
             idBene: route.params.id,
-            disallowIDChange: true,
-            backTo: '/home'
+            disallowIDChange: true
           })
         },
         {
@@ -105,7 +101,6 @@ const router = new Router({
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
             disallowIDChange: true,
-            backTo: '/home',
             title: 'Visualizza un bene temporaneo'
           })
         },
@@ -130,7 +125,7 @@ const router = new Router({
         {
           path: 'aggiungi',
           // addEditFunzione
-          component: AddEditBene,
+          component: addEditFunzione,
           props: () => ({
             title: 'Aggiungi una funzione',
             backTo: '/home'
@@ -139,24 +134,22 @@ const router = new Router({
         {
           path: 'modifica/:id',
           // addEditFunzione
-          component: AddEditBene,
+          component: addEditFunzione,
           props: (route) => ({
             title: 'Modifica una funzione',
-            idBene: route.params.id,
-            editMode: true,
-            backTo: '/home'
+            idFunzione: route.params.id,
+            editMode: true
           })
         },
         {
           path: 'modifica/:id/:id_utente',
           // addEditFunzione
-          component: AddEditBene,
+          component: addEditFunzione,
           props: (route) => ({
-            idBene: route.params.id,
+            idFunzione: route.params.id,
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
             editMode: true,
-            backTo: '/home',
             title: 'Modifica una funzione temporanea'
           })
         },
@@ -171,15 +164,13 @@ const router = new Router({
           path: 'dettagli_funzione',
           component: ViewFunzione,
           props: () => ({
-            backTo: '/home'
           })
         },
         {
           path: 'dettagli_funzione/:id',
           component: ViewFunzione,
           props: (route) => ({
-            idFunzione: route.params.id,
-            backTo: '/home'
+            idFunzione: route.params.id
           })
         },
         {
@@ -189,7 +180,6 @@ const router = new Router({
             idFunzione: route.params.id,
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
-            backTo: '/home',
             title: 'Visualizza una funzione temporanea'
           })
         }

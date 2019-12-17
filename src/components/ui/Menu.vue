@@ -18,7 +18,7 @@
 
             <b-col>
             <b-nav-item-dropdown text="Funzioni" class="d-inline-block">
-              <b-dropdown-item to="/funzione/">Aggiungi una funzione</b-dropdown-item>
+              <b-dropdown-item to="/funzione/aggiungi">Aggiungi una funzione</b-dropdown-item>
               <b-dropdown-item to="/funzione/ricerca">Ricerca/Modifica funzioni</b-dropdown-item>
             </b-nav-item-dropdown>
             </b-col>

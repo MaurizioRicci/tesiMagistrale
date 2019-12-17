@@ -74,7 +74,11 @@ export default {
             }
             // i due ruoli sono in JSON devo parsarli
             T.form.ruolo = ok.data.ruolo ? JSON.parse(ok.data.ruolo) : T.form.ruolo
+            // se non ci sono ruoli il primo vale stringa vuota
+            // serve per Vue per mostrare il campo dove scrivere
+            T.form.ruolo = T.form.ruolo.length === 0 ? [''] : T.form.ruolo
             T.form.ruolor = ok.data.ruolor ? JSON.parse(ok.data.ruolor) : T.form.ruolor
+            T.form.ruolor = T.form.ruolor.length === 0 ? [''] : T.form.ruolor
             // faccio una deep copy dei valori resi dal server
             // salvo cosi due copie: originale e versione modificabile da utente
             T.formRetrived = lodashclonedeep(T.form)

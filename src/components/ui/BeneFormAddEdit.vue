@@ -150,7 +150,7 @@ import * as dict from '@/assets/js/loadDict'
 import axios from 'axios'
 
 export default {
-  name: 'FormBeneLettura',
+  name: 'FormBeneLeggiScrivi',
   components: {
     BeneFormToolTip,
     MyAutocompleteInput,

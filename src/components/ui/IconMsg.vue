@@ -1,5 +1,5 @@
 <template>
-  <span v-b-tooltip.hover="icon_msg">
+  <span v-b-tooltip.hover="icon_msg" @click="$emit('click')">
     <font-awesome-icon :icon="['fas', icon_name]"
       :style="{ color: 'royalblue' }"/>
   </span>
