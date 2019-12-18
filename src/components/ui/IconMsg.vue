@@ -1,7 +1,7 @@
 <template>
   <span v-b-tooltip.hover="icon_msg" @click="$emit('click')">
     <font-awesome-icon :icon="['fas', icon_name]"
-      :style="{ color: 'royalblue' }"/>
+      :style="{ color: icon_color }"/>
   </span>
 </template>
 
@@ -10,7 +10,8 @@ export default {
   name: 'IconMsg',
   props: {
     icon_name: String,
-    icon_msg: String
+    icon_msg: String,
+    icon_color: {type: String, default: 'royalblue'}
   }
 }
 </script>

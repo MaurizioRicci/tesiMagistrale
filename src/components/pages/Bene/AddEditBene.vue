@@ -152,7 +152,7 @@ export default {
             this.beneOverlapTxt = 'Il bene è molto vicino ai seguenti beni:'
             let infoArr = resp.data.map(el => {
               let dist = Math.floor(Number(el.dist))
-              return el.id + ' (' + dist + 'm)'
+              return 'ID=' + el.id + ' (' + dist + 'm)'
             })
             this.beneOverlapTxt += infoArr.join(', ')
           }
