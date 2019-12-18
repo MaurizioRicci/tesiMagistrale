@@ -25,6 +25,7 @@
     "lodash.values": "^4.3.0",
     "qs": "^6.9.0",
     "vue": "^2.6.10",
+    "vue-clickaway": "^2.2.2",
     "vue-router": "^3.0.1",
     "vue-tables-2": "^1.5.43",
     "vue2-leaflet": "^2.2.1",

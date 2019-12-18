@@ -6,6 +6,7 @@
       </b-col>
       <b-col>
         <LoginWarning/>
+        <b-alert variant="warning" :show="beneOverlapTxt !== ''">{{beneOverlapTxt}}</b-alert>
         <b-alert variant="success" :show="serverRespOk">Bene creato/aggiunto</b-alert>
         <h2 v-if="!noTitle">{{title || 'Aggiungi/Modifica un bene'}}</h2>
       </b-col>
@@ -29,7 +30,8 @@
       <b-col :cols="mapCols">
         <MyMap ref="myMap" @ingrandisci-mappa="ingrandisciMappa"
           v-model="form.polygon" :zoom="editMode ? 17 : 10" :center="mapCenter"
-          @rimpicciolisci-mappa="rimpicciolisciMappa"/>
+          @rimpicciolisci-mappa="rimpicciolisciMappa"
+          v-on-clickaway="checkPolygonDist"/>
       </b-col>
     </b-row>
   </b-container>
@@ -44,6 +46,7 @@ import LoginWarning from '@/components/ui/LoginWarning'
 import MyMap from '@/components/ui/Map'
 import '@/assets/css/slideFadeTransition.css'
 import lodashclonedeep from 'lodash.clonedeep'
+import { mixin as clickaway } from 'vue-clickaway'
 const axios = require('axios')
 const qs = require('qs')
 
@@ -56,13 +59,14 @@ export default {
     BeneFormAddEdit,
     MyMap
   },
-  mixins: [commonPageMixin, dettagliBeneMixin],
+  mixins: [commonPageMixin, dettagliBeneMixin, clickaway],
   data () {
     return {
       mapCols: 4,
       sendBtnClicked: false,
       serverRespOk: false, // serve per innescare il messaggio di bene creato/modificato,
-      leavePage: true // decide se lasciare la pagina dopo aggiunta/modifica o se rimanere
+      leavePage: true, // decide se lasciare la pagina dopo aggiunta/modifica o se rimanere,
+      beneOverlapTxt: '' // mostra gli eventuali beni sovrapposti a quello che si sta creando
     }
   },
   props: {
@@ -94,7 +98,8 @@ export default {
     // @vuese
     // invio effettivo dei dati al server. form ok & utente è sicuro di quello che fa
     sendData () {
-      let postData = lodashclonedeep(Object.assign(this.form, this.$store.getters.getUserData))
+      let postData = lodashclonedeep(
+        Object.assign({}, this.form, this.$store.getters.getUserData))
       // PostGIS vuole i punti come longitudine-latitudine
       postData.polygon = postData.polygon.flipCoordinates()
       let storeGetters = this.$store.getters
@@ -127,6 +132,7 @@ export default {
       this.sendBtnClicked = false
       this.serverRespOk = false
       this.leavePage = true
+      this.beneOverlapTxt = ''
       if (!this.editMode) {
       // se non si modifica allora si aggiunge e quindi diamo noi l'id del bene da creare
         this.form.id = this.$store.getters.beneUltimoID + 1
@@ -134,6 +140,23 @@ export default {
       if (this.idBene && this.editMode) {
         this.fetchBeneDataByID(this.idBene, this.idUtente)
       }
+    },
+    checkPolygonDist () {
+      let postData = lodashclonedeep(
+        Object.assign({}, this.form, this.$store.getters.getUserData))
+      // PostGIS vuole i punti come longitudine-latitudine
+      postData.polygon = postData.polygon.flipCoordinates()
+      axios.post(this.$store.getters.checkDistURL, qs.stringify(postData))
+        .then(resp => {
+          if (resp.data.length > 0) {
+            this.beneOverlapTxt = 'Il bene è molto vicino ai seguenti beni:'
+            let infoArr = resp.data.map(el => {
+              let dist = Math.floor(Number(el.dist))
+              return el.id + ' (' + dist + 'm)'
+            })
+            this.beneOverlapTxt += infoArr.join(', ')
+          }
+        })
     }
   },
   mounted () {

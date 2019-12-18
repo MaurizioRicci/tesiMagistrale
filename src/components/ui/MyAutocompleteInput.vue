@@ -1,5 +1,5 @@
 <template>
-  <div class="my-autocomplete">
+  <div class="my-autocomplete" v-on-clickaway="closeSuggestions">
     <span ref="input_container">
       <b-input-group>
         <slot></slot>
@@ -46,9 +46,11 @@
 
 <script>
 import IconMsg from '@/components/ui/IconMsg'
+import { mixin as clickaway } from 'vue-clickaway'
 
 export default {
   name: 'MyAutocompleteInput',
+  mixins: [ clickaway ],
   components: { 'icon-msg': IconMsg },
   props: {
     // è possibile passare dei suggerimenti come array
@@ -151,7 +153,7 @@ export default {
     },
     onInputKeyDown: function (evt) {
       // esc key pressed
-      if (evt.keyCode === 27) { this.state.listClosed = true } else if (evt.keyCode === 13) {
+      if (evt.keyCode === 27) { this.closeSuggestions() } else if (evt.keyCode === 13) {
         /* If the ENTER key is pressed, prevent the form from being submitted, */
         evt.preventDefault()
         /* and simulate a click on the "active" item: */
@@ -163,6 +165,9 @@ export default {
       this.show()
       this.validate()
       this.listeners['input'] && this.listeners['input'](evt)
+    },
+    closeSuggestions () {
+      this.state.listClosed = true
     }
   },
   mounted () {

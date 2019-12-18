@@ -79,7 +79,8 @@ export default {
     },
     sendData () {
       // da rivedere
-      let postData = lodashclonedeep(Object.assign(this.form, this.$store.getters.getUserData))
+      let postData = lodashclonedeep(
+        Object.assign({}, this.form, this.$store.getters.getUserData))
       // PostGIS vuole i punti come longitudine-latitudine
       postData.polygon = postData.polygon.flipCoordinates()
       let storeGetters = this.$store.getters

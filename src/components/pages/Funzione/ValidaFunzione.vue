@@ -79,7 +79,8 @@ export default {
     },
     sendData () {
       // da rivedere
-      let postData = lodashclonedeep(Object.assign(this.form, this.$store.getters.getUserData))
+      let postData = lodashclonedeep(
+        Object.assign({}, this.form, this.$store.getters.getUserData))
       let storeGetters = this.$store.getters
       let url = this.editMode ? storeGetters.validaFunzioneURL : storeGetters.validaFunzioneURL
       axios.post(url, qs.stringify(postData))

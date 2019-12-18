@@ -101,7 +101,8 @@ export default {
     // @vuese
     // invio effettivo dei dati al server. form ok & utente è sicuro di quello che fa
     sendData () {
-      let postData = lodashclonedeep(Object.assign(this.form, this.$store.getters.getUserData))
+      let postData = lodashclonedeep(
+        Object.assign({}, this.form, this.$store.getters.getUserData))
       let storeGetters = this.$store.getters
       // la url dipende se modifico un bene o se ne aggiungo uno
       let url = this.editMode ? storeGetters.modificaFunzioneURL : storeGetters.aggiungiFunzioneURL
