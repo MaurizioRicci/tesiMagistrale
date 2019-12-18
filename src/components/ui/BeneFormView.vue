@@ -1,11 +1,12 @@
 <template>
   <div>
-    <BeneFormToolTip/>
+    <BeneFormToolTip prefix="bene_form_view_"/>
+    <!-- id del form serve per i tooltip -->
     <b-form :novalidate="true">
       <b-form-group id="input-group-1" label="ID:"
-        label-for="input-id" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        label-for="bene_form_view_input-id" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-input
-          id="input-id"
+          id="bene_form_view_input-id"
           type="number"
           v-model="form.id"
           placeholder=""
@@ -15,9 +16,9 @@
           ></b-form-input>
       </b-form-group>
       <b-form-group id="input-group-1" label="Identificazione:"
-        label-for="input-identificazione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        label-for="bene_form_view_input-identificazione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-input
-          id="input-identificazione"
+          id="bene_form_view_input-identificazione"
           type="text"
           v-model="form.identificazione"
           disabled
@@ -26,9 +27,9 @@
           ></b-form-input>
       </b-form-group>
       <b-form-group id="input-group-1" label="Descrizione:"
-        label-for="input-descrizione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        label-for="bene_form_view_input-descrizione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-input
-          id="input-descrizione"
+          id="bene_form_view_input-descrizione"
           type="text"
           v-model="form.descrizione"
           disabled
@@ -37,9 +38,9 @@
           ></b-form-input>
       </b-form-group>
       <b-form-group id="input-group-1" label="MacroEpocaOrig:"
-        label-for="input-macro-epoca-orig" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        label-for="bene_form_view_input-macro-epoca-orig" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-input
-          id="input-macro-epoca-orig"
+          id="bene_form_view_input-macro-epoca-orig"
           type="text"
           v-model="form.macroEpocaOrig"
           disabled
@@ -48,9 +49,9 @@
           ></b-form-input>
       </b-form-group>
       <b-form-group id="input-group-1" label="MacroEpocaCar:"
-        label-for="input-macro-epoca-car" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        label-for="bene_form_view_input-macro-epoca-car" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-input
-          id="input-macro-epoca-car"
+          id="bene_form_view_input-macro-epoca-car"
           type="text"
           v-model="form.macroEpocaCar"
           disabled
@@ -58,37 +59,37 @@
           autocomplete="off"
           ></b-form-input>
       </b-form-group>
-      <b-form-group id="input-group-1" label="Toponimo:" label-for="input-toponimo" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-input id="input-toponimo" v-model="form.toponimo"
+      <b-form-group id="input-group-1" label="Toponimo:" label-for="bene_form_view_input-toponimo" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        <b-form-input id="bene_form_view_input-toponimo" v-model="form.toponimo"
           type="text" disabled placeholder=""></b-form-input>
       </b-form-group>
-      <b-form-group id="input-group-1" label="Esistenza:" label-for="input-esistenza" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-input id="input-esistenza" v-model="form.esistenza" type="text" disabled placeholder=""></b-form-input>
+      <b-form-group id="input-group-1" label="Esistenza:" label-for="bene_form_view_input-esistenza" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        <b-form-input id="bene_form_view_input-esistenza" v-model="form.esistenza" type="text" disabled placeholder=""></b-form-input>
       </b-form-group>
-      <b-form-group id="input-group-1" label="Comune:" label-for="input-comune" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-input id="input-comune" v-model="form.comune" type="text" disabled placeholder=""></b-form-input>
+      <b-form-group id="input-group-1" label="Comune:" label-for="bene_form_view_input-comune" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        <b-form-input id="bene_form_view_input-comune" v-model="form.comune" type="text" disabled placeholder=""></b-form-input>
       </b-form-group>
-      <b-form-group id="input-group-1" label="Bibliografia:" label-for="input-bibliografia" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+      <b-form-group id="input-group-1" label="Bibliografia:" label-for="bene_form_view_input-bibliografia" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-textarea
-          id="input-bibliografia"
+          id="bene_form_view_input-bibliografia"
           v-model="form.bibliografia"
           type="text"
           disabled
           placeholder=""></b-form-textarea>
       </b-form-group>
-      <b-form-group id="input-group-1" label="Schedatori:" label-for="input-schedatori" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+      <b-form-group id="input-group-1" label="Schedatori:" label-for="bene_form_view_input-schedatori" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-textarea
-          id="input-schedatori"
+          id="bene_form_view_input-schedatori"
           v-model="form.schedatori_iniziali"
           type="text"
           disabled
           placeholder=""></b-form-textarea>
       </b-form-group>
-      <b-form-group id="input-group-1" label="Note:" label-for="input-note" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-textarea disabled id="input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
+      <b-form-group id="input-group-1" label="Note:" label-for="bene_form_view_input-note" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        <b-form-textarea disabled id="bene_form_view_input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
       </b-form-group>
-      <b-form-group id="input-group-1" label="Geometria:" label-for="input-geometria" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-textarea disabled id="input-geometria" v-model="polygonStr" type="text" placeholder=""></b-form-textarea>
+      <b-form-group id="input-group-1" label="Geometria:" label-for="bene_form_view_input-geometria" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        <b-form-textarea disabled id="bene_form_view_input-geometria" v-model="polygonStr" type="text" placeholder=""></b-form-textarea>
       </b-form-group>
     </b-form>
   </div>

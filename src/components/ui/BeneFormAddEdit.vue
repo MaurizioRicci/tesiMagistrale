@@ -1,7 +1,8 @@
 <template>
   <div>
     <BeneFormToolTip/>
-    <b-form :novalidate="true" :validated="validated" ref="form_bene">
+    <!-- id del form serve per i tooltip -->
+    <b-form :novalidate="true" :validated="validated" ref="form_bene" id="bene_form_add_edit">
       <b-form-checkbox @change="checked => checked ? form.setIncomplete() : form.setReady()"
         :checked="form.isIncomplete()"
         name="check-button-bozza" switch v-if="!noDraft"

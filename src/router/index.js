@@ -5,9 +5,10 @@ const Error404 = () => import('@/components/pages/Errors/Error404')
 const Login = () => import('@/components/pages/Login/Login')
 const Home = () => import('@/components/pages/Home/Home')
 const AddEditBene = () => import('@/components/pages/Bene/AddEditBene')
-const addEditFunzione = () => import('@/components/pages/Funzione/addEditFunzione')
+const AddEditFunzione = () => import('@/components/pages/Funzione/AddEditFunzione')
 const ViewBene = () => import('@/components/pages/Bene/ViewBene')
 const ValidaBene = () => import('@/components/pages/Bene/ValidaBene')
+const ValidaFunzione = () => import('@/components/pages/Funzione/ValidaFunzione')
 const ViewFunzione = () => import('@/components/pages/Funzione/ViewFunzione')
 const RicercaBeniApprovati = () => import('@/components/pages/Bene/BeniRicercaApprovati')
 const RicercaFunzioniApprovate = () => import('@/components/pages/Funzione/FunzioniRicercaApprovate')
@@ -124,8 +125,8 @@ const router = new Router({
       children: [
         {
           path: 'aggiungi',
-          // addEditFunzione
-          component: addEditFunzione,
+          // AddEditFunzione
+          component: AddEditFunzione,
           props: () => ({
             title: 'Aggiungi una funzione',
             backTo: '/home'
@@ -133,8 +134,8 @@ const router = new Router({
         },
         {
           path: 'modifica/:id',
-          // addEditFunzione
-          component: addEditFunzione,
+          // AddEditFunzione
+          component: AddEditFunzione,
           props: (route) => ({
             title: 'Modifica una funzione',
             idFunzione: route.params.id,
@@ -143,8 +144,8 @@ const router = new Router({
         },
         {
           path: 'modifica/:id/:id_utente',
-          // addEditFunzione
-          component: addEditFunzione,
+          // AddEditFunzione
+          component: AddEditFunzione,
           props: (route) => ({
             idFunzione: route.params.id,
             idUtente: route.params.id_utente,
@@ -181,6 +182,14 @@ const router = new Router({
             idUtente: route.params.id_utente,
             cercaInArchivioTemp: true,
             title: 'Visualizza una funzione temporanea'
+          })
+        },
+        {
+          path: 'valida/:id/:id_utente',
+          component: ValidaFunzione,
+          props: (route) => ({
+            idFunzione: route.params.id,
+            idUtente: route.params.id_utente
           })
         }
       ]

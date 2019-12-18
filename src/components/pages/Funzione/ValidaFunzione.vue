@@ -9,13 +9,13 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col v-show="!mapZoomed2">
+      <b-col>
         <h4>Funzione in archivio definitivo</h4>
         <FunzioneFormView :form="formFunzioneArchDef" :disallowIDChange="true"/>
         <!-- <MyMap ref="myMap1" locked :zoom="17" :controls="mapControls"
             v-model="formBeneArchDef.polygon" :center="mapCenterArchDef"/> -->
       </b-col>
-      <b-col v-show="!mapZoomed1">
+      <b-col>
         <h4>Funzione da approvare</h4>
         <FunzioneFormAddEdit ref="form_funzione" v-model="form" no-draft
             :validated="sendBtnClicked"/>
@@ -37,7 +37,7 @@
 
 <script>
 import commonPageMixin from '@/components/mixins/CommonPage'
-import dettagliFunzioneMixin from '@/components/mixins/DettagliBene'
+import dettagliFunzioneMixin from '@/components/mixins/DettagliFunzione'
 import Menu from '@/components/ui/Menu'
 import FunzioneFormView from '@/components/ui/FunzioneFormView'
 import FunzioneFormAddEdit from '@/components/ui/FunzioneFormAddEdit'
@@ -79,9 +79,9 @@ export default {
     },
     sendData () {
       // da rivedere
-      let postData = Object.assign(this.form, this.$store.getters.getUserData)
+      let postData = lodashclonedeep(Object.assign(this.form, this.$store.getters.getUserData))
       let storeGetters = this.$store.getters
-      let url = this.editMode ? storeGetters.modificaBeneURL : storeGetters.aggiungiBeneURL
+      let url = this.editMode ? storeGetters.validaFunzioneURL : storeGetters.validaFunzioneURL
       axios.post(url, qs.stringify(postData))
         .then(ok => {
           this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
@@ -92,16 +92,38 @@ export default {
         }, fail => {
           this.$vueEventBus.$emit('master-page-show-msg', ['Errore', fail.response.data.msg])
         })
+    },
+    init () {
+      // resetto le variabili
+      this.sendBtnClicked = false
+      this.formFunzioneArchDef = getModelloFunzione()
+      this.mapCenterArchDef = [0, 0]
+      // resetto il modello dati scaricato in precedenza (se c'è)
+      this.resetData()
+      // scarico la funzione definitiva se esiste
+      this.fetchFunzioneDataByID(this.idFunzione)
+        .then(data => {
+          if (data) {
+            this.formFunzioneArchDef = lodashclonedeep(data)
+            this.mapCenterArchDef = lodashclonedeep(this.mapCenter)
+          }
+        })
+        // dopo se esiste scarico la funzione temporanea
+        .then(() => {
+          this.resetData()
+          let cercaInArchivioTemp = true
+          this.fetchFunzioneDataByID(this.idFunzione, this.idUtente, cercaInArchivioTemp)
+        })
     }
   },
   mounted () {
-    this.fetchFunzioneDataByID(this.idFunzione)
-      .then(data => {
-        this.formFunzioneArchDef = lodashclonedeep(data)
-        // this.mapCenterArchDef = lodashclonedeep(this.mapCenter)
-      })
-    this.cercaInArchivioTemp = true
-    this.fetchFunzioneDataByID(this.idFunzione, this.idUtente)
+    this.init()
+  },
+  watch: {
+    // ascolto cambiamenti nella url
+    $route (to, from) {
+      this.init()
+    }
   }
 }
 </script>

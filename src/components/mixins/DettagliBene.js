@@ -18,6 +18,9 @@ export default {
     }
   },
   props: {
+    // le proprietà servono per essere passate al componente che le usa
+    // il singolo componente poi può scegliere se usarle o meno. Infatti
+    // fetchBeneDataByID prende dei generici parametri
     // specifica l'id del bene da visualizzare
     idBene: String,
     // specifica l'id utente del proprietario del bene in archivio temporaneo
@@ -38,11 +41,11 @@ export default {
     // Restituisce una promessa in ogni caso, il valore dipende:
     // null se non viene eseguita la richiesta o il valore d'errore non va a buon fine
     // I dettagli del bene se la richiesta va a buon fine
-    fetchBeneDataByID (requiredID, idUtente) {
-      if (this.cercaInArchivioTemp && typeof idUtente === 'undefined') {
+    fetchBeneDataByID (requiredID, idUtente, cercaInArchivioTemp) {
+      if (cercaInArchivioTemp && typeof idUtente === 'undefined') {
         throw new Error('Per cercare un bene in archivio temporaneo serve anche id utente')
       }
-      if (!this.cercaInArchivioTemp && typeof idUtente !== 'undefined') {
+      if (!cercaInArchivioTemp && typeof idUtente !== 'undefined') {
         throw new Error('Hai specificato un id utente ma non il flag per cercare in archivio temporaneo')
       }
 
@@ -52,7 +55,7 @@ export default {
       let postData = {
         'id': requiredID,
         'id_utente': idUtente,
-        'tmp_db': this.cercaInArchivioTemp
+        'tmp_db': cercaInArchivioTemp
       }
       postData = Object.assign(postData, this.$store.getters.getUserData)
       return axios.post(this.$store.getters.dettagliBeneURL, qs.stringify(postData))

@@ -26,6 +26,9 @@
           @rimpicciolisci-mappa="rimpicciolisciMappa"/>
       </b-col>
     </b-row>
+      <b-col>
+        <RicercaBeniApprovati/>
+      </b-col>
   </b-container>
 </template>
 
@@ -36,10 +39,11 @@ import FunzioneFormView from '@/components/ui/FunzioneFormView'
 import commonPageMixin from '@/components/mixins/CommonPage'
 import dettagliFunzioneMixin from '@/components/mixins/DettagliFunzione'
 import '@/assets/css/slideFadeTransition.css'
+import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 
 export default {
   name: 'VisualizzaFunzione',
-  components: { Menu, MyMap, FunzioneFormView },
+  components: { Menu, MyMap, FunzioneFormView, RicercaBeniApprovati },
   mixins: [commonPageMixin, dettagliFunzioneMixin],
   data () {
     return {
@@ -57,14 +61,17 @@ export default {
     },
     onEdit () {
       this.$router.push('/funzione/modifica/' + this.formRetrived.id)
+    },
+    init () {
+      this.fetchFunzioneDataByID(this.idFunzione, this.idUtente, this.cercaInArchivioTemp)
     }
   },
   created () {
-    this.fetchFunzioneDataByID(this.idFunzione, this.idUtente)
+    this.init()
   },
   watch: {
     $route (to, from) {
-      this.fetchFunzioneDataByID(this.idFunzione, this.idUtente)
+      this.init()
     }
   }
 }

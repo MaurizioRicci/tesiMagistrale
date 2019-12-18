@@ -63,14 +63,17 @@ export default {
     },
     onEdit () {
       this.$router.push('/bene/modifica/' + this.formRetrived.id)
+    },
+    init () {
+      this.fetchBeneDataByID(this.idBene, this.idUtente, this.cercaInArchivioTemp)
     }
   },
   created () {
-    this.fetchBeneDataByID(this.idBene, this.idUtente)
+    this.init()
   },
   watch: {
     $route (to, from) {
-      this.fetchBeneDataByID(this.idBene, this.idUtente)
+      this.init()
     }
   }
 }

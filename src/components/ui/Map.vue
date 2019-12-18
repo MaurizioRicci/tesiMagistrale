@@ -98,7 +98,8 @@ export default {
     // @vuese
     // chiama invalidateSize() di Leaflet
     invalidateSize: function () {
-      this.leafletMapObject.invalidateSize()
+      this.leafletMapObject &&
+        this.leafletMapObject.invalidateSize()
     }
   },
   data () {

@@ -9,13 +9,13 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col v-show="!mapZoomed2">
+      <b-col>
         <h4>Bene in archivio definitivo</h4>
         <BeneFormView :form="formBeneArchDef" :disallowIDChange="true"/>
         <MyMap ref="myMap1" locked :zoom="17" :controls="mapControls"
             v-model="formBeneArchDef.polygon" :center="mapCenterArchDef"/>
       </b-col>
-      <b-col v-show="!mapZoomed1">
+      <b-col>
         <h4>Bene da approvare</h4>
         <BeneFormAddEdit ref="form_bene" v-model="form" no-draft
             :validated="sendBtnClicked"/>
@@ -79,11 +79,11 @@ export default {
     },
     sendData () {
       // da rivedere
-      let postData = Object.assign(this.form, this.$store.getters.getUserData)
+      let postData = lodashclonedeep(Object.assign(this.form, this.$store.getters.getUserData))
       // PostGIS vuole i punti come longitudine-latitudine
-      this.form.polygon = this.form.polygon.flipCoordinates()
+      postData.polygon = postData.polygon.flipCoordinates()
       let storeGetters = this.$store.getters
-      let url = this.editMode ? storeGetters.modificaBeneURL : storeGetters.aggiungiBeneURL
+      let url = storeGetters.valiaBeneURL
       axios.post(url, qs.stringify(postData))
         .then(ok => {
           this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
@@ -94,16 +94,38 @@ export default {
         }, fail => {
           this.$vueEventBus.$emit('master-page-show-msg', ['Errore', fail.response.data.msg])
         })
+    },
+    init () {
+      // resetto le variabili
+      this.sendBtnClicked = false
+      this.formBeneArchDef = getModelloBene()
+      this.mapCenterArchDef = [0, 0]
+      // resetto il modello dati scaricato in precedenza (se c'è)
+      this.resetData()
+      // scarico il bene definitivo se esiste
+      this.fetchBeneDataByID(this.idBene)
+        .then(data => {
+          if (data) {
+            this.formBeneArchDef = lodashclonedeep(data)
+            this.mapCenterArchDef = lodashclonedeep(this.mapCenter)
+          }
+        })
+        // dopo se esiste scarico il bene temporaneo
+        .then(() => {
+          this.resetData()
+          let cercaInArchivioTempp = true
+          this.fetchBeneDataByID(this.idBene, this.idUtente, cercaInArchivioTempp)
+        })
     }
   },
   mounted () {
-    this.fetchBeneDataByID(this.idBene)
-      .then(data => {
-        this.formBeneArchDef = lodashclonedeep(data)
-        this.mapCenterArchDef = lodashclonedeep(this.mapCenter)
-      })
-    this.cercaInArchivioTemp = true
-    this.fetchBeneDataByID(this.idBene, this.idUtente)
+    this.init()
+  },
+  watch: {
+    // ascolto cambiamenti nella url
+    $route (to, from) {
+      this.init()
+    }
   }
 }
 </script>

@@ -32,6 +32,11 @@
           @rimpicciolisci-mappa="rimpicciolisciMappa"/>
       </b-col>
     </b-row>
+    <b-row>
+      <b-col>
+        <RicercaBeniApprovati/>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -43,6 +48,8 @@ import Menu from '@/components/ui/Menu'
 import LoginWarning from '@/components/ui/LoginWarning'
 import MyMap from '@/components/ui/Map'
 import '@/assets/css/slideFadeTransition.css'
+import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
+import lodashclonedeep from 'lodash.clonedeep'
 const axios = require('axios')
 const qs = require('qs')
 
@@ -53,7 +60,8 @@ export default {
     Menu,
     LoginWarning,
     FunzioneFormAddEdit,
-    MyMap
+    MyMap,
+    RicercaBeniApprovati
   },
   mixins: [commonPageMixin, dettagliFunzioneMixin],
   data () {
@@ -93,7 +101,7 @@ export default {
     // @vuese
     // invio effettivo dei dati al server. form ok & utente è sicuro di quello che fa
     sendData () {
-      let postData = Object.assign(this.form, this.$store.getters.getUserData)
+      let postData = lodashclonedeep(Object.assign(this.form, this.$store.getters.getUserData))
       let storeGetters = this.$store.getters
       // la url dipende se modifico un bene o se ne aggiungo uno
       let url = this.editMode ? storeGetters.modificaFunzioneURL : storeGetters.aggiungiFunzioneURL
@@ -123,7 +131,7 @@ export default {
       this.serverRespOk = false
       this.leavePage = true
       if (this.idFunzione && this.editMode) {
-        this.fetchFunzioneDataByID(this.idFunzione, this.idUtente)
+        this.fetchFunzioneDataByID(this.idFunzione, this.idUtente, this.cercaInArchivioTemp)
       }
     }
   },
