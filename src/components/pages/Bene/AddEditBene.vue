@@ -111,10 +111,9 @@ export default {
           // poi se va tutto bene bisogna incrementare l'id dell'ultimo bene usato
           this.$store.commit('incrementaBeneUltimoID')
           this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
-          if (this.leavePage) {
-            this.$vueEventBus.$once('master-page-show-msg-ok',
-              () => this.goBack())
-          } else { this.init() }
+          const callback = this.leavePage ? () => this.goBack() : () => this.init()
+          this.$vueEventBus.$once('master-page-show-msg-ok',
+            callback)
         }, fail => {
           this.$vueEventBus.$emit('master-page-show-msg', ['Errore', fail.response.data.msg])
         })
@@ -129,6 +128,7 @@ export default {
     },
     init () {
       // reset variabili
+      this.resetData()
       this.sendBtnClicked = false
       this.serverRespOk = false
       this.leavePage = true
@@ -165,7 +165,6 @@ export default {
   },
   watch: {
     $route (to, from) {
-      this.resetData()
       this.init()
     }
   },
