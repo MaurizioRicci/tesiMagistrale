@@ -113,8 +113,9 @@ export default {
           const callback = this.leavePage ? () => this.goBack() : () => this.init()
           this.$vueEventBus.$once('master-page-show-msg-ok',
             callback)
-        }, fail => {
-          this.$vueEventBus.$emit('master-page-show-msg', ['Errore', fail.response.data.msg])
+        }, error => {
+          let msg = (error.response && error.response.data.msg) || error.message
+          this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
         })
     },
     ingrandisciMappa () {

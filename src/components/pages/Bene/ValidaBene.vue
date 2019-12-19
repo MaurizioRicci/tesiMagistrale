@@ -84,7 +84,7 @@ export default {
       // PostGIS vuole i punti come longitudine-latitudine
       postData.polygon = postData.polygon.flipCoordinates()
       let storeGetters = this.$store.getters
-      let url = storeGetters.valiaBeneURL
+      let url = storeGetters.approvaBeneURL
       axios.post(url, qs.stringify(postData))
         .then(ok => {
           this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
@@ -92,8 +92,9 @@ export default {
             this.$vueEventBus.$once('master-page-show-msg-ok',
               () => this.goBack())
           }
-        }, fail => {
-          this.$vueEventBus.$emit('master-page-show-msg', ['Errore', fail.response.data.msg])
+        }, error => {
+          let msg = (error.response && error.response.data.msg) || error.message
+          this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
         })
     },
     init () {

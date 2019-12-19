@@ -33,12 +33,13 @@
 
             <b-button :to="'/funzione/modifica/' + row.id + '/' + row.id_utente"
               class="pt-1"
-              v-if="!sonoRevisore && (FunzioneModel.isIncomplete.call(row) || FunzioneModel.isIncorrect.call(row) ||
+              v-if="cercaInArchivioTemp && !sonoRevisore &&
+               (FunzioneModel.isIncomplete.call(row) || FunzioneModel.isIncorrect.call(row) ||
               FunzioneModel.isReady.call(row))">Modifica</b-button>
 
-            <b-button v-if="sonoRevisore" :to="'/funzione/modifica/' + row.id + '/' + row.id_utente"
+            <b-button v-if="cercaInArchivioTemp && sonoRevisore"
+              :to="'/funzione/valida/' + row.id + '/' + row.id_utente"
                class="pt-1">Modifica e approva</b-button>
-            <b-button v-if="sonoRevisore" @click="approvaBene(row)">Approva</b-button>
 
           </b-button-group>
         </template>
@@ -54,7 +55,8 @@
             <span v-else>
                 <input type="text" v-model="row.msg_validatore">
                 <b-button type="button" class="btn btn-info btn-xs"
-                  @click="update(row.msg_validatore); setEditing(false); inviaSegnalazione(row);">Submit</b-button>
+                  @click="update(row.msg_validatore); setEditing(false); inviaSegnalazione(row);">
+                  Submit</b-button>
                 <button type="button" class="btn btn-default btn-xs"
                   @click="revertValue(); setEditing(false)">Cancel</button>
             </span>
@@ -118,18 +120,6 @@ export default {
       axios.post(this.$store.getters.segnalaBeneURL, qs.stringify(postData))
         .then(ok => this.$vueEventBus.$emit('master-page-show-msg',
           ['Info', 'Funzione segnalata correttamente']))
-        .catch(error => {
-          let msg = (error.response && error.response.data.msg) || error.message
-          this.$vueEventBus.$emit('master-page-show-msg',
-            ['Errore', msg])
-        })
-    },
-    approvaBene (row) {
-      this.$router.push('/bene/valida/' + row.id + '/' + row.id_utente)
-      let postData = Object.assign(row, this.$store.getters.getUserData)
-      axios.post(this.$store.getters.approvaBeneURL, qs.stringify(postData))
-        .then(ok => this.$vueEventBus.$emit('master-page-show-msg',
-          ['Info', 'Funzione approvata correttamente']))
         .catch(error => {
           let msg = (error.response && error.response.data.msg) || error.message
           this.$vueEventBus.$emit('master-page-show-msg',
