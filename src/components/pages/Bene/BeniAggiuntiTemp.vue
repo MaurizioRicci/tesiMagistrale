@@ -16,7 +16,8 @@
           </b-tab>
           <b-tab title="Altri Beni utente">
             <p>Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
-            <BeniUtente cercaInArchivioTemp :update="update"/>
+            <BeniUtente v-if="role==='schedatore'"
+              cercaInArchivioTemp :update="update"/>
             <b-button @click="waitUserConfirmation=true">Invia per il controllo</b-button>
           </b-tab>
         </b-tabs>
@@ -52,7 +53,8 @@ export default {
   data: function () {
     return {
       waitUserConfirmation: false,
-      update: false
+      update: false,
+      role: this.$store.getters.getUserData.role
     }
   },
   methods: {

@@ -18,7 +18,12 @@
 
         <template v-slot:azioni="{row}">
           <b-button-group vertical>
-            <b-button :to="'/bene/dettagli_bene/' + row.id + '/' + row.id_utente"
+            <b-button v-if="cercaInArchivioTemp"
+              :to="'/bene/dettagli_bene/' + row.id + '/' + row.id_utente"
+             class="pt-1">Vedi dettagli</b-button>
+
+            <b-button v-if="!cercaInArchivioTemp"
+              :to="'/bene/dettagli_bene/' + row.id"
              class="pt-1">Vedi dettagli</b-button>
 
             <b-button :to="'/bene/modifica/' + row.id + '/' + row.id_utente"

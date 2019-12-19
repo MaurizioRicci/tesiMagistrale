@@ -17,7 +17,8 @@
           <b-tab title="Altre funzioni utente">
             <p>Qua ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
             <FunzioniUtente cercaInArchivioTemp :update="update"/>
-            <b-button @click="waitUserConfirmation=true">Invia per il controllo</b-button>
+            <b-button v-if="role==='schedatore'"
+              @click="waitUserConfirmation=true">Invia per il controllo</b-button>
           </b-tab>
         </b-tabs>
       </b-col>
@@ -52,7 +53,8 @@ export default {
   data: function () {
     return {
       waitUserConfirmation: false,
-      update: false
+      update: false,
+      role: this.$store.getters.getUserData.role
     }
   },
   methods: {
