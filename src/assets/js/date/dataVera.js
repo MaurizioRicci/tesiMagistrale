@@ -24,7 +24,6 @@ export default function dataVera (DS) {
     // #sin = DS.replace(' ','')                    # Elimina tutti i blank NO !    '1300 1400' è un errore
     let sin = DS.trim()
     if (sin.length === 0) return false // # Era una stringa di blank !!!
-    console.log(sin)
     if (isInt(sin)) { // # se ci sono solo numeri ...
       if (sin.length <= 4) { // # numero di <= 4 cifre: è solo anno
         if (Number(sin) > annomax) return false // # anno futuro = false

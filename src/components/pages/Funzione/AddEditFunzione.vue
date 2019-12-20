@@ -54,6 +54,7 @@ import '@/assets/css/slideFadeTransition.css'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 import FunzioneCopiaIncolla from '@/components/ui/FunzioneCopyPaste'
 import lodashclonedeep from 'lodash.clonedeep'
+import { ternaVera } from '@/assets/js/date/dateF'
 const axios = require('axios')
 const qs = require('qs')
 
@@ -69,6 +70,11 @@ export default {
     FunzioneCopiaIncolla
   },
   mixins: [commonPageMixin, dettagliFunzioneMixin],
+  computed: {
+    ternaValida () {
+      return ternaVera(this.form.data_ante, this.form.data_poste, this.form.tipodata)
+    }
+  },
   data () {
     return {
       mapCols: 4,
@@ -95,12 +101,17 @@ export default {
       // serve a innescare la validazione del form. Vedi <form...> a inizio
       this.sendBtnClicked = true
       evt.preventDefault()
-      if (this.$refs.form_funzione.checkValidity()) {
-        this.sendData()
-      } else {
-        // mostra un messaggio in un modal con un certo titolo e testo
+      if (!this.ternaValida) {
         this.$vueEventBus.$emit('master-page-show-msg',
-          ['Attenzione', 'Non hai finito di compilare i campi richiesti.'])
+          ['Attenzione', 'Data anteriore, data posteriore e tipo data non tornano tra loro.'])
+      } else {
+        if (this.$refs.form_funzione.checkValidity()) {
+          this.sendData()
+        } else {
+        // mostra un messaggio in un modal con un certo titolo e testo
+          this.$vueEventBus.$emit('master-page-show-msg',
+            ['Attenzione', 'Non hai finito di compilare i campi richiesti.'])
+        }
       }
     },
     // @vuese

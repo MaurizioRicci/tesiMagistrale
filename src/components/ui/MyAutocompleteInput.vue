@@ -24,6 +24,10 @@
             ></icon-msg>
         </template>
       </b-input-group>
+      <!-- Feedback invalido -->
+      <p class="invalid-feedback" style="display:initial"
+       v-if="!this.state.validFeedback">{{invalidFeedback}}</p>
+
       <div class="autocomplete" v-if="!state.listClosed && arr.length > 0">
           <div class="autocomplete-items">
             <div class="suggestions-header">
@@ -61,7 +65,8 @@ export default {
     // l'utente può scegliere di inserire liberamente se closedDictionary=false
     closedDictionary: Boolean,
     icon_name: String,
-    icon_msg: String
+    icon_msg: String,
+    invalidFeedback: String
   },
   data () {
     return {
@@ -79,7 +84,8 @@ export default {
       },
       state: {
         listClosed: true,
-        activeInput: false
+        activeInput: false,
+        validFeedback: true
       }
     }
   },
@@ -117,8 +123,10 @@ export default {
         // che l'input sia nel dizionario
         if (this.arr.map(el => el.value)
           .includes(this.bs_input.value) && !this.error) {
+          this.state.validFeedback = true
           this.bs_input.setCustomValidity('')
         } else {
+          this.state.validFeedback = false
           this.bs_input.setCustomValidity('Invalid choice')
         }
       }

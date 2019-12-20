@@ -42,7 +42,8 @@
           ></b-form-input>
       </b-form-group>
       <b-form-group id="input-group-1" label="Data anteriore:"
-        label-for="input-data_ante" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        label-for="input-data_ante" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
+        :state="dataAnteValida" invalid-feedback="Data invalida">
         <b-form-input
           id="input-data_ante"
           type="text"
@@ -52,7 +53,8 @@
           ></b-form-input>
       </b-form-group>
       <b-form-group id="input-group-1" label="Data posteriore:"
-        label-for="input-data_poste" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        label-for="input-data_poste" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
+        :state="dataPosteValida" invalid-feedback="Data invalida">
         <b-form-input
           id="input-data_poste"
           type="text"
@@ -66,7 +68,8 @@
         label-for="input-tipodata" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
       <my-autocomplete-input v-model="form.tipodata" closedDictionary
         icon_name="lock" icon_msg="Campo vincolato a un dizionario"
-        :suggestionsPromise="getDictFuncs().loadTipoData">
+        :suggestionsPromise="getDictFuncs().loadTipoData"
+        invalid-feedback="Tipo data non corretto">
           <b-form-input
             id="input-tipodata"
             type="text"
@@ -176,6 +179,7 @@ import MyAutocompleteInput from '@/components/ui/MyAutocompleteInput'
 import RemoteContextualSuggestions from '@/components/common/RemoteContextualSuggestions'
 import IconMsg from '@/components/ui/IconMsg'
 import * as dict from '@/assets/js/loadDict'
+import { dataVera } from '@/assets/js/date/dateF'
 
 export default {
   name: 'FormBeneLeggiScrivi',
@@ -209,7 +213,10 @@ export default {
       this.form[key].push('')
     }
   },
-  computed: {}
+  computed: {
+    dataAnteValida () { return dataVera(this.form.data_ante) },
+    dataPosteValida () { return dataVera(this.form.data_poste) }
+  }
 }
 </script>
 

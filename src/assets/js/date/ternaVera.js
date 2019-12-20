@@ -15,8 +15,9 @@ export default function ternaVera (DataA, DataP, DataTipo) {
     if (!DataTipo) DataTipo = ''
 
     if (DataA2[0] === 9999) {
-      if (DataP2[0] === 9999 && DataTipo === '') { return true } // # Data sconosciuta
-      else return false // # Data errata (DataA sconosciuta e valori sul resto)
+      if (DataP2[0] === 9999 && DataTipo === '') {
+        return true
+      } else return false // # Data errata (DataA sconosciuta e valori sul resto)
     }
     if (DataP2[1] < DataA2[0]) return false
     else return true
