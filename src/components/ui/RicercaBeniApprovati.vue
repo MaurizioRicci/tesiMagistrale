@@ -35,11 +35,13 @@
 <script>
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 import '@/assets/css/hugeModal.css'
-window.axios = require('axios')
+import BeneTableMixin from '@/components/mixins/BeneTable'
+window.axios = require('axios') // serve per vue-tables 2 non cancellare
 
 // Mostra una tabella con tutti i beni approvati di tutti gli utenti
 export default {
   name: 'BeniUtente',
+  mixins: [BeneTableMixin],
   components: {},
   filters: {ellipsizeLongText: ellipsize},
   props: {},
@@ -77,7 +79,6 @@ export default {
       options: {
         caption: 'Questa tabella contiene tutti i beni approvati.',
         perPage: 25,
-        filterable: true,
         filterByColumn: true,
         sendEmptyFilters: true,
         sortIcon: {
@@ -89,7 +90,8 @@ export default {
         texts: {limit: 'Risultati per pagina'}
       }
     }
-  }
+  },
+  mounted () {}
 }
 </script>
 

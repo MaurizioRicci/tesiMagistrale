@@ -36,12 +36,14 @@
 <script>
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 import '@/assets/css/hugeModal.css'
+import FunzioneTableMixin from '@/components/mixins/FunzioneTable'
 window.axios = require('axios')
 
 // Mostra una tabella con tutti i beni approvati di tutti gli utenti
 export default {
   name: 'BeniUtente',
   components: {},
+  mixins: [FunzioneTableMixin],
   filters: {ellipsizeLongText: ellipsize},
   props: {},
   methods: {},
@@ -70,7 +72,6 @@ export default {
       options: {
         caption: 'Questa tabella contiene tutte le funzioni approvate.',
         perPage: 25,
-        filterable: true,
         filterByColumn: true,
         sendEmptyFilters: true,
         sortIcon: {

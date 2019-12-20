@@ -8,6 +8,8 @@ i vari attributi target sono id di elementi presenti nella pagina -->
         <b-tooltip :target="prefix+'input-denominazione'" triggers="hover">Identificazione del bene</b-tooltip>
         <b-tooltip :target="prefix+'input-denominazioner'" triggers="hover">Identificazione del bene di riferimento</b-tooltip>
         <b-tooltip :target="prefix+'input-data'" triggers="hover">Data della funzione</b-tooltip>
+        <b-tooltip :target="prefix+'input-data_ante'" triggers="hover">Primo estremo della data della funzione</b-tooltip>
+        <b-tooltip :target="prefix+'input-data_poste'" triggers="hover">Secondo estremo della data della funzione</b-tooltip>
         <b-tooltip :target="prefix+'input-tipodata'" triggers="hover">Tipo data della funzione</b-tooltip>
         <b-tooltip :target="prefix+'input-funzione'" triggers="hover">Funzione che lega due beni</b-tooltip>
         <b-tooltip :target="prefix+'input-bibliografia'" triggers="hover">Bibliografia</b-tooltip>

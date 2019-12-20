@@ -12,6 +12,8 @@ export default () => {
     denominazione: '',
     denominazioner: '',
     data: '',
+    data_ante: '',
+    data_poste: '',
     tipodata: '',
     funzione: '',
     id_bene: '',

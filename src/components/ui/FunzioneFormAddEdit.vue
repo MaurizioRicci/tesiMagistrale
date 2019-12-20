@@ -41,6 +41,26 @@
           autocomplete="off"
           ></b-form-input>
       </b-form-group>
+      <b-form-group id="input-group-1" label="Data anteriore:"
+        label-for="input-data_ante" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        <b-form-input
+          id="input-data_ante"
+          type="text"
+          v-model="form.data_ante"
+          placeholder=""
+          autocomplete="off"
+          ></b-form-input>
+      </b-form-group>
+      <b-form-group id="input-group-1" label="Data posteriore:"
+        label-for="input-data_poste" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        <b-form-input
+          id="input-data_poste"
+          type="text"
+          v-model="form.data_poste"
+          placeholder=""
+          autocomplete="off"
+          ></b-form-input>
+      </b-form-group>
       <!-- tipo data -->
       <b-form-group id="input-group-1" label="Tipo data:"
         label-for="input-tipodata" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">

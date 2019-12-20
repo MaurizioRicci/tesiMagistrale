@@ -75,7 +75,7 @@ import DettagliBene from '@/components/pages/Bene/ViewBene'
 import EditBene from '@/components/pages/Bene/AddEditBene'
 import BeneModel from '@/assets/js/Models/beneModel'
 import '@/assets/css/hugeModal.css'
-import {loadMacroEpocaCar, loadMacroEpocaOrig} from '@/assets/js/loadDict'
+import BeneTableMixin from '@/components/mixins/BeneTable'
 const qs = require('qs')
 const axios = require('axios')
 
@@ -83,6 +83,7 @@ const axios = require('axios')
 // oppure quelli che ha in revisione
 export default {
   name: 'BeniUtente',
+  mixins: [BeneTableMixin],
   components: {
     DettagliBene: DettagliBene,
     EditBene: EditBene
@@ -128,14 +129,6 @@ export default {
           this.$vueEventBus.$emit('master-page-show-msg',
             ['Errore', msg])
         })
-    },
-    getMac: function () {
-      return loadMacroEpocaCar(this)
-        .then(resp => resp.data.map(el => { return {id: el.id, text: el.value} }))
-    },
-    getMeo: function () {
-      return loadMacroEpocaOrig(this)
-        .then(resp => resp.data.map(el => { return {id: el.id, text: el.value} }))
     }
   },
   data: function () {
@@ -165,37 +158,14 @@ export default {
           macroEpocaCar: 'Mec',
           macroEpocaOrig: 'Meo'
         },
-        filterable: [ 'id',
-          'status',
-          'identificazione',
-          'descrizione',
-          'comune',
-          'macroEpocaCar',
-          'macroEpocaOrig',
-          'bibliografia',
-          'note',
-          'toponimo',
-          'msg_validatore'],
         filterByColumn: true,
         editableColumns: ['msg_validatore'],
-        hiddenColumns: this.getHiddenColums(),
-        listColumns: {
-          status: [
-            {id: 0, text: 'In revisione'},
-            {id: 1, text: 'Da rivedere'},
-            {id: 2, text: 'Pronto per invio'},
-            {id: 3, text: 'Bozza'}
-          ],
-          macroEpocaCar: [],
-          macroEpocaOrig: []
-        }
+        hiddenColumns: this.getHiddenColums()
       }
     }
   },
   mounted () {
     this.getData()
-    this.getMac().then(arr => { this.options.listColumns.macroEpocaCar = arr })
-    this.getMeo().then(arr => { this.options.listColumns.macroEpocaOrig = arr })
   },
   watch: {
     update: function (val) { this.getData() }

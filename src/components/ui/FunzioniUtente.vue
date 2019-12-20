@@ -84,8 +84,8 @@
 import DettagliFunzione from '@/components/pages/Funzione/ViewFunzione'
 import EditBene from '@/components/pages/Bene/AddEditBene'
 import FunzioneModel from '@/assets/js/Models/funzioneModel'
+import FunzioneTableMixin from '@/components/mixins/FunzioneTable'
 import '@/assets/css/hugeModal.css'
-import {loadRuolo, loadTipoData, loadFunc} from '@/assets/js/loadDict'
 const qs = require('qs')
 const axios = require('axios')
 
@@ -97,6 +97,7 @@ export default {
     DettagliFunzione,
     EditBene
   },
+  mixins: [FunzioneTableMixin],
   computed: {
     FunzioneModel: () => FunzioneModel(),
     sonoRevisore: function () {
@@ -138,18 +139,6 @@ export default {
           this.$vueEventBus.$emit('master-page-show-msg',
             ['Errore', msg])
         })
-    },
-    getRuolo: function () {
-      return loadRuolo(this)
-        .then(resp => resp.data.map(el => { return {id: el.id, text: el.value} }))
-    },
-    getTipoData: function () {
-      return loadTipoData(this)
-        .then(resp => resp.data.map(el => { return {id: el.id, text: el.value} }))
-    },
-    getFunc: function () {
-      return loadFunc(this)
-        .then(resp => resp.data.map(el => { return {id: el.id, text: el.value} }))
     }
   },
   data: function () {
@@ -180,50 +169,14 @@ export default {
       ],
       tableData: [],
       options: {
-        filterable: [
-          'id',
-          'status',
-          'denominazione',
-          'denominazioner',
-          'data',
-          'tipodata',
-          'funzione',
-          'id_bene',
-          'id_utente_bene',
-          'ruolo',
-          'id_bener',
-          'id_utente_bener',
-          'ruolor',
-          'bibliografia',
-          'note',
-          'schedatori_iniziali'
-        ],
         filterByColumn: true,
         editableColumns: ['msg_validatore'],
-        hiddenColumns: this.getHiddenColums(),
-        listColumns: {
-          status: [
-            {id: 0, text: 'In revisione'},
-            {id: 1, text: 'Da rivedere'},
-            {id: 2, text: 'Pronto per invio'},
-            {id: 3, text: 'Bozza'}
-          ],
-          tipodata: [],
-          ruolo: [],
-          ruolor: [],
-          funzione: []
-        }
+        hiddenColumns: this.getHiddenColums()
       }
     }
   },
   mounted () {
     this.getData()
-    this.getRuolo().then(arr => {
-      this.options.listColumns.ruolo = arr
-      this.options.listColumns.ruolor = arr
-    })
-    this.getTipoData().then(arr => { this.options.listColumns.tipodata = arr })
-    this.getFunc().then(arr => { this.options.listColumns.funzione = arr })
   },
   watch: {
     update: function (val) { this.getData() }
