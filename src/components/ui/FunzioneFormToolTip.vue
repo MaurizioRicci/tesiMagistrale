@@ -1,4 +1,4 @@
-<template functional>
+<template>
 <!-- aggiunge i tooltip con le spiegazioni sulle varie parti delle funzioni
 i vari attributi target sono id di elementi presenti nella pagina -->
     <div>

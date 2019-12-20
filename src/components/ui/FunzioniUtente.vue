@@ -9,10 +9,14 @@
             'bg-success': FunzioneModel.isReady.call(row),
             'bg-info': FunzioneModel.isRev.call(row)
             }" class="mt-1 rounded">
-          <span v-if="FunzioneModel.isRev.call(row)" class="text-light">In revisione</span>
-          <span v-else-if="FunzioneModel.isIncorrect.call(row)" class="text-light">Da rivedere</span>
-          <span v-else-if="FunzioneModel.isIncomplete.call(row)" class="text-light">Bozza</span>
-          <span v-else-if="FunzioneModel.isReady.call(row)" class="text-light">Pronto per invio</span>
+          <span v-if="FunzioneModel.isRev.call(row)" class="text-light" key="inrevisione">
+            In revisione</span>
+          <span v-else-if="FunzioneModel.isIncorrect.call(row)" class="text-light" key="darivedere">
+            Da rivedere</span>
+          <span v-else-if="FunzioneModel.isIncomplete.call(row)" class="text-light" key="inbozza">
+            Bozza</span>
+          <span v-else-if="FunzioneModel.isReady.call(row)" class="text-light" key="pronto">
+            Pronto per invio</span>
           </div>
         </template>
 
@@ -29,20 +33,23 @@
         <template v-slot:azioni="{row}">
           <b-button-group horizontal>
             <b-button v-if="cercaInArchivioTemp"
+              key="siArchivioTmp"
               :to="'/funzione/dettagli_funzione/' + row.id + '/' + row.id_utente"
              class="pt-1">Vedi dettagli</b-button>
 
             <b-button v-if="!cercaInArchivioTemp"
+              key="noArchivioTmp"
               :to="'/funzione/dettagli_funzione/' + row.id"
              class="pt-1">Vedi dettagli</b-button>
 
             <b-button :to="'/funzione/modifica/' + row.id + '/' + row.id_utente"
-              class="pt-1"
+              class="pt-1" key="noRevisoreTmp"
               v-if="cercaInArchivioTemp && !sonoRevisore &&
                (FunzioneModel.isIncomplete.call(row) || FunzioneModel.isIncorrect.call(row) ||
               FunzioneModel.isReady.call(row))">Modifica</b-button>
 
             <b-button v-if="cercaInArchivioTemp && sonoRevisore"
+              key="revisoreArchTmp"
               :to="'/funzione/valida/' + row.id + '/' + row.id_utente"
                class="pt-1">Modifica e approva</b-button>
 

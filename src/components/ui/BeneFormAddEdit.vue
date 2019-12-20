@@ -5,7 +5,7 @@
     <b-form :novalidate="true" :validated="validated" ref="form_bene" id="bene_form_add_edit">
       <b-form-checkbox @change="checked => checked ? form.setIncomplete() : form.setReady()"
         :checked="form.isIncomplete()"
-        name="check-button-bozza" switch v-if="!noDraft"
+        name="check-button-bozza" switch v-if="!noDraft && schedatore"
         id="checkbox-bozza" size="lg" class="mb-1">
         Aggiungi alle bozze
       </b-form-checkbox>
@@ -164,6 +164,7 @@ export default {
     checkValidity () { return this.$refs.form_bene.checkValidity() }
   },
   computed: {
+    schedatore () { return this.$store.getters.getUserData.role === 'schedatore' },
     polygonStr: function () { return this.form.polygon.toString() },
     queryIdentificazione () {
       return () => axios.get(this.$store.getters.filtraIdentURL, {

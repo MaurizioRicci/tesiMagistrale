@@ -1,17 +1,17 @@
 <template>
     <div class="mb-1">
-        <b-button variant="outline-primary">
-          <IconMsg @click="copia" icon_name="copy"
+        <b-button variant="outline-primary" @click="copia">
+          <IconMsg icon_name="copy" icon_size="lg"
           icon_msg="Copia funzione"/>
         </b-button>
-        <b-button variant="outline-primary"
-          v-if="!noPaste && copiedModel">
-          <IconMsg v-b-modal.modal-incolla
-            icon_name="paste" icon_msg="Incolla funzione"/>
+        <b-button variant="outline-primary" v-b-modal.modal-incolla
+          v-if="!noPaste && copiedModel" key="incollaBtn">
+          <IconMsg icon_name="clipboard" icon_size="lg"
+            icon_msg="Incolla funzione"/>
         </b-button>
 
         <b-modal v-if="!noPaste" id="modal-incolla" title="Incolla funzione"
-          @ok="incolla">
+          @ok="incolla" key="incollaModal">
           <div v-for="chk in buildChks" :key="chk.value">
             <div>
               <b-form-checkbox inline

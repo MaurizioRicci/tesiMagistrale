@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid class="p-0">
+  <b-container fluid class="myMenu p-0">
     <b-navbar toggleable="lg" type="dark" variant="info" class="mb-1">
       <b-navbar-brand to="/home">Home</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -62,3 +62,8 @@ export default {
   }
 }
 </script>
+
+<style>
+.myMenu .nav-link { color: white !important; }
+.myMenu .nav-item:hover { background-color: #114e61; border-radius: 5px; }
+</style>

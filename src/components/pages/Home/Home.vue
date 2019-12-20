@@ -27,7 +27,7 @@
               ATTENZIONE: Stai per esaurire gli ID.
             </p>
             <hr/>
-            <div v-if="data.role === 'revisore'">
+            <div v-if="data.role === 'revisore'" key="revisorePage">
               <p>Hai
                 <b-badge variant="info">{{data.n_beni_da_revisionare}}</b-badge>
                 <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
@@ -39,7 +39,7 @@
                 {{data.n_funzioni_da_revisionare | formatFunzioni}}
                 da revisionare.</p>
             </div>
-            <div v-else>
+            <div v-else key="schedatorePage">
               <p>Hai
                 <b-badge variant="info">{{data.n_beni_pronti}}</b-badge>
                 <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
@@ -128,7 +128,7 @@ export default {
         })).then(function (resp) {
         this.data = resp.data
         // salvo nello store l'ultimo ID usato per un bene
-        this.$store.commit('acquisisciBeneUltimoID', resp.data.ultimo_id_bene - 1)
+        this.$store.commit('acquisisciBeneUltimoID', resp.data.ultimo_id_bene)
       }.bind(this))
     },
     logout () {

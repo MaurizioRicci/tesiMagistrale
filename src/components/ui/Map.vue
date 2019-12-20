@@ -25,15 +25,15 @@ la proprietà locked; se presente disabilita la modifica -->
               Rimpicciolisci
             </b-button>
           </span>
-          <b-button v-if="controls.watch" :pressed.sync="watch">
+          <b-button v-if="controls.watch" :pressed.sync="watch" key="watch">
             <IconMsg icon_name="info-circle" icon_color="white"
               icon_msg="Mostra dettagli dei beni"/>
           </b-button>
-          <b-button to="/options/map" v-if="controls.settings">
+          <b-button to="/options/map" v-if="controls.settings" key="settings">
             <IconMsg icon_name="cog" icon_color="white"
               icon_msg="Impostazioni"/>
           </b-button>
-          <b-button v-if="controls.resetGeo" @click="$emit('resetGeo')">
+          <b-button v-if="controls.resetGeo" key="resetGeo" @click="$emit('resetGeo')">
             <IconMsg icon_name="trash" icon_color="red"
               icon_msg="Resetta geografia"/>
           </b-button>
