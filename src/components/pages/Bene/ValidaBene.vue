@@ -12,7 +12,7 @@
       <b-col>
         <h4>Bene in archivio definitivo</h4>
         <BeneFormView :form="formBeneArchDef" :disallowIDChange="true"/>
-        <MyMap ref="myMap1" locked :zoom="17" :controls="mapControls"
+        <MyMap ref="myMap1" locked :zoom="17" :controls="mapControlsNoResetGeo"
             v-model="formBeneArchDef.polygon" :center="mapCenterArchDef"/>
       </b-col>
       <b-col>
@@ -57,7 +57,8 @@ export default {
       sendBtnClicked: false,
       formBeneArchDef: getModelloBene(),
       mapCenterArchDef: [0, 0],
-      mapControls: {zoom: false, settings: false}
+      mapControls: {zoom: false, settings: false},
+      mapControlsNoResetGeo: {zoom: false, settings: false, resetGeo: false}
     }
   },
   methods: {

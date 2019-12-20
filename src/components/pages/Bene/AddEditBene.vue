@@ -21,9 +21,9 @@
           <b-button variant="primary" @click="goBack">Indietro</b-button>
           <b-button type="reset" variant="danger" v-on:click="onReset">Reset</b-button>
           <b-button type="submit" variant="primary"
-            @click="evt => {leavePage = true; onSubmit(evt)}">Invia</b-button>
+            @click="evt => {leavePage = true; onSubmit(evt)}">Salva</b-button>
           <b-button v-if="!editMode" type="submit" variant="primary"
-            @click="evt => {leavePage = false; onSubmit(evt)}">Invia e acquisisci altro bene</b-button>
+            @click="evt => {leavePage = false; onSubmit(evt)}">Salva e acquisisci altro bene</b-button>
 
         </b-col>
       </transition>
@@ -31,7 +31,8 @@
         <MyMap ref="myMap" @ingrandisci-mappa="ingrandisciMappa"
           v-model="form.polygon" :zoom="editMode ? 17 : 10" :center="mapCenter"
           @rimpicciolisci-mappa="rimpicciolisciMappa"
-          v-on-clickaway="checkPolygonDist"/>
+          v-on-clickaway="checkPolygonDist"
+          @resetGeo="form.polygon = formRetrived.polygon"/>
       </b-col>
     </b-row>
   </b-container>
@@ -139,7 +140,7 @@ export default {
         this.form.id = this.$store.getters.beneUltimoID + 1
       }
       if (this.idBene && this.editMode) {
-        this.fetchBeneDataByID(this.idBene, this.idUtente)
+        this.fetchBeneDataByID(this.idBene, this.idUtente, this.cercaInArchivioTemp)
       }
     },
     checkPolygonDist () {

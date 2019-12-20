@@ -2,7 +2,7 @@
 la proprietà locked; se presente disabilita la modifica -->
 <template>
     <l-map :zoom="zoom" :center="center" @click="mapClick"
-      v-bind:style="{ width, height }" ref="myMap">
+      v-bind:style="{ width, height, cursor }" ref="myMap">
 
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
 
@@ -30,7 +30,12 @@ la proprietà locked; se presente disabilita la modifica -->
               icon_msg="Mostra dettagli dei beni"/>
           </b-button>
           <b-button to="/options/map" v-if="controls.settings">
-            <font-awesome-icon :icon="['fas', 'cog']" style="color:white"/>
+            <IconMsg icon_name="cog" icon_color="white"
+              icon_msg="Impostazioni"/>
+          </b-button>
+          <b-button v-if="controls.resetGeo" @click="$emit('resetGeo')">
+            <IconMsg icon_name="trash" icon_color="red"
+              icon_msg="Resetta geografia"/>
           </b-button>
         </b-button-group>
       </l-control>
@@ -67,7 +72,7 @@ export default {
     controls: {type: Object,
       default: function () {
         return {
-          zoom: true, settings: true, watch: true
+          zoom: true, settings: true, watch: true, resetGeo: true
         }
       }},
     zoom: {type: Number, default: 15},
@@ -152,6 +157,11 @@ export default {
       // serve poi se l'utente vuole modificarlo
       currPolygon: this.polygon ? this.polygon.clone() : new Polygon(),
       watch: this.controls.watch
+    }
+  },
+  computed: {
+    cursor () {
+      return this.watch ? 'help' : 'crosshair'
     }
   },
   watch: {

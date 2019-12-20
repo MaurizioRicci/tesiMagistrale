@@ -12,6 +12,8 @@
       <transition name="slide-fade" v-on:leave="mapCols = 12">
         <b-col cols="8" v-show="12-mapCols > 0">
 
+        <FunzioneCopiaIncolla :funzioneModel="form" no-paste/>
+
           <FunzioneFormView :form="form"/>
           <b-button type="submit" variant="primary" @click="goBack">Indietro</b-button>
           <!-- si modificano solo beni definitivi -->
@@ -40,10 +42,11 @@ import commonPageMixin from '@/components/mixins/CommonPage'
 import dettagliFunzioneMixin from '@/components/mixins/DettagliFunzione'
 import '@/assets/css/slideFadeTransition.css'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
+import FunzioneCopiaIncolla from '@/components/ui/FunzioneCopyPaste'
 
 export default {
   name: 'VisualizzaFunzione',
-  components: { Menu, MyMap, FunzioneFormView, RicercaBeniApprovati },
+  components: { Menu, MyMap, FunzioneFormView, RicercaBeniApprovati, FunzioneCopiaIncolla },
   mixins: [commonPageMixin, dettagliFunzioneMixin],
   data () {
     return {

@@ -93,7 +93,7 @@
         </my-autocomplete-input>
       </b-form-group>
       <!-- id bene 2 -->
-      <b-form-group id="input-group-id_bener" label="ID:" label-for="input-id_bener"
+      <b-form-group id="input-group-id_bener" label="ID rif:" label-for="input-id_bener"
        label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-input
           id="input-id_bener"

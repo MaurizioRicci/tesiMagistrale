@@ -37,20 +37,12 @@
       </b-form-group>
       <b-form-group id="input-group-1" label="Descrizione:"
         label-for="input-descrizione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <my-autocomplete-input v-model="form.descrizione"
-          :suggestionsPromise="getDictFuncs().loadDescr"
-          closedDictionary
-          icon_name="lock"
-          icon_msg="Campo vincolato a un dizionario">
-          <b-form-textarea
-            id="input-descrizione"
-            type="text"
-            v-model="form.descrizione"
-            required
-            placeholder=""
-            autocomplete="off"
-            ></b-form-textarea>
-        </my-autocomplete-input>
+        <b-form-textarea
+          id="input-descrizione"
+          type="text"
+          v-model="form.descrizione"
+          placeholder=""
+          autocomplete="off"></b-form-textarea>
       </b-form-group>
       <b-form-group id="input-group-1" label="MacroEpocaOrig:"
         label-for="input-macro-epoca-orig" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
@@ -63,7 +55,6 @@
             id="input-macro-epoca-orig"
             type="text"
             v-model="form.macroEpocaOrig"
-            required
             placeholder=""
             autocomplete="off"
             ></b-form-input>
@@ -80,7 +71,6 @@
             id="input-macro-epoca-car"
             type="text"
             v-model="form.macroEpocaCar"
-            required
             placeholder=""
             autocomplete="off"
             ></b-form-input>

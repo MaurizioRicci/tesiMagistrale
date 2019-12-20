@@ -27,36 +27,60 @@
               ATTENZIONE: Stai per esaurire gli ID.
             </p>
             <hr/>
-            <p>Hai
-              <b-badge variant="info">{{data.n_beni_rev}}</b-badge>
-              <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
-              {{data.n_beni_rev | formatBeni}}
-              in attesa di revisione.</p>
-            <p>Hai
-              <b-badge variant="info">{{data.n_funzioni_rev}}</b-badge>
-              <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
-              {{data.n_funzioni_rev | formatFunzioni}}
-               in attesa di revisione.</p>
-            <p>Hai
-              <b-badge variant="info">{{data.n_beni_da_correggere}}</b-badge>
-              <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
-              {{data.n_beni_da_correggere | formatBeni}}
-               in attesa di correzione.</p>
-            <p>Hai
-              <b-badge variant="info">{{data.n_funzioni_da_correggere}}</b-badge>
-              <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
-              {{data.n_funzioni_da_correggere | formatFunzioni}}
-              in attesa di correzione.</p>
-            <p>Hai
-              <b-badge variant="info">{{data.n_beni_incompleti}}</b-badge>
-              <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
-              {{data.n_beni_incompleti | formatBeni}}
-               incompleti.</p>
-            <p>Hai
-              <b-badge variant="info">{{data.n_funzioni_incomplete}}</b-badge>
-              <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
-              {{data.n_funzioni_incomplete | formatFunzioni}}
-               incomplete.</p>
+            <div v-if="data.role === 'revisore'">
+              <p>Hai
+                <b-badge variant="info">{{data.n_beni_da_revisionare}}</b-badge>
+                <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
+                {{data.n_beni_da_revisionare | formatBeni}}
+                da revisionare.</p>
+              <p>Hai
+                <b-badge variant="info">{{data.n_funzioni_da_revisionare}}</b-badge>
+                <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
+                {{data.n_funzioni_da_revisionare | formatFunzioni}}
+                da revisionare.</p>
+            </div>
+            <div v-else>
+              <p>Hai
+                <b-badge variant="info">{{data.n_beni_pronti}}</b-badge>
+                <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
+                {{data.n_beni_pronti | formatBeni}}
+                in attesa di invio.</p>
+              <p>Hai
+                <b-badge variant="info">{{data.n_funzioni_pronte}}</b-badge>
+                <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
+                {{data.n_funzioni_pronte | formatFunzioni}}
+                in attesa di invio.</p>
+              <p>Hai
+                <b-badge variant="info">{{data.n_beni_rev}}</b-badge>
+                <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
+                {{data.n_beni_rev | formatBeni}}
+                in attesa di revisione.</p>
+              <p>Hai
+                <b-badge variant="info">{{data.n_funzioni_rev}}</b-badge>
+                <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
+                {{data.n_funzioni_rev | formatFunzioni}}
+                in attesa di revisione.</p>
+              <p>Hai
+                <b-badge variant="info">{{data.n_beni_da_correggere}}</b-badge>
+                <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
+                {{data.n_beni_da_correggere | formatBeni}}
+                da correggere.</p>
+              <p>Hai
+                <b-badge variant="info">{{data.n_funzioni_da_correggere}}</b-badge>
+                <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
+                {{data.n_funzioni_da_correggere | formatFunzioni}}
+                da correggere.</p>
+              <p>Hai
+                <b-badge variant="info">{{data.n_beni_incompleti}}</b-badge>
+                <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
+                {{data.n_beni_incompleti | formatBeni}}
+                incompleti.</p>
+              <p>Hai
+                <b-badge variant="info">{{data.n_funzioni_incomplete}}</b-badge>
+                <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
+                {{data.n_funzioni_incomplete | formatFunzioni}}
+                incomplete.</p>
+            </div>
             <hr/>
             <b-col class="text-center">
               <b-button @click="logout">Logout</b-button>
@@ -100,12 +124,11 @@ export default {
       axios.post(this.$store.getters.userStatsURL,
         qs.stringify({
           username: this.$store.getters.getUserData.username,
-          password: this.$store.getters.getUserData.password,
-          switch_bene: this.cercaInArchivioTemp ? 'miei_temp' : 'miei_aggiunti'
+          password: this.$store.getters.getUserData.password
         })).then(function (resp) {
         this.data = resp.data
         // salvo nello store l'ultimo ID usato per un bene
-        this.$store.commit('acquisisciBeneUltimoID', resp.data.ultimo_id_bene)
+        this.$store.commit('acquisisciBeneUltimoID', resp.data.ultimo_id_bene - 1)
       }.bind(this))
     },
     logout () {

@@ -15,14 +15,17 @@
         <!-- 12-mapCols > 0 => se la mappa occupa 12 colonne allora il form è nascosto -->
         <b-col cols="8" v-show="12-mapCols > 0">
 
+          <FunzioneCopiaIncolla :funzioneModel="form"
+           @incolla_funzione="data => form = Object.assign(form, data)"/>
+
           <FunzioneFormAddEdit ref="form_funzione" v-model="form"
             :validated="sendBtnClicked"/>
           <b-button variant="primary" @click="goBack">Indietro</b-button>
           <b-button type="reset" variant="danger" v-on:click="onReset">Reset</b-button>
           <b-button type="submit" variant="primary"
-            @click="evt => {leavePage = true; onSubmit(evt)}">Invia</b-button>
+            @click="evt => {leavePage = true; onSubmit(evt)}">Salva</b-button>
           <b-button v-if="!editMode" type="submit" variant="primary"
-            @click="evt => {leavePage = false; onSubmit(evt)}">Invia e acquisisci altra funzione</b-button>
+            @click="evt => {leavePage = false; onSubmit(evt)}">Salva e acquisisci altra funzione</b-button>
 
         </b-col>
       </transition>
@@ -49,6 +52,7 @@ import LoginWarning from '@/components/ui/LoginWarning'
 import MyMap from '@/components/ui/Map'
 import '@/assets/css/slideFadeTransition.css'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
+import FunzioneCopiaIncolla from '@/components/ui/FunzioneCopyPaste'
 import lodashclonedeep from 'lodash.clonedeep'
 const axios = require('axios')
 const qs = require('qs')
@@ -61,7 +65,8 @@ export default {
     LoginWarning,
     FunzioneFormAddEdit,
     MyMap,
-    RicercaBeniApprovati
+    RicercaBeniApprovati,
+    FunzioneCopiaIncolla
   },
   mixins: [commonPageMixin, dettagliFunzioneMixin],
   data () {

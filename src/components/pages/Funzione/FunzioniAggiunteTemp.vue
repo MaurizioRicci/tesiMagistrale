@@ -11,10 +11,10 @@
     <b-row>
       <b-col>
         <b-tabs pills card align="center">
-          <b-tab title="Funzioni aggiunte" active>
+          <b-tab title="Funzioni tue archivio definitivo">
             <FunzioniUtente :update="update"/>
           </b-tab>
-          <b-tab title="Altre funzioni utente">
+          <b-tab title="Altre funzioni utente" active>
             <p>Qua ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
             <FunzioniUtente cercaInArchivioTemp :update="update"/>
             <b-button v-if="role==='schedatore'"

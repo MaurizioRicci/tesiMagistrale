@@ -11,10 +11,10 @@
     <b-row>
       <b-col>
         <b-tabs pills card align="center">
-          <b-tab title="Beni aggiunti" active>
+          <b-tab title="Beni tuoi archivio definitivo">
             <BeniUtente :update="update"/>
           </b-tab>
-          <b-tab title="Altri Beni utente">
+          <b-tab title="Altri Beni utente" active>
             <p>Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
             <BeniUtente v-if="role==='schedatore'"
               cercaInArchivioTemp :update="update"/>
