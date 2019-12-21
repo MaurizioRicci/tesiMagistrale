@@ -32,7 +32,7 @@
           v-model="form.polygon" :zoom="editMode ? 17 : 10" :center="mapCenter"
           @rimpicciolisci-mappa="rimpicciolisciMappa"
           v-on-clickaway="checkPolygonDist"
-          @resetGeo="() => form.polygon = formRetrived.polygon"/>
+          @resetGeo="form.polygon = formRetrived.polygon.clone()"/>
       </b-col>
     </b-row>
   </b-container>

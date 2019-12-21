@@ -30,7 +30,7 @@
         </b-col>
       </transition>
       <b-col :cols="mapCols">
-        <MyMap ref="myMap" @ingrandisci-mappa="ingrandisciMappa"
+        <MyMap ref="myMap" locked @ingrandisci-mappa="ingrandisciMappa"
           v-model="form.polygon" :zoom="editMode ? 17 : 10" :center="mapCenter"
           @rimpicciolisci-mappa="rimpicciolisciMappa"/>
       </b-col>

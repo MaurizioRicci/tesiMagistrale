@@ -27,7 +27,7 @@
               :to="'/bene/dettagli_bene/' + row.id + '/' + row.id_utente"
              class="pt-1">Vedi dettagli</b-button>
 
-            <b-button v-if="!cercaInArchivioTemp"
+            <b-button v-else
               key="noArchivioTmp"
               :to="'/bene/dettagli_bene/' + row.id"
              class="pt-1">Vedi dettagli</b-button>

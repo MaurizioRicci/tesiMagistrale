@@ -33,7 +33,7 @@ la proprietà locked; se presente disabilita la modifica -->
             <IconMsg icon_name="cog" icon_color="white"
               icon_msg="Impostazioni"/>
           </b-button>
-          <b-button v-if="controls.resetGeo" key="resetGeo" @click="$emit('resetGeo')">
+          <b-button v-if="!locked" key="resetGeo" @click="$emit('resetGeo')">
             <IconMsg icon_name="trash" icon_color="red"
               icon_msg="Resetta geografia"/>
           </b-button>
@@ -72,7 +72,7 @@ export default {
     controls: {type: Object,
       default: function () {
         return {
-          zoom: true, settings: true, watch: true, resetGeo: true
+          zoom: true, settings: true, watch: true
         }
       }},
     zoom: {type: Number, default: 15},
