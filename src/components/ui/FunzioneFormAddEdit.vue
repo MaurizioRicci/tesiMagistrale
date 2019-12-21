@@ -50,6 +50,7 @@
           v-model="form.data_ante"
           placeholder=""
           autocomplete="off"
+          v-setcustomvalidity="dataAnteValida"
           ></b-form-input>
       </b-form-group>
       <b-form-group id="input-group-1" label="Data posteriore:"
@@ -61,6 +62,7 @@
           v-model="form.data_poste"
           placeholder=""
           autocomplete="off"
+          v-setcustomvalidity="dataPosteValida"
           ></b-form-input>
       </b-form-group>
       <!-- tipo data -->
@@ -174,6 +176,7 @@
 </template>
 
 <script>
+import setCustomValidity from '@/components/directives/setCustomValidity'
 import FunzioneFormToolTip from '@/components/ui/FunzioneFormToolTip'
 import MyAutocompleteInput from '@/components/ui/MyAutocompleteInput'
 import RemoteContextualSuggestions from '@/components/common/RemoteContextualSuggestions'
@@ -190,6 +193,9 @@ export default {
     IconMsg
   },
   mixins: [],
+  directives: {
+    setcustomvalidity: setCustomValidity
+  },
   props: {
     validated: Boolean,
     form: Object,
