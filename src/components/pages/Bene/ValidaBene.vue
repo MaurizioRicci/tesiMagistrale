@@ -79,7 +79,6 @@ export default {
       }
     },
     sendData () {
-      // da rivedere
       let postData = lodashclonedeep(
         Object.assign({}, this.form, this.$store.getters.getUserData))
       // PostGIS vuole i punti come longitudine-latitudine
@@ -129,6 +128,20 @@ export default {
     $route (to, from) {
       this.init()
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    // called when the route that renders this component is about to
+    // be navigated away from.
+    // has access to `this` component instance.
+    let resp = true
+    if (!this.sendBtnClicked) {
+      // se il server non ha dato responso OK o se proprio non gli è stato mandato
+      let formClone = Object.assign({}, this.form)
+      if (JSON.stringify(formClone) !== JSON.stringify(this.formRetrived)) {
+        resp = window.confirm('Hai modifiche in sospeso, abbandonare la pagina?')
+      }
+    }
+    if (resp) next()
   }
 }
 </script>

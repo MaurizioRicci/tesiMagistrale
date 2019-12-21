@@ -44,6 +44,7 @@ import FunzioneFormAddEdit from '@/components/ui/FunzioneFormAddEdit'
 import lodashclonedeep from 'lodash.clonedeep'
 import getModelloFunzione from '@/assets/js/Models/funzioneModel'
 import MyMap from '@/components/ui/Map'
+import { ternaVera } from '@/assets/js/date/dateF'
 const axios = require('axios')
 const qs = require('qs')
 
@@ -58,6 +59,11 @@ export default {
       formFunzioneArchDef: getModelloFunzione(),
       mapCenterArchDef: [0, 0],
       mapControls: {zoom: false, settings: false}
+    }
+  },
+  computed: {
+    ternaValida () {
+      return ternaVera(this.form.data_ante, this.form.data_poste, this.form.tipodata)
     }
   },
   methods: {
@@ -78,22 +84,26 @@ export default {
       }
     },
     sendData () {
-      // da rivedere
-      let postData = lodashclonedeep(
-        Object.assign({}, this.form, this.$store.getters.getUserData))
-      let storeGetters = this.$store.getters
-      let url = storeGetters.approvaFunzioneURL
-      axios.post(url, qs.stringify(postData))
-        .then(ok => {
-          this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
-          if (this.leavePage) {
-            this.$vueEventBus.$once('master-page-show-msg-ok',
-              () => this.goBack())
-          }
-        }, error => {
-          let msg = (error.response && error.response.data.msg) || error.message
-          this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
-        })
+      if (!this.ternaValida) {
+        this.$vueEventBus.$emit('master-page-show-msg',
+          ['Attenzione', 'Data anteriore, data posteriore e tipo data non tornano tra loro.'])
+      } else {
+        let postData = lodashclonedeep(
+          Object.assign({}, this.form, this.$store.getters.getUserData))
+        let storeGetters = this.$store.getters
+        let url = storeGetters.approvaFunzioneURL
+        axios.post(url, qs.stringify(postData))
+          .then(ok => {
+            this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
+            if (this.leavePage) {
+              this.$vueEventBus.$once('master-page-show-msg-ok',
+                () => this.goBack())
+            }
+          }, error => {
+            let msg = (error.response && error.response.data.msg) || error.message
+            this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
+          })
+      }
     },
     init () {
       // resetto le variabili
@@ -126,6 +136,20 @@ export default {
     $route (to, from) {
       this.init()
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    // called when the route that renders this component is about to
+    // be navigated away from.
+    // has access to `this` component instance.
+    let resp = true
+    if (!this.sendBtnClicked) {
+      // se il server non ha dato responso OK o se proprio non gli è stato mandato
+      let formClone = Object.assign({}, this.form)
+      if (JSON.stringify(formClone) !== JSON.stringify(this.formRetrived)) {
+        resp = window.confirm('Hai modifiche in sospeso, abbandonare la pagina?')
+      }
+    }
+    if (resp) next()
   }
 }
 </script>
