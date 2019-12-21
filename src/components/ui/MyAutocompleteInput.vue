@@ -121,8 +121,9 @@ export default {
       if (this.closedDictionary) {
         // se si accetta un dizionario controllato occorre controllare
         // che l'input sia nel dizionario
-        if (this.arr.map(el => el.value)
-          .includes(this.bs_input.value) && !this.error) {
+        if ((this.arr.map(el => el.value)
+          .includes(this.bs_input.value) && !this.error) ||
+          this.bs_input.value === '') {
           this.state.validFeedback = true
           this.bs_input.setCustomValidity('')
         } else {
