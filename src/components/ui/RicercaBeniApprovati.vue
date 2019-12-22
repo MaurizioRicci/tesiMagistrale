@@ -4,9 +4,15 @@
     :url="$store.getters.beniAggiuntiApprovatiURL">
 
         <template v-slot:azioni="{row}">
-          <b-button-group vertical>
-            <b-button :to="'/bene/dettagli_bene/'.concat(row.id)" class="pt-1">Vedi dettagli</b-button>
-            <b-button :to="'/bene/modifica/'.concat(row.id)" row.id class="pt-1">Modifica</b-button>
+          <b-button-group horizontal>
+            <b-button :to="'/bene/dettagli_bene/'.concat(row.id)" class="pt-1"
+              variant="light">
+              <icon-msg icon_name="info-circle" icon_msg="Vedi dettagli"/>
+            </b-button>
+            <b-button :to="'/bene/modifica/'.concat(row.id)" row.id class="pt-1"
+              variant="light">
+              <icon-msg icon_name="edit" icon_msg="Modifica"/>
+            </b-button>
           </b-button-group>
         </template>
 
@@ -33,6 +39,7 @@
 </template>
 
 <script>
+import IconMsg from '@/components/ui/IconMsg'
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 import '@/assets/css/hugeModal.css'
 import BeneTableMixin from '@/components/mixins/BeneTable'
@@ -42,7 +49,7 @@ window.axios = require('axios') // serve per vue-tables 2 non cancellare
 export default {
   name: 'BeniUtente',
   mixins: [BeneTableMixin],
-  components: {},
+  components: {IconMsg},
   filters: {ellipsizeLongText: ellipsize},
   props: {},
   methods: {

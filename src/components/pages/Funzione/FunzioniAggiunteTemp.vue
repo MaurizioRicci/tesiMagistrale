@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-    <LoadingOverlay :open="update"/>
+    <LoadingOverlay :open="loading"/>
     <b-row>
       <b-col cols="12" v-if="!noMenu">
         <Menu/>
@@ -13,11 +13,13 @@
       <b-col>
         <b-tabs pills card align="center">
           <b-tab title="Funzioni tue archivio definitivo">
-            <FunzioniUtente :update.sync="update"/>
+            <FunzioniUtente :update.sync="triggerUpdate"
+              @loading="loading=true" @loaded="loading=false"/>
           </b-tab>
           <b-tab title="Altre funzioni utente" active>
             <p>Qua ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
-            <FunzioniUtente cercaInArchivioTemp :update.sync="update"/>
+            <FunzioniUtente cercaInArchivioTemp :update.sync="triggerUpdate"
+              @loading="loading=true" @loaded="loading=false"/>
             <b-button v-if="role==='schedatore'"
               @click="waitUserConfirmation=true">Invia per il controllo</b-button>
           </b-tab>
@@ -55,7 +57,8 @@ export default {
   data: function () {
     return {
       waitUserConfirmation: false,
-      update: false,
+      triggerUpdate: false,
+      loading: false,
       role: this.$store.getters.getUserData.role
     }
   },

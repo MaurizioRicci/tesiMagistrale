@@ -33,25 +33,39 @@
         <template v-slot:azioni="{row}">
           <b-button-group horizontal>
             <b-button v-if="cercaInArchivioTemp"
-              key="siArchivioTmp"
+              key="siArchivioTmp" variant="light"
               :to="'/funzione/dettagli_funzione/' + row.id + '/' + row.id_utente"
-             class="pt-1">Vedi dettagli</b-button>
+             class="pt-1">
+              <icon-msg icon_name="info-circle" icon_msg="Vedi dettagli"/>
+            </b-button>
 
             <b-button v-if="!cercaInArchivioTemp"
-              key="noArchivioTmp"
+              key="noArchivioTmp" variant="light"
               :to="'/funzione/dettagli_funzione/' + row.id"
-             class="pt-1">Vedi dettagli</b-button>
+             class="pt-1">
+              <icon-msg icon_name="info-circle" icon_msg="Vedi dettagli"/>
+            </b-button>
 
             <b-button :to="'/funzione/modifica/' + row.id + '/' + row.id_utente"
-              class="pt-1" key="noRevisoreTmp"
+              class="pt-1" key="noRevisoreTmp" variant="light"
               v-if="cercaInArchivioTemp && !sonoRevisore &&
                (FunzioneModel.isIncomplete.call(row) || FunzioneModel.isIncorrect.call(row) ||
-              FunzioneModel.isReady.call(row))">Modifica</b-button>
+              FunzioneModel.isReady.call(row))">
+                <icon-msg icon_name="edit" icon_msg="Modifica"/>
+            </b-button>
 
             <b-button v-if="cercaInArchivioTemp && sonoRevisore"
-              key="revisoreArchTmp"
+              key="revisoreArchTmp" variant="light"
               :to="'/funzione/valida/' + row.id + '/' + row.id_utente"
-               class="pt-1">Modifica e approva</b-button>
+               class="pt-1">
+                <icon-msg icon_name="check-circle" icon_msg="Approva con modifca"/>
+            </b-button>
+
+            <!-- sei revisore oppure se non sei revisore ma la funzione non è sotto revisione -->
+            <b-button v-if="cercaInArchivioTemp && (sonoRevisore || !FunzioneModel.isRev.call(row))"
+              @click="cancellaTmp(row)" key="cancellaTmp" variant="light" class="pt-1">
+              <icon-msg icon_name="trash" icon_msg="Elimina" icon_color="red"/>
+            </b-button>
 
           </b-button-group>
         </template>
@@ -85,6 +99,7 @@ import DettagliFunzione from '@/components/pages/Funzione/ViewFunzione'
 import EditBene from '@/components/pages/Bene/AddEditBene'
 import FunzioneModel from '@/assets/js/Models/funzioneModel'
 import FunzioneTableMixin from '@/components/mixins/FunzioneTable'
+import IconMsg from '@/components/ui/IconMsg'
 import '@/assets/css/hugeModal.css'
 const qs = require('qs')
 const axios = require('axios')
@@ -95,7 +110,8 @@ export default {
   name: 'BeniUtente',
   components: {
     DettagliFunzione,
-    EditBene
+    EditBene,
+    IconMsg
   },
   mixins: [FunzioneTableMixin],
   computed: {
@@ -110,12 +126,16 @@ export default {
   },
   methods: {
     getData: function () {
+      this.$emit('loading')
       return axios.post(this.$store.getters.funzioniAggiunteTempURL,
         qs.stringify({
           username: this.$store.getters.getUserData.username,
           password: this.$store.getters.getUserData.password,
           switch_funzione: this.cercaInArchivioTemp ? 'miei_temp' : 'miei_aggiunti'
-        })).then(function (resp) { this.tableData = resp.data }.bind(this))
+        })).then(resp => {
+        this.$emit('loaded')
+        this.tableData = resp.data
+      }, fail => this.$emit('loadingFailed', fail.data))
     },
     getHiddenColums () {
       // nasconde la colonna msg_validatore se si chiedono i beni approvati dell'utente
@@ -131,9 +151,25 @@ export default {
         return
       }
       let postData = Object.assign(row, this.$store.getters.getUserData)
-      axios.post(this.$store.getters.segnalaBeneURL, qs.stringify(postData))
+      axios.post(this.$store.getters.segnalaFunzioneURL, qs.stringify(postData))
         .then(ok => this.$vueEventBus.$emit('master-page-show-msg',
           ['Info', 'Funzione segnalata correttamente']))
+        .catch(error => {
+          let msg = (error.response && error.response.data.msg) || error.message
+          this.$vueEventBus.$emit('master-page-show-msg',
+            ['Errore', msg])
+        })
+    },
+    cancellaTmp (row) {
+      let userData = this.$store.getters.getUserData
+      let funzione = {id: row.id, id_utente: row.id_utente}
+      let postData = Object.assign({}, userData, funzione)
+      axios.post(this.$store.getters.cancellaFunzioneURL, qs.stringify(postData))
+        .then(ok => {
+          this.$vueEventBus.$emit('master-page-show-msg',
+            ['Info', 'Funzione temporanea cancellata correttamente'])
+          this.getData()
+        })
         .catch(error => {
           let msg = (error.response && error.response.data.msg) || error.message
           this.$vueEventBus.$emit('master-page-show-msg',

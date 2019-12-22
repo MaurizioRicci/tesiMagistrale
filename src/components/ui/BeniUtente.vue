@@ -23,25 +23,40 @@
         <template v-slot:azioni="{row}">
           <b-button-group horizontal>
             <b-button v-if="cercaInArchivioTemp"
-              key="siArchivioTmp"
+              key="siArchivioTmp" variant="light"
               :to="'/bene/dettagli_bene/' + row.id + '/' + row.id_utente"
-             class="pt-1">Vedi dettagli</b-button>
+             class="pt-1">
+              <icon-msg icon_name="info-circle" icon_msg="Vedi dettagli"/>
+            </b-button>
 
             <b-button v-else
-              key="noArchivioTmp"
+              key="noArchivioTmp" variant="light"
               :to="'/bene/dettagli_bene/' + row.id"
-             class="pt-1">Vedi dettagli</b-button>
+             class="pt-1">
+              <icon-msg icon_name="info-circle" icon_msg="Vedi dettagli"/>
+            </b-button>
 
             <b-button :to="'/bene/modifica/' + row.id + '/' + row.id_utente"
-              class="pt-1" key="nonRevisoreTmp"
+              class="pt-1" key="nonRevisoreTmp" variant="light"
               v-if="cercaInArchivioTemp && !sonoRevisore &&
                (BeneModel.isIncomplete.call(row) || BeneModel.isIncorrect.call(row) ||
-              BeneModel.isReady.call(row))">Modifica</b-button>
+              BeneModel.isReady.call(row))">
+                <icon-msg icon_name="edit" icon_msg="Modifica"/>
+            </b-button>
 
             <b-button v-if="cercaInArchivioTemp && sonoRevisore"
-              key="revisoreArchTmp"
+              key="revisoreArchTmp" variant="light"
               :to="'/bene/valida/' + row.id + '/' + row.id_utente"
-               class="pt-1">Modifica e approva</b-button>
+               class="pt-1">
+                <icon-msg icon_name="check-circle" icon_msg="Approva con modifica"/>
+            </b-button>
+
+            <!-- sei revisore oppure se non sei revisore ma il bene non è sotto revisione -->
+            <b-button v-if="cercaInArchivioTemp &&
+              (sonoRevisore || !BeneModel.isRev.call(row))"
+              @click="cancellaTmp(row)" key="cancellaTmp" variant="light" class="pt-1">
+              <icon-msg icon_name="trash" icon_msg="Elimina" icon_color="red"/>
+            </b-button>
 
           </b-button-group>
         </template>
@@ -76,6 +91,7 @@ import EditBene from '@/components/pages/Bene/AddEditBene'
 import BeneModel from '@/assets/js/Models/beneModel'
 import '@/assets/css/hugeModal.css'
 import BeneTableMixin from '@/components/mixins/BeneTable'
+import IconMsg from '@/components/ui/IconMsg'
 const qs = require('qs')
 const axios = require('axios')
 
@@ -85,8 +101,7 @@ export default {
   name: 'BeniUtente',
   mixins: [BeneTableMixin],
   components: {
-    DettagliBene: DettagliBene,
-    EditBene: EditBene
+    DettagliBene, EditBene, IconMsg
   },
   computed: {
     BeneModel: () => BeneModel(),
@@ -100,12 +115,16 @@ export default {
   },
   methods: {
     getData: function () {
+      this.$emit('loading')
       return axios.post(this.$store.getters.beniAggiuntiTempURL,
         qs.stringify({
           username: this.$store.getters.getUserData.username,
           password: this.$store.getters.getUserData.password,
           switch_bene: this.cercaInArchivioTemp ? 'miei_temp' : 'miei_aggiunti'
-        })).then(function (resp) { this.tableData = resp.data }.bind(this))
+        })).then(resp => {
+        this.$emit('loaded')
+        this.tableData = resp.data
+      }, fail => this.$emit('loadingFailed', fail.data))
     },
     getHiddenColums () {
       // nasconde la colonna msg_validatore se si chiedono i beni approvati dell'utente
@@ -124,6 +143,22 @@ export default {
       axios.post(this.$store.getters.segnalaBeneURL, qs.stringify(postData))
         .then(ok => this.$vueEventBus.$emit('master-page-show-msg',
           ['Info', 'Bene segnalato correttamente']))
+        .catch(error => {
+          let msg = (error.response && error.response.data.msg) || error.message
+          this.$vueEventBus.$emit('master-page-show-msg',
+            ['Errore', msg])
+        })
+    },
+    cancellaTmp (row) {
+      let userData = this.$store.getters.getUserData
+      let bene = {id: row.id, id_utente: row.id_utente}
+      let postData = Object.assign({}, userData, bene)
+      axios.post(this.$store.getters.cancellaBeneURL, qs.stringify(postData))
+        .then(ok => {
+          this.$vueEventBus.$emit('master-page-show-msg',
+            ['Info', 'Bene temporaneo cancellato correttamente'])
+          this.getData()
+        })
         .catch(error => {
           let msg = (error.response && error.response.data.msg) || error.message
           this.$vueEventBus.$emit('master-page-show-msg',
