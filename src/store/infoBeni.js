@@ -12,8 +12,8 @@ const infoBeniStore = {
         state.beneUltimoID = Number(id)
       }
     },
-    incrementaBeneUltimoID (state) {
-      state.beneUltimoID++
+    incrementaBeneUltimoID (state, n = 1) {
+      state.beneUltimoID += n
     }
   }
 }

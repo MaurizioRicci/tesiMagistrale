@@ -201,7 +201,7 @@ export default {
         'ruolor',
         'bibliografia',
         'note',
-        'schedatori_iniziali'
+        'msg_validatore'
       ],
       tableData: [],
       options: {
