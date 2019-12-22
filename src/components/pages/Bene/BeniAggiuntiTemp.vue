@@ -1,5 +1,6 @@
 <template>
   <b-container fluid>
+    <LoadingOverlay :open="update"/>
     <b-row>
       <b-col cols="12" v-if="!noMenu">
         <Menu/>
@@ -12,12 +13,12 @@
       <b-col>
         <b-tabs pills card align="center">
           <b-tab title="Beni tuoi archivio definitivo">
-            <BeniUtente :update="update"/>
+            <BeniUtente :update.sync="update"/>
           </b-tab>
           <b-tab title="Altri Beni utente" active>
             <p>Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
             <BeniUtente v-if="role==='schedatore'"
-              cercaInArchivioTemp :update="update"/>
+              cercaInArchivioTemp :update.sync="update"/>
             <b-button @click="waitUserConfirmation=true">Invia per il controllo</b-button>
           </b-tab>
         </b-tabs>
@@ -43,13 +44,14 @@
 import Menu from '@/components/ui/Menu'
 import commonPageMixin from '@/components/mixins/CommonPage'
 import BeniUtente from '@/components/ui/BeniUtente'
+import LoadingOverlay from '@/components/ui/LoadingOverlay'
 const axios = require('axios')
 const qs = require('qs')
 
 export default {
   name: 'BeniAggiuntiTemp',
   mixins: [commonPageMixin],
-  components: { Menu, BeniUtente },
+  components: { Menu, BeniUtente, LoadingOverlay },
   data: function () {
     return {
       waitUserConfirmation: false,

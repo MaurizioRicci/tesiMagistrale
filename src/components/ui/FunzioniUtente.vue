@@ -179,7 +179,11 @@ export default {
     this.getData()
   },
   watch: {
-    update: function (val) { this.getData() }
+    update: function (val) {
+      if (val) {
+        this.getData().then(() => this.$emit('update:update', false))
+      }
+    }
   }
 }
 </script>
