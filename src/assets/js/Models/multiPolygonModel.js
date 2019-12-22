@@ -29,7 +29,10 @@ Polygon.prototype.flipCoordinates = function () {
 }
 
 Polygon.prototype.countVertex = function () { return this.latlngArr.length }
+
 Polygon.prototype.toString = function () { return JSON.stringify(this.latlngArr) }
+
+Polygon.prototype.reset = function () { this.latlngArr = [] }
 
 export const MultiPolygon = function (PolygonArr = []) {
   this.polygonArr = PolygonArr
