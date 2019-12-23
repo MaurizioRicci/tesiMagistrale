@@ -127,8 +127,6 @@ export default {
           password: this.$store.getters.getUserData.password
         })).then(function (resp) {
         this.data = resp.data
-        // salvo nello store l'ultimo ID usato per un bene
-        this.$store.commit('acquisisciBeneUltimoID', resp.data.ultimo_id_bene)
       }.bind(this))
     },
     logout () {

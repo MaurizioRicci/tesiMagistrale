@@ -136,10 +136,16 @@ export default {
       this.leavePage = true
       this.beneOverlapTxt = ''
       if (!this.editMode) {
-      // se non si modifica allora si aggiunge e quindi diamo noi l'id del bene da creare
-        this.form.id = this.$store.getters.beneUltimoID + 1
-      }
-      if (this.idBene && this.editMode) {
+        // se non si modifica allora si aggiunge e quindi diamo noi l'id del bene da creare
+        // chiudo tutti i buchi di id di un certo utente
+        let storeGetters = this.$store.getters
+        axios.post(storeGetters.getNewIDURL, qs.stringify(storeGetters.getUserData))
+          .then(resp => {
+            let id = resp.data.id
+            this.formRetrived.id = id
+            this.form.id = id
+          })
+      } else if (this.idBene && this.editMode) {
         this.fetchBeneDataByID(this.idBene, this.idUtente, this.cercaInArchivioTemp)
       }
     },

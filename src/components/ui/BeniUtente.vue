@@ -155,10 +155,6 @@ export default {
       let postData = Object.assign({}, userData, bene)
       axios.post(this.$store.getters.cancellaBeneURL, qs.stringify(postData))
         .then(ok => {
-          // se l'utente cancella il suo ultimo bene aggiorno lo stato interno dell'app
-          if (Number(this.row.id) === this.$store.getters.beneUltimoID) {
-            this.$store.commit('incrementaBeneUltimoID', -1)
-          }
           this.$vueEventBus.$emit('master-page-show-msg',
             ['Info', 'Bene temporaneo cancellato correttamente'])
           this.getData()
