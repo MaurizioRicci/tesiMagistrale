@@ -140,6 +140,7 @@ import RemoteContextualSuggestions from '@/components/common/RemoteContextualSug
 import * as dict from '@/assets/js/loadDict'
 import axios from 'axios'
 
+// Renderizza il form per la aggiunta/modifica di un bene
 export default {
   name: 'FormBeneLeggiScrivi',
   components: {

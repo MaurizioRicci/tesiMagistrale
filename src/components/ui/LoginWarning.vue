@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// Mostra un avviso se non si è loggati
 export default {
   name: 'LoginWarning',
   computed: {

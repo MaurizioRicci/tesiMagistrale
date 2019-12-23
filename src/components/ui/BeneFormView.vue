@@ -97,6 +97,8 @@
 
 <script>
 import BeneFormToolTip from '@/components/ui/BeneFormToolTip'
+
+// Renderizza il form per la visualizzazione di un bene
 export default {
   name: 'FormBeneLettura',
   components: {BeneFormToolTip},

@@ -184,6 +184,7 @@ import IconMsg from '@/components/ui/IconMsg'
 import * as dict from '@/assets/js/loadDict'
 import { dataVera } from '@/assets/js/date/dateF'
 
+// Renderizza il form per la aggiunta/modifica di una funzione
 export default {
   name: 'FormBeneLeggiScrivi',
   components: {

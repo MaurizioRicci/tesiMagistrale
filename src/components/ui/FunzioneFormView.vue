@@ -130,6 +130,8 @@
 
 <script>
 import FunzioneFormToolTip from '@/components/ui/FunzioneFormToolTip'
+
+// Renderizza il form per la visualizzazione di una funzione
 export default {
   name: 'FormFunzioneLettura',
   components: {FunzioneFormToolTip},

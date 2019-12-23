@@ -6,12 +6,17 @@
 </template>
 
 <script>
+// Mostra una icona di Vue FontAwesome con un tooltip al mouse hover.
 export default {
   name: 'IconMsg',
   props: {
-    icon_name: String,
+    // il nome dell'icon di FontAwesome da mostrare
+    icon_name: {type: String, required: true},
+    // un testo per un eventuale tooltip per l'icona
     icon_msg: String,
+    // un colore (opzionale) per l'icona
     icon_color: {type: String, default: 'royalblue'},
+    // regola la grandezza dell'icona. I valori ammessi sono quelli di Font Awesome
     icon_size: String
   }
 }

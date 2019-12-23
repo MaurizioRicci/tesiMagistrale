@@ -1,6 +1,4 @@
 <template>
-<!-- aggiunge i tooltip con le spiegazioni sulle varie parti dei beni
-i vari attributi target sono id di elementi presenti nella pagina -->
     <div>
         <b-tooltip :target="prefix+'checkbox-bozza'" triggers="hover">Specifica se il bene è una bozza o se è pronto per essere inviato (su richiesta dell'utente)</b-tooltip>
         <b-tooltip :target="prefix+'input-id'" triggers="hover">ID del bene</b-tooltip>
@@ -18,6 +16,8 @@ i vari attributi target sono id di elementi presenti nella pagina -->
 </template>
 
 <script>
+// Aggiunge i tooltip con le spiegazioni sulle varie parti dei beni
+// i vari attributi target sono id di elementi presenti nella pagina
 export default {
   name: 'BeneFormTooltip',
   props: {prefix: {type: String, default: ''}}

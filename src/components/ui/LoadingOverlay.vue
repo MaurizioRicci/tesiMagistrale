@@ -11,6 +11,7 @@
 export default {
   name: 'LoadingOverlay',
   props: {
+    // quando la prop è settata a true si apre
     open: {type: Boolean, required: true}
   },
   computed: {

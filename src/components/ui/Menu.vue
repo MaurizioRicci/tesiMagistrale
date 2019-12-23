@@ -50,6 +50,7 @@
 </template>
 
 <script>
+// E' il menu dell'applicazione
 export default {
   name: 'SiteMenu',
   computed: {

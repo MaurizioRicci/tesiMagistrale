@@ -4,11 +4,12 @@
 </template>
 
 <script>
-
-// codice riadattato da https://gist.github.com/rclark/6908938
 import { LWMSTileLayer } from 'vue2-leaflet'
 const axios = require('axios')
 
+// codice riadattato da https://gist.github.com/rclark/6908938
+// Crea un later WMS basato su leaflet con il supporto a richieste di tipo
+// GetFeatureInfo
 export default {
   name: 'BetterWMS',
   components: { LWMSTileLayer },
@@ -18,6 +19,7 @@ export default {
     }
   },
   props: {
+    // URL dal quale recuperare il layer WMS
     baseUrl: {type: String, required: true},
     styles: {type: String, default: ''},
     transparent: {type: Boolean, default: true},
@@ -29,6 +31,10 @@ export default {
     layerType: {type: String, default: 'base'}
   },
   methods: {
+    // @vuese
+    // Riceve come parametro l'evento leaflet da cui estrae le coordinate;
+    // tali coordinate sono usate per la richiesta getFeatureInfo
+    // se la richiesta va a buon fine i dati sono emessi tramite l'evento 'getFeatureInfo'
     getFeatureInfo: function (evt) {
       // Make an AJAX request to the server and hope for the best
       let url = this.getFeatureInfoUrl(evt.latlng)
