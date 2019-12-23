@@ -69,12 +69,14 @@ export default {
     // default map center su Pisa. Non sembra essere reactive center in vue-leaflet
     // meglio essere sicuri del centro e poi instanziare questo componente
     center: {type: Array, default: function () { return this.$store.getters.getDefaultMapCenter }},
-    controls: {type: Object,
+    controls: {
+      type: Object,
       default: function () {
         return {
           zoom: true, settings: true, watch: true
         }
-      }},
+      }
+    },
     zoom: {type: Number, default: 15},
     width: {default: '100%'},
     height: {default: '500px'},
@@ -101,7 +103,7 @@ export default {
       }
     },
     addPoint: function (evt) {
-      if (this.locked || !this.currPolygon) return
+      if (this.locked || !this.currPolygon || this.watch) return
       let lat = evt.latlng.lat
       let lng = evt.latlng.lng
       this.currPolygon.addVertex(lat, lng)
@@ -109,7 +111,7 @@ export default {
       this.$emit('change', this.currPolygon)
     },
     removePoint: function (evt) {
-      if (this.locked || !this.currPolygon) return
+      if (this.locked || !this.currPolygon || this.watch) return
       let K = this.pointRemoveThreshold
       let latP = evt.latlng.lat
       let lngP = evt.latlng.lng
