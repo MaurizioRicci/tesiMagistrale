@@ -74,7 +74,7 @@ export default {
             () => {
               // se tutto va bene nascondo la finestra di conferma
               this.waitUserConfirmation = false
-              this.update = true
+              this.triggerUpdate = true
             })
         }, fail => {
           this.$vueEventBus.$emit('master-page-show-msg', ['Errore', fail.response.data.msg])
