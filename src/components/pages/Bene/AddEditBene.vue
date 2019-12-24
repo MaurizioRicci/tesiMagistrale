@@ -5,6 +5,7 @@
         <Menu/>
       </b-col>
       <b-col>
+        <LoadingOverlay ref="loadingOverlay"/>
         <LoginWarning/>
         <b-alert variant="warning" :show="beneOverlapTxt !== ''">{{beneOverlapTxt}}</b-alert>
         <b-alert variant="success" :show="serverRespOk">Bene creato/aggiunto</b-alert>
@@ -45,6 +46,7 @@ import BeneFormAddEdit from '@/components/ui/BeneFormAddEdit'
 import Menu from '@/components/ui/Menu'
 import LoginWarning from '@/components/ui/LoginWarning'
 import MyMap from '@/components/ui/Map'
+import LoadingOverlay from '@/components/ui/LoadingOverlay'
 import '@/assets/css/slideFadeTransition.css'
 import lodashclonedeep from 'lodash.clonedeep'
 import { mixin as clickaway } from 'vue-clickaway'
@@ -58,16 +60,20 @@ export default {
     Menu,
     LoginWarning,
     BeneFormAddEdit,
-    MyMap
+    MyMap,
+    LoadingOverlay
   },
   mixins: [commonPageMixin, dettagliBeneMixin, clickaway],
   data () {
     return {
       mapCols: 4,
       sendBtnClicked: false,
-      serverRespOk: false, // serve per innescare il messaggio di bene creato/modificato,
-      leavePage: true, // decide se lasciare la pagina dopo aggiunta/modifica o se rimanere,
-      beneOverlapTxt: '' // mostra gli eventuali beni sovrapposti a quello che si sta creando
+      // serve per innescare il messaggio di bene creato/modificato
+      serverRespOk: false,
+      // decide se lasciare la pagina dopo aggiunta/modifica o se rimanere
+      leavePage: true,
+      // mostra gli eventuali beni sovrapposti a quello che si sta creando
+      beneOverlapTxt: ''
     }
   },
   props: {
@@ -99,6 +105,8 @@ export default {
     // @vuese
     // invio effettivo dei dati al server. form ok & utente è sicuro di quello che fa
     sendData () {
+      // mostro la schermata di caricamento
+      this.$refs.loadingOverlay.show()
       let postData = lodashclonedeep(
         Object.assign({}, this.form, this.$store.getters.getUserData))
       // PostGIS vuole i punti come longitudine-latitudine
@@ -119,6 +127,8 @@ export default {
           let msg = (error.response && error.response.data.msg) || error.message
           this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
         })
+        // nascondo la schermata di caricamento
+        .finally(() => this.$refs.loadingOverlay.hide())
     },
     ingrandisciMappa () {
       this.mapCols = 12

@@ -12,10 +12,19 @@ export default {
   name: 'LoadingOverlay',
   props: {
     // quando la prop è settata a true si apre
-    open: {type: Boolean, required: true}
+    open: Boolean
   },
-  computed: {
-    dState () { return this.open ? 'block' : 'none' }
+  data () {
+    return { dState: 'none' }
+  },
+  watch: {
+    open: function (newVal) {
+      this.dState = newVal ? 'block' : 'none'
+    }
+  },
+  methods: {
+    show () { this.dState = 'block' },
+    hide () { this.dState = 'none' }
   }
 }
 </script>

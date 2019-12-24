@@ -5,6 +5,7 @@
         <Menu/>
       </b-col>
       <b-col>
+        <LoadingOverlay ref="loadingOverlay"/>
         <LoginWarning/>
         <b-alert variant="success" :show="serverRespOk">Funzione creata/aggiunta</b-alert>
         <h2 v-if="!noTitle">{{title || 'Aggiungi/Modifica una funzione'}}</h2>
@@ -53,6 +54,7 @@ import MyMap from '@/components/ui/Map'
 import '@/assets/css/slideFadeTransition.css'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 import FunzioneCopiaIncolla from '@/components/ui/FunzioneCopyPaste'
+import LoadingOverlay from '@/components/ui/LoadingOverlay'
 import lodashclonedeep from 'lodash.clonedeep'
 import { ternaVera } from '@/assets/js/date/dateF'
 const axios = require('axios')
@@ -67,7 +69,8 @@ export default {
     FunzioneFormAddEdit,
     MyMap,
     RicercaBeniApprovati,
-    FunzioneCopiaIncolla
+    FunzioneCopiaIncolla,
+    LoadingOverlay
   },
   mixins: [commonPageMixin, dettagliFunzioneMixin],
   computed: {
@@ -79,8 +82,10 @@ export default {
     return {
       mapCols: 4,
       sendBtnClicked: false,
-      serverRespOk: false, // serve per innescare il messaggio di funzione creata/modificata,
-      leavePage: true // decide se lasciare la pagina dopo aggiunta/modifica o se rimanere
+      // serve per innescare il messaggio di funzione creata/modificata
+      serverRespOk: false,
+      // decide se lasciare la pagina dopo aggiunta/modifica o se rimanere
+      leavePage: true
     }
   },
   props: {
@@ -117,6 +122,8 @@ export default {
     // @vuese
     // invio effettivo dei dati al server. form ok & utente è sicuro di quello che fa
     sendData () {
+      // mostro la schermata di caricamento
+      this.$refs.loadingOverlay.show()
       let postData = lodashclonedeep(
         Object.assign({}, this.form, this.$store.getters.getUserData))
       let storeGetters = this.$store.getters
@@ -133,6 +140,8 @@ export default {
           let msg = (error.response && error.response.data.msg) || error.message
           this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
         })
+      // nascondo la schermata di caricamento
+        .finally(() => this.$refs.loadingOverlay.hide())
     },
     ingrandisciMappa () {
       this.mapCols = 12
