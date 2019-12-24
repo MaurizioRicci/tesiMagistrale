@@ -93,7 +93,7 @@ export default {
       } else {
         // mostra un messaggio in un modal con un certo titolo e testo
         this.$vueEventBus.$emit('master-page-show-msg',
-          ['Attenzione', 'Non hai finito di compilare i campi richiesti.'])
+          ['Attenzione', 'Ci sono errori nel form.'])
       }
     },
     // @vuese

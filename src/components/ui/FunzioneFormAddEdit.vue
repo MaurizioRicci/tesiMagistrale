@@ -88,7 +88,8 @@
           :label-for="'input-ruolo'+index" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
           <my-autocomplete-input v-model="form.ruolo[index]" closedDictionary
             icon_name="lock" icon_msg="Campo vincolato a un dizionario"
-            :suggestionsPromise="getDictFuncs().loadRuolo">
+            :suggestionsPromise="getDictFuncs().loadRuolo"
+            invalid-feedback="Ruolo non valido">
             <b-form-input
               v-model="form.ruolo[index]"
               :id="'input-ruolo'+index"
@@ -145,7 +146,8 @@
           :label-for="'input-ruolor'+index" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
           <my-autocomplete-input v-model="form.ruolor[index]" closedDictionary
             icon_name="lock" icon_msg="Campo vincolato a un dizionario"
-            :suggestionsPromise="getDictFuncs().loadRuolo">
+            :suggestionsPromise="getDictFuncs().loadRuolo"
+            invalid-feedback="Ruolo non valido">
             <b-form-input
               v-model="form.ruolor[index]"
               :id="'input-ruolor'+index"
