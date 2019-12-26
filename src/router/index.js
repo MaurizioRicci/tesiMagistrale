@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import {store} from '@/store/store'
-import RoutesBeni from '@/router/RoutesBeni'
-import RoutesFunzioni from '@/router/RoutesFunzioni'
+import RoutesBeni from '@/router/routesBeni'
+import RoutesFunzioni from '@/router/routesFunzioni'
 const Error404 = () => import('@/components/pages/Errors/Error404')
 const Login = () => import('@/components/pages/Login/Login')
 const Home = () => import('@/components/pages/Home/Home')

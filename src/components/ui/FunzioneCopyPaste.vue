@@ -73,7 +73,7 @@ export default {
         // sono interessato solo a alcune chiavi però
           .filter(el => Object.keys(this.text).includes(el.value))
         return chksTmp
-      }
+      } else return []
     }
   },
   methods: {
