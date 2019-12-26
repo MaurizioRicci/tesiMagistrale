@@ -14,13 +14,15 @@
         <b-tabs pills card align="center">
           <b-tab title="Beni tuoi archivio definitivo">
             <BeniUtente :update.sync="triggerUpdate"
-              @loading="loading=true" @loaded="loading=false"/>
+              @loading="loading=true" @loaded="loading=false"
+              @loadingFailed="loading=false"/>
           </b-tab>
           <b-tab title="Altri Beni utente" active>
             <p>Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
             <BeniUtente v-if="role==='schedatore'"
               cercaInArchivioTemp :update.sync="triggerUpdate"
-              @loading="loading=true" @loaded="loading=false"/>
+              @loading="loading=true" @loaded="loading=false"
+              @loadingFailed="loading=false"/>
             <b-button @click="waitUserConfirmation=true">Invia per il controllo</b-button>
           </b-tab>
         </b-tabs>

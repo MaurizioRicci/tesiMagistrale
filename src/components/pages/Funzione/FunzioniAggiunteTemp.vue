@@ -14,12 +14,14 @@
         <b-tabs pills card align="center">
           <b-tab title="Funzioni tue archivio definitivo">
             <FunzioniUtente :update.sync="triggerUpdate"
-              @loading="loading=true" @loaded="loading=false"/>
+              @loading="loading=true" @loaded="loading=false"
+              @loadingFailed="loading=false"/>
           </b-tab>
           <b-tab title="Altre funzioni utente" active>
             <p>Qua ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
             <FunzioniUtente cercaInArchivioTemp :update.sync="triggerUpdate"
-              @loading="loading=true" @loaded="loading=false"/>
+              @loading="loading=true" @loaded="loading=false"
+              @loadingFailed="loading=false"/>
             <b-button v-if="role==='schedatore'"
               @click="waitUserConfirmation=true">Invia per il controllo</b-button>
           </b-tab>
