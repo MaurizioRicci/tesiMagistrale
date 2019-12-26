@@ -33,7 +33,8 @@ export default {
           ruolo: [],
           ruolor: [],
           funzione: []
-        }
+        },
+        texts: {limit: 'Risultati per pagina', noResults: 'Nessun risultato'}
       }
     }
   },

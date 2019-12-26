@@ -24,7 +24,8 @@ export default {
           ],
           macroEpocaCar: [],
           macroEpocaOrig: []
-        }
+        },
+        texts: {limit: 'Risultati per pagina', noResults: 'Nessun risultato'}
       }
     }
   },

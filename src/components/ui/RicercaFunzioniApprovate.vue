@@ -86,8 +86,7 @@ export default {
           is: 'fa-sort',
           up: 'fa-sort-up',
           down: 'fa-sort-down'
-        },
-        texts: {limit: 'Risultati per pagina'}
+        }
       }
     }
   }
