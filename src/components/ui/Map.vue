@@ -10,11 +10,6 @@ la proprietà locked; se presente disabilita la modifica -->
         :attribution="attribution" ref="betterWMS"
         @getFeatureInfo="evt => openPopUp(evt.latlng, evt.data)"/>
 
-        <l-polygon v-if="currPolygon" @click="removePoint"
-      :lat-lngs="currPolygon.getLatLngs()"
-      :color="polygon_color">
-      </l-polygon>
-
       <l-control position="bottomleft">
         <b-button-group>
           <span v-if="controls.zoom">
@@ -45,11 +40,11 @@ la proprietà locked; se presente disabilita la modifica -->
 
 <script>
 // Leaflet nonostante usi EPSG3857 accetta anche punti in 4326 facendo la conversione automatica
-import { LMap, LTileLayer, LPolygon, LControl } from 'vue2-leaflet'
-import { DomEvent } from 'leaflet' // CRS è usato nel template
+import { LMap, LTileLayer, LPolygon, LControl, LFeatureGroup } from 'vue2-leaflet'
 import { Polygon } from '@/assets/js/Models/multiPolygonModel'
 import BetterWMS from '@/components/ui/BetterWMS'
 import IconMsg from '@/components/ui/IconMsg'
+import LeafletToolbar from '@/assets/js/AddLeafletToolbar'
 
 export default {
   name: 'Map',
@@ -59,7 +54,9 @@ export default {
     LPolygon,
     LControl,
     BetterWMS,
-    IconMsg },
+    IconMsg,
+    LFeatureGroup
+  },
   model: {
     // imposto v-model collegato alla proprietà polygon
     prop: 'polygon',
@@ -82,15 +79,10 @@ export default {
     height: {default: '500px'},
     // vero se l'utente non può modificare il poligono
     locked: {type: Boolean},
-    // distanza dal click entro la quale cercare il vertice da rimuovere
-    pointRemoveThreshold: {type: Number, default: 0.001},
     polygon: {type: Polygon},
     polygon_color: {type: String, default: 'green'}
   },
   methods: {
-    twoPointDist: function (x1, y1, x2, y2) {
-      return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
-    },
     mapClick (evt) {
       // se l'utente sta guarndando (ottiene info sui beni)
       // mostro i dettagli di dove clicca
@@ -99,28 +91,8 @@ export default {
       } else {
         // se l'utente non sta guardando i dettagli allora
         // provo a vedere se può modificare il poligono del bene
-        this.addPoint(evt)
+        // this.addPoint(evt)
       }
-    },
-    addPoint: function (evt) {
-      if (this.locked || !this.currPolygon || this.watch) return
-      let lat = evt.latlng.lat
-      let lng = evt.latlng.lng
-      this.currPolygon.addVertex(lat, lng)
-      // attenzione non c'è copia non alterare i dati restituiti
-      this.$emit('change', this.currPolygon)
-    },
-    removePoint: function (evt) {
-      if (this.locked || !this.currPolygon || this.watch) return
-      let K = this.pointRemoveThreshold
-      let latP = evt.latlng.lat
-      let lngP = evt.latlng.lng
-      this.currPolygon = this.currPolygon.filter(
-        (currLat, currLng) =>
-          this.twoPointDist(latP, lngP, currLat, currLng) > K
-      )
-      DomEvent.stopPropagation(evt)
-      this.$emit('change', this.currPolygon)
     },
     ingrandisci: function (evt) {
       this.state.mappaIngrandita = true
@@ -158,7 +130,7 @@ export default {
       state: { mappaIngrandita: false },
       // serve poi se l'utente vuole modificarlo
       currPolygon: this.polygon ? this.polygon.clone() : new Polygon(),
-      watch: this.controls.watch
+      watch: false
     }
   },
   computed: {
@@ -176,14 +148,46 @@ export default {
     },
     polygon: {
       deep: true,
-      handler (val) {
-        this.currPolygon = val
+      handler (polygon) {
+        this.currPolygon = polygon.clone()
         this.invalidateSize()
+        LeafletToolbar.addPoly(this.currPolygon)
       }
     }
   },
   mounted () {
-    this.$nextTick(() => { this.leafletMapObject = this.$refs.myMap.mapObject })
+    this.$nextTick(() => {
+      this.leafletMapObject = this.$refs.myMap.mapObject
+      // creo le callback per la toolbar di leaflet
+      let callbacks = {
+        onCreated: geoJSON => {
+          // inverto le coordinate perchè in geoJSON sono lon-lat
+          this.$set(this, 'currPolygon',
+            new Polygon(geoJSON.geometry.coordinates[0])
+              .flipCoordinates())
+          this.$emit('change', this.currPolygon)
+        },
+        onEdited: geoJSON => {
+          // inverto le coordinate perchè in geoJSON sono lon-lat
+          this.$set(this, 'currPolygon',
+            new Polygon(geoJSON.geometry.coordinates[0])
+              .flipCoordinates())
+          this.$emit('change', this.currPolygon)
+        }
+      }
+      // instanzio la toolbar di leaflet
+      LeafletToolbar.initToolbar(this.leafletMapObject, callbacks)
+    })
   }
 }
 </script>
+
+<style>
+.leaflet-marker-icon {
+  width: 12px !important;
+  height: 12px !important;
+  margin-left: -7px !important;
+  margin-top: -7px !important;
+  border-radius: 5px;
+}
+</style>

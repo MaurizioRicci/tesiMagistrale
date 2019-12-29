@@ -20,6 +20,8 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.3",
     "leaflet": "^1.5.1",
+    "leaflet-draw": "^1.0.4",
+    "leaflet-toolbar": "^0.4.0-alpha.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.mapvalues": "^4.6.0",
     "lodash.values": "^4.3.0",
