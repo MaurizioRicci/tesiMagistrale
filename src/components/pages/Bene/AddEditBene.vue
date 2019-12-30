@@ -6,10 +6,13 @@
       </b-col>
       <b-col>
         <LoadingOverlay ref="loadingOverlay"/>
-        <LoginWarning/>
-        <b-alert variant="warning" :show="beneOverlapTxt !== ''">{{beneOverlapTxt}}</b-alert>
-        <b-alert variant="success" :show="serverRespOk">Bene creato/aggiunto</b-alert>
         <h2 v-if="!noTitle">{{title || 'Aggiungi/Modifica un bene'}}</h2>
+        <LoginWarning/>
+        <b-alert :show="form.msg_validatore" variant="primary">
+          Da rivedere: {{form.msg_validatore}}
+        </b-alert>
+        <b-alert variant="warning" :show="beneOverlapTxt !== ''">{{beneOverlapTxt}}</b-alert>
+
       </b-col>
     </b-row>
     <b-row align-h="center">
@@ -68,7 +71,7 @@ export default {
     return {
       mapCols: 4,
       sendBtnClicked: false,
-      // serve per innescare il messaggio di bene creato/modificato
+      // registra se il server ha risposto positivamente alla aggiunta/modifica
       serverRespOk: false,
       // decide se lasciare la pagina dopo aggiunta/modifica o se rimanere
       leavePage: true,
@@ -117,8 +120,6 @@ export default {
       axios.post(url, qs.stringify(postData))
         .then(ok => {
           this.serverRespOk = true
-          // poi se va tutto bene bisogna incrementare l'id dell'ultimo bene usato
-          this.$store.commit('incrementaBeneUltimoID')
           this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
           const callback = this.leavePage ? () => this.goBack() : () => this.init()
           this.$vueEventBus.$once('master-page-show-msg-ok',

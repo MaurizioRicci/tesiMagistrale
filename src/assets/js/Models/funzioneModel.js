@@ -25,6 +25,7 @@ export default () => {
     bibliografia: '',
     note: '',
     schedatori_iniziali: '',
+    msg_validatore: '',
     // Number() nel caso fosse una stringa
     isRev: function () { return exist(this.status) && Number(this.status) === 0 },
     isIncorrect: function () { return exist(this.status) && Number(this.status) === 1 },

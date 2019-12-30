@@ -22,6 +22,7 @@ export default () => {
     schedatori_iniziali: '',
     note: '',
     polygon: new Polygon(),
+    msg_validatore: '',
     // Number() nel caso fosse una stringa
     isRev: function () { return exist(this.status) && Number(this.status) === 0 },
     isIncorrect: function () { return exist(this.status) && Number(this.status) === 1 },

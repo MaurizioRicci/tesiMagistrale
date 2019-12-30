@@ -6,9 +6,11 @@
       </b-col>
       <b-col>
         <LoadingOverlay ref="loadingOverlay"/>
-        <LoginWarning/>
-        <b-alert variant="success" :show="serverRespOk">Funzione creata/aggiunta</b-alert>
         <h2 v-if="!noTitle">{{title || 'Aggiungi/Modifica una funzione'}}</h2>
+        <LoginWarning/>
+        <b-alert :show="form.msg_validatore" variant="primary">
+          Da rivedere: {{form.msg_validatore}}
+        </b-alert>
       </b-col>
     </b-row>
     <b-row align-h="center">
@@ -82,7 +84,7 @@ export default {
     return {
       mapCols: 4,
       sendBtnClicked: false,
-      // serve per innescare il messaggio di funzione creata/modificata
+      // registra se il server ha risposto positivamente alla aggiunta/modifica
       serverRespOk: false,
       // decide se lasciare la pagina dopo aggiunta/modifica o se rimanere
       leavePage: true

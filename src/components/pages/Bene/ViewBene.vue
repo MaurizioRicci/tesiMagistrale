@@ -6,6 +6,9 @@
       </b-col>
       <b-col>
         <h2 v-if="!noTitle">{{title || 'Visualizza un bene'}}</h2>
+        <b-alert :show="form.msg_validatore" variant="primary">
+          Da rivedere: {{form.msg_validatore}}
+        </b-alert>
       </b-col>
     </b-row>
     <b-row align-h="center">
