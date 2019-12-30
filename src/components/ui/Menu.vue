@@ -56,11 +56,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.myMenu .nav-link { color: white !important; }
-.myMenu .nav-item:hover { background-color: #114e61; border-radius: 5px; }
-.dropdown-item:hover, .dropdown-item:focus {
-  background-color: #45b0d047;
-}
-</style>

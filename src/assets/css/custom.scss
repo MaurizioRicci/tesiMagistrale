@@ -2,6 +2,8 @@
 
 // Custom Bootstrap variable overrides go first
 
+$navbar-dark-color: white;
+$dropdown-link-hover-bg: #00000012;
 
 // Then include the following
 @import 'bootstrap/scss/bootstrap.scss';
@@ -9,3 +11,5 @@
 
 // And define any of your custom or additional CSS/SCSS here,
 // or via an @import
+
+.myMenu .nav-item:hover { background-color: darken($info, 15%); border-radius: 5px; }
