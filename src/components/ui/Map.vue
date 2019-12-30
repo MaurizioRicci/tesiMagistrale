@@ -40,7 +40,7 @@ la proprietà locked; se presente disabilita la modifica -->
 
 <script>
 // Leaflet nonostante usi EPSG3857 accetta anche punti in 4326 facendo la conversione automatica
-import { LMap, LTileLayer, LPolygon, LControl, LFeatureGroup } from 'vue2-leaflet'
+import { LMap, LTileLayer, LControl } from 'vue2-leaflet'
 import { Polygon } from '@/assets/js/Models/multiPolygonModel'
 import BetterWMS from '@/components/ui/BetterWMS'
 import IconMsg from '@/components/ui/IconMsg'
@@ -51,11 +51,9 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LPolygon,
     LControl,
     BetterWMS,
     IconMsg,
-    LFeatureGroup
   },
   model: {
     // imposto v-model collegato alla proprietà polygon
