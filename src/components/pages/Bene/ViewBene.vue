@@ -40,7 +40,7 @@ import MyMap from '@/components/ui/Map'
 import BeneFormView from '@/components/ui/BeneFormView'
 import commonPageMixin from '@/components/mixins/CommonPage'
 import dettagliBeneMixin from '@/components/mixins/DettagliBene'
-import '@/assets/css/slideFadeTransition.css'
+import '@/assets/styles/slideFadeTransition.css'
 
 export default {
   name: 'VisualizzaBene',

@@ -42,7 +42,6 @@
 <script>
 import IconMsg from '@/components/ui/IconMsg'
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
-import '@/assets/css/hugeModal.css'
 import FunzioneTableMixin from '@/components/mixins/FunzioneTable'
 window.axios = require('axios')
 

@@ -50,7 +50,7 @@ import Menu from '@/components/ui/Menu'
 import LoginWarning from '@/components/ui/LoginWarning'
 import MyMap from '@/components/ui/Map'
 import LoadingOverlay from '@/components/ui/LoadingOverlay'
-import '@/assets/css/slideFadeTransition.css'
+import '@/assets/styles/slideFadeTransition.css'
 import lodashclonedeep from 'lodash.clonedeep'
 import { mixin as clickaway } from 'vue-clickaway'
 const axios = require('axios')

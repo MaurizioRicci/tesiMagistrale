@@ -8,7 +8,7 @@ import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 // Importo un scss personalizzato che a sua volta importa
 // gli stili di BootStrap e Bootstrap-Vue
-import './assets/css/custom.scss'
+import './assets/styles/custom.scss'
 
 // Vuex store del progetto
 import { store } from './store/store'

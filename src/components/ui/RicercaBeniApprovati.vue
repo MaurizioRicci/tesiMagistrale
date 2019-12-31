@@ -41,7 +41,7 @@
 <script>
 import IconMsg from '@/components/ui/IconMsg'
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
-import '@/assets/css/hugeModal.css'
+import '@/assets/styles/hugeModal.css'
 import BeneTableMixin from '@/components/mixins/BeneTable'
 window.axios = require('axios') // serve per vue-tables 2 non cancellare
 

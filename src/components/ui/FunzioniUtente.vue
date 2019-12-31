@@ -100,7 +100,6 @@ import EditBene from '@/components/pages/Bene/AddEditBene'
 import FunzioneModel from '@/assets/js/Models/funzioneModel'
 import FunzioneTableMixin from '@/components/mixins/FunzioneTable'
 import IconMsg from '@/components/ui/IconMsg'
-import '@/assets/css/hugeModal.css'
 const qs = require('qs')
 const axios = require('axios')
 
@@ -109,8 +108,6 @@ const axios = require('axios')
 export default {
   name: 'BeniUtente',
   components: {
-    DettagliFunzione,
-    EditBene,
     IconMsg
   },
   mixins: [FunzioneTableMixin],

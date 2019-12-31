@@ -89,7 +89,6 @@
 import DettagliBene from '@/components/pages/Bene/ViewBene'
 import EditBene from '@/components/pages/Bene/AddEditBene'
 import BeneModel from '@/assets/js/Models/beneModel'
-import '@/assets/css/hugeModal.css'
 import BeneTableMixin from '@/components/mixins/BeneTable'
 import IconMsg from '@/components/ui/IconMsg'
 const qs = require('qs')

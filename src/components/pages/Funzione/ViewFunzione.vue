@@ -43,7 +43,7 @@ import MyMap from '@/components/ui/Map'
 import FunzioneFormView from '@/components/ui/FunzioneFormView'
 import commonPageMixin from '@/components/mixins/CommonPage'
 import dettagliFunzioneMixin from '@/components/mixins/DettagliFunzione'
-import '@/assets/css/slideFadeTransition.css'
+import '@/assets/styles/slideFadeTransition.css'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 import FunzioneCopiaIncolla from '@/components/ui/FunzioneCopyPaste'
 
