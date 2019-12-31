@@ -86,8 +86,6 @@
 </template>
 
 <script>
-import DettagliBene from '@/components/pages/Bene/ViewBene'
-import EditBene from '@/components/pages/Bene/AddEditBene'
 import BeneModel from '@/assets/js/Models/beneModel'
 import BeneTableMixin from '@/components/mixins/BeneTable'
 import IconMsg from '@/components/ui/IconMsg'
@@ -100,7 +98,7 @@ export default {
   name: 'BeniUtente',
   mixins: [BeneTableMixin],
   components: {
-    DettagliBene, EditBene, IconMsg
+    IconMsg
   },
   computed: {
     BeneModel: () => BeneModel(),

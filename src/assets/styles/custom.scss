@@ -1,13 +1,12 @@
 // custom.scss
 
 // Custom Bootstrap variable overrides go first
-
-$navbar-dark-color: white;
-$dropdown-link-hover-bg: #00000012;
+@import './myVariables';
 
 // Then include the following
 @import 'bootstrap/scss/bootstrap.scss';
 @import 'bootstrap-vue/src/index.scss';
+
 
 // And define any of your custom or additional CSS/SCSS here,
 // or via an @import

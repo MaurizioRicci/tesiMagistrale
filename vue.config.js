@@ -9,5 +9,12 @@ module.exports = {
                 options.compilerOptions.whitespace = 'preserve'
                 return options
             })
-    }
+    },
+    css: {
+        loaderOptions: {
+          sass: {
+            prependData: '@import "@/assets/styles/_myVariables.scss";'
+          }
+        }
+      }
 }
