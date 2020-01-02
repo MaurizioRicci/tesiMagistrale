@@ -20,5 +20,10 @@ npm run build
 npm run lint
 ```
 
+### Shows a brief documentation about Vue Components
+```
+npm run showDoc
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
