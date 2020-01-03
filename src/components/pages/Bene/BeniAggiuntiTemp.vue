@@ -23,7 +23,8 @@
               cercaInArchivioTemp :update.sync="triggerUpdate"
               @loading="loading=true" @loaded="loading=false"
               @loadingFailed="loading=false"/>
-            <b-button @click="waitUserConfirmation=true">Invia per il controllo</b-button>
+            <b-button @click="waitUserConfirmation=true"
+              v-if="role==='schedatore'">Invia per il controllo</b-button>
           </b-tab>
         </b-tabs>
       </b-col>
@@ -56,12 +57,14 @@ export default {
   name: 'BeniAggiuntiTemp',
   mixins: [commonPageMixin],
   components: { Menu, BeniUtente, LoadingOverlay },
+  computed: {
+    role: function () { return this.$store.getters.getUserData.role }
+  },
   data: function () {
     return {
       waitUserConfirmation: false,
       triggerUpdate: false,
-      loading: false,
-      role: this.$store.getters.getUserData.role
+      loading: false
     }
   },
   methods: {

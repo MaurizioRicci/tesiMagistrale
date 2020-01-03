@@ -56,12 +56,14 @@ export default {
   name: 'FunzioniAggiunteTemp',
   mixins: [commonPageMixin],
   components: { Menu, FunzioniUtente, LoadingOverlay },
+    computed: {
+    role: function () { return this.$store.getters.getUserData.role }
+  },
   data: function () {
     return {
       waitUserConfirmation: false,
       triggerUpdate: false,
-      loading: false,
-      role: this.$store.getters.getUserData.role
+      loading: false
     }
   },
   methods: {
