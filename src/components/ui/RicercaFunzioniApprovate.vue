@@ -88,6 +88,11 @@ export default {
         }
       }
     }
+  },
+  created () {
+    // tolgo da vue tables le colonne status e msg_validatore che qua non sono usate
+    this.options.filterable = this.options.filterable.filter(x => x !== 'status' &&
+     x !== 'msg_validatore')
   }
 }
 </script>
