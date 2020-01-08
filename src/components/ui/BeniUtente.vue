@@ -148,7 +148,7 @@ export default {
     },
     cancellaTmp (row) {
       let userData = this.$store.getters.getUserData
-      let bene = {id: row.id, id_utente: row.id_utente}
+      let bene = { id: row.id, id_utente: row.id_utente }
       let postData = Object.assign({}, userData, bene)
       axios.post(this.$store.getters.cancellaBeneURL, qs.stringify(postData))
         .then(ok => {

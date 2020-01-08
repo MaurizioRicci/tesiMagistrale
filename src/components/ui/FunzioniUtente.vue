@@ -95,8 +95,6 @@
 </template>
 
 <script>
-import DettagliFunzione from '@/components/pages/Funzione/ViewFunzione'
-import EditBene from '@/components/pages/Bene/AddEditBene'
 import FunzioneModel from '@/assets/js/Models/funzioneModel'
 import FunzioneTableMixin from '@/components/mixins/FunzioneTable'
 import IconMsg from '@/components/ui/IconMsg'
@@ -159,7 +157,7 @@ export default {
     },
     cancellaTmp (row) {
       let userData = this.$store.getters.getUserData
-      let funzione = {id: row.id, id_utente: row.id_utente}
+      let funzione = { id: row.id, id_utente: row.id_utente }
       let postData = Object.assign({}, userData, funzione)
       axios.post(this.$store.getters.cancellaFunzioneURL, qs.stringify(postData))
         .then(ok => {

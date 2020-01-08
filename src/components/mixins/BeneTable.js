@@ -1,4 +1,4 @@
-import {loadMacroEpocaCar, loadMacroEpocaOrig} from '@/assets/js/loadDict'
+import { loadMacroEpocaCar, loadMacroEpocaOrig } from '@/assets/js/loadDict'
 
 export default {
   data () {
@@ -17,26 +17,26 @@ export default {
           'msg_validatore'],
         listColumns: {
           status: [
-            {id: 0, text: 'In revisione'},
-            {id: 1, text: 'Da rivedere'},
-            {id: 2, text: 'Pronto per invio'},
-            {id: 3, text: 'Bozza'}
+            { id: 0, text: 'In revisione' },
+            { id: 1, text: 'Da rivedere' },
+            { id: 2, text: 'Pronto per invio' },
+            { id: 3, text: 'Bozza' }
           ],
           macroEpocaCar: [],
           macroEpocaOrig: []
         },
-        texts: {limit: 'Risultati per pagina', noResults: 'Nessun risultato'}
+        texts: { limit: 'Risultati per pagina', noResults: 'Nessun risultato' }
       }
     }
   },
   methods: {
     getMac: function () {
       return loadMacroEpocaCar(this)
-        .then(resp => resp.data.map(el => { return {id: el.id, text: el.value} }))
+        .then(resp => resp.data.map(el => { return { id: el.id, text: el.value } }))
     },
     getMeo: function () {
       return loadMacroEpocaOrig(this)
-        .then(resp => resp.data.map(el => { return {id: el.id, text: el.value} }))
+        .then(resp => resp.data.map(el => { return { id: el.id, text: el.value } }))
     }
   },
   mounted () {

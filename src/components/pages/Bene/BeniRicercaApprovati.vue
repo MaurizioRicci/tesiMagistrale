@@ -21,7 +21,7 @@ import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 
 export default {
   name: 'BeniRicercaApprovati',
-  components: {Menu, RicercaBeniApprovati},
+  components: { Menu, RicercaBeniApprovati },
   mixins: [commonPageMixin],
   data () {
     return {}

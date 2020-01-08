@@ -1,4 +1,4 @@
-import {loadRuolo, loadTipoData, loadFunc} from '@/assets/js/loadDict'
+import { loadRuolo, loadTipoData, loadFunc } from '@/assets/js/loadDict'
 
 export default {
   data () {
@@ -24,32 +24,32 @@ export default {
         ],
         listColumns: {
           status: [
-            {id: 0, text: 'In revisione'},
-            {id: 1, text: 'Da rivedere'},
-            {id: 2, text: 'Pronto per invio'},
-            {id: 3, text: 'Bozza'}
+            { id: 0, text: 'In revisione' },
+            { id: 1, text: 'Da rivedere' },
+            { id: 2, text: 'Pronto per invio' },
+            { id: 3, text: 'Bozza' }
           ],
           tipodata: [],
           ruolo: [],
           ruolor: [],
           funzione: []
         },
-        texts: {limit: 'Risultati per pagina', noResults: 'Nessun risultato'}
+        texts: { limit: 'Risultati per pagina', noResults: 'Nessun risultato' }
       }
     }
   },
   methods: {
     getRuolo: function () {
       return loadRuolo(this)
-        .then(resp => resp.data.map(el => { return {id: el.id, text: el.value} }))
+        .then(resp => resp.data.map(el => { return { id: el.id, text: el.value } }))
     },
     getTipoData: function () {
       return loadTipoData(this)
-        .then(resp => resp.data.map(el => { return {id: el.id, text: el.value} }))
+        .then(resp => resp.data.map(el => { return { id: el.id, text: el.value } }))
     },
     getFunc: function () {
       return loadFunc(this)
-        .then(resp => resp.data.map(el => { return {id: el.id, text: el.value} }))
+        .then(resp => resp.data.map(el => { return { id: el.id, text: el.value } }))
     }
   },
   mounted () {

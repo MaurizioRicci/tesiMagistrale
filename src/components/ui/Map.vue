@@ -53,7 +53,7 @@ export default {
     LTileLayer,
     LControl,
     BetterWMS,
-    IconMsg,
+    IconMsg
   },
   model: {
     // imposto v-model collegato alla proprietà polygon
@@ -63,7 +63,7 @@ export default {
   props: {
     // default map center su Pisa. Non sembra essere reactive center in vue-leaflet
     // meglio essere sicuri del centro e poi instanziare questo componente
-    center: {type: Array, default: function () { return this.$store.getters.getDefaultMapCenter }},
+    center: { type: Array, default: function () { return this.$store.getters.getDefaultMapCenter } },
     controls: {
       type: Object,
       default: function () {
@@ -72,13 +72,13 @@ export default {
         }
       }
     },
-    zoom: {type: Number, default: 15},
-    width: {default: '100%'},
-    height: {default: '500px'},
+    zoom: { type: Number, default: 15 },
+    width: { default: '100%' },
+    height: { default: '500px' },
     // vero se l'utente non può modificare il poligono
-    locked: {type: Boolean},
-    polygon: {type: Polygon},
-    polygon_color: {type: String, default: 'green'}
+    locked: { type: Boolean },
+    polygon: { type: Polygon },
+    polygon_color: { type: String, default: 'green' }
   },
   methods: {
     mapClick (evt) {
@@ -114,7 +114,7 @@ export default {
     },
     openPopUp (latlng, content) {
       const L = window.L
-      L.popup({maxWidth: '200', maxHeight: Number(this.height) * 0.8})
+      L.popup({ maxWidth: '200', maxHeight: Number(this.height) * 0.8 })
         .setLatLng(latlng)
         .setContent(content)
         .openOn(this.leafletMapObject)

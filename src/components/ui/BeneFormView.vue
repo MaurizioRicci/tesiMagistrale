@@ -101,12 +101,12 @@ import BeneFormToolTip from '@/components/ui/BeneFormToolTip'
 // Renderizza il form per la visualizzazione di un bene
 export default {
   name: 'FormBeneLettura',
-  components: {BeneFormToolTip},
+  components: { BeneFormToolTip },
   data () {
     return {}
   },
   props: {
-    form: {type: Object, required: true},
+    form: { type: Object, required: true },
     disallowIDChange: Boolean
   },
   computed: {

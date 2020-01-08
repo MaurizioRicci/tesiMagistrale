@@ -1,4 +1,4 @@
-import {Polygon} from '@/assets/js/Models/multiPolygonModel'
+import { Polygon } from '@/assets/js/Models/multiPolygonModel'
 
 // piccola scorciatoia
 const exist = el => (typeof el !== 'undefined' &&

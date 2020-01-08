@@ -21,7 +21,7 @@ import RicercaFunzioniApprovate from '@/components/ui/RicercaFunzioniApprovate'
 
 export default {
   name: 'FunzioniRicercaApprovate',
-  components: {Menu, RicercaFunzioniApprovate},
+  components: { Menu, RicercaFunzioniApprovate },
   mixins: [commonPageMixin],
   data () {
     return {}

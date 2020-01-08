@@ -51,14 +51,14 @@ const qs = require('qs')
 // Valida un bene mostrando il confronto con la versione in archivio definitivo
 export default {
   name: 'ValidaFunzione',
-  components: {Menu, FunzioneFormView, FunzioneFormAddEdit, MyMap},
+  components: { Menu, FunzioneFormView, FunzioneFormAddEdit, MyMap },
   mixins: [commonPageMixin, dettagliFunzioneMixin],
   data () {
     return {
       sendBtnClicked: false,
       formFunzioneArchDef: getModelloFunzione(),
       mapCenterArchDef: [0, 0],
-      mapControls: {zoom: false, settings: false}
+      mapControls: { zoom: false, settings: false }
     }
   },
   computed: {

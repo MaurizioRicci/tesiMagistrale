@@ -49,8 +49,8 @@ window.axios = require('axios') // serve per vue-tables 2 non cancellare
 export default {
   name: 'BeniUtente',
   mixins: [BeneTableMixin],
-  components: {IconMsg},
-  filters: {ellipsizeLongText: ellipsize},
+  components: { IconMsg },
+  filters: { ellipsizeLongText: ellipsize },
   props: {},
   methods: {
     openModalEdit (idBene, idUtente) {

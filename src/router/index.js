@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import {store} from '@/store/store'
+import { store } from '@/store/store'
 import RoutesBeni from '@/router/routesBeni'
 import RoutesFunzioni from '@/router/routesFunzioni'
 const Error404 = () => import('@/components/pages/Errors/Error404')
@@ -63,7 +63,7 @@ const router = new Router({
 })
 
 router.beforeEach(function (to, from, next) {
-  let {path} = to
+  let { path } = to
   // se vengo già dalla pagina di login si ha un loop
   if (path !== '/' && !isAuthenticated()) next('/')
   else next()

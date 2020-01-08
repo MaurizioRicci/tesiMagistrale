@@ -56,7 +56,7 @@ export default {
   name: 'FunzioniAggiunteTemp',
   mixins: [commonPageMixin],
   components: { Menu, FunzioniUtente, LoadingOverlay },
-    computed: {
+  computed: {
     role: function () { return this.$store.getters.getUserData.role }
   },
   data: function () {

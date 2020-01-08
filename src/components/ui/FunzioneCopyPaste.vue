@@ -33,10 +33,10 @@ import IconMsg from '@/components/ui/IconMsg'
 // Mostro i bottoni per copiare/incollare una funzione
 export default {
   name: 'FunzioneCopiaIncolla',
-  components: {IconMsg},
+  components: { IconMsg },
   props: {
-    funzioneModel: {type: Object, required: true},
-    noPaste: Boolean},
+    funzioneModel: { type: Object, required: true },
+    noPaste: Boolean },
   data () {
     return {
       selected: [],
@@ -68,7 +68,7 @@ export default {
           if (key === 'ruolo' || key === 'ruolor') {
             txt = this.copiedModel[key].join(', ')
           }
-          return {text: txt, value: key}
+          return { text: txt, value: key }
         })
         // sono interessato solo a alcune chiavi però
           .filter(el => Object.keys(this.text).includes(el.value))

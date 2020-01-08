@@ -35,7 +35,7 @@ import axios from 'axios'
 
 export default {
   name: 'MapOptions',
-  components: {Menu, LMap, LTileLayer, LGeoJson, LMarker, LPopup},
+  components: { Menu, LMap, LTileLayer, LGeoJson, LMarker, LPopup },
   mixins: [commonPageMixin],
   data () {
     return {

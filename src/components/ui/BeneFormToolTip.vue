@@ -20,7 +20,7 @@
 // i vari attributi target sono id di elementi presenti nella pagina
 export default {
   name: 'BeneFormTooltip',
-  props: {prefix: {type: String, default: ''}}
+  props: { prefix: { type: String, default: '' } }
 }
 </script>
 

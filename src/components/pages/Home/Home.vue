@@ -93,13 +93,13 @@
 <script>
 import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
-import {deleteCookie} from '@/assets/js/cookie'
+import { deleteCookie } from '@/assets/js/cookie'
 import axios from 'axios'
 import qs from 'qs'
 
 export default {
   name: 'Home',
-  components: {Menu},
+  components: { Menu },
   mixins: [commonPageMixin],
   data () {
     return {

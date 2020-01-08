@@ -48,9 +48,9 @@ window.axios = require('axios')
 // Mostra una tabella con tutti i beni approvati di tutti gli utenti
 export default {
   name: 'BeniUtente',
-  components: {IconMsg},
+  components: { IconMsg },
   mixins: [FunzioneTableMixin],
-  filters: {ellipsizeLongText: ellipsize},
+  filters: { ellipsizeLongText: ellipsize },
   props: {},
   methods: {},
   data: function () {

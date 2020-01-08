@@ -90,7 +90,7 @@ export default {
     onSubmit (evt) {
       evt.preventDefault()
       axios.post(this.$store.getters.loginURL, qs.stringify(this.formData), {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
       })
         .then(function (resp) {
           // in ogni caso elimino il vecchio cookie (se presente)

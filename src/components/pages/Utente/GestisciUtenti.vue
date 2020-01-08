@@ -78,7 +78,7 @@ const _values = require('lodash.values')
 
 export default {
   name: 'GestisciUtenti',
-  components: {Menu},
+  components: { Menu },
   mixins: [commonPageMixin],
   data () {
     return {

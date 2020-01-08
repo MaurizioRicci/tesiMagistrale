@@ -20,15 +20,15 @@ export default {
   },
   props: {
     // URL dal quale recuperare il layer WMS
-    baseUrl: {type: String, required: true},
-    styles: {type: String, default: ''},
-    transparent: {type: Boolean, default: true},
+    baseUrl: { type: String, required: true },
+    styles: { type: String, default: '' },
+    transparent: { type: Boolean, default: true },
     version: String,
-    format: {typr: String, default: 'image/png'},
-    attribution: {type: String, default: ''},
-    layers: {type: String, default: 'benigeo'},
-    name: {type: String, default: 'benigeo'},
-    layerType: {type: String, default: 'base'}
+    format: { typr: String, default: 'image/png' },
+    attribution: { type: String, default: '' },
+    layers: { type: String, default: 'benigeo' },
+    name: { type: String, default: 'benigeo' },
+    layerType: { type: String, default: 'base' }
   },
   methods: {
     // @vuese
@@ -40,7 +40,7 @@ export default {
       let url = this.getFeatureInfoUrl(evt.latlng)
       axios.get(url).then(resp => {
         let err = typeof resp === 'string' ? null : resp.data
-        this.emitResults({latlng: evt.latlng, data: err})
+        this.emitResults({ latlng: evt.latlng, data: err })
       }, fail => { console.log(fail) })
     },
     getFeatureInfoUrl: function (latlng) {

@@ -50,15 +50,15 @@ const qs = require('qs')
 // Valida un bene mostrando il confronto con la versione in archivio definitivo
 export default {
   name: 'ValidaBene',
-  components: {Menu, BeneFormView, BeneFormAddEdit, MyMap},
+  components: { Menu, BeneFormView, BeneFormAddEdit, MyMap },
   mixins: [commonPageMixin, dettagliBeneMixin],
   data () {
     return {
       sendBtnClicked: false,
       formBeneArchDef: getModelloBene(),
       mapCenterArchDef: [0, 0],
-      mapControls: {zoom: false, settings: false},
-      mapControlsNoResetGeo: {zoom: false, settings: false, resetGeo: false}
+      mapControls: { zoom: false, settings: false },
+      mapControlsNoResetGeo: { zoom: false, settings: false, resetGeo: false }
     }
   },
   methods: {

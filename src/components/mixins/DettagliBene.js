@@ -1,4 +1,4 @@
-import {MultiPolygon} from '@/assets/js/Models/multiPolygonModel'
+import { MultiPolygon } from '@/assets/js/Models/multiPolygonModel'
 import getModelloBene from '@/assets/js/Models/beneModel'
 import lodashclonedeep from 'lodash.clonedeep'
 import { Polygon } from '../../assets/js/Models/multiPolygonModel'
