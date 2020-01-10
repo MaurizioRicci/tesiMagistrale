@@ -1,5 +1,8 @@
 <template>
   <b-container fluid>
+    <b-navbar toggleable="lg" type="dark" variant="info" class="mb-1">
+      <b-navbar-brand>Beni Lunigiana</b-navbar-brand>
+    </b-navbar>
     <b-row>
       <b-col>
         <h2>Login</h2>
