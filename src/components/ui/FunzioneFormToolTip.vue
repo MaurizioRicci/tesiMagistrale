@@ -12,6 +12,8 @@
         <b-tooltip :target="prefix+'input-funzione'" triggers="hover">Funzione che lega due beni</b-tooltip>
         <b-tooltip :target="prefix+'input-bibliografia'" triggers="hover">Bibliografia</b-tooltip>
         <b-tooltip :target="prefix+'input-note'" triggers="hover">Eventuali note</b-tooltip>
+        <b-tooltip :target="prefix+'input-ruolo'" triggers="hover">Ruolo del bene nella funzione/relazione</b-tooltip>
+        <b-tooltip :target="prefix+'input-ruolor'" triggers="hover">Ruolo del bene di riferimento nella funzione/relazione</b-tooltip>
     </div>
 </template>
 

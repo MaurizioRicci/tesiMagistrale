@@ -70,17 +70,8 @@
           ></b-form-input>
       </b-form-group>
       <!-- ruolo 1 -->
-      <span id="input_ruolo" v-for="(ruolor, index) in form.ruolor" :key="'ruolo'+index">
-        <b-form-group id="input-group-1" label="Ruolo:"
-          :label-for="'input-ruolo'+index" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-            <b-form-input
-              :value="form.ruolo[index]"
-              :id="'input-ruolo'+index"
-              type="text"
-              placeholder=""
-              disabled></b-form-input>
-        </b-form-group>
-      </span>
+      <ruoli-form-tag v-model="form.ruolo" label="Ruoli rif." disabled
+        inputID="funzione_form_view_input-ruolor"/>
       <b-form-group id="input-group-1" label="Funzione:" label-for="funzione_form_view_input-funzione" label-cols-sm="6"
         label-cols-md="3" label-cols-xl="2">
         <b-form-input id="funzione_form_view_input-funzione" v-model="form.funzione" type="text" disabled placeholder=""></b-form-input>
@@ -94,17 +85,8 @@
         <b-form-input id="funzione_form_view_input-denominazioner" v-model="form.denominazioner" type="text" disabled placeholder=""></b-form-input>
       </b-form-group>
       <!-- ruolo 2 -->
-      <span id="input_ruolor" v-for="(ruolor, index) in form.ruolor" :key="'ruolor'+index">
-        <b-form-group id="input-group-1" label="Ruolo rif:"
-          :label-for="'input-ruolor'+index" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-            <b-form-input
-              :value="form.ruolor[index]"
-              :id="'input-ruolor'+index"
-              type="text"
-              placeholder=""
-              disabled></b-form-input>
-        </b-form-group>
-      </span>
+      <ruoli-form-tag v-model="form.ruolor" label="Ruoli rif." disabled
+        inputID="funzione_form_view_input-ruolo"/>
       <b-form-group id="input-group-1" label="Bibliografia:" label-for="funzione_form_view_input-bibliografia" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-textarea
           id="funzione_form_view_input-bibliografia"
@@ -130,11 +112,12 @@
 
 <script>
 import FunzioneFormToolTip from '@/components/ui/FunzioneFormToolTip'
+import RuoliFormTag from '@/components/ui/RuoliFormTag'
 
 // Renderizza il form per la visualizzazione di una funzione
 export default {
   name: 'FormFunzioneLettura',
-  components: { FunzioneFormToolTip },
+  components: { FunzioneFormToolTip, RuoliFormTag },
   data () {
     return {}
   },

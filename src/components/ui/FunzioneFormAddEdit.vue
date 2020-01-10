@@ -82,27 +82,7 @@
           </my-autocomplete-input>
       </b-form-group>
       <!-- ruolo -->
-      <!-- @change="val => $set(this.form, 'ruolo', val)" -->
-      <span id="input_ruolo" v-for="(ruolo, index) in form.ruolo" :key="'ruolo'+index">
-        <b-form-group id="input-group-1" label="Ruolo:"
-          :label-for="'input-ruolo'+index" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-          <my-autocomplete-input v-model="form.ruolo[index]" closedDictionary
-            icon_name="lock" icon_msg="Campo vincolato a un dizionario"
-            :suggestionsPromise="getDictFuncs().loadRuolo"
-            invalid-feedback="Ruolo non valido">
-            <b-form-input
-              v-model="form.ruolo[index]"
-              :id="'input-ruolo'+index"
-              type="text"
-              placeholder=""
-              autocomplete="off"></b-form-input>
-          </my-autocomplete-input>
-          <IconMsg icon_name="minus-square" icon_msg="Rimuovi ruolo"
-            @click="removeRole('ruolo', index)"/>
-          <IconMsg icon_name="plus-square" icon_msg="Aggiungi ruolo"
-            @click="addRole('ruolo')"/>
-        </b-form-group>
-      </span>
+      <ruoli-form-tag v-model="form.ruolo" label="Ruoli" inputID="input-ruolo"/>
       <!-- funzione -->
       <b-form-group id="input-group-1" label="Funzione:"
         label-for="input-funzione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
@@ -141,26 +121,7 @@
             ></b-form-input>
       </b-form-group>
       <!-- ruolo2 -->
-      <span id="input_ruolor" v-for="(ruolor, index) in form.ruolor" :key="'ruolor'+index">
-        <b-form-group id="input-group-1" label="Ruolo rif:"
-          :label-for="'input-ruolor'+index" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-          <my-autocomplete-input v-model="form.ruolor[index]" closedDictionary
-            icon_name="lock" icon_msg="Campo vincolato a un dizionario"
-            :suggestionsPromise="getDictFuncs().loadRuolo"
-            invalid-feedback="Ruolo non valido">
-            <b-form-input
-              v-model="form.ruolor[index]"
-              :id="'input-ruolor'+index"
-              type="text"
-              placeholder=""
-              autocomplete="off"></b-form-input>
-          </my-autocomplete-input>
-          <IconMsg icon_name="minus-square" icon_msg="Rimuovi ruolo"
-            @click="removeRole('ruolor', index)"/>
-          <IconMsg icon_name="plus-square" icon_msg="Aggiungi ruolo"
-            @click="addRole('ruolor')"/>
-        </b-form-group>
-      </span>
+      <ruoli-form-tag v-model="form.ruolor" label="Ruoli rif." inputID="input-ruolor"/>
       <!-- bibliografia -->
       <b-form-group id="input-group-1" label="Bibliografia:" label-for="input-bibliografia" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-textarea
@@ -181,8 +142,7 @@
 import setCustomValidity from '@/components/directives/setCustomValidity'
 import FunzioneFormToolTip from '@/components/ui/FunzioneFormToolTip'
 import MyAutocompleteInput from '@/components/ui/MyAutocompleteInput'
-import RemoteContextualSuggestions from '@/components/common/RemoteContextualSuggestions'
-import IconMsg from '@/components/ui/IconMsg'
+import RuoliFormTag from '@/components/ui/RuoliFormTag'
 import * as dict from '@/assets/js/loadDict'
 import { dataVera } from '@/assets/js/date/dateF'
 
@@ -192,8 +152,7 @@ export default {
   components: {
     FunzioneFormToolTip,
     MyAutocompleteInput,
-    RemoteContextualSuggestions,
-    IconMsg
+    RuoliFormTag
   },
   mixins: [],
   directives: {
