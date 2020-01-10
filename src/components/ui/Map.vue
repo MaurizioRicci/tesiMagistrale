@@ -174,7 +174,7 @@ export default {
         }
       }
       // instanzio la toolbar di leaflet
-      LeafletToolbar.initToolbar(this.leafletMapObject, callbacks)
+      LeafletToolbar.initToolbar(this.leafletMapObject, callbacks, this.locked)
     })
   }
 }

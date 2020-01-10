@@ -10,7 +10,8 @@ const defaultCallbacks = {
 }
 
 export default {
-  initToolbar: function (map, callbacks) {
+  initToolbar: function (map, callbacks, disabledToolbar) {
+    if (disabledToolbar) return
     const L = window.L
     callbacks = callbacks || defaultCallbacks
     this.drawnItems = L.featureGroup().addTo(map)
