@@ -94,9 +94,9 @@ export default {
         let url = storeGetters.approvaFunzioneURL
         axios.post(url, qs.stringify(postData))
           .then(ok => {
-            this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
+            this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok', 'sendData'])
             if (this.leavePage) {
-              this.$vueEventBus.$once('master-page-show-msg-ok',
+              this.$vueEventBus.$once('master-page-show-msg-ok-sendData',
                 () => this.goBack())
             }
           }, error => {

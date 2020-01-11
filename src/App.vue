@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <!-- Modal per mostrare possibili errori all'utente -->
-    <b-modal :title="msgData.title" ok-only v-model="modalShow"
-      @ok="emitOkBtnClicked">
-        <p class="my-2">{{msgData.message}}</p>
+    <b-modal v-for="(msg, index) in msgData" :key="index"
+      :title="msg.title" ok-only v-model="msg.modalShow"
+      @ok="emitOkBtnClicked(index)">
+        <p class="my-2">{{msg.msg}}</p>
     </b-modal>
     <router-view/>
   </div>
@@ -15,26 +16,20 @@ export default {
   data () {
     return {
       modalShow: false,
-      msgData: {
-        title: '',
-        message: ''
-      }
+      msgData: []
     }
   },
   methods: {
     // assegnamento di destrutturazione array con valori di default
-    showMsg: function ([title = '', msg = '']) {
-      // evito di mostrare più volte stesso messaggio se già aperto
-      // se non è aperto apro. Se è aperto apro solo se title & message sono diversi
-      if (!this.modalShow || (this.modalShow && this.msgData.title !== title &&
-       this.msgData.message !== msg)) {
-        this.msgData.title = title
-        this.msgData.message = msg
-        this.modalShow = true
-      }
+    showMsg: function ([title = '', msg = '', msgID = '']) {
+      // aggiungo i dati del messaggio da mostrare alla lista degli altri messaggi attivi
+      this.msgData.push({ id: msgID, title: title, msg: msg, modalShow: true })
     },
-    emitOkBtnClicked () {
-      this.$vueEventBus.$emit('master-page-show-msg-ok')
+    emitOkBtnClicked (index) {
+      // se il messaggio ha un id lo aggiungo al nome dell'evento
+      let suffix = this.msgData[index].id ? '-' + this.msgData[index].id : ''
+      this.$vueEventBus.$emit('master-page-show-msg-ok' + suffix)
+      this.msgData = this.msgData.filter((el, idx) => idx !== index)
     }
   },
   created () {
