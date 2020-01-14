@@ -11,76 +11,81 @@
             <h5>Benvenuto
               <b-badge variant="info">{{$store.getters.getUserData.username}}</b-badge>
             </h5>
-            <h5>Info e statistiche</h5>
-            <p>Il tuo ruolo è
-              <b-badge variant="info">{{$store.getters.getUserData.role}}</b-badge>
-            </p>
-            <p>Gli ID a te riservati variano da
-              <b-badge variant="info">{{data.id_min}}</b-badge>
-              a
-              <b-badge variant="info">{{data.id_max}}</b-badge>
-            </p>
-            <p>Il tuo ultimo ID usato per un Bene è
-              <b-badge variant="info">{{data.ultimo_id_bene}}</b-badge>
-            </p>
-            <p v-if="IDInEsaurimento" class="bg-warning d-inline-block rounded">
-              ATTENZIONE: Stai per esaurire gli ID.
-            </p>
-            <hr/>
-            <div v-if="data.role === 'revisore'" key="revisorePage">
-              <p>Hai
-                <b-badge variant="info">{{data.n_beni_da_revisionare}}</b-badge>
-                <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
-                {{data.n_beni_da_revisionare | formatBeni}}
-                da revisionare.</p>
-              <p>Hai
-                <b-badge variant="info">{{data.n_funzioni_da_revisionare}}</b-badge>
-                <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
-                {{data.n_funzioni_da_revisionare | formatFunzioni}}
-                da revisionare.</p>
-            </div>
-            <div v-else key="schedatorePage">
-              <p>Hai
-                <b-badge variant="info">{{data.n_beni_pronti}}</b-badge>
-                <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
-                {{data.n_beni_pronti | formatBeni}}
-                in attesa di invio.</p>
-              <p>Hai
-                <b-badge variant="info">{{data.n_funzioni_pronte}}</b-badge>
-                <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
-                {{data.n_funzioni_pronte | formatFunzioni}}
-                in attesa di invio.</p>
-              <p>Hai
-                <b-badge variant="info">{{data.n_beni_rev}}</b-badge>
-                <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
-                {{data.n_beni_rev | formatBeni}}
-                in attesa di revisione.</p>
-              <p>Hai
-                <b-badge variant="info">{{data.n_funzioni_rev}}</b-badge>
-                <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
-                {{data.n_funzioni_rev | formatFunzioni}}
-                in attesa di revisione.</p>
-              <p>Hai
-                <b-badge variant="info">{{data.n_beni_da_correggere}}</b-badge>
-                <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
-                {{data.n_beni_da_correggere | formatBeni}}
-                da correggere.</p>
-              <p>Hai
-                <b-badge variant="info">{{data.n_funzioni_da_correggere}}</b-badge>
-                <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
-                {{data.n_funzioni_da_correggere | formatFunzioni}}
-                da correggere.</p>
-              <p>Hai
-                <b-badge variant="info">{{data.n_beni_incompleti}}</b-badge>
-                <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
-                {{data.n_beni_incompleti | formatBeni}}
-                incompleti.</p>
-              <p>Hai
-                <b-badge variant="info">{{data.n_funzioni_incomplete}}</b-badge>
-                <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
-                {{data.n_funzioni_incomplete | formatFunzioni}}
-                incomplete.</p>
-            </div>
+            <b-card header="Info e statistiche">
+              <p>Il tuo ruolo è
+                <b-badge variant="info">{{$store.getters.getUserData.role}}</b-badge>
+              </p>
+              <p>Gli ID a te riservati variano da
+                <b-badge variant="info">{{data.id_min}}</b-badge>
+                a
+                <b-badge variant="info">{{data.id_max}}</b-badge>
+              </p>
+              <p>Il tuo ultimo ID usato per un Bene è
+                <b-badge variant="info">{{data.ultimo_id_bene}}</b-badge>
+              </p>
+              <p v-if="IDInEsaurimento" class="bg-warning d-inline-block rounded">
+                ATTENZIONE: Stai per esaurire gli ID.
+              </p>
+              <hr/>
+              <div v-if="isRevisore" key="revisorePage">
+                <p>Hai
+                  <b-badge variant="info">{{data.n_beni_da_revisionare}}</b-badge>
+                  <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
+                  {{data.n_beni_da_revisionare | formatBeni}}
+                  da revisionare.</p>
+                <p>Hai
+                  <b-badge variant="info">{{data.n_funzioni_da_revisionare}}</b-badge>
+                  <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
+                  {{data.n_funzioni_da_revisionare | formatFunzioni}}
+                  da revisionare.</p>
+              </div>
+              <div v-else key="schedatorePage">
+                <p>Hai
+                  <b-badge variant="info">{{data.n_beni_pronti}}</b-badge>
+                  <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
+                  {{data.n_beni_pronti | formatBeni}}
+                  in attesa di invio.</p>
+                <p>Hai
+                  <b-badge variant="info">{{data.n_funzioni_pronte}}</b-badge>
+                  <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
+                  {{data.n_funzioni_pronte | formatFunzioni}}
+                  in attesa di invio.</p>
+                <p>Hai
+                  <b-badge variant="info">{{data.n_beni_rev}}</b-badge>
+                  <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
+                  {{data.n_beni_rev | formatBeni}}
+                  in attesa di revisione.</p>
+                <p>Hai
+                  <b-badge variant="info">{{data.n_funzioni_rev}}</b-badge>
+                  <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
+                  {{data.n_funzioni_rev | formatFunzioni}}
+                  in attesa di revisione.</p>
+                <p>Hai
+                  <b-badge variant="info">{{data.n_beni_da_correggere}}</b-badge>
+                  <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
+                  {{data.n_beni_da_correggere | formatBeni}}
+                  da correggere.</p>
+                <p>Hai
+                  <b-badge variant="info">{{data.n_funzioni_da_correggere}}</b-badge>
+                  <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
+                  {{data.n_funzioni_da_correggere | formatFunzioni}}
+                  da correggere.</p>
+                <p>Hai
+                  <b-badge variant="info">{{data.n_beni_incompleti}}</b-badge>
+                  <!-- Questo è amore per l'utente, se è 1 scrivo Bene, altrimenti Beni -->
+                  {{data.n_beni_incompleti | formatBeni}}
+                  incompleti.</p>
+                <p>Hai
+                  <b-badge variant="info">{{data.n_funzioni_incomplete}}</b-badge>
+                  <!-- Questo è amore per l'utente, se è 1 scrivo Funzione, altrimenti Funzioni -->
+                  {{data.n_funzioni_incomplete | formatFunzioni}}
+                  incomplete.</p>
+              </div>
+            </b-card>
+            <b-card header="Azioni revisore" v-if="isRevisore||true"
+             class="mt-2 text-center" header-border-variant="warning">
+              <b-button to="/gestisci_utenti">Aggiungi / Modifica utenti</b-button>
+            </b-card>
             <hr/>
             <b-col class="text-center">
               <b-button @click="logout">Logout</b-button>
@@ -117,6 +122,9 @@ export default {
         return Number(this.data.id_max) -
           Number(this.data.ultimo_id_bene) < 50
       } catch (err) { return false }
+    },
+    isRevisore: function () {
+      return this.data && this.data.role === 'revisore'
     }
   },
   methods: {

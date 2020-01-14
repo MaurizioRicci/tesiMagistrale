@@ -27,14 +27,11 @@
       </b-navbar-nav>
 
       <b-navbar-nav class="w-100" align="center">
-        <b-navbar-nav>
-          <b-nav-item to="/">
-            <span style="color:white;" :class="{'text-warning': !currUsername}"
-              v-b-tooltip.hover.bottom="loginTooltip">
-                User: {{currUsername || '???'}}
-            </span>
-          </b-nav-item>
-        </b-navbar-nav>
+        <b-nav-item to="/" v-b-tooltip.hover.bottom="loginTooltip">
+          <span style="color:white;" :class="{'text-warning': !currUsername}">
+            User: {{currUsername || '???'}}
+          </span>
+        </b-nav-item>
       </b-navbar-nav>
 
       </b-collapse>
