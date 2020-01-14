@@ -11,7 +11,7 @@
           v-model="form.id"
           placeholder=""
           autocomplete="off"
-          @keyup.enter="$emit('requestedId', form.id)"
+          @change="$emit('requestedId', form.id)"
           :disabled="this.disallowIDChange"
           ></b-form-input>
       </b-form-group>
