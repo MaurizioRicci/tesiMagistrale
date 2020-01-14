@@ -1,49 +1,42 @@
 <template>
   <div class="my-autocomplete" v-on-clickaway="closeSuggestions">
+    <!-- Non cancellare il ref, serve per ritrovare l'input text al suo interno -->
     <span ref="input_container">
       <b-input-group>
         <slot></slot>
         <template v-slot:append>
-            <!-- Mentre carica i suggerimenti -->
-            <span  v-if="loading && !error" class="input-group-text">
-              <b-spinner class="m-1" small
+          <!-- Mentre carica i suggerimenti -->
+          <span  v-if="loading && !error" class="input-group-text">
+            <b-spinner class="m-1" small
               variant="primary" label="Loading">
-              </b-spinner>
-            </span>
-            <!-- Dopo aver caricato i suggerimenti -->
-            <icon-msg v-if="!loading && !error && icon_name"
+            </b-spinner>
+          </span>
+          <!-- Dopo aver caricato i suggerimenti -->
+          <icon-msg v-if="!loading && !error && icon_name"
             class="input-group-text"
             :icon_name="icon_name"
-            :icon_msg="icon_msg"
-            ></icon-msg>
-            <!-- In caso di errore durante il caricamento -->
-            <icon-msg v-if="error"
+            :icon_msg="icon_msg"></icon-msg>
+          <!-- In caso di errore durante il caricamento -->
+          <icon-msg v-if="error"
             class="input-group-text"
             icon_name="exclamation-circle"
-            icon_msg="Impossibile ottenere i suggerimenti"
-            ></icon-msg>
+            icon_msg="Impossibile ottenere i suggerimenti"></icon-msg>
         </template>
       </b-input-group>
       <!-- Feedback invalido -->
       <p class="invalid-feedback" style="display:initial"
-       v-if="!this.state.validFeedback">{{invalidFeedback}}</p>
+        v-if="!this.state.validFeedback">{{invalidFeedback}}</p>
 
-      <div class="autocomplete" v-if="!state.listClosed && arr.length > 0">
-          <div class="autocomplete-items">
-            <div class="suggestions-header">
-              <slot name="suggestions-header" :all-suggestions="arr"></slot>
-            </div>
-            <div v-for="sugg in arr"
-             v-bind:key="sugg.id" class="suggestion-row"
-             v-on:click="updateValue(sugg) || onSuggestionPicked() || hide()">
-              <slot name="suggestion-row" :curr-suggestion="sugg">
-                <span>{{sugg.value}}</span>
-                <input type="hidden"
-                :value="sugg.value">
-              </slot>
-            </div>
-          </div>
-      </div>
+      <b-list-group class="my-list border border-primary"
+        v-if="!state.listClosed && arr.length > 0">
+        <b-list-group-item button v-for="sugg in arr"
+          v-bind:key="sugg.id" class="suggestion-row"
+          v-on:click="updateValue(sugg); onSuggestionPicked(); hide();">
+          <slot name="suggestion-row" :curr-suggestion="sugg">
+            {{sugg.value}}
+          </slot>
+        </b-list-group-item>
+      </b-list-group>
     </span>
   </div>
 </template>
@@ -84,7 +77,6 @@ export default {
       },
       state: {
         listClosed: true,
-        activeInput: false,
         validFeedback: true
       }
     }
@@ -165,8 +157,6 @@ export default {
       if (evt.keyCode === 27) { this.closeSuggestions() } else if (evt.keyCode === 13) {
         /* If the ENTER key is pressed, prevent the form from being submitted, */
         evt.preventDefault()
-        /* and simulate a click on the "active" item: */
-        // if (x) x[this.state.currentFocus].click()
       }
       this.listeners['keydown'] && this.listeners['keydown'](evt)
     },
@@ -189,40 +179,17 @@ export default {
 }
 </script>
 <style scoped>
-.autocomplete {
-  /*the container must be positioned relative:*/
-  position: relative;
-  width: 100%;
-}
-.autocomplete >>> .autocomplete-items {
+.my-list {
+  max-height: 30vh;
+  overflow: auto;
   position: absolute;
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  border-top: none;
   z-index: 99;
   /*position the autocomplete items to be the same width as the container:*/
   top: 100%;
   left: 0;
   right: 0;
-  max-height: 30vh;
-  overflow: auto;
-  border: 2px steelblue solid;
   -webkit-box-shadow: 3px 3px 5px 0px rgba(133,131,133,1);
   -moz-box-shadow: 3px 3px 5px 0px rgba(133,131,133,1);
   box-shadow: 3px 3px 5px 0px rgba(133,131,133,1);
-}
-.autocomplete >>> .autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #fff;
-  border-bottom: 1px solid #d4d4d4;
-}
-.autocomplete >>> .autocomplete-items .suggestions-header {
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-.autocomplete >>> .autocomplete-items div:hover {
-  /*when hovering an item:*/
-  background-color: #e9e9e9;
 }
 </style>
