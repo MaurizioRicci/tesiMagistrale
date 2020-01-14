@@ -18,8 +18,7 @@
         <!-- 12-mapCols > 0 => se la mappa occupa 12 colonne allora il form è nascosto -->
         <b-col cols="8" v-show="12-mapCols > 0">
 
-          <FunzioneCopiaIncolla :funzioneModel="form"
-           @incolla_funzione="data => form = Object.assign(form, data)"/>
+          <FunzioneCopiaIncolla :funzioneModel="form"/>
 
           <FunzioneFormAddEdit ref="form_funzione" v-model="form"
             :validated="sendBtnClicked"/>

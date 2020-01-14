@@ -1,7 +1,9 @@
+import lodashclonedeep from 'lodash.clonedeep'
+
 const copiaIncollaStore = {
   state: {
-    beneCopiato: null,
-    funzioneCopiata: null
+    beneCopiato: [],
+    funzioneCopiata: []
   },
   getters: {
     getBeneCopiato: state => state.beneCopiato,
@@ -9,10 +11,10 @@ const copiaIncollaStore = {
   },
   mutations: {
     copiaBene (state, beneModel) {
-      state.beneCopiato = beneModel
+      state.beneCopiato.push(lodashclonedeep(beneModel))
     },
     copiaFunzione (state, funzioneModel) {
-      state.funzioneCopiata = funzioneModel
+      state.funzioneCopiata.push(lodashclonedeep(funzioneModel))
     }
   }
 }
