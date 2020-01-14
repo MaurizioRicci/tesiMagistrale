@@ -11,7 +11,6 @@ const defaultCallbacks = {
 
 export default {
   initToolbar: function (map, callbacks, disabledToolbar) {
-    if (disabledToolbar) return
     const L = window.L
     callbacks = callbacks || defaultCallbacks
     this.drawnItems = L.featureGroup().addTo(map)
@@ -19,7 +18,7 @@ export default {
       position: 'topright',
       draw: {
         polyline: false,
-        polygon: {
+        polygon: disabledToolbar ? false : {
           allowIntersection: false,
           showArea: true
         },
@@ -30,6 +29,8 @@ export default {
       },
       edit: {
         featureGroup: this.drawnItems,
+        edit: !disabledToolbar,
+        remove: !disabledToolbar,
         polygon: {
           allowIntersection: false,
           showArea: true
