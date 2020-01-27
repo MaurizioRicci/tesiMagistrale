@@ -82,7 +82,7 @@
                   incomplete.</p>
               </div>
             </b-card>
-            <b-card header="Azioni revisore" v-if="isRevisore||true"
+            <b-card header="Azioni revisore" v-if="isRevisore"
              class="mt-2 text-center" header-border-variant="warning">
               <b-button to="/gestisci_utenti">Aggiungi / Modifica utenti</b-button>
             </b-card>

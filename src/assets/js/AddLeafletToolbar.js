@@ -15,7 +15,7 @@ export default {
     callbacks = callbacks || defaultCallbacks
     this.drawnItems = L.featureGroup().addTo(map)
     this.drawControl = new L.Control.Draw({
-      position: 'topright',
+      position: 'topleft',
       draw: {
         polyline: false,
         polygon: disabledToolbar ? false : {

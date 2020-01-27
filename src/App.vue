@@ -3,7 +3,7 @@
     <!-- Modal per mostrare possibili errori all'utente -->
     <b-modal v-for="(msg, index) in msgData" :key="index"
       :title="msg.title" ok-only v-model="msg.modalShow"
-      @ok="emitOkBtnClicked(index)">
+      @ok="emitOkBtnClicked(index)" hide-header-close>
         <p class="my-2">{{msg.msg}}</p>
     </b-modal>
     <router-view/>

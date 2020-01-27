@@ -88,7 +88,7 @@
         label-for="input-funzione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <my-autocomplete-input v-model="form.funzione" closedDictionary
           icon_name="lock" icon_msg="Campo vincolato a un dizionario"
-          :suggestionsPromise="getDictFuncs().loadTipoData">
+          :suggestionsPromise="getDictFuncs().loadFunc">
           <b-form-input
             v-model="form.funzione"
             id="input-funzione"

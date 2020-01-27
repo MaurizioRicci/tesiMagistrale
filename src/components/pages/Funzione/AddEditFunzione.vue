@@ -133,7 +133,8 @@ export default {
       axios.post(url, qs.stringify(postData))
         .then(ok => {
           this.serverRespOk = true
-          this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok', 'sendData'])
+          this.$vueEventBus.$emit('master-page-show-msg',
+            ['Risposta', 'Funzione salvata', 'sendData'])
           const callback = this.leavePage ? () => this.goBack() : () => this.init()
           this.$vueEventBus.$once('master-page-show-msg-ok-sendData',
             callback)
