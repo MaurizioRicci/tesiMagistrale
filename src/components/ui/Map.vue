@@ -118,6 +118,14 @@ export default {
         .setLatLng(latlng)
         .setContent(content)
         .openOn(this.leafletMapObject)
+    },
+    addScale (map) {
+      // aggiungo la scala alla mappa
+      const L = window.L
+      L.control.scale({
+        imperial: false,
+        position: 'bottomright'
+      }).addTo(map)
     }
   },
   data () {
@@ -156,6 +164,7 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.leafletMapObject = this.$refs.myMap.mapObject
+      this.addScale(this.leafletMapObject)
       // creo le callback per la toolbar di leaflet
       let callbacks = {
         onCreated: geoJSON => {
