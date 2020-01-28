@@ -43,8 +43,8 @@ export default function dataConverti (DS) {
         sispart = pythonSlice(i, null, sin) // sin[i:]                     //# ... di 'Xinizio' qui resta 'inizio'
       }
     }
-    sinsec = sinsec.upper()
-    sispart = sispart.lower()
+    sinsec = sinsec.toUpperCase()
+    sispart = sispart.toLowerCase()
     let secolonum
     for (let i = 0; i < RomToArab.length; i++) {
       if (sinsec === RomToArab[i]) secolonum = RomToArab[i + 1] // # secolo 'X' diventa 10
