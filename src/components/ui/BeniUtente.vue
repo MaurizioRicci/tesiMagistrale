@@ -1,6 +1,7 @@
 <template>
 <div>
-  <v-client-table ref="myTable" :columns="columns" v-model="tableData" :options="options">
+  <v-client-table ref="myTable" :columns="columns" v-model="tableData" :options="options"
+  class="myTable table-sm">
 
         <template v-slot:status="{row}">
           <div :class="{
@@ -80,6 +81,16 @@
           </div>
         </div>
 
+        <template v-slot:bibliografia="{row}">
+          <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
+          {{row.bibliografia | ellipsizeLongText()}}
+        </template>
+
+        <template v-slot:note="{row}">
+          <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
+          {{row.note | ellipsizeLongText()}}
+        </template>
+
     </v-client-table>
 
 </div>
@@ -89,6 +100,7 @@
 import BeneModel from '@/assets/js/Models/beneModel'
 import BeneTableMixin from '@/components/mixins/BeneTable'
 import IconMsg from '@/components/ui/IconMsg'
+import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 const qs = require('qs')
 const axios = require('axios')
 
@@ -97,6 +109,7 @@ const axios = require('axios')
 export default {
   name: 'BeniUtente',
   mixins: [BeneTableMixin],
+  filters: { ellipsizeLongText: ellipsize },
   components: {
     IconMsg
   },

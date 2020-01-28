@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-server-table :columns="columns" :options="options" class="myTable"
+  <v-server-table :columns="columns" :options="options" class="myTable table-sm"
     :url="$store.getters.beniAggiuntiApprovatiURL">
 
         <template v-slot:azioni="{row}">

@@ -1,6 +1,7 @@
 <template>
 <div>
-  <v-client-table ref="myTable" :columns="columns" v-model="tableData" :options="options">
+  <v-client-table ref="myTable" :columns="columns" v-model="tableData" :options="options"
+  class="myTable table-sm">
 
         <template v-slot:status="{row}">
           <div :class="{
@@ -89,6 +90,16 @@
           </div>
         </div>
 
+        <template v-slot:bibliografia="{row}">
+          <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
+          {{row.bibliografia | ellipsizeLongText()}}
+        </template>
+
+        <template v-slot:note="{row}">
+          <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
+          {{row.note | ellipsizeLongText()}}
+        </template>
+
     </v-client-table>
 
 </div>
@@ -98,6 +109,7 @@
 import FunzioneModel from '@/assets/js/Models/funzioneModel'
 import FunzioneTableMixin from '@/components/mixins/FunzioneTable'
 import IconMsg from '@/components/ui/IconMsg'
+import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 const qs = require('qs')
 const axios = require('axios')
 
@@ -109,6 +121,7 @@ export default {
     IconMsg
   },
   mixins: [FunzioneTableMixin],
+  filters: { ellipsizeLongText: ellipsize },
   computed: {
     FunzioneModel: () => FunzioneModel(),
     sonoRevisore: function () {
