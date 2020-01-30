@@ -18,7 +18,8 @@
               @loadingFailed="loading=false"/>
           </b-tab>
           <b-tab title="Altri Beni utente" active>
-            <p>Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
+            <p v-if="role==='schedatore'">Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
+            <p v-if="role==='revisore'">Qua ci sono i beni da revisionare</p>
             <BeniUtente v-if="role==='schedatore'"
               cercaInArchivioTemp :update.sync="triggerUpdate"
               @loading="loading=true" @loaded="loading=false"

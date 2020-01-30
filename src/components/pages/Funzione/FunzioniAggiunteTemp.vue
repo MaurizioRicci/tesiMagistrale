@@ -18,7 +18,8 @@
               @loadingFailed="loading=false"/>
           </b-tab>
           <b-tab title="Altre funzioni utente" active>
-            <p>Qua ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
+            <p v-if="role==='schedatore'">Qua ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
+            <p v-if="role==='revisore'">Qua ci sono le funzioni da revisionare</p>
             <FunzioniUtente cercaInArchivioTemp :update.sync="triggerUpdate"
               @loading="loading=true" @loaded="loading=false"
               @loadingFailed="loading=false"/>
