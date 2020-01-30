@@ -1,7 +1,5 @@
 import getModelloFunzione from '@/assets/js/Models/funzioneModel'
-import lodashclonedeep from 'lodash.clonedeep'
-const axios = require('axios')
-const qs = require('qs')
+import fetchFunzione from '@/assets/js/fetchFunzione'
 
 // define a mixin object
 export default {
@@ -56,35 +54,14 @@ export default {
         'tmp_db': cercaInArchivioTemp
       }
       postData = Object.assign(postData, this.$store.getters.getUserData)
-      return axios.post(this.$store.getters.dettagliFunzioneURL, qs.stringify(postData))
-        .then(ok => {
-          this.form = this.getModel()
-          if (ok.data.length <= 0) {
+      return fetchFunzione(this, postData)
+        .then(data => {
+          if (!data) {
             this.$vueEventBus.$emit('master-page-show-msg', ['Info', 'No result found'])
           } else {
-            let centroid = ok.data.centroid
-            if (centroid) {
-              T.mapCenter = centroid.coordinates
-              // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
-              // occorre fare lo scambio
-              T.mapCenter = [T.mapCenter[1], T.mapCenter[0]]
-            }
-            for (let k in T.form) {
-              if (typeof ok.data[k] !== 'undefined' &&
-                ok.data[k] !== '') {
-                T.form[k] = ok.data[k]
-              }
-            }
-            // i due ruoli sono in JSON devo parsarli
-            T.form.ruolo = ok.data.ruolo ? JSON.parse(ok.data.ruolo) : T.form.ruolo
-            // se non ci sono ruoli il primo vale stringa vuota
-            // serve per Vue per mostrare il campo dove scrivere
-            T.form.ruolo = T.form.ruolo.length === 0 ? [''] : T.form.ruolo
-            T.form.ruolor = ok.data.ruolor ? JSON.parse(ok.data.ruolor) : T.form.ruolor
-            T.form.ruolor = T.form.ruolor.length === 0 ? [''] : T.form.ruolor
-            // faccio una deep copy dei valori resi dal server
-            // salvo cosi due copie: originale e versione modificabile da utente
-            T.formRetrived = lodashclonedeep(T.form)
+            T.mapCenter = data.mapCenter
+            T.form = data.form
+            T.formRetrived = data.formRetrived
             return T.form
           }
         }).catch(error => {

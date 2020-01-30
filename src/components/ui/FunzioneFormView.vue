@@ -4,14 +4,16 @@
     <b-form :novalidate="true">
       <b-form-group id="input-group-1" label="ID bene:"
         label-for="funzione_form_view_input-id_bene" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-input
-          id="funzione_form_view_input-id_bene"
-          type="number"
-          v-model="form.id_bene"
-          disabled
-          placeholder=""
-          autocomplete="off"
-          ></b-form-input>
+        <div @click="showBeneDetails(form.id_bene, form.id_utente_bene)">
+          <b-form-input
+            id="funzione_form_view_input-id_bene"
+            type="number"
+            v-model="form.id_bene"
+            disabled
+            placeholder=""
+            autocomplete="off"
+            ></b-form-input>
+        </div>
       </b-form-group>
       <b-form-group id="input-group-1" label="Denominazione:"
         label-for="funzione_form_view_input-denominazione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
@@ -78,7 +80,9 @@
       </b-form-group>
       <b-form-group id="input-group-1" label="ID bene rif:" label-for="funzione_form_view_input-id_bener" label-cols-sm="6"
         label-cols-md="3" label-cols-xl="2">
-        <b-form-input id="funzione_form_view_input-id_bener" v-model="form.id_bener" type="number" disabled placeholder=""></b-form-input>
+        <div @click="showBeneDetails(form.id_bener, form.id_utente_bener)">
+          <b-form-input id="funzione_form_view_input-id_bener" v-model="form.id_bener" type="number" disabled placeholder=""></b-form-input>
+        </div>
       </b-form-group>
       <b-form-group id="input-group-1" label="Denominazione rif:" label-for="funzione_form_view_input-denominazioner" label-cols-sm="6"
         label-cols-md="3" label-cols-xl="2">
@@ -107,22 +111,49 @@
         <b-form-textarea disabled id="funzione_form_view_input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
       </b-form-group>
     </b-form>
+
+    <b-modal id="modal-dettagli-bene" title="Dettagli Bene"
+      size="huge" hide-footer>
+      <BeneFormView v-if="beneForm" :form="beneForm"
+        disallowIDChange/>
+    </b-modal>
+
   </div>
 </template>
 
 <script>
 import FunzioneFormToolTip from '@/components/ui/FunzioneFormToolTip'
 import RuoliFormTag from '@/components/ui/RuoliFormTag'
+import BeneFormView from '@/components/ui/BeneFormView'
+import fetchBene from '@/assets/js/fetchBene'
+import '@/assets/styles/hugeModal.css'
 
 // Renderizza il form per la visualizzazione di una funzione
 export default {
   name: 'FormFunzioneLettura',
-  components: { FunzioneFormToolTip, RuoliFormTag },
+  components: { FunzioneFormToolTip, RuoliFormTag, BeneFormView },
   data () {
-    return {}
+    return {
+      beneForm: null
+    }
   },
   props: {
     form: { type: Object, required: true }
+  },
+  methods: {
+    showBeneDetails (idBene, idUtenteBene) {
+      let postData = {
+        'id': idBene,
+        'id_utente': idUtenteBene,
+        'tmp_db': idUtenteBene !== ''
+      }
+      console.log('fetchBene')
+      fetchBene(this, postData)
+        .then(data => {
+          this.beneForm = data.form
+          this.$bvModal.show('modal-dettagli-bene')
+        })
+    }
   }
 }
 </script>

@@ -1,9 +1,5 @@
-import { MultiPolygon } from '@/assets/js/Models/multiPolygonModel'
 import getModelloBene from '@/assets/js/Models/beneModel'
-import lodashclonedeep from 'lodash.clonedeep'
-import { Polygon } from '../../assets/js/Models/multiPolygonModel'
-const axios = require('axios')
-const qs = require('qs')
+import fetchBene from '@/assets/js/fetchBene'
 
 // define a mixin object
 export default {
@@ -58,33 +54,16 @@ export default {
         'tmp_db': cercaInArchivioTemp
       }
       postData = Object.assign(postData, this.$store.getters.getUserData)
-      return axios.post(this.$store.getters.dettagliBeneURL, qs.stringify(postData))
-        .then(ok => {
-          this.form = this.getModel()
-          if (ok.data.length <= 0) {
+      return fetchBene(this, postData)
+        .then(data => {
+          if (!data) {
             this.$vueEventBus.$emit('master-page-show-msg', ['Info', 'No result found'])
           } else {
-            let geojson = ok.data.geojson
-            let newPolygon = new MultiPolygon()
-              .buildFromGeoJSON(geojson).findPolygonByIndex(0)
-            newPolygon = newPolygon || new Polygon()
-            let centroid = ok.data.centroid
-            if (centroid) {
-              T.mapCenter = centroid.coordinates
-              // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
-              // occorre fare lo scambio
-              T.mapCenter = [T.mapCenter[1], T.mapCenter[0]]
-            }
-            for (let k in T.form) {
-              if (typeof ok.data[k] !== 'undefined' &&
-                ok.data[k] !== '') {
-                T.form[k] = ok.data[k]
-              }
-            }
-            T.form.polygon = newPolygon
+            T.mapCenter = data.mapCenter
+            T.form = data.form
             // faccio una deep copy dei valori resi dal server
             // salvo cosi due copie: originale e versione modificabile da utente
-            T.formRetrived = lodashclonedeep(T.form)
+            T.formRetrived = data.formRetrived
             return T.form
           }
         }).catch(error => {
