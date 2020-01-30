@@ -68,35 +68,16 @@
       <!-- tipo data -->
       <b-form-group id="input-group-1" label="Tipo data:"
         label-for="input-tipodata" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-      <my-autocomplete-input v-model="form.tipodata" closedDictionary
-        icon_name="lock" icon_msg="Campo vincolato a un dizionario"
-        :suggestionsPromise="getDictFuncs().loadTipoData"
-        invalid-feedback="Tipo data non corretto">
-          <b-form-input
-            id="input-tipodata"
-            type="text"
-            v-model="form.tipodata"
-            placeholder=""
-            autocomplete="off"
-            ></b-form-input>
-          </my-autocomplete-input>
+        <b-form-select id="input-tipodata" v-model="form.tipodata"
+         :options="tipoDataOptions" required></b-form-select>
       </b-form-group>
       <!-- ruolo -->
       <ruoli-form-tag v-model="form.ruolo" label="Ruoli" inputID="input-ruolo"/>
       <!-- funzione -->
       <b-form-group id="input-group-1" label="Funzione:"
         label-for="input-funzione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <my-autocomplete-input v-model="form.funzione" closedDictionary
-          icon_name="lock" icon_msg="Campo vincolato a un dizionario"
-          :suggestionsPromise="getDictFuncs().loadFunc">
-          <b-form-input
-            v-model="form.funzione"
-            id="input-funzione"
-            type="text"
-            placeholder=""
-            autocomplete="off"
-            ></b-form-input>
-        </my-autocomplete-input>
+        <b-form-select id="input-funzione" v-model="form.funzione"
+         :options="funzioneOptions" required></b-form-select>
       </b-form-group>
       <!-- id bene 2 -->
       <b-form-group id="input-group-id_bener" label="ID rif:" label-for="input-id_bener"
@@ -169,21 +150,37 @@ export default {
     prop: 'form',
     event: 'change'
   },
+  data () {
+    return {
+      tipoDataOptions: [],
+      funzioneOptions: [],
+      esistenzaOptions: []
+    }
+  },
   methods: {
     getDictFuncs () { return dict },
     checkValidity () { return this.$refs.form_bene.checkValidity() },
-    removeRole (key, index) {
-      if (index > 0) {
-        this.form[key] = this.form[key].filter((val, idx) => idx !== index)
-      }
+    dict2BsSelect (dict) {
+      return dict.map(el => {
+        return { value: el.id, text: el.value }
+      })
     },
-    addRole (key) {
-      this.form[key].push('')
+    getTipoDataOptions () {
+      return dict.loadTipoData(this)
+        .then(res => this.dict2BsSelect(res.data))
+    },
+    getFunzioneOptions () {
+      return dict.loadFunc(this)
+        .then(res => this.dict2BsSelect(res.data))
     }
   },
   computed: {
     dataAnteValida () { return dataVera(this.form.data_ante) },
     dataPosteValida () { return dataVera(this.form.data_poste) }
+  },
+  mounted () {
+    this.getTipoDataOptions().then(options => { this.tipoDataOptions = options })
+    this.getFunzioneOptions().then(options => { this.funzioneOptions = options })
   }
 }
 </script>

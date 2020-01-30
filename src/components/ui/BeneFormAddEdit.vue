@@ -46,35 +46,13 @@
       </b-form-group>
       <b-form-group id="input-group-1" label="MacroEpocaOrig:"
         label-for="input-macro-epoca-orig" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <my-autocomplete-input v-model="form.macroEpocaOrig"
-          :suggestionsPromise="getDictFuncs().loadMacroEpocaOrig"
-          closedDictionary
-          icon_name="lock"
-          icon_msg="Campo vincolato a un dizionario">
-          <b-form-input
-            id="input-macro-epoca-orig"
-            type="text"
-            v-model="form.macroEpocaOrig"
-            placeholder=""
-            autocomplete="off"
-            ></b-form-input>
-        </my-autocomplete-input>
+        <b-form-select id="input-macro-epoca-orig" v-model="form.macroEpocaOrig"
+         :options="meoOptions" required></b-form-select>
       </b-form-group>
       <b-form-group id="input-group-1" label="MacroEpocaCar:"
         label-for="input-macro-epoca-car" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <my-autocomplete-input v-model="form.macroEpocaCar"
-          :suggestionsPromise="getDictFuncs().loadMacroEpocaCar"
-          closedDictionary
-          icon_name="lock"
-          icon_msg="Campo vincolato a un dizionario">
-          <b-form-input
-            id="input-macro-epoca-car"
-            type="text"
-            v-model="form.macroEpocaCar"
-            placeholder=""
-            autocomplete="off"
-            ></b-form-input>
-        </my-autocomplete-input>
+        <b-form-select id="input-macro-epoca-car" v-model="form.macroEpocaCar"
+         :options="mecOptions" required></b-form-select>
       </b-form-group>
       <b-form-group id="input-group-1" label="Toponimo:" label-for="input-toponimo" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <remote-contextual-suggestions :waitTime="1000"
@@ -91,16 +69,8 @@
         </remote-contextual-suggestions>
       </b-form-group>
       <b-form-group id="input-group-1" label="Esistenza:" label-for="input-esistenza" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <my-autocomplete-input v-model="form.esistenza" closedDictionary
-          :suggestionsPromise="getDictFuncs().loadEsistenza">
-          <b-form-input
-            id="input-esistenza"
-            type="text"
-            v-model="form.esistenza"
-            placeholder=""
-            autocomplete="off"
-            ></b-form-input>
-        </my-autocomplete-input>
+        <b-form-select id="input-esistenza" v-model="form.esistenza"
+         :options="esistenzaOptions" required></b-form-select>
       </b-form-group>
       <b-form-group id="input-group-1" label="Comune:" label-for="input-comune" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <remote-contextual-suggestions :waitTime="1000"
@@ -160,9 +130,33 @@ export default {
     prop: 'form',
     event: 'change'
   },
+  data () {
+    return {
+      mecOptions: [],
+      meoOptions: [],
+      esistenzaOptions: []
+    }
+  },
   methods: {
     getDictFuncs () { return dict },
-    checkValidity () { return this.$refs.form_bene.checkValidity() }
+    checkValidity () { return this.$refs.form_bene.checkValidity() },
+    dict2BsSelect (dict) {
+      return dict.map(el => {
+        return { value: el.id, text: el.value }
+      })
+    },
+    getMECOptions () {
+      return dict.loadMacroEpocaCar(this)
+        .then(res => this.dict2BsSelect(res.data))
+    },
+    getMEOOptions () {
+      return dict.loadMacroEpocaOrig(this)
+        .then(res => this.dict2BsSelect(res.data))
+    },
+    getEsistenzaOptions () {
+      return dict.loadEsistenza(this)
+        .then(res => this.dict2BsSelect(res.data))
+    }
   },
   computed: {
     schedatore () { return this.$store.getters.getUserData.role === 'schedatore' },
@@ -182,6 +176,11 @@ export default {
         params: this.form
       })
     }
+  },
+  mounted () {
+    this.getMECOptions().then(options => { this.mecOptions = options })
+    this.getMEOOptions().then(options => { this.meoOptions = options })
+    this.getEsistenzaOptions().then(options => { this.esistenzaOptions = options })
   }
 }
 </script>
