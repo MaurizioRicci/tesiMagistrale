@@ -12,14 +12,6 @@ la proprietà locked; se presente disabilita la modifica -->
 
       <l-control position="bottomleft">
         <b-button-group>
-          <span v-if="controls.zoom">
-            <b-button @click="ingrandisci" v-show="!state.mappaIngrandita">
-              Ingrandisci
-            </b-button>
-            <b-button @click="rimpicciolisci" v-show="state.mappaIngrandita">
-              Rimpicciolisci
-            </b-button>
-          </span>
           <b-button v-if="controls.watch" :pressed.sync="watch" key="watch">
             <IconMsg icon_name="info-circle" icon_color="white"
               icon_msg="Mostra dettagli dei beni"/>
@@ -45,6 +37,8 @@ import { Polygon } from '@/assets/js/Models/multiPolygonModel'
 import BetterWMS from '@/components/ui/BetterWMS'
 import IconMsg from '@/components/ui/IconMsg'
 import LeafletToolbar from '@/assets/js/AddLeafletToolbar'
+import 'leaflet-fullscreen'
+import 'leaflet-fullscreen/dist/leaflet.fullscreen.css'
 
 export default {
   name: 'Map',
@@ -126,6 +120,12 @@ export default {
         imperial: false,
         position: 'bottomright'
       }).addTo(map)
+    },
+    addFullScreen (map) {
+      if (this.controls.zoom) {
+        const L = window.L
+        map.addControl(new L.Control.Fullscreen())
+      }
     }
   },
   data () {
@@ -164,6 +164,7 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.leafletMapObject = this.$refs.myMap.mapObject
+      this.addFullScreen(this.leafletMapObject)
       this.addScale(this.leafletMapObject)
       // creo le callback per la toolbar di leaflet
       let callbacks = {
