@@ -55,7 +55,10 @@ export default {
   },
   methods: {
     // se non c'è nessun ruolo aggiunge lui il ruolo 'none'
-    noneIfEmpty: arr => arr.length === 0 ? ['none'] : arr,
+    noneIfEmpty (arr) {
+      arr = arr.filter(el => el !== 'none')
+      return arr.length === 0 ? ['none'] : arr
+    },
     // il tag con none se è l'unico tag deve essere disabilitato per non cancellare
     // se ci sono altri tag, allora il tag 'none' si può cancellare
     disableNoneTag: tags => tags.length === 1 && tags[0] === 'none'

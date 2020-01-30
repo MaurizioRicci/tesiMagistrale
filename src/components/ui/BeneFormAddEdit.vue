@@ -141,9 +141,10 @@ export default {
     getDictFuncs () { return dict },
     checkValidity () { return this.$refs.form_bene.checkValidity() },
     dict2BsSelect (dict) {
-      return dict.map(el => {
+      let options = [{ value: '', text: 'Seleziona un\'opzione', disabled: true }]
+      return options.concat(dict.map(el => {
         return { value: el.id, text: el.value }
-      })
+      }))
     },
     getMECOptions () {
       return dict.loadMacroEpocaCar(this)

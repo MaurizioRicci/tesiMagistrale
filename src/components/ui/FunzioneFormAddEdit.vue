@@ -122,7 +122,6 @@
 <script>
 import setCustomValidity from '@/components/directives/setCustomValidity'
 import FunzioneFormToolTip from '@/components/ui/FunzioneFormToolTip'
-import MyAutocompleteInput from '@/components/ui/MyAutocompleteInput'
 import RuoliFormTag from '@/components/ui/RuoliFormTag'
 import * as dict from '@/assets/js/loadDict'
 import { dataVera } from '@/assets/js/date/dateF'
@@ -132,7 +131,6 @@ export default {
   name: 'FormBeneLeggiScrivi',
   components: {
     FunzioneFormToolTip,
-    MyAutocompleteInput,
     RuoliFormTag
   },
   mixins: [],
@@ -161,9 +159,10 @@ export default {
     getDictFuncs () { return dict },
     checkValidity () { return this.$refs.form_bene.checkValidity() },
     dict2BsSelect (dict) {
-      return dict.map(el => {
+      let options = [{ value: '', text: 'Seleziona un\'opzione', disabled: true }]
+      return options.concat(dict.map(el => {
         return { value: el.id, text: el.value }
-      })
+      }))
     },
     getTipoDataOptions () {
       return dict.loadTipoData(this)
