@@ -126,6 +126,10 @@ export default {
         const L = window.L
         map.addControl(new L.Control.Fullscreen())
       }
+    },
+    addPolygonToToolbar () {
+      this.invalidateSize()
+      LeafletToolbar.addPoly(this.currPolygon)
     }
   },
   data () {
@@ -156,8 +160,7 @@ export default {
       deep: true,
       handler (polygon) {
         this.currPolygon = polygon.clone()
-        this.invalidateSize()
-        LeafletToolbar.addPoly(this.currPolygon)
+        this.addPolygonToToolbar()
       }
     }
   },
@@ -185,6 +188,9 @@ export default {
       }
       // instanzio la toolbar di leaflet
       LeafletToolbar.initToolbar(this.leafletMapObject, callbacks, this.locked)
+      this.invalidateSize()
+      LeafletToolbar.addPoly(this.currPolygon)
+      this.addPolygonToToolbar()
     })
   }
 }

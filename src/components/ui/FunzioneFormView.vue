@@ -4,7 +4,8 @@
     <b-form :novalidate="true">
       <b-form-group id="input-group-1" label="ID bene:"
         label-for="funzione_form_view_input-id_bene" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <div @click="showBeneDetails(form.id_bene, form.id_utente_bene)">
+        <div @click="showBeneDetails(form.id_bene, form.id_utente_bene)"
+          style="cursor:'pointer'">
           <b-form-input
             id="funzione_form_view_input-id_bene"
             type="number"
@@ -113,9 +114,30 @@
     </b-form>
 
     <b-modal id="modal-dettagli-bene" title="Dettagli Bene"
-      size="huge" hide-footer>
-      <BeneFormView v-if="beneForm" :form="beneForm"
-        disallowIDChange/>
+      size="huge" hide-footer @shown="$refs.myMap.invalidateSize()">
+    <div role="tablist">
+      <b-card no-body class="mb-1">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-button block href="#" v-b-toggle.accordion-1 variant="info">Mappa</b-button>
+        </b-card-header>
+        <b-collapse id="accordion-1" visible accordion="accordion-bene-details" role="tabpanel">
+          <b-card-body>
+            <MyMap ref="myMap" :polygon="beneData.form.polygon"
+             :center="beneData.mapCenter" locked :zoom="17"/>
+          </b-card-body>
+        </b-collapse>
+      </b-card>
+      <b-card no-body class="mb-1">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-button block href="#" v-b-toggle.accordion-2 variant="info">Attributi</b-button>
+        </b-card-header>
+        <b-collapse id="accordion-2" accordion="accordion-bene-details" role="tabpanel">
+          <b-card-body>
+            <BeneFormView v-if="beneData" :form="beneData.form" disallowIDChange/>
+          </b-card-body>
+        </b-collapse>
+      </b-card>
+    </div>
     </b-modal>
 
   </div>
@@ -126,15 +148,17 @@ import FunzioneFormToolTip from '@/components/ui/FunzioneFormToolTip'
 import RuoliFormTag from '@/components/ui/RuoliFormTag'
 import BeneFormView from '@/components/ui/BeneFormView'
 import fetchBene from '@/assets/js/fetchBene'
+import MyMap from '@/components/ui/Map'
+import getBeneModel from '@/assets/js/Models/beneModel'
 import '@/assets/styles/hugeModal.css'
 
 // Renderizza il form per la visualizzazione di una funzione
 export default {
   name: 'FormFunzioneLettura',
-  components: { FunzioneFormToolTip, RuoliFormTag, BeneFormView },
+  components: { FunzioneFormToolTip, RuoliFormTag, BeneFormView, MyMap },
   data () {
     return {
-      beneForm: null
+      beneData: { form: getBeneModel(), mapCenter: [0, 0] }
     }
   },
   props: {
@@ -150,8 +174,11 @@ export default {
       console.log('fetchBene')
       fetchBene(this, postData)
         .then(data => {
-          this.beneForm = data.form
+          this.beneData = data
           this.$bvModal.show('modal-dettagli-bene')
+          this.$nextTick(() => {
+            this.$refs.myMap.invalidateSize()
+          })
         })
     }
   }
@@ -160,4 +187,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#funzione_form_view_input-id_bene:hover, #funzione_form_view_input-id_bener:hover {
+  border: solid 2px steelblue;
+  cursor: pointer;
+}
 </style>
