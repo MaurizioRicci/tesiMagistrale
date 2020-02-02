@@ -137,15 +137,14 @@ export default {
       leafletMapObject: null,
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      state: { mappaIngrandita: false },
+      state: { mappaIngrandita: false, watch: false },
       // serve poi se l'utente vuole modificarlo
-      currPolygon: this.polygon ? this.polygon.clone() : new Polygon(),
-      watch: false
+      currPolygon: this.polygon ? this.polygon.clone() : new Polygon()
     }
   },
   computed: {
     cursor () {
-      return this.watch ? 'help' : 'crosshair'
+      return this.state.watch ? 'help' : 'crosshair'
     }
   },
   watch: {

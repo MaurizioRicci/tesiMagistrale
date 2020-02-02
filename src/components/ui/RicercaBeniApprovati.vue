@@ -1,7 +1,8 @@
 <template>
 <div>
   <v-server-table :columns="columns" :options="options" class="myTable table-sm"
-    :url="$store.getters.beniAggiuntiApprovatiURL">
+    :url="$store.getters.beniAggiuntiApprovatiURL"
+    @click="e => openChildRow(e)">
 
         <template v-slot:azioni="{row}">
           <b-button-group horizontal>
@@ -25,6 +26,14 @@
         <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
         {{row.note | ellipsizeLongText()}}
       </template>
+
+      <template slot="child_row" slot-scope="props">
+       <b-button @click="() => openChildRow(props)" class="m-1">Mostra sulla mappa</b-button>
+        <Map height="300px" v-if="currBeni[props.row.id]"
+          :center="currBeni[props.row.id].mapCenter"
+          :polygon="currBeni[props.row.id].form.polygon" locked :zoom="17"/>
+      </template>
+
     </v-server-table>
 
   <b-modal title="Dettagli" size="huge"
@@ -42,14 +51,16 @@
 import IconMsg from '@/components/ui/IconMsg'
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 import '@/assets/styles/hugeModal.css'
-import BeneTableMixin from '@/components/mixins/BeneTable'
-window.axios = require('axios') // serve per vue-tables 2 non cancellare
+import BeneTableMixin from '@/components/mixins/BeneTable' // serve per vue-tables 2 non cancellare
+import Map from '@/components/ui/Map'
+import fetchBene from '@/assets/js/fetchBene'
+window.axios = require('axios')
 
 // Mostra una tabella con tutti i beni approvati di tutti gli utenti
 export default {
   name: 'BeniUtente',
   mixins: [BeneTableMixin],
-  components: { IconMsg },
+  components: { IconMsg, Map },
   filters: { ellipsizeLongText: ellipsize },
   props: {},
   methods: {
@@ -62,10 +73,21 @@ export default {
       this.idBene = idBene
       this.idUtente = idUtente
       this.modalShowView = true
+    },
+    openChildRow (data) {
+      const row = data.row
+      fetchBene(this, {
+        'id': row.id,
+        'tmp_db': false
+      }).then(resp => {
+        this.$set(this.currBeni, row.id, resp)
+      })
     }
   },
   data: function () {
     return {
+      // dettagli aggiuntivi del bene scelto (vedi Vue tables 2 Child Row)
+      currBeni: { },
       idBene: '',
       idUtente: '',
       modalShowView: false,
@@ -107,4 +129,27 @@ export default {
 
 <style scoped>
     .myTable >>> caption { caption-side: top; }
+</style>
+
+<style>
+.VueTables__child-row-toggler {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+.VueTables__child-row-toggler--closed::before {
+    content: "+";
+    color: blue;
+    font-size: 1.1em;
+}
+
+.VueTables__child-row-toggler--open::before {
+    content: "-";
+    color: blue;
+    font-size: 1.1em;
+}
 </style>
