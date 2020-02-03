@@ -12,7 +12,7 @@ la proprietà locked; se presente disabilita la modifica -->
 
       <l-control position="bottomleft">
         <b-button-group>
-          <b-button v-if="controls.watch" :pressed.sync="watch" key="watch">
+          <b-button v-if="controls.watch" :pressed.sync="state.watch" key="watch">
             <IconMsg icon_name="info-circle" icon_color="white"
               icon_msg="Mostra dettagli dei beni"/>
           </b-button>
