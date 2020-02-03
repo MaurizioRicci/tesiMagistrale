@@ -138,10 +138,7 @@ export default {
     },
     getHiddenColums () {
       // nasconde la colonna msg_validatore se si chiedono i beni approvati dell'utente
-      let res = []
-      if (this.cercaInArchivioTemp) res = []
-      else res = ['msg_validatore']
-      return res
+      return this.cercaInArchivioTemp ? [] : ['msg_validatore']
     },
     inviaSegnalazione (row) {
       if (!this.BeneModel.isRev.call(row)) {
@@ -185,11 +182,11 @@ export default {
       columns: [
         'id',
         'status',
-        // visible: this.cercaInArchivioTemp
         'azioni',
         'identificazione',
         'descrizione',
         'comune',
+        'esistenza',
         'macroEpocaCar',
         'macroEpocaOrig',
         'bibliografia',

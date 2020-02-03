@@ -98,6 +98,7 @@ export default {
         'identificazione',
         'descrizione',
         'comune',
+        'esistenza',
         'macroEpocaCar',
         'macroEpocaOrig',
         'bibliografia',

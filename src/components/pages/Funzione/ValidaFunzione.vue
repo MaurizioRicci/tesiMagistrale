@@ -5,7 +5,7 @@
         <Menu/>
       </b-col>
       <b-col>
-        <h2 v-if="!noTitle">{{title || 'Valida un bene'}}</h2>
+        <h2 v-if="!noTitle">{{title || 'Valida una funzione'}}</h2>
       </b-col>
     </b-row>
     <b-row>

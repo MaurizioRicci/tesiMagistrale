@@ -1,4 +1,4 @@
-import { loadMacroEpocaCar, loadMacroEpocaOrig } from '@/assets/js/loadDict'
+import { loadMacroEpocaCar, loadMacroEpocaOrig, loadEsistenza } from '@/assets/js/loadDict'
 
 export default {
   data () {
@@ -9,6 +9,7 @@ export default {
           'identificazione',
           'descrizione',
           'comune',
+          'esistenza',
           'macroEpocaCar',
           'macroEpocaOrig',
           'bibliografia',
@@ -23,7 +24,8 @@ export default {
             { id: 3, text: 'Bozza' }
           ],
           macroEpocaCar: [],
-          macroEpocaOrig: []
+          macroEpocaOrig: [],
+          esistenza: []
         },
         texts: { limit: 'Risultati per pagina', noResults: 'Nessun risultato' }
       }
@@ -37,10 +39,16 @@ export default {
     getMeo: function () {
       return loadMacroEpocaOrig(this)
         .then(resp => resp.data.map(el => { return { id: el.id, text: el.value } }))
+    },
+    getEsistenza: function () {
+      return loadEsistenza(this)
+        .then(resp => resp.data.map(el => { return { id: el.id, text: el.value } }))
     }
   },
   mounted () {
+    // inizializzo le select
     this.getMac().then(arr => { this.options.listColumns.macroEpocaCar = arr })
     this.getMeo().then(arr => { this.options.listColumns.macroEpocaOrig = arr })
+    this.getEsistenza().then(arr => { this.options.listColumns.esistenza = arr })
   }
 }
