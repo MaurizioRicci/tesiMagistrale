@@ -3,6 +3,10 @@
   <v-client-table ref="myTable" :columns="columns" v-model="tableData" :options="options"
   class="myTable table-sm">
 
+        <template v-slot:filter__id>
+          <b-form-input @input="e => applyFilterID(e)"/>
+        </template>
+
         <template v-slot:status="{row}">
           <div :class="{
             'bg-warning': BeneModel.isIncomplete.call(row),
@@ -101,6 +105,8 @@ import BeneModel from '@/assets/js/Models/beneModel'
 import BeneTableMixin from '@/components/mixins/BeneTable'
 import IconMsg from '@/components/ui/IconMsg'
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
+// eslint-disable-next-line no-unused-vars
+import { Event } from 'vue-tables-2'
 const qs = require('qs')
 const axios = require('axios')
 
@@ -171,6 +177,9 @@ export default {
           this.$vueEventBus.$emit('master-page-show-msg',
             ['Errore', msg])
         })
+    },
+    applyFilterID (query) {
+      Event.$emit('vue-tables.filter::id', query)
     }
   },
   data: function () {
@@ -201,12 +210,36 @@ export default {
           macroEpocaOrig: 'Meo'
         },
         filterByColumn: true,
+        customFilters: [{
+          name: 'id',
+          callback: function (row, query) {
+            // se è solo un numero
+            query = query.replace(' ', '')
+            if (!isNaN(Number(query))) {
+              return row.id === query
+            } else {
+              // se è un intervallo X-Y
+              let lowerUpper = query.split('-')
+              let res = true
+              console.log(lowerUpper)
+              if (lowerUpper.length > 0 && lowerUpper[0] !== '') {
+                res &= Number(row.id) >= Number(lowerUpper[0])
+              }
+              if (lowerUpper.length > 1 && lowerUpper[1] !== '') {
+                res &= Number(row.id) <= Number(lowerUpper[1])
+              }
+              return res
+            }
+          }
+        }],
         editableColumns: ['msg_validatore'],
         hiddenColumns: this.getHiddenColums()
       }
     }
   },
   mounted () {
+    // rimuovo id filtrabile perchè uso la mia logica
+    this.options.filterable = this.options.filterable.filter(el => el !== 'id')
     this.getData()
   },
   watch: {

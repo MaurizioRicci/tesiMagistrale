@@ -192,4 +192,7 @@ export default {
   -moz-box-shadow: 3px 3px 5px 0px rgba(133,131,133,1);
   box-shadow: 3px 3px 5px 0px rgba(133,131,133,1);
 }
+.my-list >>> button {
+  padding: 7px;
+}
 </style>
