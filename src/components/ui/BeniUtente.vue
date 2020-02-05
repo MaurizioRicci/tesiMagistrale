@@ -3,10 +3,6 @@
   <v-client-table ref="myTable" :columns="columns" v-model="tableData" :options="options"
   class="myTable table-sm">
 
-        <template v-slot:filter__id>
-          <b-form-input @input="e => applyFilterID(e)"/>
-        </template>
-
         <template v-slot:status="{row}">
           <div :class="{
             'bg-warning': BeneModel.isIncomplete.call(row),
@@ -234,9 +230,8 @@ export default {
           macroEpocaOrig: 'Meo'
         },
         filterByColumn: true,
-        customFilters: [{
-          name: 'id',
-          callback: function (row, query) {
+        filterAlgorithm: {
+          id (row, query) {
             // se è solo un numero
             query = query.replace(' ', '')
             if (!isNaN(Number(query))) {
@@ -255,15 +250,13 @@ export default {
               return res
             }
           }
-        }],
+        },
         editableColumns: ['msg_validatore'],
         hiddenColumns: this.getHiddenColums()
       }
     }
   },
   mounted () {
-    // rimuovo id filtrabile perchè uso la mia logica
-    this.options.filterable = this.options.filterable.filter(el => el !== 'id')
     this.getData()
   },
   watch: {
