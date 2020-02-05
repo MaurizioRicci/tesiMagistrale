@@ -38,7 +38,11 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col>
+      <b-col cols="12" class="mt-2" v-if="!sonoRevisore">
+        <BeniUtente cercaInArchivioTemp
+        caption="Questa tabella contiene i tuoi beni da approvare."/>
+      </b-col>
+      <b-col cols="12">
         <RicercaBeniApprovati/>
       </b-col>
     </b-row>
@@ -54,6 +58,7 @@ import LoginWarning from '@/components/ui/LoginWarning'
 import MyMap from '@/components/ui/Map'
 import '@/assets/styles/slideFadeTransition.css'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
+import BeniUtente from '@/components/ui/BeniUtente'
 import FunzioneCopiaIncolla from '@/components/ui/FunzioneCopyPaste'
 import LoadingOverlay from '@/components/ui/LoadingOverlay'
 import lodashclonedeep from 'lodash.clonedeep'
@@ -70,6 +75,7 @@ export default {
     FunzioneFormAddEdit,
     MyMap,
     RicercaBeniApprovati,
+    BeniUtente,
     FunzioneCopiaIncolla,
     LoadingOverlay
   },
@@ -77,7 +83,8 @@ export default {
   computed: {
     ternaValida () {
       return ternaVera(this.form.data_ante, this.form.data_poste, this.form.tipodata)
-    }
+    },
+    sonoRevisore () { return this.$store.getters.getUserData.role === 'revisore' }
   },
   data () {
     return {

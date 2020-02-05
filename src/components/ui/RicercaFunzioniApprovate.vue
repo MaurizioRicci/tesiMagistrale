@@ -51,7 +51,9 @@ export default {
   components: { IconMsg },
   mixins: [FunzioneTableMixin],
   filters: { ellipsizeLongText: ellipsize },
-  props: {},
+  props: {
+    caption: { type: String, default: 'Questa tabella contiene tutte le funzioni approvate.' }
+  },
   methods: {},
   data: function () {
     return {
@@ -74,7 +76,7 @@ export default {
         'schedatori_iniziali'
       ],
       options: {
-        caption: 'Questa tabella contiene tutte le funzioni approvate.',
+        caption: this.caption,
         perPage: 25,
         filterByColumn: true,
         sendEmptyFilters: true,

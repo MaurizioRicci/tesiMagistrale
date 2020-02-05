@@ -130,7 +130,8 @@ export default {
   },
   props: {
     cercaInArchivioTemp: Boolean,
-    update: Boolean
+    update: Boolean,
+    caption: { type: String, default: '' }
   },
   methods: {
     getData: function () {
@@ -187,10 +188,6 @@ export default {
   },
   data: function () {
     return {
-      idBene: '',
-      idUtente: '',
-      modalShowView: false,
-      modalShowEdit: false,
       columns: [
         'id',
         'status',
@@ -213,6 +210,7 @@ export default {
       ],
       tableData: [],
       options: {
+        caption: this.caption,
         filterByColumn: true,
         editableColumns: ['msg_validatore'],
         hiddenColumns: this.getHiddenColums()

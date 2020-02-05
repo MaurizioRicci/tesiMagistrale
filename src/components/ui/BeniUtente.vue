@@ -95,6 +95,16 @@
           {{row.note | ellipsizeLongText()}}
         </template>
 
+        <template slot="child_row" slot-scope="props">
+        <b-button @click="() => openChildRow(props)" class="m-1">Mostra sulla mappa</b-button>
+        <div v-if="currBeni[props.row.id]">
+          <Map height="300px" v-if="!currBeni[props.row.id].form.polygon.isEmpty()"
+            key="beneConGeometria" :center="currBeni[props.row.id].mapCenter"
+            :polygon="currBeni[props.row.id].form.polygon" locked :zoom="17"/>
+          <p v-else key="beneSenzaGeometria">Nessuna geometria trovata per il bene.</p>
+        </div>
+      </template>
+
     </v-client-table>
 
 </div>
@@ -105,6 +115,8 @@ import BeneModel from '@/assets/js/Models/beneModel'
 import BeneTableMixin from '@/components/mixins/BeneTable'
 import IconMsg from '@/components/ui/IconMsg'
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
+import Map from '@/components/ui/Map'
+import fetchBene from '@/assets/js/fetchBene'
 // eslint-disable-next-line no-unused-vars
 import { Event } from 'vue-tables-2'
 const qs = require('qs')
@@ -117,7 +129,8 @@ export default {
   mixins: [BeneTableMixin],
   filters: { ellipsizeLongText: ellipsize },
   components: {
-    IconMsg
+    IconMsg,
+    Map
   },
   computed: {
     BeneModel: () => BeneModel(),
@@ -127,7 +140,8 @@ export default {
   },
   props: {
     cercaInArchivioTemp: Boolean,
-    update: Boolean
+    update: Boolean,
+    caption: { type: String, default: '' }
   },
   methods: {
     getData: function () {
@@ -180,14 +194,23 @@ export default {
     },
     applyFilterID (query) {
       Event.$emit('vue-tables.filter::id', query)
+    },
+    openChildRow (data) {
+      const row = data.row
+      fetchBene(this, {
+        'id': row.id,
+        'tmp_db': true,
+        'id_utente': row.id_utente
+      }).then(resp => {
+        console.log(resp)
+        this.$set(this.currBeni, row.id, resp)
+      })
     }
   },
   data: function () {
     return {
-      idBene: '',
-      idUtente: '',
-      modalShowView: false,
-      modalShowEdit: false,
+      // dettagli aggiuntivi dei beni scelti (vedi Vue tables 2 Child Row)
+      currBeni: { },
       columns: [
         'id',
         'status',
@@ -205,6 +228,7 @@ export default {
       ],
       tableData: [],
       options: {
+        caption: this.caption,
         headings: {
           macroEpocaCar: 'Mec',
           macroEpocaOrig: 'Meo'

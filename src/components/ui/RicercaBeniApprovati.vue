@@ -62,7 +62,9 @@ export default {
   mixins: [BeneTableMixin],
   components: { IconMsg, Map },
   filters: { ellipsizeLongText: ellipsize },
-  props: {},
+  props: {
+    caption: { type: String, default: 'Questa tabella contiene tutti i beni approvati.' }
+  },
   methods: {
     openModalEdit (idBene, idUtente) {
       this.idBene = idBene
@@ -86,7 +88,7 @@ export default {
   },
   data: function () {
     return {
-      // dettagli aggiuntivi del bene scelto (vedi Vue tables 2 Child Row)
+      // dettagli aggiuntivi dei beni scelti (vedi Vue tables 2 Child Row)
       currBeni: { },
       idBene: '',
       idUtente: '',
@@ -107,7 +109,7 @@ export default {
         'schedatori_iniziali'
       ],
       options: {
-        caption: 'Questa tabella contiene tutti i beni approvati.',
+        caption: this.caption,
         perPage: 25,
         filterByColumn: true,
         sendEmptyFilters: true,

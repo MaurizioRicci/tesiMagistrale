@@ -34,6 +34,8 @@ Polygon.prototype.toString = function () { return JSON.stringify(this.latlngArr)
 
 Polygon.prototype.reset = function () { this.latlngArr = [] }
 
+Polygon.prototype.isEmpty = function () { return this.latlngArr.length <= 0 }
+
 export const MultiPolygon = function (PolygonArr = []) {
   this.polygonArr = PolygonArr
 }
