@@ -12,20 +12,21 @@ const userDataStore = {
     currUserData: userData || {
       username: '',
       password: '',
+      id_utente: '',
       role: ''
     }
   },
   getters: {
     getUserData: state => state.currUserData,
-    loggedIn: state => state.currUserData.username !== '' &&
-        state.currUserData.password !== ''
+    loggedIn: state => state.currUserData.id !== ''
   },
   mutations: {
     registerUser (state, userData) {
-      let { username, password, role } = userData
+      let { username, password, role, id } = userData
       state.currUserData.username = username || ''
       state.currUserData.password = password || ''
       state.currUserData.role = role || ''
+      state.currUserData.id_utente = id || ''
     }
   }
 }

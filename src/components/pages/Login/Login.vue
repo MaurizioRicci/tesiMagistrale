@@ -99,6 +99,7 @@ export default {
           // in ogni caso elimino il vecchio cookie (se presente)
           deleteCookie('userData')
           this.formData.role = resp.data.role
+          this.formData.id = resp.data.id
           // se c'è il flag salviamo un cookie con username e password
           if (this.rememberMe === 'si') {
             // imposto un cookie di 6 mesi circa
