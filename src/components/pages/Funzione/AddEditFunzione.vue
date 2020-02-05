@@ -39,10 +39,12 @@
     </b-row>
     <b-row>
       <b-col cols="12" class="mt-2" v-if="!sonoRevisore">
+        <hr>
         <BeniUtente cercaInArchivioTemp
         caption="Questa tabella contiene i tuoi beni da approvare."/>
       </b-col>
       <b-col cols="12">
+        <hr>
         <RicercaBeniApprovati/>
       </b-col>
     </b-row>
@@ -202,4 +204,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+hr { margin: 5px; }
 </style>

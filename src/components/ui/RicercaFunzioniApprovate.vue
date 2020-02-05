@@ -77,7 +77,6 @@ export default {
       ],
       options: {
         caption: this.caption,
-        perPage: 25,
         filterByColumn: true,
         sendEmptyFilters: true,
         sortIcon: {

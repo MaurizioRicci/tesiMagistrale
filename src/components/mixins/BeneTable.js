@@ -27,7 +27,9 @@ export default {
           macroEpocaOrig: [],
           esistenza: []
         },
-        texts: { limit: 'Risultati per pagina', noResults: 'Nessun risultato' }
+        texts: { limit: 'Risultati per pagina', noResults: 'Nessun risultato' },
+        perPage: 30,
+        perPageValues: []
       }
     }
   },
