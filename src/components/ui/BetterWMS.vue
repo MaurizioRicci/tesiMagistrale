@@ -5,7 +5,7 @@
 
 <script>
 import { LWMSTileLayer } from 'vue2-leaflet'
-const axios = require('axios')
+import axios from 'axios'
 
 // codice riadattato da https://gist.github.com/rclark/6908938
 // Crea un later WMS basato su leaflet con il supporto a richieste di tipo

@@ -51,8 +51,8 @@ import Menu from '@/components/ui/Menu'
 import commonPageMixin from '@/components/mixins/CommonPage'
 import BeniUtente from '@/components/ui/BeniUtente'
 import LoadingOverlay from '@/components/ui/LoadingOverlay'
-const axios = require('axios')
-const qs = require('qs')
+import axios from 'axios'
+import qs from 'qs'
 
 export default {
   name: 'BeniAggiuntiTemp',

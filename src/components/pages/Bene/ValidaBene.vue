@@ -44,8 +44,8 @@ import BeneFormAddEdit from '@/components/ui/BeneFormAddEdit'
 import lodashclonedeep from 'lodash.clonedeep'
 import getModelloBene from '@/assets/js/Models/beneModel'
 import MyMap from '@/components/ui/Map'
-const axios = require('axios')
-const qs = require('qs')
+import axios from 'axios'
+import qs from 'qs'
 
 // Valida un bene mostrando il confronto con la versione in archivio definitivo
 export default {

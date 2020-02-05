@@ -48,8 +48,8 @@
 
 <script>
 import { setCookie, getCookie, existCookie, deleteCookie } from '@/assets/js/cookie'
-const qs = require('qs')
-const axios = require('axios')
+import qs from 'qs'
+import axios from 'axios'
 
 export default {
   name: 'LoginPage',

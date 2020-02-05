@@ -110,8 +110,8 @@ import FunzioneModel from '@/assets/js/Models/funzioneModel'
 import FunzioneTableMixin from '@/components/mixins/FunzioneTable'
 import IconMsg from '@/components/ui/IconMsg'
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
-const qs = require('qs')
-const axios = require('axios')
+import qs from 'qs'
+import axios from 'axios'
 
 // Beni Aggiunti o In Revisione, mostra i beni aggiunti dall'utente
 // oppure quelli che ha in revisione

@@ -71,8 +71,8 @@
 <script>
 import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
-const qs = require('qs')
-const axios = require('axios')
+import qs from 'qs'
+import axios from 'axios'
 const _mapValues = require('lodash.mapvalues')
 const _values = require('lodash.values')
 

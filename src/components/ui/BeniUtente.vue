@@ -115,8 +115,8 @@ import Map from '@/components/ui/Map'
 import fetchBene from '@/assets/js/fetchBene'
 // eslint-disable-next-line no-unused-vars
 import { Event } from 'vue-tables-2'
-const qs = require('qs')
-const axios = require('axios')
+import qs from 'qs'
+import axios from 'axios'
 
 // Beni Aggiunti o In Revisione, mostra i beni aggiunti dall'utente
 // oppure quelli che ha in revisione

@@ -1,7 +1,7 @@
 import getModelloFunzione from '@/assets/js/Models/funzioneModel'
 import lodashclonedeep from 'lodash.clonedeep'
-const axios = require('axios')
-const qs = require('qs')
+import axios from 'axios'
+import qs from 'qs'
 
 export default function fetchFunzione (This, URLdata) {
   let URL = This.$store.getters.dettagliFunzioneURL

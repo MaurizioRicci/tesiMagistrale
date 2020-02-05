@@ -65,8 +65,8 @@ import FunzioneCopiaIncolla from '@/components/ui/FunzioneCopyPaste'
 import LoadingOverlay from '@/components/ui/LoadingOverlay'
 import lodashclonedeep from 'lodash.clonedeep'
 import { ternaVera } from '@/assets/js/date/dateF'
-const axios = require('axios')
-const qs = require('qs')
+import axios from 'axios'
+import qs from 'qs'
 
 // Aggiunge o Modifica una funzione esistente
 export default {

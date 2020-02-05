@@ -1,8 +1,9 @@
 import { Polygon, MultiPolygon } from '@/assets/js/Models/multiPolygonModel'
 import getModelloBene from '@/assets/js/Models/beneModel'
 import lodashclonedeep from 'lodash.clonedeep'
-const axios = require('axios')
-const qs = require('qs')
+// import axios from 'axios'
+import axios from 'axios'
+import qs from 'qs'
 
 export default function fetchBene (This, URLdata) {
   let URL = This.$store.getters.dettagliBeneURL

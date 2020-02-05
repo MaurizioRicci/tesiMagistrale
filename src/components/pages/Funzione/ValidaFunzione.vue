@@ -45,8 +45,8 @@ import lodashclonedeep from 'lodash.clonedeep'
 import getModelloFunzione from '@/assets/js/Models/funzioneModel'
 import MyMap from '@/components/ui/Map'
 import { ternaVera } from '@/assets/js/date/dateF'
-const axios = require('axios')
-const qs = require('qs')
+import axios from 'axios'
+import qs from 'qs'
 
 // Valida un bene mostrando il confronto con la versione in archivio definitivo
 export default {

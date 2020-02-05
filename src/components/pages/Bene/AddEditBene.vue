@@ -53,8 +53,8 @@ import LoadingOverlay from '@/components/ui/LoadingOverlay'
 import '@/assets/styles/slideFadeTransition.css'
 import lodashclonedeep from 'lodash.clonedeep'
 import { mixin as clickaway } from 'vue-clickaway'
-const axios = require('axios')
-const qs = require('qs')
+import axios from 'axios'
+import qs from 'qs'
 
 // Aggiunge o Modifica un bene esistente
 export default {

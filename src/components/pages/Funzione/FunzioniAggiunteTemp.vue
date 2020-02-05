@@ -50,8 +50,8 @@ import Menu from '@/components/ui/Menu'
 import commonPageMixin from '@/components/mixins/CommonPage'
 import FunzioniUtente from '@/components/ui/FunzioniUtente'
 import LoadingOverlay from '@/components/ui/LoadingOverlay'
-const axios = require('axios')
-const qs = require('qs')
+import axios from 'axios'
+import qs from 'qs'
 
 export default {
   name: 'FunzioniAggiunteTemp',

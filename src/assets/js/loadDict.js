@@ -1,4 +1,4 @@
-const axios = require('axios')
+import axios from 'axios'
 
 // carica le voci dei dizionari controllati
 let loadDescr = (T) => axios.get(T.$store.getters.getDizionarioURL + '?' + 'dict_name=descrizione')
