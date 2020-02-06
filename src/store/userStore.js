@@ -12,7 +12,7 @@ const userDataStore = {
     currUserData: userData || {
       username: '',
       password: '',
-      id_utente: '',
+      userID: '', // non chiamarlo id_utente => già usato per altri parametri
       role: ''
     }
   },
@@ -26,7 +26,7 @@ const userDataStore = {
       state.currUserData.username = username || ''
       state.currUserData.password = password || ''
       state.currUserData.role = role || ''
-      state.currUserData.id_utente = id || ''
+      state.currUserData.userID = id || ''
     }
   }
 }
