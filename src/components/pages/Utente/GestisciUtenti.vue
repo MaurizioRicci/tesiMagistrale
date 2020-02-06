@@ -35,7 +35,7 @@
                           :class="{'border rounded border-danger': colonnaVuota(row, colName, row[colName])
                             || userCollide(row, colName, row[colName]) || checkIniziali(row, colName, row[colName])
                             || idsCollide(row, colName, row[colName])}">
-                            <span :id="colName + row.gid" @click="options.editableColumns.includes(colName) && setEditing(true)"
+                            <span :id="colName + row.gid" @click="options.editableColumns.includes(colName); setEditing(true);"
                                 v-if="!options.editableColumns.includes(colName) || !isEditing()">
                                 <!-- class="d-inline-block w-100" da spessore per la modifica della cella
                                 anche se la cella ha come contenuto stringa vuota (utente appena aggiunto) -->
@@ -84,6 +84,16 @@ import qs from 'qs'
 import axios from 'axios'
 const _mapValues = require('lodash.mapvalues')
 const _values = require('lodash.values')
+// usato per sortare le colonne di id che sono numerici
+const sortByID = function (ascending) {
+  return function (a, b) {
+    a = Number(a.id_min)
+    b = Number(b.id_min)
+    a = isNaN(a) ? Number.MAX_SAFE_INTEGER : a
+    b = isNaN(b) ? Number.MAX_SAFE_INTEGER : b
+    return ascending ? a - b : b - a
+  }
+}
 
 export default {
   name: 'GestisciUtenti',
@@ -113,7 +123,11 @@ export default {
         editableColumns: ['username', 'password', 'role', 'iniziali',
           'nome', 'cognome', 'id_min', 'id_max'],
         filterable: true,
-        filterByColumn: true
+        filterByColumn: true,
+        customSorting: {
+          id_min: sortByID,
+          id_max: sortByID
+        }
       },
       users: {
         ins: [],
@@ -245,8 +259,7 @@ export default {
     },
     // dice se le iniziali non sono scritte in maiuscolo
     checkIniziali: function (row, colName, valoreCella) {
-      let res = valoreCella !== valoreCella.toUpperCase() &&
-        colName === 'iniziali'
+      let res = colName === 'iniziali' && valoreCella !== valoreCella.toUpperCase()
       this.errors.iniziali = this.errors.iniziali || res
       return res
     },
@@ -274,11 +287,16 @@ export default {
     // computa la lista di id di utenti i cui username e password collidono
     collidingUsers: function () {
       let copy = this.wholeUsers
+      // lista di utenti da aggiungere/modificare
+      let addEdit = this.users.ins.concat(this.users.mod)
       let colliding = []
-      copy.forEach(el => {
+      addEdit.forEach(el => {
         copy.forEach(el2 => {
           if (el.gid !== el2.gid && el.username === el2.username &&
-             el.password === el2.password) { colliding.push(el.gid) }
+             el.password === el2.password) {
+            colliding.push(el.gid)
+            colliding.push(el2.gid)
+          }
         })
       })
       return colliding
@@ -286,16 +304,19 @@ export default {
     // computa la lista di id di utenti i cui id min/max si sovrappongono
     overlappingIDS: function () {
       let copy = this.wholeUsers
+      // lista di utenti da aggiungere/modificare
+      let addEdit = this.users.ins.concat(this.users.mod)
       let overlapping = []
       let overlapID = (id, idMinRef, idMaxRef) =>
         Number(id) !== -1 && Number(id) >= Number(idMinRef) &&
              Number(id) <= Number(idMaxRef)
-      copy.forEach(el => {
+      addEdit.forEach(el => {
         copy.forEach(el2 => {
           // id utente diversi e almeno uno dei due id deve sovrapporsi
           if (el.gid !== el2.gid && (overlapID(el.id_min, el2.id_min, el2.id_max) ||
             overlapID(el.id_max, el2.id_min, el2.id_max))) {
             overlapping.push(el.gid)
+            overlapping.push(el2.gid)
           }
         })
       })
@@ -304,6 +325,15 @@ export default {
   },
   mounted () {
     this.retriveUsers()
+  },
+  beforeRouteLeave (to, from, next) {
+    // called when the route that renders this component is about to
+    // be navigated away from.
+    let resp = true
+    if (this.users.ins.length > 0 || this.users.mod.length > 0) {
+      resp = window.confirm('Hai modifiche in sospeso, abbandonare la pagina?')
+    }
+    if (resp) next()
   }
 }
 </script>
