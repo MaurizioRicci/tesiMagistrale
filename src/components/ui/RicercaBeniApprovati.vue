@@ -1,7 +1,7 @@
 <template>
 <div>
   <v-server-table :columns="columns" :options="options" class="myTable table-sm"
-    :url="$store.getters.beniAggiuntiApprovatiURL"
+    :url="$store.getters.beniAggiuntiApprovatiURL" name="ricercaBeniApprovati"
     @click="e => openChildRow(e)">
 
         <template v-slot:azioni="{row}">
@@ -109,6 +109,8 @@ export default {
         'schedatori_iniziali'
       ],
       options: {
+        saveState: true,
+        storage: 'session',
         caption: this.caption,
         filterByColumn: true,
         sendEmptyFilters: true,

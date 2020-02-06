@@ -1,7 +1,7 @@
 <template>
 <div>
   <v-server-table :columns="columns" :options="options" class="myTable table-sm"
-    :url="$store.getters.funzioniAggiunteApprovateURL">
+    :url="$store.getters.funzioniAggiunteApprovateURL" name="ricercaFunzioniApprovate">
 
         <template v-slot:azioni="{row}">
           <b-button-group horizontal>
@@ -76,6 +76,8 @@ export default {
         'schedatori_iniziali'
       ],
       options: {
+        saveState: true,
+        storage: 'session',
         caption: this.caption,
         filterByColumn: true,
         sendEmptyFilters: true,
