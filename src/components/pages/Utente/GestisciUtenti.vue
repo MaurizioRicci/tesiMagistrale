@@ -41,8 +41,9 @@
                                 <a class="d-inline-block w-100">{{row[colName]}}</a>
                             </span>
                             <span :id="colName + row.gid" v-else>
-                                <input type="text" v-model="row[colName]" v-if="colName !== 'role'" class="w-100">
-                                <b-form-select v-else v-model="row[colName]" :options="rolesOption"></b-form-select>
+                                <b-form-input type="text" v-model="row[colName]"
+                                  v-if="colName !== 'role'" :formatter="e => formatter(e, colName)"/>
+                                <b-form-select v-else v-model="row[colName]" :options="rolesOption"/>
                                 <b-button variant="primary"
                                     @click="update(row[colName]); setEditing(false)">Ok</b-button>
                                 <b-button type="button"
@@ -243,6 +244,9 @@ export default {
       // niente paura se fallisce ci pensa il db a controllare
       return this.$refs.myTable.$el
         .querySelector('.border-danger')
+    },
+    formatter: function (val, colName) {
+      return colName === 'iniziali' ? val.toUpperCase() : val
     }
   },
   computed: {
@@ -270,4 +274,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+* >>> td {
+  outline: none;
+}
 </style>

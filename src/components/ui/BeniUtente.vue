@@ -262,6 +262,7 @@ export default {
   watch: {
     update: function (val) {
       if (val) {
+        // evento update (da usare con .sync) per la proprietà update
         this.getData().then(() => this.$emit('update:update', false))
       }
     }
