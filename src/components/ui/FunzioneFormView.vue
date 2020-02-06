@@ -171,7 +171,6 @@ export default {
         'id_utente': idUtenteBene,
         'tmp_db': idUtenteBene !== ''
       }
-      console.log('fetchBene')
       fetchBene(this, postData)
         .then(data => {
           this.beneData = data

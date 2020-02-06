@@ -55,12 +55,15 @@
                 <icon-msg icon_name="edit" icon_msg="Modifica"/>
             </b-button>
 
+            <div v-b-tooltip.hover :title="getApprovaBtnTxt(row)">
             <b-button v-if="cercaInArchivioTemp && sonoRevisore"
+              :disabled="!funzioneApprovabile(row)"
               key="revisoreArchTmp" variant="light"
               :to="'/funzione/valida/' + row.id + '/' + row.id_utente"
                class="pt-1">
-                <icon-msg icon_name="check-circle" icon_msg="Approva con modifca"/>
+                <icon-msg icon_name="check-circle" icon_msg="Approva con modifica"/>
             </b-button>
+            </div>
 
             <!-- sei revisore oppure se non sei revisore ma la funzione non è sotto revisione -->
             <b-button v-if="cercaInArchivioTemp && (sonoRevisore || !FunzioneModel.isRev.call(row))"
@@ -184,6 +187,16 @@ export default {
           this.$vueEventBus.$emit('master-page-show-msg',
             ['Errore', msg])
         })
+    },
+    funzioneApprovabile (row) {
+      return row.bene_approvato === 't' && row.bener_approvato === 't'
+    },
+    getApprovaBtnTxt (row) {
+      let beniDaApprovare = []
+      if (row.bene_approvato !== 't') beniDaApprovare.push(row.id_bene)
+      if (row.bener_approvato !== 't') beniDaApprovare.push(row.id_bener)
+      return this.funzioneApprovabile(row) ? ''
+        : 'Devi prima approvare i seguenti beni: ' + beniDaApprovare.join(',')
     }
   },
   data: function () {

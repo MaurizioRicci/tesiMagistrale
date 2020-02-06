@@ -15,7 +15,7 @@ export default function dataTipoVera (TS) {
     let TSnob = TS.replace(re, '')
     if (TSnob.length === 0) return false
     let TSnobmin = TSnob.toLowerCase()
-    if (Tipi.contains(TSnobmin)) return true
+    if (Tipi.includes(TSnobmin)) return true
     else return false
   } catch (error) {
     console.warn('dataTipoVera eccezione', error)
