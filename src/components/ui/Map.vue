@@ -78,12 +78,8 @@ export default {
     mapClick (evt) {
       // se l'utente sta guarndando (ottiene info sui beni)
       // mostro i dettagli di dove clicca
-      if (this.watch) {
+      if (this.state.watch) {
         this.$refs.betterWMS.getFeatureInfo(evt)
-      } else {
-        // se l'utente non sta guardando i dettagli allora
-        // provo a vedere se può modificare il poligono del bene
-        // this.addPoint(evt)
       }
     },
     ingrandisci: function (evt) {

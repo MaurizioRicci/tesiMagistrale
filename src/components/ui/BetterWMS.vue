@@ -1,5 +1,5 @@
 <template>
-    <LWMSTileLayer v-bind="$props" @click="getFeatureInfo" ref="myLayer">
+    <LWMSTileLayer v-bind="$props" ref="myLayer">
     </LWMSTileLayer>
 </template>
 
