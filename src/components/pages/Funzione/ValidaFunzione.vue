@@ -113,7 +113,9 @@ export default {
       // resetto il modello dati scaricato in precedenza (se c'è)
       this.resetData()
       // scarico la funzione definitiva se esiste
-      this.fetchFunzioneDataByID(this.idFunzione)
+      this.fetchFunzioneDataByID(this.idFunzione, null, false, {
+        noResultsMsg: 'Funzione in archivio definitivo non trovata'
+      })
         .then(data => {
           if (data) {
             this.formFunzioneArchDef = lodashclonedeep(data)

@@ -37,7 +37,8 @@ export default {
     // Restituisce una promessa in ogni caso, il valore dipende:
     // null se non viene eseguita la richiesta o il valore d'errore non va a buon fine
     // I dettagli del bene se la richiesta va a buon fine
-    fetchFunzioneDataByID (requiredID, idUtente, cercaInArchivioTemp) {
+    fetchFunzioneDataByID (requiredID, idUtente, cercaInArchivioTemp, options = {}) {
+      let { noResultsMsg } = options
       if (cercaInArchivioTemp && typeof idUtente === 'undefined') {
         throw new Error('Per cercare una funzione in archivio temporaneo serve anche id utente')
       }
@@ -57,7 +58,7 @@ export default {
       return fetchFunzione(this, postData)
         .then(data => {
           if (!data) {
-            this.$vueEventBus.$emit('master-page-show-msg', ['Info', 'No result found'])
+            this.$vueEventBus.$emit('master-page-show-msg', ['Info', noResultsMsg || 'No result found'])
           } else {
             T.mapCenter = data.mapCenter
             T.form = data.form

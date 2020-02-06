@@ -105,7 +105,9 @@ export default {
       // resetto il modello dati scaricato in precedenza (se c'è)
       this.resetData()
       // scarico il bene definitivo se esiste
-      this.fetchBeneDataByID(this.idBene)
+      this.fetchBeneDataByID(this.idBene, null, false, {
+        noResultsMsg: 'Bene in archivio definitivo non trovato'
+      })
         .then(data => {
           if (data) {
             this.formBeneArchDef = lodashclonedeep(data)
