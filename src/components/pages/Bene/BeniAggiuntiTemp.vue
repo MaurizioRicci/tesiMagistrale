@@ -31,14 +31,14 @@
       </b-col>
     </b-row>
     <b-toast id="confirm-toast" title="Richiesta conferma" solid no-auto-hide
-      toaster="b-toaster-bottom-full" variant="secondary" v-model="waitUserConfirmation">
-      <div class="">
-        <div class="row justify-content-center">
+      toaster="b-toaster-bottom-center" variant="secondary" v-model="waitUserConfirmation">
+      <div class="row justify-content-center">
+        <div class="col-12">
           <p>I beni pronti verranno inviati al controllo,
             fintanto che saranno in attesa revisione non potrai modificarli
           </p>
         </div>
-        <div class="row justify-content-center">
+        <div class="col-auto">
           <b-button @click="mettiInRevisione">Conferma</b-button>
         </div>
       </div>

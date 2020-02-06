@@ -31,13 +31,13 @@
     </b-row>
     <b-toast id="confirm-toast" title="Richiesta conferma" solid no-auto-hide
       toaster="b-toaster-bottom-full" variant="secondary" v-model="waitUserConfirmation">
-      <div class="">
-        <div class="row justify-content-center">
+      <div class="row justify-content-center">
+        <div class="col-12">
           <p>Le funzioni pronte verranno inviate al controllo,
             fintanto che saranno in attesa revisione non potrai modificarle
           </p>
         </div>
-        <div class="row justify-content-center">
+        <div class="col-auto">
           <b-button @click="mettiInRevisione">Conferma</b-button>
         </div>
       </div>
