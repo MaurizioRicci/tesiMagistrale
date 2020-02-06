@@ -19,6 +19,7 @@
     "core-js": "^3.6.1",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
+    "leaflet-fullscreen": "^1.0.2",
     "leaflet-toolbar": "^0.4.0-alpha.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.mapvalues": "^4.6.0",

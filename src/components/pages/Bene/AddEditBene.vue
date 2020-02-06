@@ -35,7 +35,7 @@
         <MyMap ref="myMap" @ingrandisci-mappa="ingrandisciMappa"
           v-model="form.polygon" :zoom="editMode ? 17 : 10" :center="mapCenter"
           @rimpicciolisci-mappa="rimpicciolisciMappa"
-          v-on-clickaway="checkPolygonDist"
+          @change="checkPolygonDist"
           @resetGeo="form.polygon.reset()"/>
       </b-col>
     </b-row>
@@ -52,7 +52,6 @@ import MyMap from '@/components/ui/Map'
 import LoadingOverlay from '@/components/ui/LoadingOverlay'
 import '@/assets/styles/slideFadeTransition.css'
 import lodashclonedeep from 'lodash.clonedeep'
-import { mixin as clickaway } from 'vue-clickaway'
 import axios from 'axios'
 import qs from 'qs'
 
@@ -66,7 +65,7 @@ export default {
     MyMap,
     LoadingOverlay
   },
-  mixins: [commonPageMixin, dettagliBeneMixin, clickaway],
+  mixins: [commonPageMixin, dettagliBeneMixin],
   data () {
     return {
       mapCols: 4,
@@ -162,6 +161,7 @@ export default {
       }
     },
     checkPolygonDist () {
+      // controllo la distanza da altri beni
       let postData = lodashclonedeep(
         Object.assign({}, this.form, this.$store.getters.getUserData))
       // PostGIS vuole i punti come longitudine-latitudine
