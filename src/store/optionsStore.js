@@ -1,8 +1,9 @@
-import { getCookie, existCookie, setCookie } from '@/assets/js/cookie'
+// import { getCookie, existCookie, setCookie } from '@/assets/js/cookie'
 
 let options
-if (existCookie('options')) {
-  options = JSON.parse(getCookie('options'))
+// if (existCookie('options')) {
+if (localStorage.getItem('options')) {
+  options = JSON.parse(localStorage.getItem('options'))
 }
 
 const optionsStore = {
@@ -21,7 +22,7 @@ const optionsStore = {
       state.defaultMapCenter = latLongArr
     },
     saveOptions (state) {
-      setCookie('options', JSON.stringify(state), 31 * 6)
+      localStorage.setItem('options', JSON.stringify(state), 31 * 6)
     }
   },
   actions: {
