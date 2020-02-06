@@ -196,7 +196,7 @@ export default {
 </script>
 
 <style>
-.leaflet-marker-icon {
+.leaflet-editing-icon {
   width: 12px !important;
   height: 12px !important;
   margin-left: -7px !important;
