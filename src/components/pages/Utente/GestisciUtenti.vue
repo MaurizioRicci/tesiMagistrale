@@ -33,7 +33,8 @@
                         v-slot:[colName]="{row, update, setEditing, isEditing, revertValue}">
                         <div :key="colName"
                           :class="{'border rounded border-danger': colonnaVuota(row, colName, row[colName])
-                            || userCollide(row, colName, row[colName]) || checkIniziali(row, colName, row[colName])}">
+                            || userCollide(row, colName, row[colName]) || checkIniziali(row, colName, row[colName])
+                            || idsCollide(row, colName, row[colName])}">
                             <span :id="colName + row.gid" @click="options.editableColumns.includes(colName) && setEditing(true)"
                                 v-if="!options.editableColumns.includes(colName) || !isEditing()">
                                 <!-- class="d-inline-block w-100" da spessore per la modifica della cella
@@ -41,9 +42,12 @@
                                 <a class="d-inline-block w-100">{{row[colName]}}</a>
                             </span>
                             <span :id="colName + row.gid" v-else>
-                                <b-form-input type="text" v-model="row[colName]"
-                                  v-if="colName !== 'role'" :formatter="e => formatter(e, colName)"/>
-                                <b-form-select v-else v-model="row[colName]" :options="rolesOption"/>
+                                <b-form-input type="number" v-model="row[colName]" :formatter="v => Math.max(-1, v)"
+                                  v-if="colName === 'id_min' || colName === 'id_max'" key="numberInput"
+                                  min="-1" number/>
+                                <b-form-input type="text" v-model="row[colName]" key="textInput"
+                                  v-else-if="colName !== 'role'" :formatter="e => formatter(e, colName)"/>
+                                <b-form-select v-else v-model="row[colName]" :options="rolesOption" key="selectInput"/>
                                 <b-button variant="primary"
                                     @click="update(row[colName]); setEditing(false)">Ok</b-button>
                                 <b-button type="button"
@@ -60,6 +64,10 @@
                             <b-tooltip :target="colName + row.gid" triggers="hover"
                               v-if="userCollide(row, colName, row[colName])">
                                 Stesso username/password di un altro utente
+                            </b-tooltip>
+                            <b-tooltip :target="colName + row.gid" triggers="hover"
+                              v-if="idsCollide(row, colName, row[colName])">
+                                ID assegnato collide con quello di un'altro utente
                             </b-tooltip>
                         </div>
                     </template>
@@ -86,12 +94,15 @@ export default {
       errors: {
         unique: false,
         iniziali: false,
-        empty: false
+        empty: false,
+        overlappingIDs: false
       },
       tableData: [],
       columns: ['gid', 'username', 'password', 'role', 'iniziali',
         'nome', 'cognome', 'id_min', 'id_max'],
       options: {
+        perPage: 30,
+        perPageValues: [],
         headings: {
           gid: 'ID utente',
           id_min: 'ID minimo',
@@ -109,6 +120,7 @@ export default {
         mod: []
       },
       rolesOption: [
+        { value: '', text: 'Scegli ruolo' },
         { value: 'schedatore', text: 'schedatore' },
         { value: 'revisore', text: 'revisore' }
       ]
@@ -158,8 +170,8 @@ export default {
         'iniziali': '',
         'nome': '',
         'cognome': '',
-        'id_min': '',
-        'id_max': ''
+        'id_min': '-1',
+        'id_max': '-1'
       }
       this.tableData.push(user)
       this.users.ins.push(user)
@@ -245,6 +257,12 @@ export default {
       return this.$refs.myTable.$el
         .querySelector('.border-danger')
     },
+    idsCollide: function (row, colName, valoreCella) {
+      let res = (colName === 'id_min' || colName === 'id_max') &&
+        this.overlappingIDS.includes(row.gid)
+      this.errors.overlappingIDs = this.errors.overlappingIDs || res
+      return res
+    },
     formatter: function (val, colName) {
       return colName === 'iniziali' ? val.toUpperCase() : val
     }
@@ -264,6 +282,24 @@ export default {
         })
       })
       return colliding
+    },
+    // computa la lista di id di utenti i cui id min/max si sovrappongono
+    overlappingIDS: function () {
+      let copy = this.wholeUsers
+      let overlapping = []
+      let overlapID = (id, idMinRef, idMaxRef) =>
+        Number(id) !== -1 && Number(id) >= Number(idMinRef) &&
+             Number(id) <= Number(idMaxRef)
+      copy.forEach(el => {
+        copy.forEach(el2 => {
+          // id utente diversi e almeno uno dei due id deve sovrapporsi
+          if (el.gid !== el2.gid && (overlapID(el.id_min, el2.id_min, el2.id_max) ||
+            overlapID(el.id_max, el2.id_min, el2.id_max))) {
+            overlapping.push(el.gid)
+          }
+        })
+      })
+      return overlapping
     }
   },
   mounted () {
