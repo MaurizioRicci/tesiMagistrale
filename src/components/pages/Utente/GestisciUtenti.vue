@@ -32,11 +32,12 @@
                     <template v-for="colName in columns"
                         v-slot:[colName]="{row, update, setEditing, isEditing, revertValue}">
                         <div :key="colName"
-                          :class="{'border rounded border-danger': colonnaVuota(row, colName, row[colName])
-                            || userCollide(row, colName, row[colName]) || checkIniziali(row, colName, row[colName])
-                            || idsCollide(row, colName, row[colName])}">
-                            <span :id="colName + row.gid" @click="options.editableColumns.includes(colName); setEditing(true);"
-                                v-if="!options.editableColumns.includes(colName) || !isEditing()">
+                          :class="{'border rounded border-danger': hasErrors(row, colName, row[colName])}">
+                            <!-- Se non è una colonna editabile o se non sono in editing
+                            mostro il valore della cella semplice-->
+                            <span :id="colName + row.gid"
+                              @click="setEditing(true)"
+                              v-if="!options.editableColumns.includes(colName) || !isEditing()">
                                 <!-- class="d-inline-block w-100" da spessore per la modifica della cella
                                 anche se la cella ha come contenuto stringa vuota (utente appena aggiunto) -->
                                 <a class="d-inline-block w-100">{{row[colName]}}</a>
@@ -49,9 +50,9 @@
                                   v-else-if="colName !== 'role'" :formatter="e => formatter(e, colName)"/>
                                 <b-form-select v-else v-model="row[colName]" :options="rolesOption" key="selectInput"/>
                                 <b-button variant="primary"
-                                    @click="update(row[colName]); setEditing(false)">Ok</b-button>
+                                  @click="update(row[colName]); setEditing(false)">Ok</b-button>
                                 <b-button type="button"
-                                    @click="revertValue(); setEditing(false)">Annulla</b-button>
+                                  @click="revertValue(); setEditing(false)">Annulla</b-button>
                             </span>
                             <b-tooltip :target="colName + row.gid" triggers="hover"
                               v-if="colonnaVuota(row, colName, row[colName])">
@@ -141,6 +142,12 @@ export default {
     }
   },
   methods: {
+    hasErrors: function (row, colName) {
+      return this.colonnaVuota(row, colName, row[colName]) ||
+              this.userCollide(row, colName, row[colName]) ||
+                this.checkIniziali(row, colName, row[colName]) ||
+                  this.idsCollide(row, colName, row[colName])
+    },
     retriveUsers: function () {
       axios.post(this.$store.getters.gestioneUtentiURL, qs.stringify({
         username: this.$store.getters.getUserData.username,
