@@ -97,7 +97,10 @@
           <Map height="300px" v-if="!currBeni[props.row.id].form.polygon.isEmpty()"
             key="beneConGeometria" :center="currBeni[props.row.id].mapCenter"
             :polygon="currBeni[props.row.id].form.polygon" locked :zoom="17"/>
-          <p v-else key="beneSenzaGeometria">Nessuna geometria trovata per il bene.</p>
+          <b-alert show variant="info" v-else key="beneSenzaGeometria" shown
+            class="d-inline-block">
+            Nessuna geometria trovata per il bene.
+          </b-alert>
         </div>
       </template>
 
@@ -271,6 +274,5 @@ export default {
 </script>
 
 <style scoped>
-    .myTable >>> table { table-layout: fixed; }
-    .myTable >>> caption { caption-side: top; }
+  .myTable >>> caption { caption-side: top; }
 </style>
