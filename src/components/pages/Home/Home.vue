@@ -7,11 +7,35 @@
         </b-col>
       </b-row>
       <b-row class="mt-3" align-h="center">
-          <b-col class="text-left" cols="12" md="6" lg="3">
-            <h5>Benvenuto
-              <b-badge variant="info">{{$store.getters.getUserData.username}}</b-badge>
-            </h5>
-            <b-card header="Info e statistiche">
+          <h5 class="col-12">Benvenuto
+            <b-badge variant="info">{{$store.getters.getUserData.username}}</b-badge>
+          </h5>
+          <!-- Collegamenti rapidi -->
+          <b-col class="text-left mt-1" cols="12" md="6" lg="3">
+            <b-card header="Collegamenti rapidi" no-body bg-variant="info" text-variant="white">
+              <b-list-group flush>
+                <b-list-group-item>
+                  <b-link to="bene/aggiungi">
+                  Aggiungi un bene</b-link>
+                  </b-list-group-item>
+                <b-list-group-item>
+                  <b-link to="/bene/ricerca">
+                  Ricerca un bene</b-link>
+                  </b-list-group-item>
+                <b-list-group-item>
+                  <b-link to="funzione/aggiungi">
+                  Aggiungi una funzione tra due beni</b-link>
+                </b-list-group-item>
+                <b-list-group-item>
+                  <b-link to="">
+                  Aiuto (DA FARE)</b-link>
+                </b-list-group-item>
+              </b-list-group>
+            </b-card>
+          </b-col>
+          <!-- Statistiche -->
+          <b-col class="text-left mt-1" cols="12" md="6" lg="3">
+            <b-card header="Info e statistiche" no-footer>
               <p>Il tuo ruolo è
                 <b-badge variant="info">{{$store.getters.getUserData.role}}</b-badge>
               </p>
@@ -82,14 +106,13 @@
                   incomplete.</p>
               </div>
             </b-card>
-            <b-card header="Azioni revisore" v-if="isRevisore"
-             class="mt-2 text-center" header-border-variant="warning">
-              <b-button to="/gestisci_utenti">Aggiungi / Modifica utenti</b-button>
-            </b-card>
-            <hr/>
-            <b-col class="text-center">
-              <b-button @click="logout">Logout</b-button>
-            </b-col>
+          </b-col>
+          <!-- Utenti & logout -->
+          <b-col cols="12">
+            <hr class="w-50"/>
+            <b-button to="/gestisci_utenti" variant="warning"
+              v-if="isRevisore">Aggiungi / Modifica utenti</b-button>
+            <b-button @click="logout">Logout</b-button>
           </b-col>
       </b-row>
   </b-container>
@@ -124,7 +147,7 @@ export default {
       } catch (err) { return false }
     },
     isRevisore: function () {
-      return this.data && this.data.role === 'revisore'
+      return this.$store.getters.getUserData.role === 'revisore'
     }
   },
   methods: {
@@ -160,7 +183,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+p:last-child {
+  margin-bottom: 0px;
+}
 .badge {
   font-size: 100%;
+}
+.card-header {
+  font-weight: bold;
 }
 </style>
