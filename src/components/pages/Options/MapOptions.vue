@@ -15,7 +15,7 @@
                 <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
                      <l-geo-json :geojson="geoJson" @click="handleClick"></l-geo-json>
                      <l-marker :lat-lng="popUp.position" @update:lat-lng="panToPoint"
-                        ref="myMarker">
+                      ref="myMarker">
                         <l-popup>
                             <p>{{popUp.txt}}</p>
                             <b-button @click="salvaPunto">Salva</b-button>
@@ -42,11 +42,11 @@ export default {
       zoom: 6,
       center: this.$store.getters.getDefaultMapCenter,
       leafletMapObject: null,
-      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+      url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       geoJson: null,
       popUp: {
-        position: [0, 0],
+        position: this.$store.getters.getDefaultMapCenter,
         txt: ''
       }
     }
