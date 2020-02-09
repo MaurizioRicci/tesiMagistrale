@@ -1,9 +1,13 @@
 // import { getCookie, existCookie, setCookie } from '@/assets/js/cookie'
-
+const STORAGE_NAME = 'options'
 let options
+
+const saveToLocalStorage = (obj) =>
+  localStorage.setItem(STORAGE_NAME, JSON.stringify(obj), 31 * 6)
+
 // if (existCookie('options')) {
-if (localStorage.getItem('options')) {
-  options = JSON.parse(localStorage.getItem('options'))
+if (localStorage.getItem(STORAGE_NAME)) {
+  options = JSON.parse(localStorage.getItem(STORAGE_NAME))
 }
 
 const optionsStore = {
@@ -17,12 +21,11 @@ const optionsStore = {
   mutations: {
     setOptions (state, options) {
       state = Object.assign(state, options)
+      saveToLocalStorage(state)
     },
     setMapCenter (state, latLongArr) {
       state.defaultMapCenter = latLongArr
-    },
-    saveOptions (state) {
-      localStorage.setItem('options', JSON.stringify(state), 31 * 6)
+      saveToLocalStorage(state.defaultMapCenter)
     }
   },
   actions: {
