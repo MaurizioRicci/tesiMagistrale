@@ -179,6 +179,9 @@ export default {
             new Polygon(geoJSON.geometry.coordinates[0])
               .flipCoordinates())
           this.$emit('change', this.currPolygon)
+        },
+        onDeleted: () => {
+          this.$emit('resetGeo')
         }
       }
       // instanzio la toolbar di leaflet

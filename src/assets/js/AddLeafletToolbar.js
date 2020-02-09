@@ -5,8 +5,9 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import 'leaflet-draw'
 
 const defaultCallbacks = {
-  onCreated: function (geoJSON) {},
-  onEdited: function (geoJSON) {}
+  onCreated: (geoJSON) => {},
+  onEdited: (geoJSON) => {},
+  onDeleted: () => {}
 }
 
 export default {
@@ -35,6 +36,9 @@ export default {
           allowIntersection: false,
           showArea: true
         }
+      },
+      delete: {
+        delete: !disabledToolbar
       }
     })
     map.addControl(this.drawControl)
@@ -54,6 +58,9 @@ export default {
         let gJSON = layer.toGeoJSON()
         callbacks.onEdited(gJSON)
       })
+    })
+    map.on(window.L.Draw.Event.DELETED, (event) => {
+      callbacks.onDeleted()
     })
   },
   addPoly: function (newPolygon) {
