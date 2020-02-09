@@ -204,7 +204,6 @@ export default {
       columns: [
         'id',
         'status',
-        // visible: this.cercaInArchivioTemp
         'azioni',
         'denominazione',
         'denominazioner',

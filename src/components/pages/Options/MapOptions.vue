@@ -8,7 +8,7 @@
       </b-row>
       <b-row>
         <b-col cols="8" class="m-auto">
-            <h5>Clicca su una regione per scegliere il centro della mappa per future visualizzazioni.</h5>
+            <h5>Clicca su una provincia per scegliere il centro della mappa per future visualizzazioni.</h5>
             <l-map :zoom="zoom" :center="center"
                 @update:center="invalidateSize"
                 style="width:70vw;height:70vh" ref="myMap">

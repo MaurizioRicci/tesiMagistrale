@@ -99,14 +99,14 @@ export default {
         'azioni',
         'identificazione',
         'descrizione',
+        'macroEpocaOrig',
+        'macroEpocaCar',
+        'toponimo',
         'comune',
         'esistenza',
-        'macroEpocaCar',
-        'macroEpocaOrig',
         'bibliografia',
-        'note',
-        'toponimo',
-        'schedatori_iniziali'
+        'schedatori_iniziali',
+        'note'
       ],
       options: {
         saveState: true,
