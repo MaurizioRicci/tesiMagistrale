@@ -8,7 +8,7 @@
       </b-row>
       <b-row>
         <b-col cols="8" class="m-auto">
-            <h5>Clicca su una provincia per scegliere il centro della mappa per future visualizzazioni.</h5>
+            <h5>Clicca su un punto per scegliere il centro della mappa per future visualizzazioni.</h5>
             <l-map :zoom="zoom" :center="center"
                 @update:center="invalidateSize"
                 style="width:70vw;height:70vh" ref="myMap">
@@ -18,7 +18,7 @@
                         ref="myMarker">
                         <l-popup>
                             <p>{{popUp.txt}}</p>
-                            <b-button @click="salvaCentroide">Salva</b-button>
+                            <b-button @click="salvaPunto">Salva</b-button>
                         </l-popup>
                      </l-marker>
             </l-map>
@@ -53,12 +53,12 @@ export default {
   },
   methods: {
     handleClick (evt) {
+      this.popUp.position = evt.latlng
       if (evt.layer && evt.layer.feature && evt.layer.feature.properties) {
         let feature = evt.layer.feature
         this.popUp.txt = feature.properties.den_uts
-        let jsonCentroid = JSON.parse(feature.properties.centr)
-        this.popUp.position = jsonCentroid.coordinates
-        // layer.bindPopup('<p>' + feature.properties.den_uts + '</p>' + '<button @click="getData">Salva</button>')
+        // let jsonCentroid = JSON.parse(feature.properties.centr)
+        // this.popUp.position = jsonCentroid.coordinates
       }
     },
     // @vuese
@@ -70,9 +70,8 @@ export default {
       axios.get(this.$store.getters.elencoProvinceURL)
         .then(ok => { this.geoJson = ok.data })
     },
-    salvaCentroide () {
+    salvaPunto () {
       this.$store.commit('setMapCenter', this.popUp.position)
-      this.$store.dispatch('asyncSaveOptions')
       this.goBack()
     },
     openPopUp () {

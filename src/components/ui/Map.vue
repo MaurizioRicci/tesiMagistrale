@@ -57,7 +57,12 @@ export default {
   props: {
     // default map center su Pisa. Non sembra essere reactive center in vue-leaflet
     // meglio essere sicuri del centro e poi instanziare questo componente
-    center: { type: Array, default: function () { return this.$store.getters.getDefaultMapCenter } },
+    center: {
+      type: [Array, Object],
+      default: function () {
+        return this.$store.getters.getDefaultMapCenter
+      }
+    },
     controls: {
       type: Object,
       default: function () {

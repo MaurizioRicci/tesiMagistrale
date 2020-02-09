@@ -1,19 +1,20 @@
 // import { getCookie, existCookie, setCookie } from '@/assets/js/cookie'
 const STORAGE_NAME = 'options'
-let options
 
+const DEFAULT_OPTIONS = {
+  defaultMapCenter: [43.717039, 10.397445]
+}
 const saveToLocalStorage = (obj) =>
   localStorage.setItem(STORAGE_NAME, JSON.stringify(obj), 31 * 6)
 
+let options
 // if (existCookie('options')) {
 if (localStorage.getItem(STORAGE_NAME)) {
   options = JSON.parse(localStorage.getItem(STORAGE_NAME))
 }
 
 const optionsStore = {
-  state: options || {
-    defaultMapCenter: [43.717039, 10.397445]
-  },
+  state: options || DEFAULT_OPTIONS,
   getters: {
     getWholeOptions: state => state,
     getDefaultMapCenter: state => state.defaultMapCenter
@@ -25,7 +26,7 @@ const optionsStore = {
     },
     setMapCenter (state, latLongArr) {
       state.defaultMapCenter = latLongArr
-      saveToLocalStorage(state.defaultMapCenter)
+      saveToLocalStorage(state)
     }
   },
   actions: {
