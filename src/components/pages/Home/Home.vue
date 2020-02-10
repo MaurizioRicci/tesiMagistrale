@@ -10,6 +10,40 @@
           <h5 class="col-12">Benvenuto
             <b-badge variant="info">{{$store.getters.getUserData.username}}</b-badge>
           </h5>
+          <!-- Breve descrizione -->
+          <b-col class="text-left mt-1" cols="12">
+            <b-row align-h="center">
+              <b-col cols="12" md="10" lg="7">
+                <p>
+                  Questa applicazione permette di acquisire dati per il sistema di Historical GIS. I dati sono formati da <b-badge>Beni</b-badge>
+                  (identificano un luogo sul territorio dove esiste o esisteva una entità geografica) e <b-badge>Funzioni</b-badge>
+                  (descrivono le relazione tra beni; es: il bene 1 paga un tributo al bene 2).
+                </p>
+                <p>
+                  La fase di acquisizione consiste nell'individuare Beni e Funzioni che legano insieme tali Beni. Prima di acquisire occorre andare sulle apposite pagine
+                    <b-breadcrumb>
+                      <b-breadcrumb-item active>Beni</b-breadcrumb-item>
+                      <b-breadcrumb-item to="/bene/ricerca">Ricerca Beni</b-breadcrumb-item>
+                    </b-breadcrumb>
+                    e
+                    <b-breadcrumb>
+                      <b-breadcrumb-item active>Funzioni</b-breadcrumb-item>
+                      <b-breadcrumb-item to="/funzione/ricerca">Ricerca Funzioni</b-breadcrumb-item>
+                    </b-breadcrumb>
+                  per verificare che il lavoro non sia già stato fatto da altri.
+                </p>
+                <p>
+                  La barra principale in alto, il <b-badge>Menu</b-badge> ha le seguenti aree sensibili:
+                  <ul>
+                  <li>Home: va alla home del progetto</li>
+                  <li>Beni: apre un menu per analizzare i Beni presenti in archivio, per modificarli o aggiungerne altri</li>
+                  <li>Funzioni: apre un menu per analizzare le Funzioni presenti in archivio, per modificarle o aggiungerne altre</li>
+                  <li>Il mio lavoro: apre un menu per analizzare le i Beni o le Funzioni che sono state create dall'utente o che sono in attesa di revisione</li>
+                  </ul>
+                </p>
+              </b-col>
+            </b-row>
+          </b-col>
           <!-- Collegamenti rapidi -->
           <b-col class="text-left mt-1" cols="12" md="6" lg="3">
             <b-card header="Collegamenti rapidi" no-body bg-variant="info" text-variant="white">
@@ -191,5 +225,16 @@ p:last-child {
 }
 .card-header {
   font-weight: bold;
+}
+.breadcrumb, .breadcrumb-item {
+  display: inline-block;
+  margin: 0px;
+  padding: 2px;
+}
+.breadcrumb-item:first-child::before {
+  content: ''
+}
+.breadcrumb-item::before {
+  content: '→'
 }
 </style>
