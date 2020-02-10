@@ -18,7 +18,7 @@
           <BeneFormView :form="form"
             :disallowIDChange="disallowIDChange"
             @requestedId="id => fetchBeneDataByID(id)"/>
-          <b-button type="submit" variant="primary" @click="goBack">Indietro</b-button>
+          <b-button type="button" @click="goBack">Indietro</b-button>
           <!-- si modificano solo beni definitivi -->
           <b-button type="reset" variant="danger" @click="onEdit"
             v-if="!cercaInArchivioTemp">Modifica</b-button>

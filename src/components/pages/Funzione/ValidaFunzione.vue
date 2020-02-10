@@ -26,7 +26,7 @@
     </b-row>
     <b-row align-h="center" class="mt-2">
         <b-col cols="6">
-        <b-button variant="primary" @click="goBack">Indietro</b-button>
+        <b-button type="button" @click="goBack">Indietro</b-button>
         <b-button type="reset" variant="danger" v-on:click="onReset">Reset</b-button>
         <b-button type="submit" variant="warning"
             @click="evt => onSubmit(evt)">Valida</b-button>

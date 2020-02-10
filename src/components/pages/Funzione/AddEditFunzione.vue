@@ -22,7 +22,7 @@
 
           <FunzioneFormAddEdit ref="form_funzione" v-model="form"
             :validated="sendBtnClicked"/>
-          <b-button variant="primary" @click="goBack">Indietro</b-button>
+          <b-button type="button" @click="goBack">Indietro</b-button>
           <b-button type="reset" variant="danger" v-on:click="onReset">Reset</b-button>
           <b-button type="submit" variant="primary"
             @click="evt => {leavePage = true; onSubmit(evt)}">Salva</b-button>
