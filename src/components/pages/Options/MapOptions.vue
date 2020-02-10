@@ -1,29 +1,31 @@
 <template>
   <b-container fluid>
-      <b-row>
-        <b-col cols="12" v-if="!noMenu"><Menu/></b-col>
-        <b-col>
-          <h2 v-if="!noTitle">{{title || 'Opzioni mappa'}}</h2>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col cols="8" class="m-auto">
-            <h5>Clicca su un punto per scegliere il centro della mappa per future visualizzazioni.</h5>
-            <l-map :zoom="zoom" :center="center"
-                @update:center="invalidateSize"
-                style="width:70vw;height:70vh" ref="myMap">
-                <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-                     <l-geo-json :geojson="geoJson" @click="handleClick"></l-geo-json>
-                     <l-marker :lat-lng="popUp.position" @update:lat-lng="panToPoint"
-                      ref="myMarker">
-                        <l-popup>
-                            <p>{{popUp.txt}}</p>
-                            <b-button @click="salvaPunto">Salva</b-button>
-                        </l-popup>
-                     </l-marker>
-            </l-map>
-        </b-col>
-      </b-row>
+    <b-row>
+      <b-col cols="12" v-if="!noMenu">
+        <Menu/>
+      </b-col>
+      <b-col>
+        <h2 v-if="!noTitle">{{title || 'Opzioni mappa'}}</h2>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="8" class="m-auto">
+        <h5>Clicca su un punto per scegliere il centro della mappa per future visualizzazioni.</h5>
+        <l-map :zoom="zoom" :center="center"
+          @update:center="invalidateSize"
+          style="width:70vw;height:70vh" ref="myMap">
+          <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+          <l-geo-json :geojson="geoJson" @click="handleClick"></l-geo-json>
+          <l-marker :lat-lng="popUp.position" @update:lat-lng="panToPoint"
+            ref="myMarker">
+            <l-popup>
+              <p>{{popUp.txt}}</p>
+              <b-button @click="salvaPunto">Salva</b-button>
+            </l-popup>
+          </l-marker>
+        </l-map>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
