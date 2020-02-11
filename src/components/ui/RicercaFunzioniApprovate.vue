@@ -80,13 +80,7 @@ export default {
         storage: 'session',
         caption: this.caption,
         filterByColumn: true,
-        sendEmptyFilters: true,
-        sortIcon: {
-          base: 'fas',
-          is: 'fa-sort',
-          up: 'fa-sort-up',
-          down: 'fa-sort-down'
-        }
+        sendEmptyFilters: true
       }
     }
   },

@@ -20,7 +20,8 @@
         </b-form-input>
       </b-form-group>
       <b-form-group id="input-group-1" label="Identificazione:"
-        label-for="input-identificazione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        label-for="input-identificazione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
+        class="required-field">
         <remote-contextual-suggestions :waitTime="1000"
           :suggestionsPromise="queryIdentificazione">
           <my-autocomplete-input v-model="form.identificazione">
@@ -45,12 +46,14 @@
           autocomplete="off"></b-form-textarea>
       </b-form-group>
       <b-form-group id="input-group-1" label="MacroEpocaOrig:"
-        label-for="input-macro-epoca-orig" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        label-for="input-macro-epoca-orig" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
+        class="required-field">
         <b-form-select id="input-macro-epoca-orig" v-model="form.macroEpocaOrig"
          :options="meoOptions" required></b-form-select>
       </b-form-group>
       <b-form-group id="input-group-1" label="MacroEpocaCar:"
-        label-for="input-macro-epoca-car" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        label-for="input-macro-epoca-car" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
+        class="required-field">
         <b-form-select id="input-macro-epoca-car" v-model="form.macroEpocaCar"
          :options="mecOptions" required></b-form-select>
       </b-form-group>
@@ -68,7 +71,8 @@
           </my-autocomplete-input>
         </remote-contextual-suggestions>
       </b-form-group>
-      <b-form-group id="input-group-1" label="Esistenza:" label-for="input-esistenza" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+      <b-form-group id="input-group-1" label="Esistenza:" label-for="input-esistenza" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
+      class="required-field">
         <b-form-select id="input-esistenza" v-model="form.esistenza"
          :options="esistenzaOptions" required></b-form-select>
       </b-form-group>

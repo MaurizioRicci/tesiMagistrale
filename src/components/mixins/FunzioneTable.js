@@ -20,6 +20,10 @@ export default {
           'note',
           'schedatori_iniziali'
         ],
+        columnsDropdown: true,
+        columnsDisplay: {
+          schedatori_iniziali: 'mobileP'
+        },
         listColumns: {
           status: [
             { id: 0, text: 'In revisione' },
@@ -32,6 +36,8 @@ export default {
           ruolor: [],
           funzione: []
         },
+        perPage: 30,
+        perPageValues: [],
         texts: {
           limit: 'Risultati per pagina',
           noResults: 'Nessun risultato',

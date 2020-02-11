@@ -4,7 +4,8 @@ export default {
   data () {
     return {
       options: {
-        filterable: [ 'id',
+        filterable: [
+          'id',
           'status',
           'identificazione',
           'descrizione',
@@ -15,7 +16,14 @@ export default {
           'bibliografia',
           'note',
           'toponimo',
-          'msg_validatore'],
+          'msg_validatore'
+        ],
+        columnsDropdown: true,
+        columnsDisplay: {
+          macroEpocaCar: 'mobileP',
+          macroEpocaOrig: 'mobileP',
+          schedatori_iniziali: 'mobileP'
+        },
         listColumns: {
           status: [
             { id: 0, text: 'In revisione' },

@@ -84,7 +84,8 @@ export default {
   mixins: [commonPageMixin, dettagliFunzioneMixin],
   computed: {
     ternaValida () {
-      return ternaVera(this.form.data_ante, this.form.data_poste, this.form.tipodata)
+      return (this.form.data_ante === '' && this.form.data_poste === '') ||
+        ternaVera(this.form.data_ante, this.form.data_poste, this.form.tipodata)
     },
     sonoRevisore () { return this.$store.getters.getUserData.role === 'revisore' }
   },

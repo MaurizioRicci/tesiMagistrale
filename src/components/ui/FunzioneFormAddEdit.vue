@@ -10,7 +10,7 @@
       </b-form-checkbox>
       <!-- id bene 1 -->
       <b-form-group id="input-group-id" label="ID:" label-for="input-id_bene"
-       label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+       label-cols-sm="6" label-cols-md="3" label-cols-xl="2" class="required-field">
         <b-form-input
           id="input-id_bene"
           v-model="form.id_bene"
@@ -31,43 +31,45 @@
             ></b-form-input>
       </b-form-group>
       <!-- data -->
-      <b-form-group id="input-group-1" label="Data:"
-        label-for="input-data" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-input
-          id="input-data"
-          type="text"
-          v-model="form.data"
-          placeholder=""
-          autocomplete="off"
-          ></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-group-1" label="Data anteriore:"
-        label-for="input-data_ante" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
-        :state="dataAnteValida" invalid-feedback="Data invalida">
-        <b-form-input
-          id="input-data_ante"
-          type="text"
-          v-model="form.data_ante"
-          placeholder=""
-          autocomplete="off"
-          v-setcustomvalidity="dataAnteValida"
-          ></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-group-1" label="Data posteriore:"
-        label-for="input-data_poste" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
-        :state="dataPosteValida" invalid-feedback="Data invalida">
-        <b-form-input
-          id="input-data_poste"
-          type="text"
-          v-model="form.data_poste"
-          placeholder=""
-          autocomplete="off"
-          v-setcustomvalidity="dataPosteValida"
-          ></b-form-input>
-      </b-form-group>
+      <b-row>
+        <b-col sm="6" md="3" xl="2" class="col-form-label">
+          <label>Data</label>
+        </b-col>
+        <b-col>
+          <b-form-group id="input-group-1" label="Da:"
+            label-for="input-data_ante" label-cols-sm="6"
+            label-cols-md="3" label-cols-xl="2"
+            :state="dataAnteValida" invalid-feedback="Data invalida">
+            <b-form-input
+              id="input-data_ante"
+              type="text"
+              v-model="form.data_ante"
+              placeholder=""
+              autocomplete="off"
+              v-setcustomvalidity="dataAnteValida"
+              ></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col>
+          <b-form-group id="input-group-1" label="A:"
+            label-for="input-data_poste" label-cols-sm="6"
+            label-cols-md="3" label-cols-xl="2"
+            :state="dataPosteValida" invalid-feedback="Data invalida">
+            <b-form-input
+              id="input-data_poste"
+              type="text"
+              v-model="form.data_poste"
+              placeholder=""
+              autocomplete="off"
+              v-setcustomvalidity="dataPosteValida"
+              ></b-form-input>
+          </b-form-group>
+        </b-col>
+      </b-row>
       <!-- tipo data -->
       <b-form-group id="input-group-1" label="Tipo data:"
-        label-for="input-tipodata" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        label-for="input-tipodata" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
+        class="required-field">
         <b-form-select id="input-tipodata" v-model="form.tipodata"
          :options="tipoDataOptions" required></b-form-select>
       </b-form-group>
@@ -75,13 +77,15 @@
       <ruoli-form-tag v-model="form.ruolo" label="Ruoli" inputID="input-ruolo"/>
       <!-- funzione -->
       <b-form-group id="input-group-1" label="Funzione:"
-        label-for="input-funzione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+        label-for="input-funzione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
+        class="required-field">
         <b-form-select id="input-funzione" v-model="form.funzione"
          :options="funzioneOptions" required></b-form-select>
       </b-form-group>
       <!-- id bene 2 -->
       <b-form-group id="input-group-id_bener" label="ID rif:" label-for="input-id_bener"
-       label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+       label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
+       class="required-field">
         <b-form-input
           id="input-id_bener"
           v-model="form.id_bener"

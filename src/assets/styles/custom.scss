@@ -12,3 +12,18 @@
 // or via an @import
 
 .myMenu .nav-item:hover { background-color: darken($info, 15%); border-radius: 5px; }
+.dropdown-menu { z-index: 1500; }
+.required-field label::after {
+    content: '*';
+    color: red;
+    position: relative;
+    left: 5px;
+}
+
+.VueTables__columns-dropdown-wrapper {
+    position: relative;
+    top: 100%;
+}
+.VueTables__columns-dropdown-wrapper .dropdown-menu {
+    left: -100%;
+}

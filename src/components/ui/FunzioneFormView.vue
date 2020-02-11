@@ -28,39 +28,37 @@
           ></b-form-input>
       </b-form-group>
       <!-- data -->
-      <b-form-group id="input-group-1" label="Data:"
-        label-for="funzione_form_view_input-data" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-input
-          id="funzione_form_view_input-data"
-          type="text"
-          v-model="form.data"
-          disabled
-          placeholder=""
-          autocomplete="off"
-          ></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-group-1" label="Data anteriore:"
-        label-for="funzione_form_view_input-data_ante" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-input
-          id="funzione_form_view_input-data_ante"
-          type="text"
-          v-model="form.data_ante"
-          disabled
-          placeholder=""
-          autocomplete="off"
-          ></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-group-1" label="Data posteriore:"
-        label-for="funzione_form_view_input-data_poste" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-input
-          id="funzione_form_view_input-data_poste"
-          type="text"
-          v-model="form.data_poste"
-          disabled
-          placeholder=""
-          autocomplete="off"
-          ></b-form-input>
-      </b-form-group>
+      <b-row>
+        <b-col sm="6" md="3" xl="2" class="col-form-label">
+          <label>Data</label>
+        </b-col>
+        <b-col>
+          <b-form-group id="input-group-1" label="Da:"
+            label-for="funzione_form_view_input-data_ante" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+            <b-form-input
+              id="funzione_form_view_input-data_ante"
+              type="text"
+              v-model="form.data_ante"
+              disabled
+              placeholder=""
+              autocomplete="off"
+              ></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col>
+          <b-form-group id="input-group-1" label="A:"
+            label-for="funzione_form_view_input-data_poste" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+            <b-form-input
+              id="funzione_form_view_input-data_poste"
+              type="text"
+              v-model="form.data_poste"
+              disabled
+              placeholder=""
+              autocomplete="off"
+              ></b-form-input>
+          </b-form-group>
+        </b-col>
+      </b-row>
       <b-form-group id="input-group-1" label="Tipo data:"
         label-for="funzione_form_view_input-tipodata" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-input
