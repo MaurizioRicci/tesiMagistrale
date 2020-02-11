@@ -13,13 +13,11 @@
           <!-- Breve descrizione -->
           <b-col class="text-left mt-1" cols="12">
             <b-row align-h="center">
-              <b-col cols="12" md="10" lg="7">
+              <b-col cols="12" md="10" lg="9">
                 <p>
                   Questa applicazione permette di acquisire dati per il sistema di Historical GIS. I dati sono formati da <b-badge>Beni</b-badge>
                   (identificano un luogo sul territorio dove esiste o esisteva una entità geografica) e <b-badge>Funzioni</b-badge>
                   (descrivono le relazione tra beni; es: il bene 1 paga un tributo al bene 2).
-                </p>
-                <p>
                   La fase di acquisizione consiste nell'individuare Beni e Funzioni che legano insieme tali Beni. Prima di acquisire occorre andare sulle apposite pagine
                     <b-breadcrumb>
                       <b-breadcrumb-item active>Beni</b-breadcrumb-item>
@@ -236,5 +234,8 @@ p:last-child {
 }
 .breadcrumb-item::before {
   content: '→'
+}
+.list-group-item {
+  padding: 5px;
 }
 </style>
