@@ -4,6 +4,7 @@ export default {
   data () {
     return {
       options: {
+        caption: 'd',
         filterable: [
           'id',
           'status',

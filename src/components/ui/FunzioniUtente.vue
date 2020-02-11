@@ -134,7 +134,7 @@ export default {
   props: {
     cercaInArchivioTemp: Boolean,
     update: Boolean,
-    caption: { type: String, default: '' }
+    caption: { type: String, default: 'Qua ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incomplete.' }
   },
   methods: {
     getData: function () {

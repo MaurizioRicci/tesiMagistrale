@@ -18,9 +18,7 @@
               @loadingFailed="loading=false"/>
           </b-tab>
           <b-tab title="Altri Beni utente" active>
-            <p v-if="role==='schedatore'">Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
-            <p v-if="role==='revisore'">Qua ci sono i beni da revisionare</p>
-            <BeniUtente  cercaInArchivioTemp :update.sync="triggerUpdate"
+            <BeniUtente  cercaInArchivioTemp :update.sync="triggerUpdate" :caption="caption"
               @loading="loading=true" @loaded="loading=false"
               @loadingFailed="loading=false"/>
             <b-button @click="waitUserConfirmation=true"
@@ -58,7 +56,12 @@ export default {
   mixins: [commonPageMixin],
   components: { Menu, BeniUtente, LoadingOverlay },
   computed: {
-    role: function () { return this.$store.getters.getUserData.role }
+    role: function () { return this.$store.getters.getUserData.role },
+    caption: function () {
+      return this.role === 'schedatore'
+        ? 'Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.'
+        : 'Qua ci sono i beni da revisionare'
+    }
   },
   data: function () {
     return {
@@ -88,3 +91,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.card-body {
+  padding: 5px;
+}
+</style>

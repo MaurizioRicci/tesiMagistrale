@@ -140,7 +140,7 @@ export default {
   props: {
     cercaInArchivioTemp: Boolean,
     update: Boolean,
-    caption: { type: String, default: '' }
+    caption: { type: String, default: 'Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.' }
   },
   methods: {
     getData: function () {

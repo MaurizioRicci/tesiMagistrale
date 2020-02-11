@@ -18,8 +18,6 @@
               @loadingFailed="loading=false"/>
           </b-tab>
           <b-tab title="Altre funzioni utente" active>
-            <p v-if="role==='schedatore'">Qua ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incompleti.</p>
-            <p v-if="role==='revisore'">Qua ci sono le funzioni da revisionare</p>
             <FunzioniUtente cercaInArchivioTemp :update.sync="triggerUpdate"
               @loading="loading=true" @loaded="loading=false"
               @loadingFailed="loading=false"/>
@@ -58,7 +56,12 @@ export default {
   mixins: [commonPageMixin],
   components: { Menu, FunzioniUtente, LoadingOverlay },
   computed: {
-    role: function () { return this.$store.getters.getUserData.role }
+    role: function () { return this.$store.getters.getUserData.role },
+    caption: function () {
+      return this.role === 'schedatore'
+        ? 'Qua ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incomplete.'
+        : 'Qua ci sono le funzioni da revisionare.'
+    }
   },
   data: function () {
     return {
