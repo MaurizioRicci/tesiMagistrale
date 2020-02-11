@@ -223,6 +223,7 @@ p:last-child {
 }
 .card-header {
   font-weight: bold;
+  padding: 7px;
 }
 .breadcrumb, .breadcrumb-item {
   display: inline-block;

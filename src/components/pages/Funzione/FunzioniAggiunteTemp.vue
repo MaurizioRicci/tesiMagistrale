@@ -28,7 +28,7 @@
       </b-col>
     </b-row>
     <b-toast id="confirm-toast" title="Richiesta conferma" solid no-auto-hide
-      toaster="b-toaster-bottom-full" variant="secondary" v-model="waitUserConfirmation">
+      toaster="b-toaster-bottom-center" variant="secondary" v-model="waitUserConfirmation">
       <div class="row justify-content-center">
         <div class="col-12">
           <p>Le funzioni pronte verranno inviate al controllo,
@@ -77,7 +77,7 @@ export default {
       let url = storeGetters.funzioniMettiInRevisioneURL
       axios.post(url, qs.stringify(postData))
         .then(ok => {
-          this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
+          this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Funzioni inviate al revisore.'])
           this.$vueEventBus.$once('master-page-show-msg-ok',
             () => {
               // se tutto va bene nascondo la finestra di conferma

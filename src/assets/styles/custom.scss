@@ -11,15 +11,23 @@
 // And define any of your custom or additional CSS/SCSS here,
 // or via an @import
 
+// menu
 .myMenu .nav-item:hover { background-color: darken($info, 15%); border-radius: 5px; }
 .dropdown-menu { z-index: 1500; }
+
+// asterisco campi obbligatori
 .required-field label::after {
     content: '*';
     color: red;
     position: relative;
     left: 5px;
 }
-.VueTables .row { height: 0px; }
+
+//vue tables per sprecare meno spazio
+.VueTables .row:first-child { 
+    position: absolute;
+    right: 20px;
+ }
 .VueTables__columns-dropdown-wrapper .dropdown-menu {
     left: -100%;
 }

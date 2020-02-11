@@ -77,7 +77,7 @@ export default {
       let url = storeGetters.beniMettiInRevisioneURL
       axios.post(url, qs.stringify(postData))
         .then(ok => {
-          this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok'])
+          this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Beni inviati al revisore.'])
           this.$vueEventBus.$once('master-page-show-msg-ok',
             () => {
               // se tutto va bene nascondo la finestra di conferma
