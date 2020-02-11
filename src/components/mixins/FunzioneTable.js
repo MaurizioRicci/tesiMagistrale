@@ -9,7 +9,7 @@ export default {
           'status',
           'denominazione',
           'denominazioner',
-          'data',
+          'data_ante',
           'tipodata',
           'funzione',
           'id_bene',

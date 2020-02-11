@@ -64,7 +64,7 @@ export default {
         'azioni',
         'denominazione',
         'denominazioner',
-        'data',
+        'data_ante',
         'tipodata',
         'funzione',
         'id_bene',

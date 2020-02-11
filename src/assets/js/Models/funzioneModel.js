@@ -11,7 +11,6 @@ export default () => {
     status: 2,
     denominazione: '',
     denominazioner: '',
-    data: '',
     data_ante: '',
     data_poste: '',
     tipodata: '',
