@@ -118,7 +118,9 @@ export default {
         .then(() => {
           this.resetData()
           let cercaInArchivioTempp = true
-          this.fetchBeneDataByID(this.idBene, this.idUtente, cercaInArchivioTempp)
+          this.fetchBeneDataByID(this.idBene, this.idUtente, cercaInArchivioTempp, {
+            noResultsMsg: 'Bene da revisionare non trovato'
+          })
         })
     }
   },

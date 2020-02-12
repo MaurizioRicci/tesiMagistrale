@@ -164,6 +164,10 @@ export default {
   },
   methods: {
     showBeneDetails (idBene, idUtenteBene) {
+      if (!idBene) {
+        this.$vueEventBus.$emit('master-page-show-msg', ['Errore', 'Nessun ID specificato per il bene.'])
+        return
+      }
       let postData = {
         'id': idBene,
         'id_utente': idUtenteBene,
