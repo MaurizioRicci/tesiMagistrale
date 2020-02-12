@@ -8,27 +8,25 @@
         <h2>Login</h2>
       </b-col>
     </b-row>
-        <b-row align-h="center">
-      <b-col cols="12" md="6" lg="3">
+    <b-row align-h="center">
+      <b-col cols="8" md="5" lg="4">
         <b-alert :show="showError" variant="danger">{{errorMsg}}</b-alert>
         <b-form @submit="onSubmit" @reset="onReset">
-          <b-form-group id="input-group-1" label="Username:" label-for="input-username" label-cols="2">
-            <b-col cols="12">
-              <b-form-input id="input-username" v-model="formData.username" type="text" required placeholder=""></b-form-input>
-            </b-col>
+          <b-form-group id="input-group-1" label="Username:" label-for="input-username" label-cols="3">
+            <b-form-input id="input-username" v-model="formData.username" type="text"
+              required placeholder="" class="col-9 col-xl-8"></b-form-input>
           </b-form-group>
-          <b-form-group id="input-group-1" label="Password:" label-for="input-password" label-cols="2">
-            <b-col cols="12">
-              <b-form-input
-                id="input-password"
-                v-model="formData.password"
-                type="password"
-                required
-                placeholder=""
+          <b-form-group id="input-group-1" label="Password:" label-for="input-password" label-cols="3">
+            <b-form-input
+              class="col-9 col-xl-8"
+              id="input-password"
+              v-model="formData.password"
+              type="password"
+              required
+              placeholder=""
               ></b-form-input>
-            </b-col>
           </b-form-group>
-            <b-button type="submit" variant="primary">Submit</b-button>
+          <b-button type="submit" variant="primary">Submit</b-button>
           <b-button type="reset" variant="danger">Reset</b-button>
           <!-- si passa sempre dal login lato server a ogni lancio dell'applicazione -->
           <b-form-checkbox v-if="true"
@@ -37,13 +35,13 @@
             name="checkbox-1"
             value="si"
             unchecked-value="no"
-          >
-      Remember me
-    </b-form-checkbox>
+            >
+            Remember me
+          </b-form-checkbox>
         </b-form>
       </b-col>
-        </b-row>
-    </b-container>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
