@@ -15,6 +15,11 @@
 .myMenu .nav-item:hover { background-color: darken($info, 15%); border-radius: 5px; }
 .dropdown-menu { z-index: 1500; }
 
+// meno padding per le liste
+.list-group-item {
+    padding: 5px;
+}
+
 // asterisco campi obbligatori
 .required-field label::after {
     content: '*';

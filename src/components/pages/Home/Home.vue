@@ -236,7 +236,4 @@ p:last-child {
 .breadcrumb-item::before {
   content: '→'
 }
-.list-group-item {
-  padding: 5px;
-}
 </style>

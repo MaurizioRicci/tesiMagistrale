@@ -191,9 +191,6 @@ export default {
             ['Errore', msg])
         })
     },
-    applyFilterID (query) {
-      Event.$emit('vue-tables.filter::id', query)
-    },
     openChildRow (data) {
       const row = data.row
       fetchBene(this, {

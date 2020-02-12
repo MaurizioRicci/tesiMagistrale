@@ -31,15 +31,15 @@
             ></b-form-input>
       </b-form-group>
       <!-- data -->
-      <b-row>
-        <b-col sm="6" md="3" xl="2" class="col-form-label">
+      <b-row no-gutters>
+        <b-col md="3" xl="2" class="col-form-label">
           <label>Data</label>
         </b-col>
-        <b-col>
+        <b-col cols="12" md>
           <b-form-group id="input-group-1" label="Da:"
-            label-for="input-data_ante" label-cols-sm="6"
+            label-for="input-data_ante" label-cols="2" label-cols-sm="6"
             label-cols-md="3" label-cols-xl="2"
-            :state="dataAnteValida" invalid-feedback="Data invalida">
+            :state="dataAnteValida">
             <b-form-input
               id="input-data_ante"
               type="text"
@@ -48,13 +48,16 @@
               autocomplete="off"
               v-setcustomvalidity="dataAnteValida"
               ></b-form-input>
+              <b-form-invalid-feedback :state="dataAnteValida">
+                <span id="data_ante-help">Data invalida. Vedi date supportate</span>
+              </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-        <b-col>
+        <b-col cols="12" md>
           <b-form-group id="input-group-1" label="A:"
-            label-for="input-data_poste" label-cols-sm="6"
+            label-for="input-data_poste" label-cols="2" label-cols-sm="6"
             label-cols-md="3" label-cols-xl="2"
-            :state="dataPosteValida" invalid-feedback="Data invalida">
+            :state="dataPosteValida">
             <b-form-input
               id="input-data_poste"
               type="text"
@@ -63,6 +66,9 @@
               autocomplete="off"
               v-setcustomvalidity="dataPosteValida"
               ></b-form-input>
+              <b-form-invalid-feedback :state="dataPosteValida">
+                <span id="data_poste-help">Data invalida. Vedi date supportate</span>
+              </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -120,6 +126,8 @@
         <b-form-textarea id="input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
       </b-form-group>
     </b-form>
+    <HelpDate target="data_ante-help"/>
+    <HelpDate target="data_poste-help"/>
   </div>
 </template>
 
@@ -127,6 +135,7 @@
 import setCustomValidity from '@/components/directives/setCustomValidity'
 import FunzioneFormToolTip from '@/components/ui/FunzioneFormToolTip'
 import RuoliFormTag from '@/components/ui/RuoliFormTag'
+import HelpDate from '@/components/ui/HelpDate'
 import * as dict from '@/assets/js/loadDict'
 import { dataVera } from '@/assets/js/date/dateF'
 
@@ -135,7 +144,8 @@ export default {
   name: 'FormBeneLeggiScrivi',
   components: {
     FunzioneFormToolTip,
-    RuoliFormTag
+    RuoliFormTag,
+    HelpDate
   },
   mixins: [],
   directives: {
