@@ -29,10 +29,10 @@
       </b-form-group>
       <!-- data -->
       <b-row>
-        <b-col sm="6" md="3" xl="2" class="col-form-label">
+        <b-col md="3" xl="2" class="col-form-label">
           <label>Data</label>
         </b-col>
-        <b-col>
+        <b-col cols="12" md>
           <b-form-group id="input-group-1" label="Da:"
             label-for="funzione_form_view_input-data_ante" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
             <b-form-input
@@ -45,7 +45,7 @@
               ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col>
+        <b-col cols="12" md>
           <b-form-group id="input-group-1" label="A:"
             label-for="funzione_form_view_input-data_poste" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
             <b-form-input
@@ -177,9 +177,6 @@ export default {
         .then(data => {
           this.beneData = data
           this.$bvModal.show('modal-dettagli-bene')
-          this.$nextTick(() => {
-            this.$refs.myMap.invalidateSize()
-          })
         })
     }
   }

@@ -12,8 +12,7 @@
       </b-col>
     </b-row>
     <b-row align-h="center">
-      <transition name="slide-fade" v-on:leave="mapCols = 12">
-        <b-col cols="8" v-show="12-mapCols > 0">
+      <b-col cols="8">
 
         <FunzioneCopiaIncolla :funzioneModel="form" no-paste/>
 
@@ -23,9 +22,9 @@
           <b-button type="reset" variant="danger" @click="onEdit"
             v-if="!cercaInArchivioTemp">Modifica</b-button>
 
-        </b-col>
-      </transition>
-      <b-col :cols="mapCols">
+      </b-col>
+
+      <b-col cols="4">
         <MyMap ref="myMap" locked
           :center="mapCenter" :zoom="17" @ingrandisci-mappa="ingrandisciMappa"
           @rimpicciolisci-mappa="rimpicciolisciMappa"/>
@@ -43,7 +42,6 @@ import MyMap from '@/components/ui/Map'
 import FunzioneFormView from '@/components/ui/FunzioneFormView'
 import commonPageMixin from '@/components/mixins/CommonPage'
 import dettagliFunzioneMixin from '@/components/mixins/DettagliFunzione'
-import '@/assets/styles/slideFadeTransition.css'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 import FunzioneCopiaIncolla from '@/components/ui/FunzioneCopyPaste'
 
@@ -52,9 +50,7 @@ export default {
   components: { Menu, MyMap, FunzioneFormView, RicercaBeniApprovati, FunzioneCopiaIncolla },
   mixins: [commonPageMixin, dettagliFunzioneMixin],
   data () {
-    return {
-      mapCols: 4
-    }
+    return {}
   },
   methods: {
     ingrandisciMappa () {

@@ -16,9 +16,7 @@
       </b-col>
     </b-row>
     <b-row align-h="center">
-      <transition name="slide-fade" v-on:leave="mapCols = 12">
-        <!-- 12-mapCols > 0 => se la mappa occupa 12 colonne allora il form è nascosto -->
-        <b-col cols="8" v-show="12-mapCols > 0">
+      <b-col cols="8">
 
           <BeneFormAddEdit ref="form_bene" v-model="form"
             :validated="sendBtnClicked"/>
@@ -29,9 +27,9 @@
           <b-button v-if="!editMode" type="submit" variant="primary"
             @click="evt => {leavePage = false; onSubmit(evt)}">Salva e acquisisci altro bene</b-button>
 
-        </b-col>
-      </transition>
-      <b-col :cols="mapCols">
+      </b-col>
+
+      <b-col cols="4">
         <MyMap ref="myMap" @ingrandisci-mappa="ingrandisciMappa"
           v-model="form.polygon" :zoom="editMode ? 17 : 10" :center="mapCenter"
           @rimpicciolisci-mappa="rimpicciolisciMappa"
@@ -50,7 +48,6 @@ import Menu from '@/components/ui/Menu'
 import LoginWarning from '@/components/ui/LoginWarning'
 import MyMap from '@/components/ui/Map'
 import LoadingOverlay from '@/components/ui/LoadingOverlay'
-import '@/assets/styles/slideFadeTransition.css'
 import lodashclonedeep from 'lodash.clonedeep'
 import axios from 'axios'
 import qs from 'qs'
@@ -68,7 +65,6 @@ export default {
   mixins: [commonPageMixin, dettagliBeneMixin],
   data () {
     return {
-      mapCols: 4,
       sendBtnClicked: false,
       // registra se il server ha risposto positivamente alla aggiunta/modifica
       serverRespOk: false,

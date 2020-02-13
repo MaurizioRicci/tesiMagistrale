@@ -12,8 +12,7 @@
       </b-col>
     </b-row>
     <b-row align-h="center">
-      <transition name="slide-fade" v-on:leave="mapCols = 12">
-        <b-col cols="8" v-show="12-mapCols > 0">
+      <b-col cols="8">
 
           <BeneFormView :form="form"
             :disallowIDChange="disallowIDChange"
@@ -23,8 +22,8 @@
           <b-button type="reset" variant="danger" @click="onEdit"
             v-if="!cercaInArchivioTemp">Modifica</b-button>
 
-        </b-col>
-      </transition>
+      </b-col>
+
       <b-col :cols="mapCols">
         <MyMap ref="myMap" locked v-model="form.polygon"
           :center="mapCenter" :zoom="17" @ingrandisci-mappa="ingrandisciMappa"
@@ -40,16 +39,13 @@ import MyMap from '@/components/ui/Map'
 import BeneFormView from '@/components/ui/BeneFormView'
 import commonPageMixin from '@/components/mixins/CommonPage'
 import dettagliBeneMixin from '@/components/mixins/DettagliBene'
-import '@/assets/styles/slideFadeTransition.css'
 
 export default {
   name: 'VisualizzaBene',
   components: { Menu, MyMap, BeneFormView },
   mixins: [commonPageMixin, dettagliBeneMixin],
   data () {
-    return {
-      mapCols: 4
-    }
+    return {}
   },
   props: {
     // possibilità di scrivere un id da cercare

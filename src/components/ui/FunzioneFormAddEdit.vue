@@ -31,7 +31,7 @@
             ></b-form-input>
       </b-form-group>
       <!-- data -->
-      <b-row no-gutters>
+      <b-row>
         <b-col md="3" xl="2" class="col-form-label">
           <label>Data</label>
         </b-col>

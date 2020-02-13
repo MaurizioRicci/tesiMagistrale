@@ -14,9 +14,7 @@
       </b-col>
     </b-row>
     <b-row align-h="center">
-      <transition name="slide-fade" v-on:leave="mapCols = 12">
-        <!-- 12-mapCols > 0 => se la mappa occupa 12 colonne allora il form è nascosto -->
-        <b-col cols="8" v-show="12-mapCols > 0">
+      <b-col cols="8">
 
           <FunzioneCopiaIncolla :funzioneModel="form"/>
 
@@ -29,9 +27,9 @@
           <b-button v-if="!editMode" type="submit" variant="primary"
             @click="evt => {leavePage = false; onSubmit(evt)}">Salva e acquisisci altra funzione</b-button>
 
-        </b-col>
-      </transition>
-      <b-col :cols="mapCols">
+      </b-col>
+
+      <b-col cols="4">
         <MyMap ref="myMap" locked @ingrandisci-mappa="ingrandisciMappa"
           v-model="form.polygon" :zoom="editMode ? 17 : 10" :center="mapCenter"
           @rimpicciolisci-mappa="rimpicciolisciMappa"/>
@@ -58,7 +56,6 @@ import FunzioneFormAddEdit from '@/components/ui/FunzioneFormAddEdit'
 import Menu from '@/components/ui/Menu'
 import LoginWarning from '@/components/ui/LoginWarning'
 import MyMap from '@/components/ui/Map'
-import '@/assets/styles/slideFadeTransition.css'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 import BeniUtente from '@/components/ui/BeniUtente'
 import FunzioneCopiaIncolla from '@/components/ui/FunzioneCopyPaste'
@@ -91,7 +88,6 @@ export default {
   },
   data () {
     return {
-      mapCols: 4,
       sendBtnClicked: false,
       // registra se il server ha risposto positivamente alla aggiunta/modifica
       serverRespOk: false,
