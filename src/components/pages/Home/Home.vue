@@ -47,7 +47,7 @@
             <b-card header="Collegamenti rapidi" no-body bg-variant="info" text-variant="white">
               <b-list-group flush>
                 <b-list-group-item>
-                  <b-link to="bene/aggiungi">
+                  <b-link to="/bene/aggiungi">
                   Aggiungi un bene</b-link>
                   </b-list-group-item>
                 <b-list-group-item>
@@ -55,12 +55,11 @@
                   Ricerca un bene</b-link>
                   </b-list-group-item>
                 <b-list-group-item>
-                  <b-link to="funzione/aggiungi">
+                  <b-link to="/funzione/aggiungi">
                   Aggiungi una funzione tra due beni</b-link>
                 </b-list-group-item>
                 <b-list-group-item>
-                  <b-link to="">
-                  Aiuto (DA FARE)</b-link>
+                  <b-link to="/aiuto">Aiuto</b-link>
                 </b-list-group-item>
               </b-list-group>
             </b-card>
