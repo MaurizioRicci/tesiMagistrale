@@ -67,6 +67,7 @@ export default {
       type: Object,
       default: function () {
         return {
+          // fullScreen, impostazioni mappa, vedi dettagli altri beni
           zoom: true, settings: true, watch: true
         }
       }

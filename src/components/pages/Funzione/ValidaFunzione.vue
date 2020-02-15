@@ -12,16 +12,12 @@
       <b-col>
         <h4>Funzione in archivio definitivo</h4>
         <FunzioneFormView :form="formFunzioneArchDef" :disallowIDChange="true"/>
-        <!-- <MyMap ref="myMap1" locked :zoom="17" :controls="mapControls"
-            v-model="formBeneArchDef.polygon" :center="mapCenterArchDef"/> -->
       </b-col>
       <b-col>
         <h4>Funzione da approvare</h4>
         <FunzioneFormAddEdit ref="form_funzione" v-model="form" no-draft
             :validated="sendBtnClicked"/>
-        <!-- <MyMap ref="myMap2" v-model="form.polygon"
-            :controls="mapControls"
-            :zoom="17" :center="mapCenter"/> -->
+        <MyMap ref="myMap2" :zoom="17"/>
       </b-col>
     </b-row>
     <b-row align-h="center" class="mt-2">
@@ -58,8 +54,7 @@ export default {
     return {
       sendBtnClicked: false,
       formFunzioneArchDef: getModelloFunzione(),
-      mapCenterArchDef: [0, 0],
-      mapControls: { zoom: false, settings: false }
+      mapCenterArchDef: [0, 0]
     }
   },
   computed: {
