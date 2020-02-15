@@ -19,6 +19,7 @@ import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
 import RicercaFunzioniApprovate from '@/components/ui/RicercaFunzioniApprovate'
 
+// @group Pages
 export default {
   name: 'FunzioniRicercaApprovate',
   components: { Menu, RicercaFunzioniApprovate },

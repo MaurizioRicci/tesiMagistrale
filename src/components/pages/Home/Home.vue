@@ -157,6 +157,7 @@ import { deleteCookie } from '@/assets/js/cookie'
 import axios from 'axios'
 import qs from 'qs'
 
+// @group Pages
 export default {
   name: 'Home',
   components: { Menu },

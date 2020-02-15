@@ -96,6 +96,8 @@ const sortByID = function (ascending) {
   }
 }
 
+// @group Pages
+// Consente di aggiungere o modificare gli utenti, lascia la possibilità di assegnare tutti i dati.
 export default {
   name: 'GestisciUtenti',
   components: { Menu },

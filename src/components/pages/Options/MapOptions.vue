@@ -35,6 +35,8 @@ import Menu from '@/components/ui/Menu'
 import { LMap, LTileLayer, LGeoJson, LMarker, LPopup } from 'vue2-leaflet'
 import axios from 'axios'
 
+// @group Pages
+// Mostra la pagine delle opzioni per la mappa
 export default {
   name: 'MapOptions',
   components: { Menu, LMap, LTileLayer, LGeoJson, LMarker, LPopup },

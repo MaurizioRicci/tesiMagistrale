@@ -45,6 +45,7 @@ import dettagliFunzioneMixin from '@/components/mixins/DettagliFunzione'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 import FunzioneCopiaIncolla from '@/components/ui/FunzioneCopyPaste'
 
+// @group Pages
 export default {
   name: 'VisualizzaFunzione',
   components: { Menu, MyMap, FunzioneFormView, RicercaBeniApprovati, FunzioneCopiaIncolla },

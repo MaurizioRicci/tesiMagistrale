@@ -40,6 +40,7 @@ import BeneFormView from '@/components/ui/BeneFormView'
 import commonPageMixin from '@/components/mixins/CommonPage'
 import dettagliBeneMixin from '@/components/mixins/DettagliBene'
 
+// @group Pages
 export default {
   name: 'VisualizzaBene',
   components: { Menu, MyMap, BeneFormView },

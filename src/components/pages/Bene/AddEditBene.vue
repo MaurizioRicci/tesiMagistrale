@@ -52,6 +52,7 @@ import lodashclonedeep from 'lodash.clonedeep'
 import axios from 'axios'
 import qs from 'qs'
 
+// @group Pages
 // Aggiunge o Modifica un bene esistente
 export default {
   name: 'AggiungiModificaBene',

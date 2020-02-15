@@ -47,6 +47,7 @@ import MyMap from '@/components/ui/Map'
 import axios from 'axios'
 import qs from 'qs'
 
+// @group Pages
 // Valida un bene mostrando il confronto con la versione in archivio definitivo
 export default {
   name: 'ValidaBene',

@@ -65,6 +65,7 @@ import { ternaVera } from '@/assets/js/date/dateF'
 import axios from 'axios'
 import qs from 'qs'
 
+// @group Pages
 // Aggiunge o Modifica una funzione esistente
 export default {
   name: 'AggiungiModificaFunzione',

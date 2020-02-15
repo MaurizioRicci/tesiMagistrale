@@ -51,6 +51,7 @@ import LoadingOverlay from '@/components/ui/LoadingOverlay'
 import axios from 'axios'
 import qs from 'qs'
 
+// @group Pages
 export default {
   name: 'BeniAggiuntiTemp',
   mixins: [commonPageMixin],

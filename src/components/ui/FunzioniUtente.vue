@@ -119,7 +119,7 @@ import axios from 'axios'
 // Beni Aggiunti o In Revisione, mostra i beni aggiunti dall'utente
 // oppure quelli che ha in revisione
 export default {
-  name: 'BeniUtente',
+  name: 'FunzioniUtente',
   components: {
     IconMsg
   },

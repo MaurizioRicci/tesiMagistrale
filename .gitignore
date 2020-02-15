@@ -2,6 +2,8 @@
 node_modules
 /dist
 .history/
+# docs folder
+website/
 
 # local env files
 .env.local

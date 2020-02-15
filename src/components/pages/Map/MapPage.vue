@@ -41,6 +41,8 @@ import Menu from '@/components/ui/Menu'
 import MyMap from '@/components/ui/Map'
 import dettagliBeneMixin from '@/components/mixins/DettagliBene'
 
+// @group Pages
+// Forse da togliere
 export default {
   name: 'MapPage',
   components: { Menu, MyMap },

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+// @group Pages Mostra la pagina di errore. Componente statico.
 export default {
   name: 'Error404'
 }

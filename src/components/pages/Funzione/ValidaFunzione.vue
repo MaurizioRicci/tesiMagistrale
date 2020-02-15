@@ -48,7 +48,8 @@ import { ternaVera } from '@/assets/js/date/dateF'
 import axios from 'axios'
 import qs from 'qs'
 
-// Valida un bene mostrando il confronto con la versione in archivio definitivo
+// @group Pages
+// Valida una funzione mostrando il confronto con la versione in archivio definitivo
 export default {
   name: 'ValidaFunzione',
   components: { Menu, FunzioneFormView, FunzioneFormAddEdit, MyMap },

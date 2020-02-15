@@ -49,6 +49,7 @@ import { setCookie, getCookie, existCookie, deleteCookie } from '@/assets/js/coo
 import qs from 'qs'
 import axios from 'axios'
 
+// @group Pages
 export default {
   name: 'LoginPage',
   data () {
