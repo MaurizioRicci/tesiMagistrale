@@ -111,31 +111,8 @@
       </b-form-group>
     </b-form>
 
-    <b-modal id="modal-dettagli-bene" title="Dettagli Bene"
-      size="huge" hide-footer @shown="$refs.myMap.invalidateSize()">
-    <div role="tablist">
-      <b-card no-body class="mb-1">
-        <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block href="#" v-b-toggle.accordion-1 variant="info">Mappa</b-button>
-        </b-card-header>
-        <b-collapse id="accordion-1" visible accordion="accordion-bene-details" role="tabpanel">
-          <b-card-body>
-            <MyMap ref="myMap" :polygon="beneData.form.polygon"
-             :center="beneData.mapCenter" locked :zoom="17"/>
-          </b-card-body>
-        </b-collapse>
-      </b-card>
-      <b-card no-body class="mb-1">
-        <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block href="#" v-b-toggle.accordion-2 variant="info">Attributi</b-button>
-        </b-card-header>
-        <b-collapse id="accordion-2" accordion="accordion-bene-details" role="tabpanel">
-          <b-card-body>
-            <BeneFormView v-if="beneData" :form="beneData.form" disallowIDChange/>
-          </b-card-body>
-        </b-collapse>
-      </b-card>
-    </div>
+    <b-modal id="modal-dettagli-bene" title="Dettagli Bene" size="huge" hide-footer>
+      <BeneOverview :idBene="formBene.id" :idUtente="formBene.id_utente"/>
     </b-modal>
 
   </div>
@@ -144,40 +121,27 @@
 <script>
 import FunzioneFormToolTip from '@/components/ui/FunzioneFormToolTip'
 import RuoliFormTag from '@/components/ui/RuoliFormTag'
-import BeneFormView from '@/components/ui/BeneFormView'
-import fetchBene from '@/assets/js/fetchBene'
-import MyMap from '@/components/ui/Map'
+import BeneOverview from '@/components/ui/BeneOverview'
 import getBeneModel from '@/assets/js/Models/beneModel'
 import '@/assets/styles/hugeModal.css'
 
 // Renderizza il form per la visualizzazione di una funzione
 export default {
   name: 'FormFunzioneLettura',
-  components: { FunzioneFormToolTip, RuoliFormTag, BeneFormView, MyMap },
+  components: { FunzioneFormToolTip, RuoliFormTag, BeneOverview },
   data () {
     return {
-      beneData: { form: getBeneModel(), mapCenter: [0, 0] }
+      formBene: getBeneModel()
     }
   },
   props: {
     form: { type: Object, required: true }
   },
   methods: {
-    showBeneDetails (idBene, idUtenteBene) {
-      if (!idBene) {
-        this.$vueEventBus.$emit('master-page-show-msg', ['Errore', 'Nessun ID specificato per il bene.'])
-        return
-      }
-      let postData = {
-        'id': idBene,
-        'id_utente': idUtenteBene,
-        'tmp_db': idUtenteBene !== ''
-      }
-      fetchBene(this, postData)
-        .then(data => {
-          this.beneData = data
-          this.$bvModal.show('modal-dettagli-bene')
-        })
+    showBeneDetails (idBene, idUtente) {
+      this.formBene.id = idBene
+      this.formBene.id_utente = idUtente
+      this.$bvModal.show('modal-dettagli-bene')
     }
   }
 }
