@@ -111,7 +111,7 @@
       </b-form-group>
     </b-form>
 
-    <b-modal id="modal-dettagli-bene" title="Dettagli Bene" size="huge" hide-footer>
+    <b-modal id="modal-dettagli-bene" title="Dettagli Bene" size="xl" hide-footer>
       <BeneOverview :idBene="formBene.id" :idUtente="formBene.id_utente"/>
     </b-modal>
 
@@ -123,7 +123,6 @@ import FunzioneFormToolTip from '@/components/ui/FunzioneFormToolTip'
 import RuoliFormTag from '@/components/ui/RuoliFormTag'
 import BeneOverview from '@/components/ui/BeneOverview'
 import getBeneModel from '@/assets/js/Models/beneModel'
-import '@/assets/styles/hugeModal.css'
 
 // Renderizza il form per la visualizzazione di una funzione
 export default {

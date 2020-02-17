@@ -49,7 +49,7 @@ export default {
     // @vuese
     // carico i dettagli del bene sapendo che id & id_utente sono stati passati
     // tramite le proprietà del componente
-    showBeneDetailsProps () { this.showBeneDetails(this.idBene, this.idUtente) },
+    showBeneDetailsProps () { return this.showBeneDetails(this.idBene, this.idUtente) },
     // @vuese
     // carico i dettagli di uno specifico bene
     showBeneDetails (idBene, idUtenteBene) {
@@ -62,10 +62,10 @@ export default {
         'id_utente': idUtenteBene,
         'tmp_db': idUtenteBene !== ''
       }
-      fetchBene(this, postData)
+      return fetchBene(this, postData)
         .then(data => {
           this.beneData = data
-          this.$bvModal.show('modal-dettagli-bene')
+          this.$refs.myMap.invalidateSize()
         })
     }
   },

@@ -13,7 +13,6 @@
     </b-row>
     <b-row align-h="center">
       <b-col cols="8">
-
           <BeneFormView :form="form"
             :disallowIDChange="disallowIDChange"
             @requestedId="id => fetchBeneDataByID(id)"/>
@@ -21,13 +20,11 @@
           <!-- si modificano solo beni definitivi -->
           <b-button type="reset" variant="danger" @click="onEdit"
             v-if="!cercaInArchivioTemp">Modifica</b-button>
-
       </b-col>
 
-      <b-col :cols="mapCols">
+      <b-col cols="4">
         <MyMap ref="myMap" locked v-model="form.polygon"
-          :center="mapCenter" :zoom="17" @ingrandisci-mappa="ingrandisciMappa"
-          @rimpicciolisci-mappa="rimpicciolisciMappa"/>
+          :center="mapCenter" :zoom="17"/>
       </b-col>
     </b-row>
   </b-container>
@@ -53,14 +50,6 @@ export default {
     disallowIDChange: Boolean
   },
   methods: {
-    ingrandisciMappa () {
-      this.mapCols = 12
-      this.$nextTick(() => this.$refs.myMap.invalidateSize())
-    },
-    rimpicciolisciMappa () {
-      this.mapCols = 4
-      this.$nextTick(() => this.$refs.myMap.invalidateSize())
-    },
     onEdit () {
       this.$router.push('/bene/modifica/' + this.formRetrived.id)
     },
