@@ -40,7 +40,8 @@
                               v-if="!options.editableColumns.includes(colName) || !isEditing()">
                                 <!-- class="d-inline-block w-100" da spessore per la modifica della cella
                                 anche se la cella ha come contenuto stringa vuota (utente appena aggiunto) -->
-                                <a class="d-inline-block w-100">{{row[colName]}}</a>
+                                <a class="d-inline-block"
+                                  :class="{'w-100': row[colName] === ''}">{{row[colName]}}</a>
                             </span>
                             <span :id="colName + row.gid" v-else>
                                 <b-form-input type="number" v-model="row[colName]" :formatter="v => Math.max(-1, v)"
@@ -60,7 +61,7 @@
                             </b-tooltip>
                             <b-tooltip :target="colName + row.gid" triggers="hover"
                               v-if="checkIniziali(row, colName, row[colName])">
-                                Le iniziali devono essere maiuscole
+                                Le iniziali devono essere maiuscole/non duplicate
                             </b-tooltip>
                             <b-tooltip :target="colName + row.gid" triggers="hover"
                               v-if="userCollide(row, colName, row[colName])">
@@ -241,6 +242,9 @@ export default {
           mod: this.users.mod
         }))
           .then((resp) => {
+            // resetto variabili di utenti inseriti/modificati
+            this.users.ins = []
+            this.users.mod = []
             this.$vueEventBus.$emit('master-page-show-msg',
               ['Info', 'Operazione completata'])
             this.retriveUsers()
@@ -268,7 +272,8 @@ export default {
     },
     // dice se le iniziali non sono scritte in maiuscolo
     checkIniziali: function (row, colName, valoreCella) {
-      let res = colName === 'iniziali' && valoreCella !== valoreCella.toUpperCase()
+      let res = (colName === 'iniziali' && valoreCella !== valoreCella.toUpperCase()) ||
+        (colName === 'iniziali' && this.overlappingInizali.includes(row.gid))
       this.errors.iniziali = this.errors.iniziali || res
       return res
     },
@@ -324,6 +329,23 @@ export default {
           // id utente diversi e almeno uno dei due id deve sovrapporsi
           if (el.gid !== el2.gid && (overlapID(el.id_min, el2.id_min, el2.id_max) ||
             overlapID(el.id_max, el2.id_min, el2.id_max))) {
+            overlapping.push(el.gid)
+            overlapping.push(el2.gid)
+          }
+        })
+      })
+      return overlapping
+    },
+    // computa la lista di id di utenti con stesse iniziali
+    overlappingInizali: function () {
+      let copy = this.wholeUsers
+      // lista di utenti da aggiungere/modificare
+      let addEdit = this.users.ins.concat(this.users.mod)
+      let overlapping = []
+      addEdit.forEach(el => {
+        copy.forEach(el2 => {
+          // id utente diversi e almeno uno dei due id deve sovrapporsi
+          if (el.gid !== el2.gid && el.iniziali === el2.iniziali) {
             overlapping.push(el.gid)
             overlapping.push(el2.gid)
           }
