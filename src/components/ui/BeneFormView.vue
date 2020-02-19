@@ -28,14 +28,15 @@
       </b-form-group>
       <b-form-group id="input-group-1" label="Descrizione:"
         label-for="bene_form_view_input-descrizione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-input
+        <b-form-textarea
           id="bene_form_view_input-descrizione"
           type="text"
           v-model="form.descrizione"
           disabled
+          v-autoresize
           placeholder=""
           autocomplete="off"
-          ></b-form-input>
+          ></b-form-textarea>
       </b-form-group>
       <b-form-group id="input-group-1" label="MacroEpocaOrig:"
         label-for="bene_form_view_input-macro-epoca-orig" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
@@ -75,6 +76,7 @@
           v-model="form.bibliografia"
           type="text"
           disabled
+          v-autoresize
           placeholder=""></b-form-textarea>
       </b-form-group>
       <b-form-group id="input-group-1" label="Schedatori:" label-for="bene_form_view_input-schedatori" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
@@ -83,13 +85,15 @@
           v-model="form.schedatori_iniziali"
           type="text"
           disabled
+          v-autoresize
           placeholder=""></b-form-textarea>
       </b-form-group>
       <b-form-group id="input-group-1" label="Note:" label-for="bene_form_view_input-note" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-textarea disabled id="bene_form_view_input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
+        <b-form-textarea v-autoresize disabled id="bene_form_view_input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
       </b-form-group>
       <b-form-group id="input-group-1" label="Geometria:" label-for="bene_form_view_input-geometria" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-textarea disabled id="bene_form_view_input-geometria" v-model="polygonStr" type="text" placeholder=""></b-form-textarea>
+        <b-form-textarea disabled id="bene_form_view_input-geometria" v-model="polygonStr" type="text" placeholder=""
+          v-autoresize></b-form-textarea>
       </b-form-group>
     </b-form>
   </div>
@@ -97,11 +101,15 @@
 
 <script>
 import BeneFormToolTip from '@/components/ui/BeneFormToolTip'
+import autoResize from '@/components/directives/autoResizeTextArea'
 
 // Renderizza il form per la visualizzazione di un bene
 export default {
   name: 'FormBeneLettura',
   components: { BeneFormToolTip },
+  directives: {
+    autoresize: autoResize
+  },
   data () {
     return {}
   },

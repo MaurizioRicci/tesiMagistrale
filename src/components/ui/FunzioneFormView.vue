@@ -96,6 +96,7 @@
           v-model="form.bibliografia"
           type="text"
           disabled
+          v-autoresize
           placeholder=""></b-form-textarea>
       </b-form-group>
       <b-form-group id="input-group-1" label="Schedatori:" label-for="funzione_form_view_input-schedatori" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
@@ -104,10 +105,12 @@
           v-model="form.schedatori_iniziali"
           type="text"
           disabled
+          v-autoresize
           placeholder=""></b-form-textarea>
       </b-form-group>
       <b-form-group id="input-group-1" label="Note:" label-for="funzione_form_view_input-note" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-textarea disabled id="funzione_form_view_input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
+        <b-form-textarea disabled id="funzione_form_view_input-note" v-autoresize
+         v-model="form.note" type="text" placeholder=""></b-form-textarea>
       </b-form-group>
     </b-form>
 
@@ -123,11 +126,15 @@ import FunzioneFormToolTip from '@/components/ui/FunzioneFormToolTip'
 import RuoliFormTag from '@/components/ui/RuoliFormTag'
 import BeneOverview from '@/components/ui/BeneOverview'
 import getBeneModel from '@/assets/js/Models/beneModel'
+import autoResize from '@/components/directives/autoResizeTextArea'
 
 // Renderizza il form per la visualizzazione di una funzione
 export default {
   name: 'FormFunzioneLettura',
   components: { FunzioneFormToolTip, RuoliFormTag, BeneOverview },
+  directives: {
+    autoresize: autoResize
+  },
   data () {
     return {
       formBene: getBeneModel()

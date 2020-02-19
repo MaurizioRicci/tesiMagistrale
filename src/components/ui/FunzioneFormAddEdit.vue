@@ -118,11 +118,13 @@
           id="input-bibliografia"
           v-model="form.bibliografia"
           type="text"
+          v-autoresize
           placeholder=""></b-form-textarea>
       </b-form-group>
       <!-- note -->
       <b-form-group id="input-group-1" label="Note:" label-for="input-note" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-textarea id="input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
+        <b-form-textarea id="input-note" v-model="form.note" v-autoresize
+         type="text" placeholder=""></b-form-textarea>
       </b-form-group>
     </b-form>
     <HelpDate target="data_ante-help"/>
@@ -137,6 +139,7 @@ import RuoliFormTag from '@/components/ui/RuoliFormTag'
 import HelpDate from '@/components/ui/HelpDate'
 import * as dict from '@/assets/js/loadDict'
 import { dataVera } from '@/assets/js/date/dateF'
+import autoResize from '@/components/directives/autoResizeTextArea'
 
 // Renderizza il form per la aggiunta/modifica di una funzione
 export default {
@@ -148,7 +151,8 @@ export default {
   },
   mixins: [],
   directives: {
-    setcustomvalidity: setCustomValidity
+    setcustomvalidity: setCustomValidity,
+    autoresize: autoResize
   },
   props: {
     validated: Boolean,

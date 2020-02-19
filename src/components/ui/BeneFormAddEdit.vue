@@ -41,6 +41,7 @@
         <b-form-textarea
           id="input-descrizione"
           type="text"
+          v-autoresize
           v-model="form.descrizione"
           placeholder=""
           autocomplete="off"></b-form-textarea>
@@ -92,14 +93,15 @@
         <b-form-textarea
           id="input-bibliografia"
           v-model="form.bibliografia"
+          v-autoresize
           type="text"
           placeholder=""></b-form-textarea>
       </b-form-group>
       <b-form-group id="input-group-1" label="Note:" label-for="input-note" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-textarea id="input-note" v-model="form.note" type="text" placeholder=""></b-form-textarea>
+        <b-form-textarea id="input-note" v-autoresize v-model="form.note" type="text" placeholder=""></b-form-textarea>
       </b-form-group>
       <b-form-group id="input-group-1" label="Geometria:" label-for="input-geometria" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
-        <b-form-textarea disabled id="input-geometria" :value="polygonStr" type="text" placeholder=""></b-form-textarea>
+        <b-form-textarea disabled id="input-geometria" v-autoresize :value="polygonStr" type="text" placeholder=""></b-form-textarea>
       </b-form-group>
     </b-form>
   </div>
@@ -110,6 +112,7 @@ import BeneFormToolTip from '@/components/ui/BeneFormToolTip'
 import MyAutocompleteInput from '@/components/ui/MyAutocompleteInput'
 import RemoteContextualSuggestions from '@/components/common/RemoteContextualSuggestions'
 import * as dict from '@/assets/js/loadDict'
+import autoResize from '@/components/directives/autoResizeTextArea'
 import axios from 'axios'
 
 // Renderizza il form per la aggiunta/modifica di un bene
@@ -119,6 +122,9 @@ export default {
     BeneFormToolTip,
     MyAutocompleteInput,
     RemoteContextualSuggestions
+  },
+  directives: {
+    autoresize: autoResize
   },
   mixins: [],
   props: {
