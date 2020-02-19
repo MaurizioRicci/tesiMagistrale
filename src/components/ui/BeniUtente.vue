@@ -1,7 +1,7 @@
 <template>
 <div>
   <v-client-table ref="myTable" :columns="columns" v-model="tableData" :options="options"
-  class="myTable table-sm">
+  class="myTable table-sm" name="beniUtente">
 
         <template v-slot:status="{row}">
           <div :class="{
@@ -220,10 +220,13 @@ export default {
         'esistenza',
         'bibliografia',
         'note',
-        'msg_validatore'
+        'msg_validatore',
+        'schedatori_iniziali'
       ],
       tableData: [],
       options: {
+        saveState: true,
+        storage: 'session',
         caption: this.caption,
         headings: {
           macroEpocaCar: 'Mec',

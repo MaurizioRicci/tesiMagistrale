@@ -1,7 +1,9 @@
 <template>
   <b-container fluid class="myMenu p-0">
     <b-navbar toggleable="lg" type="dark" variant="info" class="mb-1">
-      <b-navbar-brand to="/home">Beni Lunigiana</b-navbar-brand>
+      <b-navbar-brand to="/home" title="Home">
+          <font-awesome-icon icon="home" size="lg" style="color: white;"/>
+      </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="w-100" align="center">
@@ -31,6 +33,12 @@
           <span style="color:white;" :class="{'text-warning': !currUsername}">
             User: {{currUsername || '???'}}
           </span>
+        </b-nav-item>
+      </b-navbar-nav>
+
+      <b-navbar-nav class="w-100" align="center">
+        <b-nav-item to="/aiuto">
+          Aiuto
         </b-nav-item>
       </b-navbar-nav>
 

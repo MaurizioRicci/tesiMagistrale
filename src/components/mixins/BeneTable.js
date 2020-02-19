@@ -17,7 +17,8 @@ export default {
           'bibliografia',
           'note',
           'toponimo',
-          'msg_validatore'
+          'msg_validatore',
+          'schedatori_iniziali'
         ],
         columnsDropdown: true,
         columnsDisplay: {

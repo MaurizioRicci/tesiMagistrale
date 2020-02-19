@@ -74,10 +74,9 @@
       </b-row>
       <!-- tipo data -->
       <b-form-group id="input-group-1" label="Tipo data:"
-        label-for="input-tipodata" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
-        class="required-field">
+        label-for="input-tipodata" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-select id="input-tipodata" v-model="form.tipodata"
-         :options="tipoDataOptions" required></b-form-select>
+         :options="tipoDataOptions"></b-form-select>
       </b-form-group>
       <!-- ruolo -->
       <ruoli-form-tag v-model="form.ruolo" label="Ruoli" inputID="input-ruolo"/>

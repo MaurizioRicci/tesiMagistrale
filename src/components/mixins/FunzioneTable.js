@@ -10,6 +10,7 @@ export default {
           'denominazione',
           'denominazioner',
           'data_ante',
+          'data_poste',
           'tipodata',
           'funzione',
           'id_bene',
@@ -20,8 +21,16 @@ export default {
           'note',
           'schedatori_iniziali'
         ],
+        headings: {
+          data_ante: 'DataDa',
+          data_poste: 'DataA',
+          denominazioner: 'DenominazioneR',
+          id_bener: 'Id beneR',
+          ruolor: 'RuoloR'
+        },
         columnsDropdown: true,
         columnsDisplay: {
+          id: 'mobileP',
           schedatori_iniziali: 'mobileP'
         },
         listColumns: {

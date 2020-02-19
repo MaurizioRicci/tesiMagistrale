@@ -1,7 +1,7 @@
 <template>
 <div>
   <v-client-table ref="myTable" :columns="columns" v-model="tableData" :options="options"
-  class="myTable table-sm">
+  class="myTable table-sm" name="funzioniUtente">
 
         <template v-slot:status="{row}">
           <div :class="{
@@ -205,21 +205,25 @@ export default {
         'id',
         'status',
         'azioni',
-        'denominazione',
-        'denominazioner',
         'data_ante',
+        'data_poste',
         'tipodata',
-        'funzione',
         'id_bene',
+        'denominazione',
         'ruolo',
+        'funzione',
         'id_bener',
+        'denominazioner',
         'ruolor',
         'bibliografia',
         'note',
+        'schedatori_iniziali',
         'msg_validatore'
       ],
       tableData: [],
       options: {
+        saveState: true,
+        storage: 'session',
         caption: this.caption,
         filterByColumn: true,
         editableColumns: ['msg_validatore'],

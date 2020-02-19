@@ -46,16 +46,14 @@
           autocomplete="off"></b-form-textarea>
       </b-form-group>
       <b-form-group id="input-group-1" label="MacroEpocaOrig:"
-        label-for="input-macro-epoca-orig" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
-        class="required-field">
+        label-for="input-macro-epoca-orig" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-select id="input-macro-epoca-orig" v-model="form.macroEpocaOrig"
-         :options="meoOptions" required></b-form-select>
+         :options="meoOptions"></b-form-select>
       </b-form-group>
       <b-form-group id="input-group-1" label="MacroEpocaCar:"
-        label-for="input-macro-epoca-car" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
-        class="required-field">
+        label-for="input-macro-epoca-car" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-select id="input-macro-epoca-car" v-model="form.macroEpocaCar"
-         :options="mecOptions" required></b-form-select>
+         :options="mecOptions"></b-form-select>
       </b-form-group>
       <b-form-group id="input-group-1" label="Toponimo:" label-for="input-toponimo" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <remote-contextual-suggestions :waitTime="1000"
@@ -71,10 +69,10 @@
           </my-autocomplete-input>
         </remote-contextual-suggestions>
       </b-form-group>
-      <b-form-group id="input-group-1" label="Esistenza:" label-for="input-esistenza" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
-      class="required-field">
+      <b-form-group id="input-group-1" label="Esistenza:" label-for="input-esistenza" label-cols-sm="6"
+        label-cols-md="3" label-cols-xl="2">
         <b-form-select id="input-esistenza" v-model="form.esistenza"
-         :options="esistenzaOptions" required></b-form-select>
+         :options="esistenzaOptions"></b-form-select>
       </b-form-group>
       <b-form-group id="input-group-1" label="Comune:" label-for="input-comune" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <remote-contextual-suggestions :waitTime="1000"

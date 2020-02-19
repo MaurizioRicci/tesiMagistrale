@@ -52,13 +52,31 @@ export default function dataVera (DS) {
     let RomDett = ['inizio', 'fine', 'metà', 'primametà', 'secondametà']
     let re = new RegExp(' ', 'g')
     sin = sin.replace(re, '') // # ORA considero la stringa tutta packed
-    let sinrem = sin
-    for (let dett of RomDett) {
+    // let sinrem = sin
+    /* / Prima: for (let dett of RomDett) {
       let i = sin.toLowerCase().indexOf(dett) // # se nella stringa c'è inizio, fine o altro ...
       if (i >= 0)sinrem = pythonSlice(0, i, sin)
     }
     if (!RomToArab.includes(sinrem.toUpperCase())) return false
-    return true
+    return true/ */
+
+    /* /
+    Correzione di MOG: for secolo in RomToArab:
+        if type(secolo) == str:        #  evito i numeri
+            for frazione in RomDett:
+                ipotesi = (secolo+frazione).lower()    # costruisco tutte le possibili combinazioni
+                if ipotesi == sin.lower():
+                    return True
+    return False
+    / */
+
+    for (let secolo of RomToArab) {
+      for (let frazione of RomDett) {
+        let ipotesi = (secolo + frazione).toLowerCase()
+        if (ipotesi === sin.toLowerCase()) return true
+      }
+    }
+    return false
   } catch (error) {
     console.warn('eccezione in dataVera', error)
     return false

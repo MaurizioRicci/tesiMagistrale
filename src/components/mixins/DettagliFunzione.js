@@ -58,7 +58,7 @@ export default {
       return fetchFunzione(this, postData)
         .then(data => {
           if (!data) {
-            this.$vueEventBus.$emit('master-page-show-msg', ['Info', noResultsMsg || 'No result found'])
+            this.$vueEventBus.$emit('master-page-show-msg', ['Info', noResultsMsg || 'Nessun risultato trovato'])
           } else {
             T.mapCenter = data.mapCenter
             T.form = data.form
