@@ -178,7 +178,7 @@ export default {
     dict2BsSelect (dict) {
       let options = [{ value: '', text: 'Seleziona un\'opzione', disabled: true }]
       return options.concat(dict.map(el => {
-        return { value: el.id, text: el.text || el.value }
+        return { value: el.id, text: el.value }
       }))
     },
     getTipoDataOptions () {
