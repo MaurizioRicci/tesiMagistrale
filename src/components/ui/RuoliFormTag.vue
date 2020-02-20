@@ -17,7 +17,7 @@
           :options="availableOptions">
           <template v-slot:first>
             <!-- This is required to prevent bugs with Safari -->
-            <option disabled value="">Scegli un ruolo...</option>
+            <option value="">Scegli un ruolo...</option>
           </template>
         </b-form-select>
         <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-0">
@@ -41,6 +41,7 @@ import { loadRuolo } from '@/assets/js/loadDict'
 export default {
   name: 'RuoliFormTag',
   props: {
+    // array di valori/tag scelti, è una proprietà perchè è associata a v-model
     value: [Array],
     label: String,
     inputID: String,

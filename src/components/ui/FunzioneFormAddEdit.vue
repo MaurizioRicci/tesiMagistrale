@@ -143,7 +143,7 @@ import autoResize from '@/components/directives/autoResizeTextArea'
 
 // Renderizza il form per la aggiunta/modifica di una funzione
 export default {
-  name: 'FormBeneLeggiScrivi',
+  name: 'FormFunzioneLeggiScrivi',
   components: {
     FunzioneFormToolTip,
     RuoliFormTag,
@@ -176,7 +176,7 @@ export default {
     getDictFuncs () { return dict },
     checkValidity () { return this.$refs.form_bene.checkValidity() },
     dict2BsSelect (dict) {
-      let options = [{ value: '', text: 'Seleziona un\'opzione', disabled: true }]
+      let options = [{ value: '', text: 'Seleziona un\'opzione' }]
       return options.concat(dict.map(el => {
         return { value: el.id, text: el.value }
       }))

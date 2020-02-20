@@ -1,10 +1,12 @@
 import axios from 'axios'
 let cached = {}
 
-async function getOrCache (url) {
+function getOrCache (url) {
   if (!cached[url]) {
-    let resp = await axios.get(url)
-    cached[url] = resp
+    return axios.get(url).then(resp => {
+      cached[url] = resp
+      return resp
+    })
   }
   return Promise.resolve(cached[url])
 }

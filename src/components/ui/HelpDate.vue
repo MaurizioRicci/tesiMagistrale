@@ -5,19 +5,19 @@
       :show.sync="popoverShow">
 
       <template v-slot:title>
-        <b-button @click="onClose" class="close" aria-label="Close" title="Chiudi">
+        <b-button @click="close" class="close" aria-label="Close" title="Chiudi">
           <span class="d-inline-block" aria-hidden="true">&times;</span>
         </b-button>
         <span class="pr-2">Formato date supportate</span>
       </template>
 
     <b-list-group>
-        <b-list-group-item>1500</b-list-group-item>
-        <b-list-group-item>XV inizio</b-list-group-item>
-        <b-list-group-item>XV metà</b-list-group-item>
-        <b-list-group-item>XV fine</b-list-group-item>
-        <b-list-group-item>XV prima metà</b-list-group-item>
-        <b-list-group-item>XV seconda metà</b-list-group-item>
+      <b-list-group-item>1500</b-list-group-item>
+      <b-list-group-item>XV inizio</b-list-group-item>
+      <b-list-group-item>XV metà</b-list-group-item>
+      <b-list-group-item>XV fine</b-list-group-item>
+      <b-list-group-item>XV prima metà</b-list-group-item>
+      <b-list-group-item>XV seconda metà</b-list-group-item>
     </b-list-group>
 
     </b-popover>
@@ -35,8 +35,10 @@ export default {
       popoverShow: false
     }
   },
+  // @vuese
+  // chiude la finestra
   methods: {
-    onClose () {
+    cClose () {
       this.popoverShow = false
     }
   }
