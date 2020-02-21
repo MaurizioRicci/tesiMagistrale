@@ -20,6 +20,9 @@
     padding: 5px;
 }
 
+//tabelle piccole, ancora più piccole
+.table-sm td { padding: .1rem; }
+
 // asterisco campi obbligatori
 .required-field label::after {
     content: '*';
