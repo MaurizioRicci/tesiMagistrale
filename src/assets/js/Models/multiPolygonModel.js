@@ -32,7 +32,10 @@ Polygon.prototype.countVertex = function () { return this.latlngArr.length }
 
 Polygon.prototype.toString = function () { return JSON.stringify(this.latlngArr) }
 
-Polygon.prototype.reset = function () { this.latlngArr = [] }
+Polygon.prototype.reset = function () {
+  this.latlngArr = []
+  return this
+}
 
 Polygon.prototype.isEmpty = function () { return this.latlngArr.length <= 0 }
 

@@ -15,7 +15,7 @@ export default {
   // moduli che lo importano
   initToolbar: function (store, map, callbacks, disabledToolbar) {
     const L = window.L
-    callbacks = callbacks || defaultCallbacks
+    callbacks = Object.assign(defaultCallbacks, callbacks)
     store.drawnItems = L.featureGroup().addTo(map)
     store.drawControl = new L.Control.Draw({
       position: 'topleft',

@@ -13,17 +13,17 @@
         </b-alert>
         <b-alert variant="warning" :show="beneOverlap.length > 0">
           Il bene è molto vicino ai seguenti beni:
-          <b-list-group horizontal class="justify-content-center">
-            <b-list-group-item v-for="bene in beneOverlap" :key="bene.id"
+          <b-button-group class="justify-content-center" style="flex-wrap: wrap;">
+            <b-button v-for="bene in beneOverlap" :key="bene.id"
+              variant="light" class="btn-outline-info"
               title="Click per dettagli" v-b-modal.modal-bene-overview
-              @click="$refs.beneOverview.showBeneDetails(bene.id)"
-              style="cursor:pointer;">
+              @click="$refs.beneOverview.showBeneDetails(bene.id)">
              ID {{bene.id}} ({{ Math.round(Number(bene.dist)) }}m)
-            </b-list-group-item>
-          </b-list-group>
+            </b-button>
+          </b-button-group>
         </b-alert>
         <b-modal static id="modal-bene-overview" size="lg" hide-footer>
-          <BeneOverview lazyLoad ref="beneOverview"/>
+          <BeneOverview ref="beneOverview"/>
         </b-modal>
       </b-col>
     </b-row>

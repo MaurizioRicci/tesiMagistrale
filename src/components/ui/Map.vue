@@ -178,7 +178,9 @@ export default {
           this.$emit('change', this.currPolygon)
         },
         onDeleted: () => {
+          this.$set(this, 'currPolygon', this.currPolygon.reset())
           this.$emit('resetGeo')
+          this.$emit('change', this.currPolygon)
         }
       }
       // instanzio la toolbar di leaflet
