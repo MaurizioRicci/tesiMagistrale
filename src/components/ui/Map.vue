@@ -20,10 +20,6 @@ la proprietà locked; se presente disabilita la modifica -->
             <IconMsg icon_name="cog" icon_color="white"
               icon_msg="Impostazioni"/>
           </b-button>
-          <b-button v-if="!locked" key="resetGeo" @click="$emit('resetGeo')">
-            <IconMsg icon_name="trash" icon_color="red"
-              icon_msg="Resetta geografia"/>
-          </b-button>
         </b-button-group>
       </l-control>
 

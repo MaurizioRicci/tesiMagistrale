@@ -42,11 +42,9 @@
       </b-col>
 
       <b-col cols="4">
-        <MyMap ref="myMap" @ingrandisci-mappa="ingrandisciMappa"
+        <MyMap ref="myMap"
           v-model="form.polygon" :zoom="editMode ? 17 : 10" :center="mapCenter"
-          @rimpicciolisci-mappa="rimpicciolisciMappa"
-          @change="checkPolygonDist"
-          @resetGeo="form.polygon.reset()"/>
+          @change="checkPolygonDist"/>
       </b-col>
     </b-row>
   </b-container>

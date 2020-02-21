@@ -1,7 +1,6 @@
-export default (str, maxChars) => {
-  if (!maxChars) maxChars = 50
+export default (str, maxChars = 50) => {
   if (str) {
-    if (str.length <= maxChars) return str
+    if (str.length <= maxChars || maxChars <= 0) return str
     else return str.substring(0, maxChars) + '...'
   }
 }
