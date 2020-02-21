@@ -114,8 +114,8 @@
       </b-form-group>
     </b-form>
 
-    <b-modal id="modal-dettagli-bene" title="Dettagli Bene" size="xl" hide-footer>
-      <BeneOverview :idBene="formBene.id" :idUtente="formBene.id_utente"/>
+    <b-modal id="modal-dettagli-bene" title="Dettagli Bene" size="xl" static hide-footer>
+      <BeneOverview ref="beneOverview"/>
     </b-modal>
 
   </div>
@@ -125,7 +125,6 @@
 import FunzioneFormToolTip from '@/components/ui/FunzioneFormToolTip'
 import RuoliFormTag from '@/components/ui/RuoliFormTag'
 import BeneOverview from '@/components/ui/BeneOverview'
-import getBeneModel from '@/assets/js/Models/beneModel'
 import autoResize from '@/components/directives/autoResizeTextArea'
 
 // Renderizza il form per la visualizzazione di una funzione
@@ -136,17 +135,14 @@ export default {
     autoresize: autoResize
   },
   data () {
-    return {
-      formBene: getBeneModel()
-    }
+    return {}
   },
   props: {
     form: { type: Object, required: true }
   },
   methods: {
     showBeneDetails (idBene, idUtente) {
-      this.formBene.id = idBene
-      this.formBene.id_utente = idUtente
+      this.$refs.beneOverview.showBeneDetails(idBene, idUtente)
       this.$bvModal.show('modal-dettagli-bene')
     }
   }

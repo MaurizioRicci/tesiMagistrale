@@ -11,11 +11,13 @@ const defaultCallbacks = {
 }
 
 export default {
-  initToolbar: function (map, callbacks, disabledToolbar) {
+  // store perchè non posso salvare dentro questo file poichè webpack lo condivide tra tutti
+  // moduli che lo importano
+  initToolbar: function (store, map, callbacks, disabledToolbar) {
     const L = window.L
     callbacks = callbacks || defaultCallbacks
-    this.drawnItems = L.featureGroup().addTo(map)
-    this.drawControl = new L.Control.Draw({
+    store.drawnItems = L.featureGroup().addTo(map)
+    store.drawControl = new L.Control.Draw({
       position: 'topleft',
       draw: {
         polyline: false,
@@ -29,7 +31,7 @@ export default {
         circlemarker: false
       },
       edit: {
-        featureGroup: this.drawnItems,
+        featureGroup: store.drawnItems,
         edit: !disabledToolbar,
         remove: !disabledToolbar,
         polygon: {
@@ -41,13 +43,13 @@ export default {
         delete: !disabledToolbar
       }
     })
-    map.addControl(this.drawControl)
+    map.addControl(store.drawControl)
     map.on(window.L.Draw.Event.CREATED, (event) => {
       var layer = event.layer
       // cancello il vecchio layer quando l'utente clicca sulla
       // toolbar per aggiungere un poligono
-      this.drawnItems.clearLayers()
-      this.drawnItems.addLayer(layer)
+      store.drawnItems.clearLayers()
+      store.drawnItems.addLayer(layer)
       let gJSON = layer.toGeoJSON()
       callbacks.onCreated(gJSON)
     })
@@ -63,16 +65,16 @@ export default {
       callbacks.onDeleted()
     })
   },
-  addPoly: function (newPolygon) {
-    if (newPolygon && this.drawnItems) {
+  addPoly: function (store, newPolygon) {
+    if (newPolygon && store.drawnItems) {
       if (!(newPolygon instanceof Polygon)) {
         throw new Error('addPoly: atteso poligono di classe Polygon')
       }
       const L = window.L
-      this.drawnItems.clearLayers()
+      store.drawnItems.clearLayers()
       if (newPolygon.getLatLngs().length > 0) {
         let polygonL = new L.Polygon(newPolygon.getLatLngs())
-        this.drawnItems.addLayer(polygonL)
+        store.drawnItems.addLayer(polygonL)
       }
     }
   }

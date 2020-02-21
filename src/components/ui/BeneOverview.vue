@@ -4,7 +4,8 @@
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-button block href="#" v-b-toggle.accordion-1 variant="info">Mappa</b-button>
         </b-card-header>
-        <b-collapse id="accordion-1" visible accordion="accordion-bene-details" role="tabpanel">
+        <b-collapse id="accordion-1" visible accordion="accordion-bene-details" role="tabpanel"
+          @shown="updateMap">
           <b-card-body>
             <MyMap ref="myMap" :polygon="beneData.form.polygon"
              :center="beneData.mapCenter" locked :zoom="17"/>
@@ -60,17 +61,20 @@ export default {
       let postData = {
         'id': idBene,
         'id_utente': idUtenteBene,
-        'tmp_db': idUtenteBene !== ''
+        'tmp_db': idUtenteBene && idUtenteBene !== ''
       }
       return fetchBene(this, postData)
         .then(data => {
           this.beneData = data
-          this.$refs.myMap.invalidateSize()
+          this.updateMap()
         })
+    },
+    updateMap () {
+      this.$refs.myMap.invalidateSize()
     }
   },
   mounted () {
-    if (!this.lazyLoad) this.showBeneDetailsProps()
+    if (!this.lazyLoad && this.idBene) this.showBeneDetailsProps()
   }
 }
 </script>

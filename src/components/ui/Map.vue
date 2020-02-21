@@ -141,7 +141,9 @@ export default {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       state: { mappaIngrandita: false, watch: false },
       // serve poi se l'utente vuole modificarlo
-      currPolygon: this.polygon ? this.polygon.clone() : new Polygon()
+      currPolygon: this.polygon ? this.polygon.clone() : new Polygon(),
+      // serve al leaflet toolbar per salvare dentro il suo stato
+      toolbarStore: {}
     }
   },
   computed: {
@@ -191,11 +193,14 @@ export default {
         }
       }
       // instanzio la toolbar di leaflet
-      LeafletToolbar.initToolbar(this.leafletMapObject, callbacks, this.locked)
+      LeafletToolbar.initToolbar(this.toolbarStore, this.leafletMapObject, callbacks, this.locked)
       this.invalidateSize()
-      LeafletToolbar.addPoly(this.currPolygon)
+      LeafletToolbar.addPoly(this.toolbarStore, this.currPolygon)
       this.addPolygonToToolbar()
     })
+  },
+  updated () {
+    this.invalidateSize()
   }
 }
 </script>

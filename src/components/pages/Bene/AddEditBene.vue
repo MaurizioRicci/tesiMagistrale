@@ -11,8 +11,20 @@
         <b-alert show v-if="form.msg_validatore" variant="primary">
           Da rivedere: {{form.msg_validatore}}
         </b-alert>
-        <b-alert variant="warning" :show="beneOverlapTxt !== ''">{{beneOverlapTxt}}</b-alert>
-
+        <b-alert variant="warning" :show="beneOverlap.length > 0">
+          Il bene è molto vicino ai seguenti beni:
+          <b-list-group horizontal class="justify-content-center">
+            <b-list-group-item v-for="bene in beneOverlap" :key="bene.id"
+              title="Click per dettagli" v-b-modal.modal-bene-overview
+              @click="$refs.beneOverview.showBeneDetails(bene.id)"
+              style="cursor:pointer;">
+             ID {{bene.id}} ({{ Math.round(Number(bene.dist)) }}m)
+            </b-list-group-item>
+          </b-list-group>
+        </b-alert>
+        <b-modal static id="modal-bene-overview" size="lg" hide-footer>
+          <BeneOverview lazyLoad ref="beneOverview"/>
+        </b-modal>
       </b-col>
     </b-row>
     <b-row align-h="center">
@@ -48,6 +60,7 @@ import Menu from '@/components/ui/Menu'
 import LoginWarning from '@/components/ui/LoginWarning'
 import MyMap from '@/components/ui/Map'
 import LoadingOverlay from '@/components/ui/LoadingOverlay'
+import BeneOverview from '@/components/ui/BeneOverview'
 import lodashclonedeep from 'lodash.clonedeep'
 import axios from 'axios'
 import qs from 'qs'
@@ -61,7 +74,8 @@ export default {
     LoginWarning,
     BeneFormAddEdit,
     MyMap,
-    LoadingOverlay
+    LoadingOverlay,
+    BeneOverview
   },
   mixins: [commonPageMixin, dettagliBeneMixin],
   data () {
@@ -71,8 +85,8 @@ export default {
       serverRespOk: false,
       // decide se lasciare la pagina dopo aggiunta/modifica o se rimanere
       leavePage: true,
-      // mostra gli eventuali beni sovrapposti a quello che si sta creando
-      beneOverlapTxt: ''
+      // array di eventuali beni sovrapposti a quello che si sta creando
+      beneOverlap: []
     }
   },
   props: {
@@ -161,16 +175,7 @@ export default {
       // PostGIS vuole i punti come longitudine-latitudine
       postData.polygon = postData.polygon.flipCoordinates()
       axios.post(this.$store.getters.checkDistURL, qs.stringify(postData))
-        .then(resp => {
-          if (resp.data.length > 0) {
-            this.beneOverlapTxt = 'Il bene è molto vicino ai seguenti beni:'
-            let infoArr = resp.data.map(el => {
-              let dist = Math.floor(Number(el.dist))
-              return 'ID=' + el.id + ' (' + dist + 'm)'
-            })
-            this.beneOverlapTxt += infoArr.join(', ')
-          }
-        })
+        .then(resp => { this.beneOverlap = resp.data || [] })
     }
   },
   mounted () {
