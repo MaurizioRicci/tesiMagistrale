@@ -104,10 +104,6 @@ export default {
       this.leafletMapObject &&
         this.leafletMapObject.invalidateSize()
     },
-    updateCenter: function (center) {
-      this.leafletMapObject &&
-        this.leafletMapObject.setView(center, this.zoom)
-    },
     openPopUp (latlng, content) {
       const L = window.L
       L.popup({ maxWidth: '200', maxHeight: Number(this.height) * 0.8 })
@@ -131,7 +127,7 @@ export default {
     },
     addPolygonToToolbar () {
       this.invalidateSize()
-      LeafletToolbar.addPoly(this.currPolygon)
+      LeafletToolbar.addPoly(this.toolbarStore, this.currPolygon)
     }
   },
   data () {
@@ -152,13 +148,6 @@ export default {
     }
   },
   watch: {
-    // se cambia la proprietà aggiorno anche la copia del dato
-    center: {
-      deep: true,
-      handler (val) {
-        this.updateCenter(val)
-      }
-    },
     polygon: {
       deep: true,
       handler (polygon) {

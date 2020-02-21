@@ -15,6 +15,7 @@
           id="input-id_bene"
           v-model="form.id_bene"
           type="number"
+          min="1"
           required
           placeholder="">
         </b-form-input>
@@ -95,6 +96,7 @@
           id="input-id_bener"
           v-model="form.id_bener"
           type="number"
+          min="1"
           required
           placeholder="">
         </b-form-input>

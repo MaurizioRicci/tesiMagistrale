@@ -13,9 +13,9 @@
         <b-form-input
           id="input-id"
           v-model="form.id"
-          type="text"
-          required
+          type="number"
           disabled
+          required
           placeholder="">
         </b-form-input>
       </b-form-group>

@@ -8,6 +8,7 @@
         <b-form-input
           id="bene_form_view_input-id"
           type="number"
+          min="1"
           v-model="form.id"
           placeholder=""
           autocomplete="off"
