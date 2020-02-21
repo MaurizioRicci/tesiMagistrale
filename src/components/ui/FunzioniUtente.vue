@@ -166,11 +166,6 @@ export default {
       axios.post(this.$store.getters.segnalaFunzioneURL, qs.stringify(postData))
         .then(ok => this.$vueEventBus.$emit('master-page-show-msg',
           ['Info', 'Funzione segnalata correttamente']))
-        .catch(error => {
-          let msg = (error.response && error.response.data.msg) || error.message
-          this.$vueEventBus.$emit('master-page-show-msg',
-            ['Errore', msg])
-        })
     },
     cancellaTmp (row) {
       let userData = this.$store.getters.getUserData
@@ -181,11 +176,6 @@ export default {
           this.$vueEventBus.$emit('master-page-show-msg',
             ['Info', 'Funzione temporanea cancellata correttamente'])
           this.getData()
-        })
-        .catch(error => {
-          let msg = (error.response && error.response.data.msg) || error.message
-          this.$vueEventBus.$emit('master-page-show-msg',
-            ['Errore', msg])
         })
     },
     funzioneApprovabile (row) {

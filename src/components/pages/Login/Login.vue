@@ -91,12 +91,11 @@ export default {
     },
     onSubmit (evt) {
       evt.preventDefault()
-      axios.post(this.$store.getters.loginURL, qs.stringify(this.formData), {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
-      })
+      axios.post(this.$store.getters.loginURL, qs.stringify(this.formData))
         .then(function (resp) {
           // in ogni caso elimino il vecchio cookie (se presente)
           deleteCookie('userData')
+          // acquisisco ruolo & id
           this.formData.role = resp.data.role
           this.formData.id = resp.data.id
           // se c'è il flag salviamo un cookie con username e password
@@ -106,9 +105,6 @@ export default {
           }
           this.$store.commit('registerUser', this.formData)
           this.$router.push(this.prevPagePath)
-        }.bind(this))
-        .catch(function (error) {
-          this.errorMsg = (error.response && error.response.data.msg) || error.message
         }.bind(this))
     }
   },

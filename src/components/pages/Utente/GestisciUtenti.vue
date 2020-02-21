@@ -158,12 +158,6 @@ export default {
         usersList: true
       }))
         .then((resp) => { this.tableData = resp.data })
-        .catch((error) => {
-        // se è presente un messaggio di risposta dal server uso quello
-        // altrimenti viene usato un messaggio di axios relativo al codice d'errore
-          let msg = (error.response && error.response.data.msg) || error.message
-          this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
-        })
     },
     updateRow: function (row, column, oldVal, newVal) {
       let rowData = row.row
@@ -241,19 +235,13 @@ export default {
           ins: this.users.ins,
           mod: this.users.mod
         }))
-          .then((resp) => {
+          .then(resp => {
             // resetto variabili di utenti inseriti/modificati
             this.users.ins = []
             this.users.mod = []
             this.$vueEventBus.$emit('master-page-show-msg',
               ['Info', 'Operazione completata'])
             this.retriveUsers()
-          })
-          .catch((error) => {
-            // se è presente un messaggio di risposta dal server uso quello
-            // altrimenti viene usato un messaggio di axios relativo al codice d'errore
-            let msg = (error.response && error.response.data.msg) || error.message
-            this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
           })
       })
     },

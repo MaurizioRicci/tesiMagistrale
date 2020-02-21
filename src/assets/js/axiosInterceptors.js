@@ -1,25 +1,32 @@
+/* eslint-disable no-unused-vars */
 // Per disabilitare gli interceptors globabali
 // axiosInstance.get('/v2/api-endpoint', { handlerEnabled: false })
 const isHandlerEnabled = (config = {}) => {
-  // Sembra che handlerEnabled non passi poichè axios rimuove ciò che non conosce
   return !(config.hasOwnProperty('handlerEnabled') && !config.handlerEnabled)
 }
 
 // quando arriva la risposta
 export const errorHandlerResponse = (error, vueApp) => {
-  if (isHandlerEnabled(error.config) && error.response) {
+  // se gli interceptors globali sono attivi
+  if (isHandlerEnabled(error.config)) {
     // Handle errors
-    switch (error.response.status) {
-      case 401:
-        vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error', 'Invalid credentials'])
-        break
-      case 503:
-        vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error',
-          'Il sistema è offline, si prega di riprovare più tardi.'])
-        break
-      default:
-        vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error', error])
-    }
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error', 'Invalid credentials'])
+          break
+        case 422:
+          vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error',
+            'Richiesta non processabile dal server.'])
+          break
+        case 503:
+          vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error',
+            'Il sistema è offline, si prega di riprovare più tardi.'])
+          break
+        default:
+          vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore', error])
+      }
+    } else vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore', error])
   }
   return Promise.reject(error)
 }

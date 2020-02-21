@@ -95,9 +95,6 @@ export default {
               this.$vueEventBus.$once('master-page-show-msg-ok-sendData',
                 () => this.goBack())
             }
-          }, error => {
-            let msg = (error.response && error.response.data.msg) || error.message
-            this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
           })
       }
     },

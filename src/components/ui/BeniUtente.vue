@@ -169,11 +169,6 @@ export default {
       axios.post(this.$store.getters.segnalaBeneURL, qs.stringify(postData))
         .then(ok => this.$vueEventBus.$emit('master-page-show-msg',
           ['Info', 'Bene segnalato correttamente']))
-        .catch(error => {
-          let msg = (error.response && error.response.data.msg) || error.message
-          this.$vueEventBus.$emit('master-page-show-msg',
-            ['Errore', msg])
-        })
     },
     cancellaTmp (row) {
       let userData = this.$store.getters.getUserData
@@ -185,11 +180,6 @@ export default {
             ['Info', 'Bene temporaneo cancellato correttamente'])
           this.getData()
         })
-        .catch(error => {
-          let msg = (error.response && error.response.data.msg) || error.message
-          this.$vueEventBus.$emit('master-page-show-msg',
-            ['Errore', msg])
-        })
     },
     openChildRow (data) {
       const row = data.row
@@ -198,7 +188,6 @@ export default {
         'tmp_db': true,
         'id_utente': row.id_utente
       }).then(resp => {
-        console.log(resp)
         this.$set(this.currBeni, row.id, resp)
       })
     }

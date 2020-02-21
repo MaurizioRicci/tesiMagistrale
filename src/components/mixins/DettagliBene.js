@@ -67,11 +67,6 @@ export default {
             T.formRetrived = data.formRetrived
             return T.form
           }
-        }).catch(error => {
-        // se è presente un messaggio di risposta dal server uso quello
-        // altrimenti viene usato un messaggio di axios relativo al codice d'errore
-          let msg = (error.response && error.response.data.msg) || error.message
-          this.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg])
         })
     }
   }
