@@ -21,20 +21,20 @@
                essere collegata a un'altra per mezzo di una funzione (a tal proposito vedi aiuto funzioni).
                Il bene aggiunto dovra essere prima approvato da un revisore; nel caso un revisore aggiunga un bene, esso
                verrà aggiunto subito alla lista dei beni comuni a tutti gli utenti (detti beni definitivi).
-                <div slot="footer"><b-button href="#" variant="primary">Visita pagina</b-button></div>
+                <div slot="footer"><b-button to="/bene/aggiungi" variant="primary">Visita pagina</b-button></div>
               </b-card>
             </b-col>
             <b-col cols="12" md="6" xl class="d-flex">
               <b-card title="Visualizza un bene" tag="article" class="mb-2">
               Questa pagina permette di visualizzare un bene specifico dato un identificativo (un numero intero detto ID).
-                <div slot="footer"><b-button href="#" variant="primary" class="">Visita pagina</b-button></div>
+                <div slot="footer"><b-button to="/bene/dettagli_bene" variant="primary" class="">Visita pagina</b-button></div>
               </b-card>
             </b-col>
             <b-col cols="12" md="6" xl class="d-flex">
               <b-card title="Ricerca un bene" tag="article" class="mb-2">
                 Puoi ricercare, visualizzare e modificare un bene approvato per mezzo di questa pagina. Utilizza i filtri della tabella per ricercare.
                 Nella tabella premendo il pulsante + è possibile anche aprire la mappa e vedere l'ubicazione del bene.
-                <div slot="footer"><b-button href="#" variant="primary">Visita pagina</b-button></div>
+                <div slot="footer"><b-button to="/bene/ricerca" variant="primary">Visita pagina</b-button></div>
               </b-card>
             </b-col>
           </b-row>
@@ -44,20 +44,15 @@
             <b-row>
             <b-col cols="12" md="6" xl class="d-flex">
               <b-card title="Aggiungi una funzione" tag="article" class="mb-2">
-                Some quick example text to build on the card title and make up the bulk of the card's content.
-                <div slot="footer"><b-button href="#" variant="primary">Visita pagina</b-button></div>
-              </b-card>
-            </b-col>
-            <b-col cols="12" md="6" xl class="d-flex">
-              <b-card title="Visualizza una funzione" tag="article" class="mb-2">
-                Some quick example text to build on the card title and make up the bulk of the card's content.
-                <div slot="footer"><b-button href="#" variant="primary">Visita pagina</b-button></div>
+              In questa pagina è possibile aggiungere una funzione, ovvero una relazione tra due entità geografiche. La funzione aggiunta dovra essere prima approvata da un revisore; nel caso un revisore aggiunga una funzione, essa
+               verrà aggiunto subito alla lista di tutte le funzioni comuni a tutti gli utenti (dette funzioni definitive, vedi ricerca una funzione).
+                <div slot="footer"><b-button to="funzione/aggiungi" variant="primary">Visita pagina</b-button></div>
               </b-card>
             </b-col>
             <b-col cols="12" md="6" xl class="d-flex">
               <b-card title="Ricerca una funzione" tag="article" class="mb-2">
-                Some quick example text to build on the card title and make up the bulk of the card's content.
-                <div slot="footer"><b-button href="#" variant="primary">Visita pagina</b-button></div>
+                Puoi ricercare, visualizzare e modificare una funzione approvata per mezzo di questa pagina. Utilizza i filtri della tabella per ricercare.
+                <div slot="footer"><b-button to="/funzione/ricerca" variant="primary">Visita pagina</b-button></div>
               </b-card>
             </b-col>
           </b-row>
@@ -66,15 +61,17 @@
         <b-tab title="Mio lavoro">
             <b-row align-h="center">
             <b-col cols="12" md="6" xl="4" class="d-flex">
-              <b-card title="Aggiungi bene" tag="article" class="mb-2">
-                Some quick example text to build on the card title and make up the bulk of the card's content.
-                <div slot="footer"><b-button href="#" variant="primary">Visita pagina</b-button></div>
+              <b-card title="I miei beni" tag="article" class="mb-2">
+                Qua puoi vedere i tuoi beni approvati o quelli ancora incompleti, in fase di attesa o da rivedere.
+                I revisori vedranno i beni di altri utenti da approvare.
+                <div slot="footer"><b-button to="bene/mio_lavoro" variant="primary">Visita pagina</b-button></div>
               </b-card>
             </b-col>
             <b-col cols="12" md="6" xl="4" class="d-flex">
-              <b-card title="Visualizza un bene" tag="article" class="mb-2">
-                Some quick example text to build on the card title and make up the bulk of the card's content.
-                <div slot="footer"><b-button href="#" variant="primary">Visita pagina</b-button></div>
+              <b-card title="le mie funzioni" tag="article" class="mb-2">
+              Qua puoi vedere le tue funzioni approvate o quelle ancora incomplete, in fase di attesa o da rivedere.
+                I revisori vedranno le funzioni di altri utenti da approvare.
+                <div slot="footer"><b-button to="funzione/mio_lavoro" variant="primary">Visita pagina</b-button></div>
               </b-card>
             </b-col>
           </b-row>
