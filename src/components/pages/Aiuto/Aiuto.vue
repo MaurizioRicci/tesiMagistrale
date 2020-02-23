@@ -41,15 +41,15 @@
         </b-tab>
         <!-- aiuto Funzioni -->
         <b-tab title="Funzioni">
-            <b-row>
-            <b-col cols="12" md="6" xl class="d-flex">
+            <b-row align-h="center">
+            <b-col cols="12" md="6" xl="4" class="d-flex">
               <b-card title="Aggiungi una funzione" tag="article" class="mb-2">
               In questa pagina è possibile aggiungere una funzione, ovvero una relazione tra due entità geografiche. La funzione aggiunta dovra essere prima approvata da un revisore; nel caso un revisore aggiunga una funzione, essa
                verrà aggiunto subito alla lista di tutte le funzioni comuni a tutti gli utenti (dette funzioni definitive, vedi ricerca una funzione).
                 <div slot="footer"><b-button to="funzione/aggiungi" variant="primary">Visita pagina</b-button></div>
               </b-card>
             </b-col>
-            <b-col cols="12" md="6" xl class="d-flex">
+            <b-col cols="12" md="6" xl="4" class="d-flex">
               <b-card title="Ricerca una funzione" tag="article" class="mb-2">
                 Puoi ricercare, visualizzare e modificare una funzione approvata per mezzo di questa pagina. Utilizza i filtri della tabella per ricercare.
                 <div slot="footer"><b-button to="/funzione/ricerca" variant="primary">Visita pagina</b-button></div>
@@ -58,17 +58,17 @@
           </b-row>
         </b-tab>
         <!-- aiuto mio lavoro -->
-        <b-tab title="Mio lavoro">
+        <b-tab title="Il lavoro">
             <b-row align-h="center">
             <b-col cols="12" md="6" xl="4" class="d-flex">
-              <b-card title="I miei beni" tag="article" class="mb-2">
+              <b-card title="Beni" tag="article" class="mb-2">
                 Qua puoi vedere i tuoi beni approvati o quelli ancora incompleti, in fase di attesa o da rivedere.
                 I revisori vedranno i beni di altri utenti da approvare.
                 <div slot="footer"><b-button to="bene/mio_lavoro" variant="primary">Visita pagina</b-button></div>
               </b-card>
             </b-col>
             <b-col cols="12" md="6" xl="4" class="d-flex">
-              <b-card title="le mie funzioni" tag="article" class="mb-2">
+              <b-card title="Funzioni" tag="article" class="mb-2">
               Qua puoi vedere le tue funzioni approvate o quelle ancora incomplete, in fase di attesa o da rivedere.
                 I revisori vedranno le funzioni di altri utenti da approvare.
                 <div slot="footer"><b-button to="funzione/mio_lavoro" variant="primary">Visita pagina</b-button></div>

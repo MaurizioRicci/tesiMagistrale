@@ -61,6 +61,9 @@
                 <b-list-group-item>
                   <b-link to="/aiuto">Aiuto</b-link>
                 </b-list-group-item>
+                <b-list-group-item>
+                  <b-link @click="logout">Logout</b-link>
+                </b-list-group-item>
               </b-list-group>
             </b-card>
           </b-col>

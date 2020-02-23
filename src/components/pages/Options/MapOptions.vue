@@ -13,7 +13,7 @@
         <h5>Clicca su un punto per scegliere il centro della mappa per future visualizzazioni.</h5>
         <l-map :zoom="zoom" :center="center"
           @update:center="invalidateSize"
-          style="width:70vw;height:70vh" ref="myMap">
+          style="width:100%;height:70vh" ref="myMap">
           <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
           <l-geo-json :geojson="geoJson" @click="handleClick"></l-geo-json>
           <l-marker :lat-lng="popUp.position" @update:lat-lng="panToPoint"

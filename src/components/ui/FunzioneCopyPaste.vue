@@ -12,7 +12,7 @@
 
         <b-modal v-if="!noPaste" id="modal-incolla" title="Incolla funzione"
           key="incollaModal" @hidden="copiedMsgVal = ''" ok-only ok-title="Chiudi">
-          <b-pagination v-model="currentPage" pills per-page="1"
+          <b-pagination :value="lastPage" pills per-page="1"
             :total-rows="copiedModels.length" size="sm"
             hide-goto-end-buttons></b-pagination>
 
@@ -60,17 +60,17 @@ export default {
         'ruolor': 'Ruolo rif.'
       },
       // innesca il messaggio di avvenuta copia
-      copiedMsgVal: '',
-      // indice del modello dati da visualizzare
-      currentPage: 1
+      copiedMsgVal: ''
     }
   },
   computed: {
     copiedModels () { return this.$store.getters.getFunzioneCopiata },
+    // indice ultima pagina. Parte da 1 come richiesto da b-pagination
+    lastPage () { return this.copiedModels.length || 1 },
     buildValues () {
-      if (this.copiedModels &&
-        this.currentPage <= this.copiedModels.length) {
-        let currModel = this.copiedModels[this.currentPage - 1]
+      if (this.copiedModels && this.lastPage > 0 &&
+        this.lastPage <= this.copiedModels.length) {
+        let currModel = this.copiedModels[this.lastPage - 1]
         let valuesTmp = Object.keys(currModel).map(key => {
           // trasformo le chiavi del modello in array di oggetti con chiavi text & value
           // poi lo do in pasto a bootstrap

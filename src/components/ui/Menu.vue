@@ -22,9 +22,9 @@
       </b-navbar-nav>
 
       <b-navbar-nav class="w-100" align="center">
-        <b-nav-item-dropdown text="Il mio lavoro" class="d-inline-block">
-          <b-dropdown-item to="/bene/mio_lavoro">I miei beni</b-dropdown-item>
-          <b-dropdown-item to="/funzione/mio_lavoro">Le mie funzioni</b-dropdown-item>
+        <b-nav-item-dropdown text="Il lavoro" class="d-inline-block">
+          <b-dropdown-item to="/bene/mio_lavoro">Beni</b-dropdown-item>
+          <b-dropdown-item to="/funzione/mio_lavoro">Funzioni</b-dropdown-item>
       </b-nav-item-dropdown>
       </b-navbar-nav>
 

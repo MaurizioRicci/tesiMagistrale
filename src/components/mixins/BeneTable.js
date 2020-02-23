@@ -38,6 +38,9 @@ export default {
           esistenza: []
         },
         texts: {
+          filterBy: 'Filtra',
+          defaultOption: 'Scegli',
+          columns: 'Colonne',
           limit: 'Risultati per pagina',
           noResults: 'Nessun risultato',
           count: 'Mostro i beni da {from} a {to}, {count} beni totali|{count} beni|Un bene presente'

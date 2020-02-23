@@ -15,6 +15,12 @@ export default {
   // moduli che lo importano
   initToolbar: function (store, map, callbacks, disabledToolbar) {
     const L = window.L
+
+    L.drawLocal.edit.toolbar.buttons.edit = 'Edit polygon'
+    L.drawLocal.edit.toolbar.buttons.editDisabled = 'No polygons to edit'
+    L.drawLocal.edit.toolbar.buttons.remove = 'Delete polygon'
+    L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No polygons to delete'
+
     callbacks = Object.assign(defaultCallbacks, callbacks)
     store.drawnItems = L.featureGroup().addTo(map)
     store.drawControl = new L.Control.Draw({

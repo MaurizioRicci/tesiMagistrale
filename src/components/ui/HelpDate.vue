@@ -5,19 +5,21 @@
       :show.sync="popoverShow">
 
       <template v-slot:title>
+        <span class="pr-2" style="vertical-align: middle;">
+          Formato date supportate
+        </span>
         <b-button @click="close" class="close" aria-label="Close" title="Chiudi">
-          <span class="d-inline-block" aria-hidden="true">&times;</span>
+          <span aria-hidden="true">&times;</span>
         </b-button>
-        <span class="pr-2">Formato date supportate</span>
       </template>
 
     <b-list-group>
       <b-list-group-item>1500</b-list-group-item>
       <b-list-group-item>XV inizio</b-list-group-item>
       <b-list-group-item>XV metà</b-list-group-item>
-      <b-list-group-item>XV fine</b-list-group-item>
       <b-list-group-item>XV prima metà</b-list-group-item>
       <b-list-group-item>XV seconda metà</b-list-group-item>
+      <b-list-group-item>XV fine</b-list-group-item>
     </b-list-group>
 
     </b-popover>
@@ -38,7 +40,7 @@ export default {
   // @vuese
   // chiude la finestra
   methods: {
-    cClose () {
+    close () {
       this.popoverShow = false
     }
   }
@@ -47,4 +49,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+* >>> .popover-header {
+  padding: .3rem;
+}
 </style>

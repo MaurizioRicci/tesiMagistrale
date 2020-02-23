@@ -13,14 +13,14 @@ export const errorHandlerResponse = (error, vueApp) => {
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error', 'Invalid credentials'])
+          vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore', 'Credenziali invalide'])
           break
         case 422:
-          vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error',
+          vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore',
             'Richiesta non processabile dal server.'])
           break
         case 503:
-          vueApp.$vueEventBus.$emit('master-page-show-msg', ['Error',
+          vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore',
             'Il sistema è offline, si prega di riprovare più tardi.'])
           break
         default:

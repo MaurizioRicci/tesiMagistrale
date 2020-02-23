@@ -48,6 +48,9 @@ export default {
         perPage: 30,
         perPageValues: [],
         texts: {
+          filterBy: 'Filtra',
+          defaultOption: 'Scegli',
+          columns: 'Colonne',
           limit: 'Risultati per pagina',
           noResults: 'Nessun risultato',
           count: 'Mostro le funzioni da {from} a {to}, {count} funzioni totali|{count} funzioni|Una funzione presente'
