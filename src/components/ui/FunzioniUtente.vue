@@ -84,11 +84,11 @@
             </span>
             <span v-else>
                 <input type="text" v-model="row.msg_validatore">
-                <b-button type="button" class="btn btn-info btn-xs"
+                <b-button type="button" size="sm" variant="primary"
                   @click="update(row.msg_validatore); setEditing(false); inviaSegnalazione(row);">
                   Submit</b-button>
-                <button type="button" class="btn btn-default btn-xs"
-                  @click="revertValue(); setEditing(false)">Cancel</button>
+                <b-button type="button" size="sm"
+                  @click="revertValue(); setEditing(false)">Cancel</b-button>
             </span>
           </div>
         </div>
