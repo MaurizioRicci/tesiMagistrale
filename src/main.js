@@ -17,7 +17,7 @@ import { store } from './store/store'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faLock, faExclamationCircle, faSort, faSortUp, faSortDown, faCog,
   faPlusSquare, faMinusSquare, faInfoCircle, faCopy, faClipboard, faTrash,
-  faEdit, faCheckCircle, faHome }
+  faEdit, faCheckCircle, faHome, faSearchLocation }
   from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -35,7 +35,7 @@ import { ClientTable, ServerTable } from 'vue-tables-2'
 // Icone FontAwesome
 library.add(faLock, faExclamationCircle, faSort, faSortUp, faSortDown, faCog,
   faPlusSquare, faMinusSquare, faInfoCircle, faCopy, faClipboard, faTrash,
-  faEdit, faCheckCircle, faHome)
+  faEdit, faCheckCircle, faHome, faSearchLocation)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

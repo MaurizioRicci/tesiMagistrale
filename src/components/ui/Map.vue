@@ -16,6 +16,10 @@ la proprietà locked; se presente disabilita la modifica -->
             <IconMsg icon_name="info-circle" icon_color="white"
               icon_msg="Mostra dettagli dei beni"/>
           </b-button>
+          <b-button key="zoomToPoly" @click="() => zoomToPolygon()">
+            <IconMsg icon_name="search-location" icon_color="white"
+              icon_msg="Zoom alla geometria"/>
+          </b-button>
           <b-button to="/options/map" v-if="controls.settings" key="settings">
             <IconMsg icon_name="cog" icon_color="white"
               icon_msg="Impostazioni"/>
@@ -124,6 +128,14 @@ export default {
     addPolygonToToolbar () {
       this.invalidateSize()
       LeafletToolbar.addPoly(this.toolbarStore, this.currPolygon)
+    },
+    zoomToPolygon (polygon = this.currPolygon, zoom = 18) {
+      const L = window.L
+      if (polygon && polygon.countVertex() > 0) {
+        let poly = L.polygon(polygon.getLatLngs())
+        let lalo = poly.getBounds().getCenter()
+        if (this.leafletMapObject) { this.leafletMapObject.setView(lalo, zoom) }
+      }
     }
   },
   data () {
