@@ -31,7 +31,7 @@
                     @update="updateRow" ref="myTable">
                     <template v-for="colName in columns"
                         v-slot:[colName]="{row, update, setEditing, isEditing, revertValue}">
-                        <div :key="colName"
+                        <div :key="colName" style="cursor:pointer;"
                           :class="{'border rounded border-danger': hasErrors(row, colName, row[colName])}">
                             <!-- Se non è una colonna editabile o se non sono in editing
                             mostro il valore della cella semplice-->
@@ -43,13 +43,20 @@
                                 <a class="d-inline-block"
                                   :class="{'w-100': row[colName] === ''}">{{row[colName]}}</a>
                             </span>
+                            <!-- Se sto editando in base al nome della colonna cambio tra select, input text/number/email -->
                             <span :id="colName + row.gid" v-else>
+                                <!-- number -->
                                 <b-form-input type="number" v-model="row[colName]" :formatter="v => Math.max(-1, v)"
                                   v-if="colName === 'id_min' || colName === 'id_max'" key="numberInput"
                                   min="-1" number/>
+                                <!-- email -->
+                                  <b-form-input type="email" v-model="row[colName]"
+                                  v-else-if="colName === 'email'" key="emailInput"/>
+                                <!-- select -->
                                 <b-form-input type="text" v-model="row[colName]" key="textInput"
                                   v-else-if="colName !== 'role'" :formatter="e => formatter(e, colName)"/>
                                 <b-form-select v-else v-model="row[colName]" :options="rolesOption" key="selectInput"/>
+
                                 <b-button variant="primary"
                                   @click="update(row[colName]); setEditing(false)">Ok</b-button>
                                 <b-button type="button"
@@ -58,6 +65,10 @@
                             <b-tooltip :target="colName + row.gid" triggers="hover"
                               v-if="colonnaVuota(row, colName, row[colName])">
                                 Compila il campo
+                            </b-tooltip>
+                            <b-tooltip :target="colName + row.gid" triggers="hover"
+                              v-if="!isValidEmail(row, colName, row[colName])">
+                                Email invalida
                             </b-tooltip>
                             <b-tooltip :target="colName + row.gid" triggers="hover"
                               v-if="checkIniziali(row, colName, row[colName])">
@@ -86,6 +97,8 @@ import qs from 'qs'
 import axios from 'axios'
 const _mapValues = require('lodash.mapvalues')
 const _values = require('lodash.values')
+// regex presa da https://stackoverflow.com/questions/9572254/validate-email-with-regex-jquery
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i
 // usato per sortare le colonne di id che sono numerici
 const sortByID = function (ascending) {
   return function (a, b) {
@@ -112,7 +125,7 @@ export default {
         overlappingIDs: false
       },
       tableData: [],
-      columns: ['gid', 'username', 'password', 'role', 'iniziali',
+      columns: ['gid', 'username', 'password', 'email', 'role', 'iniziali',
         'nome', 'cognome', 'id_min', 'id_max'],
       options: {
         perPage: 30,
@@ -124,7 +137,7 @@ export default {
           role: 'Ruolo'
         },
         uniqueKey: 'gid',
-        editableColumns: ['username', 'password', 'role', 'iniziali',
+        editableColumns: ['username', 'password', 'email', 'role', 'iniziali',
           'nome', 'cognome', 'id_min', 'id_max'],
         filterable: true,
         filterByColumn: true,
@@ -149,7 +162,8 @@ export default {
       return this.colonnaVuota(row, colName, row[colName]) ||
               this.userCollide(row, colName, row[colName]) ||
                 this.checkIniziali(row, colName, row[colName]) ||
-                  this.idsCollide(row, colName, row[colName])
+                  this.idsCollide(row, colName, row[colName]) ||
+                  !this.isValidEmail(row, colName, row[colName])
     },
     retriveUsers: function () {
       axios.post(this.$store.getters.gestioneUtentiURL, qs.stringify({
@@ -228,7 +242,7 @@ export default {
               'Dati inseriti non corretti. I dati non corretti sono quelli in rosso, correggere grazie.'])
           return
         }
-
+        // invio dati al server
         axios.post(this.$store.getters.gestioneUtentiURL, qs.stringify({
           username: this.$store.getters.getUserData.username,
           password: this.$store.getters.getUserData.password,
@@ -247,6 +261,8 @@ export default {
     },
     // dice se la colonna corrente è vuota o no
     colonnaVuota: function (row, colName, valoreCella) {
+      // il campo email non è segnato come da riempire è facoltativo
+      if (colName === 'email') return false
       let res = !valoreCella
       this.errors.empty = this.errors.empty || res
       return res
@@ -280,6 +296,10 @@ export default {
     },
     formatter: function (val, colName) {
       return colName === 'iniziali' ? val.toUpperCase() : val
+    },
+    isValidEmail (row, colName, valoreCella) {
+      // se la colonna è email fai il test, vero altrimenti
+      return colName === 'email' && valoreCella !== '' ? emailRegex.test(valoreCella) : true
     }
   },
   computed: {
