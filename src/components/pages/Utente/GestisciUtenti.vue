@@ -10,6 +10,8 @@
           <b-col cols="12">
               <b-button class="mb-1" @click="addUser">Aggiungi utente</b-button>
               <b-button variant="warning" class="mb-1" @click="convalida">Convalida</b-button>
+              <!-- 25/02/2020 sembra andare su IE, Firefox ma stranamento non su Chrome -->
+              <b-button class="mb-1" @click="downloadUsersFile">Scarica schedatori</b-button>
           </b-col>
             <b-col cols="12" xl="6" class="text-left">
               <p>Premere aggiungi utente per un nuovo utente, poi cliccare sui campi da modificare.</p>
@@ -95,6 +97,7 @@ import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
 import qs from 'qs'
 import axios from 'axios'
+import FileSaver from 'file-saver'
 const _mapValues = require('lodash.mapvalues')
 const _values = require('lodash.values')
 // regex presa da https://stackoverflow.com/questions/9572254/validate-email-with-regex-jquery
@@ -300,6 +303,14 @@ export default {
     isValidEmail (row, colName, valoreCella) {
       // se la colonna è email fai il test, vero altrimenti
       return colName === 'email' && valoreCella !== '' ? emailRegex.test(valoreCella) : true
+    },
+    downloadUsersFile () {
+      const data = this.tableData
+      var txt = data.filter(el => el.role === 'schedatore') // solo revisori
+        .map(el => JSON.stringify(el)) // trasformo in testo
+        .join('\n') // metto gli a capo
+      var blob = new Blob([txt], { type: 'application/json;charset=utf-8' })
+      FileSaver.saveAs(blob, 'usersList.txt')
     }
   },
   computed: {
