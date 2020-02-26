@@ -26,7 +26,8 @@ export default {
           data_poste: 'DataA',
           denominazioner: 'DenominazioneR',
           id_bener: 'Id beneR',
-          ruolor: 'RuoloR'
+          ruolor: 'RuoloR',
+          schedatori_iniziali: 'Sched.'
         },
         columnsDropdown: true,
         columnsDisplay: {

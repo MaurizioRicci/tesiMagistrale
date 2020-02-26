@@ -30,7 +30,7 @@
           </b-col>
           <b-col cols="12">
                 <v-client-table :columns="columns" v-model="tableData" :options="options"
-                    @update="updateRow" ref="myTable">
+                    @update="updateRow" ref="myTable" class="table-sm">
                     <template v-for="colName in columns"
                         v-slot:[colName]="{row, update, setEditing, isEditing, revertValue}">
                         <div :key="colName" style="cursor:pointer;"
@@ -64,6 +64,7 @@
                                 <b-button type="button"
                                   @click="revertValue(); setEditing(false)">Annulla</b-button>
                             </span>
+                            <!-- Segue la definizione di vari tooltip per specifici errori -->
                             <b-tooltip :target="colName + row.gid" triggers="hover"
                               v-if="colonnaVuota(row, colName, row[colName])">
                                 Compila il campo
@@ -98,8 +99,8 @@ import Menu from '@/components/ui/Menu'
 import qs from 'qs'
 import axios from 'axios'
 import FileSaver from 'file-saver'
-const _mapValues = require('lodash.mapvalues')
-const _values = require('lodash.values')
+const _mapValues = require('lodash.mapvalues') // è come Array.map() solo con i dizionari
+const _values = require('lodash.values') // rende una array contenenti tutti i valori in un dizionario
 // regex presa da https://stackoverflow.com/questions/9572254/validate-email-with-regex-jquery
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i
 // usato per sortare le colonne di id che sono numerici
@@ -206,7 +207,8 @@ export default {
         'nome': '',
         'cognome': '',
         'id_min': '-1',
-        'id_max': '-1'
+        'id_max': '-1',
+        'email': ''
       }
       this.tableData.push(user)
       this.users.ins.push(user)
@@ -245,7 +247,7 @@ export default {
               'Dati inseriti non corretti. I dati non corretti sono quelli in rosso, correggere grazie.'])
           return
         }
-        // invio dati al server
+        // invio dati al server con richiesta POST
         axios.post(this.$store.getters.gestioneUtentiURL, qs.stringify({
           username: this.$store.getters.getUserData.username,
           password: this.$store.getters.getUserData.password,
@@ -253,7 +255,9 @@ export default {
           mod: this.users.mod
         }))
           .then(resp => {
-            // resetto variabili di utenti inseriti/modificati
+            // resetto variabili di utenti inseriti/modificati se tutto va bene
+            // se va male in main.js c'è un axios interceptors globale che mostra il responso
+            // come messaggio di avviso nel caso in cui una richiesta di tipo POST fallisca
             this.users.ins = []
             this.users.mod = []
             this.$vueEventBus.$emit('master-page-show-msg',
@@ -291,12 +295,14 @@ export default {
       return this.$refs.myTable.$el
         .querySelector('.border-danger')
     },
+    // dice se l'ID di un certo utente ha un range di id che collide con il range di altri utenti
     idsCollide: function (row, colName, valoreCella) {
       let res = (colName === 'id_min' || colName === 'id_max') &&
         this.overlappingIDS.includes(row.gid)
       this.errors.overlappingIDs = this.errors.overlappingIDs || res
       return res
     },
+    // formatta le iniziali in maiuscolo
     formatter: function (val, colName) {
       return colName === 'iniziali' ? val.toUpperCase() : val
     },
@@ -306,9 +312,10 @@ export default {
     },
     downloadUsersFile () {
       const data = this.tableData
-      var txt = data.filter(el => el.role === 'schedatore') // solo revisori
-        .map(el => JSON.stringify(el)) // trasformo in testo
-        .join('\n') // metto gli a capo
+      var txt = data.filter(el => el.role === 'schedatore') // solo schedatori
+        // per ogni utente, ne prendo i valori e li rendo una stringa
+        .map(el => JSON.stringify(el))
+        .join('\n') // metto gli a capo, viene una stringa <utente1> \n <utente2> \n ... <utenteN>
       var blob = new Blob([txt], { type: 'application/json;charset=utf-8' })
       FileSaver.saveAs(blob, 'usersList.txt')
     }

@@ -20,6 +20,11 @@ export default {
           'msg_validatore',
           'schedatori_iniziali'
         ],
+        headings: {
+          schedatori_iniziali: 'Sched.',
+          macroEpocaCar: 'Mec',
+          macroEpocaOrig: 'Meo'
+        },
         columnsDropdown: true,
         columnsDisplay: {
           macroEpocaCar: 'mobileP',

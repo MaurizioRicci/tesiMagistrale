@@ -22,13 +22,13 @@
               @loading="loading=true" @loaded="loading=false"
               @loadingFailed="loading=false"/>
             <b-button v-if="role==='schedatore'"
-              @click="waitUserConfirmation=true">Invia per il controllo</b-button>
+              @click="waitUserConfirmationSend=true">Invia per il controllo</b-button>
           </b-tab>
         </b-tabs>
       </b-col>
     </b-row>
-    <b-toast id="confirm-toast" title="Richiesta conferma" solid no-auto-hide
-      toaster="b-toaster-bottom-center" variant="secondary" v-model="waitUserConfirmation">
+    <b-toast id="confirm-toastSend" title="Richiesta conferma" solid no-auto-hide
+      toaster="b-toaster-bottom-center" variant="secondary" v-model="waitUserConfirmationSend">
       <div class="row justify-content-center">
         <div class="col-12">
           <p>Le funzioni pronte verranno inviate al controllo,
@@ -66,7 +66,7 @@ export default {
   },
   data: function () {
     return {
-      waitUserConfirmation: false,
+      waitUserConfirmationSend: false,
       triggerUpdate: false,
       loading: false
     }
@@ -82,7 +82,7 @@ export default {
           this.$vueEventBus.$once('master-page-show-msg-ok',
             () => {
               // se tutto va bene nascondo la finestra di conferma
-              this.waitUserConfirmation = false
+              this.waitUserConfirmationSend = false
               this.triggerUpdate = true
             })
         }, fail => {

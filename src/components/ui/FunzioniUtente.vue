@@ -67,7 +67,8 @@
 
             <!-- sei revisore oppure se non sei revisore ma la funzione non è sotto revisione -->
             <b-button v-if="cercaInArchivioTemp && (sonoRevisore || !FunzioneModel.isRev.call(row))"
-              @click="cancellaTmp(row)" key="cancellaTmp" variant="light" class="pt-1">
+              @click="waitUserConfirmationDelete=true;rigaDaCancellare=row"
+              key="cancellaTmp" variant="light" class="pt-1">
               <icon-msg icon_name="trash" icon_msg="Elimina" icon_color="red"/>
             </b-button>
 
@@ -105,6 +106,18 @@
 
     </v-client-table>
 
+    <b-toast id="confirm-toastDelete" title="Richiesta conferma" solid no-auto-hide
+      toaster="b-toaster-bottom-center" variant="secondary" v-model="waitUserConfirmationDelete">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <p>Eliminare funzione?
+          </p>
+        </div>
+        <div class="col-auto">
+          <b-button variant="danger" @click="cancellaTmp(rigaDaCancellare)">Conferma</b-button>
+        </div>
+      </div>
+    </b-toast>
 </div>
 </template>
 
@@ -175,6 +188,7 @@ export default {
         .then(ok => {
           this.$vueEventBus.$emit('master-page-show-msg',
             ['Info', 'Funzione temporanea cancellata correttamente'])
+          this.waitUserConfirmationDelete = false
           this.getData()
         })
     },
@@ -191,6 +205,10 @@ export default {
   },
   data: function () {
     return {
+      // innesca la finestra di conferma eliminazione
+      waitUserConfirmationDelete: false,
+      // riga che l'utente vorrebbe cancellare
+      rigaDaCancellare: {},
       columns: [
         'id',
         'status',
