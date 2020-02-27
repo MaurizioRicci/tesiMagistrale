@@ -234,6 +234,23 @@ export default {
         storage: 'session',
         caption: this.caption,
         filterByColumn: true,
+        sortable: [
+          'id',
+          'data_ante',
+          'data_poste',
+          'tipodata',
+          'id_bene',
+          'denominazione',
+          'ruolo',
+          'funzione',
+          'id_bener',
+          'denominazioner',
+          'ruolor',
+          'bibliografia',
+          'note',
+          'schedatori_iniziali',
+          'msg_validatore'
+        ],
         editableColumns: ['msg_validatore'],
         hiddenColumns: this.getHiddenColums()
       }

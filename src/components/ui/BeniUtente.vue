@@ -235,6 +235,20 @@ export default {
         storage: 'session',
         caption: this.caption,
         filterByColumn: true,
+        sortable: [
+          'id',
+          'identificazione',
+          'descrizione',
+          'macroEpocaOrig',
+          'macroEpocaCar',
+          'toponimo',
+          'comune',
+          'esistenza',
+          'bibliografia',
+          'note',
+          'msg_validatore',
+          'schedatori_iniziali'
+        ],
         filterAlgorithm: {
           id (row, query) {
             // se è solo un numero

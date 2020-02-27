@@ -14,6 +14,7 @@
         <b-tabs pills card align="center">
           <b-tab title="Beni tuoi archivio definitivo">
             <BeniUtente :update.sync="triggerUpdate"
+             caption="Qua ci sono i tuoi beni in archivio definitivo"
               @loading="loading=true" @loaded="loading=false"
               @loadingFailed="loading=false"/>
           </b-tab>
