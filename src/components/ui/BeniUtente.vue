@@ -274,7 +274,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .myTable >>> caption { caption-side: top; }
-</style>

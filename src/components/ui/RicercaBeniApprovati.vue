@@ -125,10 +125,6 @@ export default {
 }
 </script>
 
-<style scoped>
-    .myTable >>> caption { caption-side: top; }
-</style>
-
 <style>
 .VueTables__child-row-toggler {
     width: 16px;
