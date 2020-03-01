@@ -1,12 +1,14 @@
 // Vuex store per le URL
 const serverURLsStore = {
   state: {
+    // indirizzo del server. Se il client è sulla stessa macchina del server lasciare vuoto
     serverURL: 'http://myserverapp',
     login: '/login.php',
     gestioneUtenti: '/manageUsers.php',
     userStats: '/userStats.php',
     elencoProvince: '/options/map/elencoProvince.php', // per settare il centro della mappa di default
     getNewID: '/getNewID.php',
+    shapeFile: '/downloadShapeFile.php',
     // URL per i beni
     aggiungiBene: '/inserisci/beni/crea.php',
     checkDist: '/inserisci/beni/checkDistance.php',
@@ -40,6 +42,7 @@ const serverURLsStore = {
     userStatsURL: state => state.serverURL + state.userStats,
     elencoProvinceURL: state => state.serverURL + state.elencoProvince,
     getNewIDURL: state => state.serverURL + state.getNewID,
+    shapeFileURL: state => state.serverURL + state.shapeFile,
     // URL per i beni
     aggiungiBeneURL: state => state.serverURL + state.aggiungiBene,
     checkDistURL: state => state.serverURL + state.checkDist,

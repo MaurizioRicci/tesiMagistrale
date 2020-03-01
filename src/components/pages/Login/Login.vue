@@ -9,6 +9,11 @@
       </b-col>
     </b-row>
     <b-row align-h="center">
+      <b-col cols="12">
+        <h5>
+          <a :href="shapeFileURL">Scarica i dati per QGIS</a>
+        </h5>
+      </b-col>
       <b-col cols="8" md="5" lg="4">
         <b-alert :show="showError" variant="danger">{{errorMsg}}</b-alert>
         <b-form @submit="onSubmit" @reset="onReset">
@@ -76,6 +81,9 @@ export default {
   computed: {
     showError () {
       return this.errorMsg.trim() !== ''
+    },
+    shapeFileURL () {
+      return this.$store.getters.shapeFileURL
     }
   },
   methods: {
