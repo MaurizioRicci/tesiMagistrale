@@ -31,7 +31,7 @@
     left: 5px;
 }
 
-// vue tables per sprecare meno spazio
+// vue tables riga di intestazione per sprecare meno spazio
 .VueTables .row:first-child { 
     position: absolute;
     right: 20px;
@@ -39,20 +39,7 @@
 .VueTables__columns-dropdown-wrapper .dropdown-menu {
     left: -100%;
 }
-// icone per ordinare
-.VueTables__sort-icon::before { font-size: 1.1rem; }
-// freccine sopra sotto
-.VueTables__sort-icon.glyphicon-sort::before {
-    content: '\02195';
-}
-// freccia sopra
-.VueTables__sort-icon.glyphicon-chevron-up::before {
-    content: '\02191';
-}
-// freccia sotto
-.VueTables__sort-icon.glyphicon-chevron-down::before {
-    content: '\02193';
-}
+
 // etichetta tabella in alto
 .myTable caption { 
     caption-side: top;

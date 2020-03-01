@@ -31,6 +31,7 @@ import 'leaflet/dist/leaflet.css'
 
 // vue-tables-2
 import { ClientTable, ServerTable } from 'vue-tables-2'
+import MySortControl from '@/components/ui/MySortControl'
 
 // Icone FontAwesome
 library.add(faLock, faExclamationCircle, faSort, faSortUp, faSortDown, faCog,
@@ -54,8 +55,8 @@ Icon.Default.mergeOptions({
 })
 
 // Vue tables 2
-Vue.use(ClientTable, {}, false, 'bootstrap4')
-Vue.use(ServerTable, {}, false, 'bootstrap4')
+Vue.use(ClientTable, {}, false, 'bootstrap4', { sortControl: MySortControl })
+Vue.use(ServerTable, {}, false, 'bootstrap4', { sortControl: MySortControl })
 
 /* eslint-disable no-new */
 const myApp = new Vue({
