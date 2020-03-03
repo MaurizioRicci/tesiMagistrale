@@ -41,7 +41,7 @@
           <li>Home: va alla home del progetto</li>
           <li>Beni: apre un menu per analizzare i Beni presenti in archivio, per modificarli o aggiungerne altri</li>
           <li>Funzioni: apre un menu per analizzare le Funzioni presenti in archivio, per modificarle o aggiungerne altre</li>
-          <li>Il mio lavoro: apre un menu per analizzare le i Beni o le Funzioni che sono state create dall'utente o che sono in attesa di revisione</li>
+          <li>Il lavoro: apre un menu per analizzare il lavoro inerente beni o funzioni.</li>
         </ul>
         </p>
         <b-row align-h="center" no-gutters style="margin-top: -1rem">

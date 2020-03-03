@@ -84,12 +84,14 @@
               <a class="d-inline-block w-100">{{row.msg_validatore}}</a>
             </span>
             <span v-else>
-                <input type="text" v-model="row.msg_validatore">
-                <b-button type="button" size="sm" variant="primary"
-                  @click="update(row.msg_validatore); setEditing(false); inviaSegnalazione(row);">
-                  Submit</b-button>
-                <b-button type="button" size="sm"
-                  @click="revertValue(); setEditing(false)">Cancel</b-button>
+              <b-form-textarea v-model="row.msg_validatore"
+                placeholder="Messaggio per schedatore">
+              </b-form-textarea>
+              <b-button type="button" size="sm" variant="primary"
+                @click="update(row.msg_validatore); setEditing(false); inviaSegnalazione(row);">
+                Submit</b-button>
+              <b-button type="button" size="sm"
+                @click="revertValue(); setEditing(false)">Cancel</b-button>
             </span>
           </div>
         </div>
