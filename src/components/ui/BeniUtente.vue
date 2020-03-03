@@ -67,14 +67,16 @@
            anche se la cella ha come contenuto stringa vuota (utente appena aggiunto) -->
           <span v-if="!sonoRevisore">{{row.msg_validatore}}</span>
           <div v-else>
-            <span @click="setEditing(true)" v-if="!isEditing()">
+            <span @click="setEditing(true)" v-if="!isEditing()" key="msgValRead"
+              style="cursor:pointer;">
               <a class="d-inline-block w-100">{{row.msg_validatore}}</a>
             </span>
-            <span v-else>
-                <b-form-textarea v-model="row.msg_validatore"
+            <span v-else key="msgValEdit">
+                <b-form-textarea trim @input="msg => update(msg)"
                   placeholder="Messaggio per schedatore">
                 </b-form-textarea>
                 <b-button type="button" size="sm" variant="primary"
+                  :disabled="row.msg_validatore === ''"
                   @click="update(row.msg_validatore); setEditing(false); inviaSegnalazione(row);">
                   Submit</b-button>
                 <b-button type="button" size="sm"
