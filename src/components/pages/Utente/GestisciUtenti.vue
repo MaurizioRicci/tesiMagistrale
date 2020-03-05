@@ -37,7 +37,7 @@
                           :class="{'border rounded border-danger': hasErrors(row, colName, row[colName])}">
                             <!-- Se non è una colonna editabile o se non sono in editing
                             mostro il valore della cella semplice-->
-                            <span :id="colName + row.gid"
+                            <span :id="colName + row.uid"
                               @click="setEditing(true)"
                               v-if="!options.editableColumns.includes(colName) || !isEditing()">
                                 <!-- class="d-inline-block w-100" da spessore per la modifica della cella
@@ -46,7 +46,7 @@
                                   :class="{'w-100': row[colName] === ''}">{{row[colName]}}</a>
                             </span>
                             <!-- Se sto editando in base al nome della colonna cambio tra select, input text/number/email -->
-                            <span :id="colName + row.gid" v-else>
+                            <span :id="colName + row.uid" v-else>
                                 <!-- number -->
                                 <b-form-input type="number" v-model="row[colName]" :formatter="v => Math.max(-1, v)"
                                   v-if="colName === 'id_min' || colName === 'id_max'" key="numberInput"
@@ -65,23 +65,23 @@
                                   @click="revertValue(); setEditing(false)">Annulla</b-button>
                             </span>
                             <!-- Segue la definizione di vari tooltip per specifici errori -->
-                            <b-tooltip :target="colName + row.gid" triggers="hover"
+                            <b-tooltip :target="colName + row.uid" triggers="hover"
                               v-if="colonnaVuota(row, colName, row[colName])">
                                 Compila il campo
                             </b-tooltip>
-                            <b-tooltip :target="colName + row.gid" triggers="hover"
+                            <b-tooltip :target="colName + row.uid" triggers="hover"
                               v-if="!isValidEmail(row, colName, row[colName])">
                                 Email invalida
                             </b-tooltip>
-                            <b-tooltip :target="colName + row.gid" triggers="hover"
+                            <b-tooltip :target="colName + row.uid" triggers="hover"
                               v-if="checkIniziali(row, colName, row[colName])">
                                 Le iniziali devono essere maiuscole/non duplicate
                             </b-tooltip>
-                            <b-tooltip :target="colName + row.gid" triggers="hover"
+                            <b-tooltip :target="colName + row.uid" triggers="hover"
                               v-if="userCollide(row, colName, row[colName])">
                                 Stesso username/password di un altro utente
                             </b-tooltip>
-                            <b-tooltip :target="colName + row.gid" triggers="hover"
+                            <b-tooltip :target="colName + row.uid" triggers="hover"
                               v-if="idsCollide(row, colName, row[colName])">
                                 ID assegnato collide con quello di un'altro utente
                             </b-tooltip>
@@ -129,18 +129,18 @@ export default {
         overlappingIDs: false
       },
       tableData: [],
-      columns: ['gid', 'username', 'password', 'email', 'role', 'iniziali',
+      columns: ['uid', 'username', 'password', 'email', 'role', 'iniziali',
         'nome', 'cognome', 'id_min', 'id_max'],
       options: {
         perPage: 30,
         perPageValues: [],
         headings: {
-          gid: 'ID utente',
+          uid: 'ID utente',
           id_min: 'ID minimo',
           id_max: 'ID massimo',
           role: 'Ruolo'
         },
-        uniqueKey: 'gid',
+        uniqueKey: 'uid',
         editableColumns: ['username', 'password', 'email', 'role', 'iniziali',
           'nome', 'cognome', 'id_min', 'id_max'],
         filterable: true,
@@ -180,15 +180,15 @@ export default {
     updateRow: function (row, column, oldVal, newVal) {
       let rowData = row.row
       // se l'utente modificato era stato aggiunto tolgo il vecchio valore e aggiorno
-      if (this.users.ins.filter(el => el.gid === rowData.gid).length > 0) {
+      if (this.users.ins.filter(el => el.uid === rowData.uid).length > 0) {
         // tolgo il vecchio valore con filter
-        this.users.ins = this.users.ins.filter((el) => el.gid !== rowData.gid)
+        this.users.ins = this.users.ins.filter((el) => el.uid !== rowData.uid)
         // aggiorno
         this.users.ins.push(rowData)
       } else {
         // se lo stesso utente viene modificato più volte scarto le altre modifiche
         // tolgo il vecchio valore con filter
-        this.users.mod = this.users.mod.filter((el) => el.gid !== rowData.gid)
+        this.users.mod = this.users.mod.filter((el) => el.uid !== rowData.uid)
         // aggiorno
         this.users.mod.push(rowData)
       }
@@ -199,7 +199,7 @@ export default {
     },
     addUser: function () {
       let user = {
-        'gid': String(this.nextGID() + 1),
+        'uid': String(this.nextGID() + 1),
         'username': '',
         'password': '',
         'role': '',
@@ -217,20 +217,20 @@ export default {
     },
     nextGID: function () {
       // la tabella vuole un id per ogni riga, sicchè devo calcolare un id sequenziale
-      // trovo il massimo tra tutti gli id (gid) degli utenti
+      // trovo il massimo tra tutti gli id (uid) degli utenti
       // Si noti che si considera l'id massimo tra tutti gli utenti, anche tra quelli da aggiungere
       // questo meccanismo non dovrebbe mai dare errore
-      return Math.max.apply(Math, this.wholeUsers.map((el) => Number(el.gid)))
+      return Math.max.apply(Math, this.wholeUsers.map((el) => Number(el.uid)))
     },
     // elimina le righe di utenti inserite lasciate vuote
     discardEmptyRows: function () {
       this.users.ins = this.users.ins.filter(el => {
-      // per ogni oggetto user ne mappo i valori in un array (scartando il campo gid)
+      // per ogni oggetto user ne mappo i valori in un array (scartando il campo uid)
       // concateno tutti i valori dell'array in una stringa con join e poi guardo se non è vuota
-        let keep = _values(_mapValues(el, (subEl, key) => key === 'gid' ? '' : subEl))
+        let keep = _values(_mapValues(el, (subEl, key) => key === 'uid' ? '' : subEl))
           .join('').trim() !== ''
         if (!keep) {
-          this.tableData = this.tableData.filter(el2 => el2.gid !== el.gid)
+          this.tableData = this.tableData.filter(el2 => el2.uid !== el.uid)
         }
         return keep
       }
@@ -277,14 +277,14 @@ export default {
     // dice se le credenziali di un utente collidono con quelle di un altro
     userCollide: function (row, colName, valoreCella) {
       let res = (colName === 'username' || colName === 'password') &&
-        this.collidingUsers.includes(row.gid)
+        this.collidingUsers.includes(row.uid)
       this.errors.unique = this.errors.unique || res
       return res
     },
     // dice se le iniziali non sono scritte in maiuscolo
     checkIniziali: function (row, colName, valoreCella) {
       let res = (colName === 'iniziali' && valoreCella !== valoreCella.toUpperCase()) ||
-        (colName === 'iniziali' && this.overlappingInizali.includes(row.gid))
+        (colName === 'iniziali' && this.overlappingInizali.includes(row.uid))
       this.errors.iniziali = this.errors.iniziali || res
       return res
     },
@@ -298,7 +298,7 @@ export default {
     // dice se l'ID di un certo utente ha un range di id che collide con il range di altri utenti
     idsCollide: function (row, colName, valoreCella) {
       let res = (colName === 'id_min' || colName === 'id_max') &&
-        this.overlappingIDS.includes(row.gid)
+        this.overlappingIDS.includes(row.uid)
       this.errors.overlappingIDs = this.errors.overlappingIDs || res
       return res
     },
@@ -332,10 +332,10 @@ export default {
       let colliding = []
       addEdit.forEach(el => {
         copy.forEach(el2 => {
-          if (el.gid !== el2.gid && el.username === el2.username &&
+          if (el.uid !== el2.uid && el.username === el2.username &&
              el.password === el2.password) {
-            colliding.push(el.gid)
-            colliding.push(el2.gid)
+            colliding.push(el.uid)
+            colliding.push(el2.uid)
           }
         })
       })
@@ -353,10 +353,10 @@ export default {
       addEdit.forEach(el => {
         copy.forEach(el2 => {
           // id utente diversi e almeno uno dei due id deve sovrapporsi
-          if (el.gid !== el2.gid && (overlapID(el.id_min, el2.id_min, el2.id_max) ||
+          if (el.uid !== el2.uid && (overlapID(el.id_min, el2.id_min, el2.id_max) ||
             overlapID(el.id_max, el2.id_min, el2.id_max))) {
-            overlapping.push(el.gid)
-            overlapping.push(el2.gid)
+            overlapping.push(el.uid)
+            overlapping.push(el2.uid)
           }
         })
       })
@@ -371,9 +371,9 @@ export default {
       addEdit.forEach(el => {
         copy.forEach(el2 => {
           // id utente diversi e almeno uno dei due id deve sovrapporsi
-          if (el.gid !== el2.gid && el.iniziali === el2.iniziali) {
-            overlapping.push(el.gid)
-            overlapping.push(el2.gid)
+          if (el.uid !== el2.uid && el.iniziali === el2.iniziali) {
+            overlapping.push(el.uid)
+            overlapping.push(el2.uid)
           }
         })
       })
