@@ -12,6 +12,7 @@
       <b-form-group id="input-group-id" label="ID:" label-for="input-id_bene"
        label-cols-sm="6" label-cols-md="3" label-cols-xl="2" class="required-field">
         <b-form-input
+          class="id-bene"
           id="input-id_bene"
           v-model="form.id_bene"
           type="number"
@@ -93,6 +94,7 @@
        label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
        class="required-field">
         <b-form-input
+          class="id-bene"
           id="input-id_bener"
           v-model="form.id_bener"
           type="number"

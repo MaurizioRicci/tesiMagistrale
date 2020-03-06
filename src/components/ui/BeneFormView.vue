@@ -6,6 +6,7 @@
       <b-form-group id="input-group-1" label="ID:"
         label-for="bene_form_view_input-id" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-input
+          class="id-bene"
           id="bene_form_view_input-id"
           type="number"
           min="1"

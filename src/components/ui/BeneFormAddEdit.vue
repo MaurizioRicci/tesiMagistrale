@@ -11,6 +11,7 @@
       </b-form-checkbox>
       <b-form-group id="input-group-id" label="ID:" label-for="input-id" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-input
+          class="id-bene"
           id="input-id"
           v-model="form.id"
           type="number"

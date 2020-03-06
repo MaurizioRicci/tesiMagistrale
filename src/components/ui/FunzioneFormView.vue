@@ -8,6 +8,7 @@
           title="Click per dettagli sul bene">
           <b-form-input
             id="funzione_form_view_input-id_bene"
+            class="id-bene"
             type="number"
             v-model="form.id_bene"
             disabled
@@ -80,7 +81,7 @@
       <b-form-group id="input-group-1" label="ID bene rif:" label-for="funzione_form_view_input-id_bener" label-cols-sm="6"
         label-cols-md="3" label-cols-xl="2">
         <div title="Click per dettagli sul bene" @click="showBeneDetails(form.id_bener, form.id_utente_bener)">
-          <b-form-input id="funzione_form_view_input-id_bener" v-model="form.id_bener" type="number" disabled placeholder=""></b-form-input>
+          <b-form-input class="id-bene" id="funzione_form_view_input-id_bener" v-model="form.id_bener" type="number" disabled placeholder=""></b-form-input>
         </div>
       </b-form-group>
       <b-form-group id="input-group-1" label="Denominazione rif:" label-for="funzione_form_view_input-denominazioner" label-cols-sm="6"
