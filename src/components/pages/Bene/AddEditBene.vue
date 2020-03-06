@@ -22,7 +22,7 @@
             </b-button>
           </b-button-group>
         </b-alert>
-        <b-modal static id="modal-bene-overview" size="lg" hide-footer>
+        <b-modal static id="modal-bene-overview" title="Dettagli bene" size="lg" hide-footer>
           <BeneOverview ref="beneOverview"/>
         </b-modal>
       </b-col>
