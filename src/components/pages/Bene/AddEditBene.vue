@@ -151,7 +151,7 @@ export default {
       this.sendBtnClicked = false
       this.serverRespOk = false
       this.leavePage = true
-      this.beneOverlapTxt = ''
+      this.beneOverlap = []
       if (!this.editMode) {
         // se non si modifica allora si aggiunge e quindi diamo noi l'id del bene da creare
         // chiudo tutti i buchi di id di un certo utente

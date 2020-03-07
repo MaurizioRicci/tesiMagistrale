@@ -10,6 +10,24 @@
     </b-row>
     <b-row>
       <b-col>
+          <b-alert variant="warning" :show="beneOverlap.length > 0">
+          Il bene è molto vicino ai seguenti beni:
+          <b-button-group class="justify-content-center" style="flex-wrap: wrap;">
+            <b-button v-for="bene in beneOverlap" :key="bene.id"
+              variant="light" class="btn-outline-info"
+              title="Click per dettagli" v-b-modal.modal-bene-overview
+              @click="$refs.beneOverview.showBeneDetails(bene.id)">
+             ID {{bene.id}} ({{ Math.round(Number(bene.dist)) }}m)
+            </b-button>
+          </b-button-group>
+        </b-alert>
+        <b-modal static id="modal-bene-overview" title="Dettagli bene" size="lg" hide-footer>
+          <BeneOverview ref="beneOverview"/>
+        </b-modal>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
         <h4>Bene in archivio definitivo</h4>
         <BeneFormView :form="formBeneArchDef" :disallowIDChange="true"/>
         <MyMap ref="myMap1" locked :zoom="17" :controls="mapControls"
@@ -20,7 +38,7 @@
         <BeneFormAddEdit ref="form_bene" v-model="form" no-draft
             :validated="sendBtnClicked"/>
         <MyMap ref="myMap2" v-model="form.polygon"
-            :controls="mapControls"
+            :controls="mapControls" @change="checkPolygonDist"
             :zoom="17" :center="mapCenter"/>
       </b-col>
     </b-row>
@@ -43,6 +61,7 @@ import BeneFormView from '@/components/ui/BeneFormView'
 import BeneFormAddEdit from '@/components/ui/BeneFormAddEdit'
 import lodashclonedeep from 'lodash.clonedeep'
 import getModelloBene from '@/assets/js/Models/beneModel'
+import BeneOverview from '@/components/ui/BeneOverview'
 import MyMap from '@/components/ui/Map'
 import axios from 'axios'
 import qs from 'qs'
@@ -51,14 +70,17 @@ import qs from 'qs'
 // Valida un bene mostrando il confronto con la versione in archivio definitivo
 export default {
   name: 'ValidaBene',
-  components: { Menu, BeneFormView, BeneFormAddEdit, MyMap },
+  components: { Menu, BeneFormView, BeneFormAddEdit, MyMap, BeneOverview },
   mixins: [commonPageMixin, dettagliBeneMixin],
   data () {
     return {
       sendBtnClicked: false,
+      // form bene archivio definitivo se presente
       formBeneArchDef: getModelloBene(),
       mapCenterArchDef: [0, 0],
-      mapControls: { zoom: true, settings: false }
+      mapControls: { zoom: true, settings: false },
+      // array di eventuali beni sovrapposti a quello che si sta creando
+      beneOverlap: []
     }
   },
   methods: {
@@ -94,11 +116,21 @@ export default {
           }
         })
     },
+    checkPolygonDist () {
+      // controllo la distanza da altri beni
+      let postData = lodashclonedeep(
+        Object.assign({}, this.form, this.$store.getters.getUserData))
+      // PostGIS vuole i punti come longitudine-latitudine
+      postData.polygon = postData.polygon.flipCoordinates()
+      axios.post(this.$store.getters.checkDistURL, qs.stringify(postData))
+        .then(resp => { this.beneOverlap = resp.data || [] })
+    },
     init () {
       // resetto le variabili
       this.sendBtnClicked = false
       this.formBeneArchDef = getModelloBene()
       this.mapCenterArchDef = [0, 0]
+      this.beneOverlap = []
       // resetto il modello dati scaricato in precedenza (se c'è)
       this.resetData()
       // scarico il bene definitivo se esiste

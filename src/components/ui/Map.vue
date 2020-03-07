@@ -6,8 +6,14 @@ la proprietà locked; se presente disabilita la modifica -->
 
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
 
+        <!-- Mappa beni definitivi -->
       <BetterWMS base-url="http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi"
         :attribution="attribution" ref="betterWMS"
+        @getFeatureInfo="evt => openPopUp(evt.latlng, evt.data)"/>
+
+      <!-- Mappa bene temporanei utente -->
+      <BetterWMS base-url="http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi?FILTER_BLAHBLABLAH"
+        layers="benigeo_e_schedatori" :attribution="attribution" ref="betterWMS2"
         @getFeatureInfo="evt => openPopUp(evt.latlng, evt.data)"/>
 
       <l-control position="bottomleft">
