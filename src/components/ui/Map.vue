@@ -1,19 +1,22 @@
 <!-- Una mappa che mostra un poligono, l'utente può essere abilitato o meno alla modifica di tale poligono con
 la proprietà locked; se presente disabilita la modifica -->
 <template>
-    <l-map :zoom="zoom" :center="center" @click="mapClick"
-      v-bind:style="{ width, height, cursor }" ref="myMap">
+      <l-map :zoom="zoom" :center="center" @click="mapClick"
+        v-bind:style="{ width, height, cursor }" ref="myMap">
+      <!-- Controlla quali layer vedere -->
+      <l-control-layers position="topright"  ></l-control-layers>
 
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
 
         <!-- Mappa beni definitivi -->
-      <BetterWMS base-url="http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi"
-        :attribution="attribution" ref="betterWMS"
+       <BetterWMS base-url="http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi"
+        :attribution="attribution" ref="betterWMS" name="Beni approvati"
         @getFeatureInfo="evt => openPopUp(evt.latlng, evt.data)"/>
 
       <!-- Mappa bene temporanei utente -->
-      <BetterWMS base-url="http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi?FILTER_BLAHBLABLAH"
-        layers="benigeo_e_schedatori" :attribution="attribution" ref="betterWMS2"
+      <BetterWMS base-url="http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi"
+        layers="benigeo" :URLParams="paramsTmpLayer" layer-type="overlay"
+        :attribution="attribution" ref="betterWMS2" name="Beni temporanei"
         @getFeatureInfo="evt => openPopUp(evt.latlng, evt.data)"/>
 
       <l-control position="bottomleft">
@@ -38,7 +41,7 @@ la proprietà locked; se presente disabilita la modifica -->
 
 <script>
 // Leaflet nonostante usi EPSG3857 accetta anche punti in 4326 facendo la conversione automatica
-import { LMap, LTileLayer, LControl } from 'vue2-leaflet'
+import { LMap, LTileLayer, LControl, LControlLayers } from 'vue2-leaflet'
 import { Polygon } from '@/assets/js/Models/multiPolygonModel'
 import BetterWMS from '@/components/ui/BetterWMS'
 import IconMsg from '@/components/ui/IconMsg'
@@ -53,7 +56,8 @@ export default {
     LTileLayer,
     LControl,
     BetterWMS,
-    IconMsg
+    IconMsg,
+    LControlLayers
   },
   model: {
     // imposto v-model collegato alla proprietà polygon
@@ -153,7 +157,8 @@ export default {
       // serve poi se l'utente vuole modificarlo
       currPolygon: this.polygon ? this.polygon.clone() : new Polygon(),
       // serve al leaflet toolbar per salvare dentro il suo stato
-      toolbarStore: {}
+      toolbarStore: {},
+      paramsTmpLayer: { filter: 'benigeo:"id" = 1' }
     }
   },
   computed: {

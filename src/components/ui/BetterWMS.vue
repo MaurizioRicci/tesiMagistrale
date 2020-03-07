@@ -1,5 +1,5 @@
 <template>
-    <LWMSTileLayer v-bind="$props" ref="myLayer">
+    <LWMSTileLayer v-bind="$props" :baseUrl="URLWithUserParams" ref="myLayer">
     </LWMSTileLayer>
 </template>
 
@@ -26,9 +26,19 @@ export default {
     version: String,
     format: { typr: String, default: 'image/png' },
     attribution: { type: String, default: '' },
-    layers: { type: String, default: 'benigeo' },
+    // livelli da recuperare
+    layers: { type: [String, Array], default: 'benigeo' },
     name: { type: String, default: 'benigeo' },
-    layerType: { type: String, default: 'base' }
+    layerType: { type: String, default: 'base' },
+    // parametri addizionali per la URL specificati dall'utente
+    URLParams: { type: Object, default: () => {} }
+  },
+  computed: {
+    // mette insieme la URL base per la mappa con i parametri addizionali specificati dall'utente
+    URLWithUserParams: function () {
+      const L = window.L
+      return this.baseUrl + L.Util.getParamString(this.URLParams, this.baseUrl, true)
+    }
   },
   methods: {
     // @vuese
@@ -64,7 +74,8 @@ export default {
         query_layers: this.layers,
         info_format: 'text/html'
       }
-
+      // faccio il merge tra parametri della url, includendo alcuni parametri extra specificati dall'utente
+      params = Object.assign(params, this.URLParams)
       params[params.version === '1.3.0' ? 'i' : 'x'] = Math.round(point.x)
       params[params.version === '1.3.0' ? 'j' : 'y'] = Math.round(point.y)
 
