@@ -1,6 +1,5 @@
 <template>
   <div>
-    <BeneFormToolTip prefix="bene_form_view_"/>
     <!-- id del form serve per i tooltip -->
     <b-form :novalidate="true">
       <b-form-group id="input-group-1" label="ID:"
@@ -102,13 +101,12 @@
 </template>
 
 <script>
-import BeneFormToolTip from '@/components/ui/BeneFormToolTip'
 import autoResize from '@/components/directives/autoResizeTextArea'
 
 // Renderizza il form per la visualizzazione di un bene
 export default {
   name: 'FormBeneLettura',
-  components: { BeneFormToolTip },
+  components: {},
   directives: {
     autoresize: autoResize
   },

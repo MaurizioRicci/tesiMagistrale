@@ -10,11 +10,13 @@
     </b-row>
     <b-row>
       <b-col>
-        <h4>Funzione in archivio definitivo</h4>
+        <h4 class="mb-0">Funzione in archivio definitivo</h4>
+        <span>Nel caso in cui una funzione venga modificata mostra lo stato della funzione in analisi prima della modifica.</span>
         <FunzioneFormView :form="formFunzioneArchDef" :disallowIDChange="true"/>
       </b-col>
       <b-col>
-        <h4>Funzione da approvare</h4>
+        <h4 class="mb-0">Funzione da approvare</h4>
+        <span>Mostra la funzione da approvare, è possibile apportare modifiche.</span>
         <FunzioneFormAddEdit ref="form_funzione" v-model="form" no-draft
             :validated="sendBtnClicked"/>
         <MyMap ref="myMap2" :zoom="17"/>
@@ -28,6 +30,11 @@
             @click="evt => onSubmit(evt)">Valida</b-button>
         </b-col>
     </b-row>
+    <b-row>
+      <b-col>
+        <RicercaFunzioniApprovate/>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -37,6 +44,7 @@ import dettagliFunzioneMixin from '@/components/mixins/DettagliFunzione'
 import Menu from '@/components/ui/Menu'
 import FunzioneFormView from '@/components/ui/FunzioneFormView'
 import FunzioneFormAddEdit from '@/components/ui/FunzioneFormAddEdit'
+import RicercaFunzioniApprovate from '@/components/ui/RicercaFunzioniApprovate'
 import lodashclonedeep from 'lodash.clonedeep'
 import getModelloFunzione from '@/assets/js/Models/funzioneModel'
 import MyMap from '@/components/ui/Map'
@@ -48,7 +56,7 @@ import qs from 'qs'
 // Valida una funzione mostrando il confronto con la versione in archivio definitivo
 export default {
   name: 'ValidaFunzione',
-  components: { Menu, FunzioneFormView, FunzioneFormAddEdit, MyMap },
+  components: { Menu, FunzioneFormView, FunzioneFormAddEdit, MyMap, RicercaFunzioniApprovate },
   mixins: [commonPageMixin, dettagliFunzioneMixin],
   data () {
     return {
@@ -107,7 +115,7 @@ export default {
       this.resetData()
       // scarico la funzione definitiva se esiste
       this.fetchFunzioneDataByID(this.idFunzione, null, false, {
-        noResultsMsg: 'Funzione in archivio definitivo non trovata'
+        noResultsMsg: 'Funzione in archivio definitivo non trovata. Quindi la funzione in verifica è nuova.'
       })
         .then(data => {
           if (data) {

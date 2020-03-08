@@ -28,13 +28,15 @@
     </b-row>
     <b-row>
       <b-col>
-        <h4>Bene in archivio definitivo</h4>
+        <h4 class="mb-0">Bene in archivio definitivo</h4>
+        <span>Nel caso in cui un bene venga modificato mostra lo stato del bene in analisi prima della modifica.</span>
         <BeneFormView :form="formBeneArchDef" :disallowIDChange="true"/>
         <MyMap ref="myMap1" locked :zoom="17" :controls="mapControls"
             v-model="formBeneArchDef.polygon" :center="mapCenterArchDef"/>
       </b-col>
       <b-col>
-        <h4>Bene da approvare</h4>
+        <h4 class="mb-0">Bene da approvare</h4>
+        <span>Mostra il bene da approvare, è possibile apportare modifiche.</span>
         <BeneFormAddEdit ref="form_bene" v-model="form" no-draft
             :validated="sendBtnClicked"/>
         <MyMap ref="myMap2" v-model="form.polygon"
@@ -50,6 +52,11 @@
             @click="evt => onSubmit(evt)">Valida</b-button>
         </b-col>
     </b-row>
+    <b-row>
+      <b-col>
+        <RicercaBeniApprovati/>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -59,6 +66,7 @@ import dettagliBeneMixin from '@/components/mixins/DettagliBene'
 import Menu from '@/components/ui/Menu'
 import BeneFormView from '@/components/ui/BeneFormView'
 import BeneFormAddEdit from '@/components/ui/BeneFormAddEdit'
+import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 import lodashclonedeep from 'lodash.clonedeep'
 import getModelloBene from '@/assets/js/Models/beneModel'
 import BeneOverview from '@/components/ui/BeneOverview'
@@ -70,7 +78,7 @@ import qs from 'qs'
 // Valida un bene mostrando il confronto con la versione in archivio definitivo
 export default {
   name: 'ValidaBene',
-  components: { Menu, BeneFormView, BeneFormAddEdit, MyMap, BeneOverview },
+  components: { Menu, BeneFormView, BeneFormAddEdit, MyMap, BeneOverview, RicercaBeniApprovati },
   mixins: [commonPageMixin, dettagliBeneMixin],
   data () {
     return {
@@ -135,7 +143,7 @@ export default {
       this.resetData()
       // scarico il bene definitivo se esiste
       this.fetchBeneDataByID(this.idBene, null, false, {
-        noResultsMsg: 'Bene in archivio definitivo non trovato'
+        noResultsMsg: 'Bene in archivio definitivo non trovato. Quindi il bene in verifica è nuovo.'
       })
         .then(data => {
           if (data) {

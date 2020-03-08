@@ -49,7 +49,7 @@
               key="revisoreArchTmp" variant="light"
               :to="'/bene/valida/' + row.id + '/' + row.id_utente"
                class="pt-1">
-                <icon-msg icon_name="check-circle" icon_msg="Approva con modifica"/>
+                <icon-msg icon_name="check-circle" icon_msg="Analisi per approvazione"/>
             </b-button>
 
             <!-- sei revisore oppure se non sei revisore ma il bene non è sotto revisione -->

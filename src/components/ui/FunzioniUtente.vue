@@ -61,7 +61,7 @@
               key="revisoreArchTmp" variant="light"
               :to="'/funzione/valida/' + row.id + '/' + row.id_utente"
                class="pt-1">
-                <icon-msg icon_name="check-circle" icon_msg="Approva con modifica"/>
+                <icon-msg icon_name="check-circle" icon_msg="Analsi per approvazione"/>
             </b-button>
             </div>
 
