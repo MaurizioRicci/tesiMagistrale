@@ -15,14 +15,15 @@ export default {
     open: Boolean
   },
   data () {
-    return { dState: 'none' }
+    return { dState: this.getDState(this.open) }
   },
   watch: {
     open: function (newVal) {
-      this.dState = newVal ? 'block' : 'none'
+      this.dState = this.getDState(newVal)
     }
   },
   methods: {
+    getDState (val) { return val ? 'block' : 'none' },
     show () { this.dState = 'block' },
     hide () { this.dState = 'none' }
   }

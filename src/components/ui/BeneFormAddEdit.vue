@@ -173,17 +173,17 @@ export default {
     polygonStr: function () { return this.form.polygon.toString() },
     queryIdentificazione () {
       return () => axios.get(this.$store.getters.filtraIdentURL, {
-        params: this.form
+        params: { identificazione: this.form.identificazione }
       })
     },
     queryToponimo () {
       return () => axios.get(this.$store.getters.filtraToponimoURL, {
-        params: this.form
+        params: { toponimo: this.form.toponimo }
       })
     },
     queryComune () {
       return () => axios.get(this.$store.getters.filtraComuneURL, {
-        params: this.form
+        params: { comune: this.form.comune }
       })
     }
   },
