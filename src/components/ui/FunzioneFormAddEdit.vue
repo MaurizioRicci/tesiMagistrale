@@ -10,7 +10,9 @@
       </b-form-checkbox>
       <!-- id bene 1 -->
       <b-form-group id="input-group-id" label="ID:" label-for="input-id_bene"
-       label-cols-sm="6" label-cols-md="3" label-cols-xl="2" class="required-field">
+       label-cols-sm="6" label-cols-md="3" label-cols-xl="2" class="required-field"
+       invalid-feedback="ID bene non trovato"
+       :state="beneOk">
         <b-form-input
           class="id-bene"
           id="input-id_bene"
@@ -18,7 +20,9 @@
           type="number"
           min="1"
           required
-          placeholder="">
+          placeholder=""
+          @input="debounceF1"
+          v-setcustomvalidity="beneOk">
         </b-form-input>
       </b-form-group>
       <!-- denominazione -->
@@ -92,7 +96,9 @@
       <!-- id bene 2 -->
       <b-form-group id="input-group-id_bener" label="ID rif:" label-for="input-id_bener"
        label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
-       class="required-field">
+       class="required-field"
+       invalid-feedback="ID bene di riferimento non trovato"
+       :state="benerOk">
         <b-form-input
           class="id-bene"
           id="input-id_bener"
@@ -100,7 +106,9 @@
           type="number"
           min="1"
           required
-          placeholder="">
+          placeholder=""
+          v-setcustomvalidity="benerOk"
+          @input="debounceF2">
         </b-form-input>
       </b-form-group>
       <!-- denominazione2 -->
@@ -144,6 +152,8 @@ import HelpDate from '@/components/ui/HelpDate'
 import * as dict from '@/assets/js/loadDict'
 import { dataVera } from '@/assets/js/date/dateF'
 import autoResize from '@/components/directives/autoResizeTextArea'
+import fetchBene from '@/assets/js/fetchBene'
+import debounce from '@/assets/js/asyncDebounceFunction'
 
 // Renderizza il form per la aggiunta/modifica di una funzione
 export default {
@@ -173,7 +183,15 @@ export default {
     return {
       tipoDataOptions: [],
       funzioneOptions: [],
-      esistenzaOptions: []
+      esistenzaOptions: [],
+      // contiene lo stato per la debounced function per il controllo di id bene
+      debounceF1: function () {},
+      // contiene lo stato per la debounced function per il controllo di id bener
+      debounceF2: function () {},
+      // vero se id bene scritto è corretto
+      beneOk: null,
+      // vero se id bener di riferimento scritto è corretto
+      benerOk: null
     }
   },
   methods: {
@@ -192,6 +210,21 @@ export default {
     getFunzioneOptions () {
       return dict.loadFunc(this)
         .then(res => this.dict2BsSelect(res.data))
+    },
+    async checkIDBene (idBene, idUtente, switchBene) {
+      let assignVal = (switchBene, val) => {
+        if (switchBene === 'bene') this.beneOk = val
+        else this.benerOk = val
+      }
+      const paramsBeneDef = { 'id': idBene, 'tmp_db': false }
+      const paramsBeneTmp = { 'id': idBene, 'tmp_db': true, 'id_Utente': idUtente }
+      const resp1 = await fetchBene(this, paramsBeneDef)
+      // !!resp poichè controlla che non sia ne null ne undefined
+      if (resp1) assignVal(switchBene, !!resp1)
+      else {
+        const resp2 = await fetchBene(this, paramsBeneTmp)
+        assignVal(switchBene, !!resp2)
+      }
     }
   },
   computed: {
@@ -201,6 +234,9 @@ export default {
   mounted () {
     this.getTipoDataOptions().then(options => { this.tipoDataOptions = options })
     this.getFunzioneOptions().then(options => { this.funzioneOptions = options })
+    // inizializzo le debounced function
+    this.debounceF1 = debounce(() => this.checkIDBene(this.form.id_bene, this.form.id_utente_bene, 'bene'), 2000)
+    this.debounceF2 = debounce(() => this.checkIDBene(this.form.id_bener, this.form.id_utente_bener, 'bener'), 2000)
   }
 }
 </script>
