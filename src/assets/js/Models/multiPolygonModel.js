@@ -72,7 +72,7 @@ MultiPolygon.prototype.buildFromGeoJSON = function (GeoJSON) {
     for (let c = 0; c < polygons.length; c++) {
       // geoJSON usa [longitude, latitude] mentre leaflet usa [latitude, longitude]
       // occorre fare lo scambio
-      let swapped = polygons[c][0].map(el => [el[1], el[0]])
+      let swapped = new Polygon(polygons[c][0], c).flipCoordinates()
       multipoly.addPolygon(new Polygon(swapped, c))
     }
   }

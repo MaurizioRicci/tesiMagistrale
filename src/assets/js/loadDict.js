@@ -12,7 +12,6 @@ function getOrCache (url) {
 }
 
 // carica le voci dei dizionari controllati
-let loadDescr = (T) => getOrCache(T.$store.getters.getDizionarioURL + '?' + 'dict_name=descrizione')
 let loadEsistenza = (T) => getOrCache(T.$store.getters.getDizionarioURL + '?' + 'dict_name=esistenza')
 let loadFunc = (T) => getOrCache(T.$store.getters.getDizionarioURL + '?' + 'dict_name=funzione')
 let loadMacroEpocaCar = (T) => getOrCache(T.$store.getters.getDizionarioURL + '?' + 'dict_name=macroEpocaCar')
@@ -21,7 +20,6 @@ let loadRuolo = (T) => getOrCache(T.$store.getters.getDizionarioURL + '?' + 'dic
 let loadTipoData = (T) => getOrCache(T.$store.getters.getDizionarioURL + '?' + 'dict_name=tipoData')
 
 export {
-  loadDescr,
   loadEsistenza,
   loadFunc,
   loadMacroEpocaCar,
