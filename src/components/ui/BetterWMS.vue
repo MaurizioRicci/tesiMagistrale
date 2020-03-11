@@ -49,8 +49,8 @@ export default {
       // Make an AJAX request to the server and hope for the best
       let url = this.getFeatureInfoUrl(evt.latlng)
       axios.get(url).then(resp => {
-        let err = typeof resp === 'string' ? null : resp.data
-        this.emitResults({ latlng: evt.latlng, data: err })
+        let dataReceived = typeof resp === 'string' ? null : resp.data
+        this.emitResults({ latlng: evt.latlng, data: dataReceived })
       }, fail => { console.log(fail) })
     },
     getFeatureInfoUrl: function (latlng) {
@@ -72,7 +72,7 @@ export default {
         width: size.x,
         layers: this.layers,
         query_layers: this.layers,
-        info_format: 'text/html'
+        info_format: 'application/json'
       }
       // faccio il merge tra parametri della url, includendo alcuni parametri extra specificati dall'utente
       params = Object.assign(params, this.URLParams)
@@ -82,8 +82,34 @@ export default {
       return 'https://cors-anywhere.herokuapp.com/' +
         this.baseUrl + L.Util.getParamString(params, this.baseUrl, true)
     },
+    formatResult (res) {
+      let unwantedKey = []
+      let tableData = Object.assign({}, res.data.features[0].properties) // shallow copy
+      for (let k of unwantedKey) {
+        delete tableData[k]
+      }
+      let makeTableHTML = function (tableObj) {
+        // maiuscolo prima lettera; se la stringa è vuota da stringa vuota
+        const capLetter = (str) => {
+          str = str ? str.toString() : ''
+          return str.charAt(0).toUpperCase() + str.substring(1)
+        }
+        let keys = Object.keys(tableObj)
+        var result = '<table border=1>'
+        for (var i = 0; i < keys.length; i++) {
+          result += '<tr>'
+          result += '<th>' + capLetter(keys[i]) + '</th>' // chiave
+          result += '<td>' + capLetter(tableObj[keys[i]]) + '</td>' // valore
+          result += '</tr>'
+        }
+        result += '</table>'
+        return result
+      }
+      res.data = makeTableHTML(tableData)
+      return res
+    },
     emitResults (res) {
-      this.$emit('getFeatureInfo', res)
+      this.$emit('getFeatureInfo', this.formatResult(res))
     }
   },
   mounted () {
