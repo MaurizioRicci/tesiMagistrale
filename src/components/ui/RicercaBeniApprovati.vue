@@ -63,7 +63,9 @@ export default {
   components: { IconMsg, Map },
   filters: { ellipsizeLongText: ellipsize },
   props: {
-    caption: { type: String, default: 'Questa tabella contiene tutti i beni approvati.' }
+    caption: { type: String, default: 'Questa tabella contiene tutti i beni approvati.' },
+    // se è vero non si possono compiere azioni (visualizza/modifica) sugli elementi
+    noActions: Boolean
   },
   methods: {
     openModalEdit (idBene, idUtente) {
@@ -121,6 +123,10 @@ export default {
     // tolgo da vue tables le colonne status e msg_validatore che qua non sono usate
     this.options.filterable = this.options.filterable.filter(x => x !== 'status' &&
      x !== 'msg_validatore')
+    if (this.noActions) {
+      let newCols = this.columns.filter(el => el !== 'azioni')
+      this.$set(this, 'columns', newCols)
+    }
   }
 }
 </script>

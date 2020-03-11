@@ -32,7 +32,7 @@
     </b-row>
     <b-row>
       <b-col>
-        <RicercaFunzioniApprovate/>
+        <RicercaFunzioniApprovate noActions/>
       </b-col>
     </b-row>
   </b-container>

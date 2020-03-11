@@ -54,7 +54,7 @@
     </b-row>
     <b-row>
       <b-col>
-        <RicercaBeniApprovati/>
+        <RicercaBeniApprovati noActions/>
       </b-col>
     </b-row>
   </b-container>

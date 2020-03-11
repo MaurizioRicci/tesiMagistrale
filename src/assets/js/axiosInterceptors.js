@@ -16,8 +16,10 @@ export const errorHandlerResponse = (error, vueApp) => {
           vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore', 'Credenziali invalide'])
           break
         case 422:
+          const defaultTxt = 'Richiesta non processabile dal server.'
+          let msg = error.response.data.msg
           vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore',
-            'Richiesta non processabile dal server.'])
+            msg || defaultTxt])
           break
         case 503:
           vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore',
