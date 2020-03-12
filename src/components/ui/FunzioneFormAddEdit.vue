@@ -96,7 +96,6 @@
       <!-- id bene 2 -->
       <b-form-group id="input-group-id_bener" label="ID rif:" label-for="input-id_bener"
        label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
-       class="required-field"
        invalid-feedback="ID bene di riferimento non trovato"
        :state="benerOk">
         <b-form-input
@@ -105,7 +104,6 @@
           v-model="form.id_bener"
           type="number"
           min="1"
-          required
           placeholder=""
           v-setcustomvalidity="benerOk"
           @input="debounceF2">
@@ -196,7 +194,12 @@ export default {
   },
   methods: {
     getDictFuncs () { return dict },
-    checkValidity () { return this.$refs.form_bene.checkValidity() },
+    // @vuese
+    // dice se il form è valido
+    checkValidity () {
+      return this.$refs.form_bene.checkValidity() &&
+        (this.beneOk || this.benerOk)
+    },
     dict2BsSelect (dict) {
       let options = [{ value: '', text: 'Seleziona un\'opzione' }]
       return options.concat(dict.map(el => {
@@ -216,14 +219,18 @@ export default {
         if (switchBene === 'bene') this.beneOk = val
         else this.benerOk = val
       }
-      const paramsBeneDef = { 'id': idBene, 'tmp_db': false }
-      const paramsBeneTmp = { 'id': idBene, 'tmp_db': true, 'id_Utente': idUtente }
-      const resp1 = await fetchBene(this, paramsBeneDef)
-      // !!resp poichè controlla che non sia ne null ne undefined
-      if (resp1) assignVal(switchBene, !!resp1)
-      else {
-        const resp2 = await fetchBene(this, paramsBeneTmp)
-        assignVal(switchBene, !!resp2)
+      if (idBene === '') {
+        assignVal(switchBene, null)
+      } else {
+        const paramsBeneDef = { 'id': idBene, 'tmp_db': false }
+        const paramsBeneTmp = { 'id': idBene, 'tmp_db': true, 'id_Utente': idUtente }
+        const resp1 = await fetchBene(this, paramsBeneDef)
+        // !!resp poichè controlla che non sia ne null ne undefined
+        if (resp1) assignVal(switchBene, !!resp1)
+        else {
+          const resp2 = await fetchBene(this, paramsBeneTmp)
+          assignVal(switchBene, !!resp2)
+        }
       }
     }
   },

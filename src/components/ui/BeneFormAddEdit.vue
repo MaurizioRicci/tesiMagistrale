@@ -148,6 +148,8 @@ export default {
   },
   methods: {
     getDictFuncs () { return dict },
+    // @vuese
+    // dice se il form è valido
     checkValidity () { return this.$refs.form_bene.checkValidity() },
     dict2BsSelect (dict) {
       let options = [{ value: '', text: 'Seleziona un\'opzione' }]
