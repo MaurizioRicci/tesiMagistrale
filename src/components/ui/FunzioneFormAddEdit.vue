@@ -215,6 +215,7 @@ export default {
         .then(res => this.dict2BsSelect(res.data))
     },
     async checkIDBene (idBene, idUtente, switchBene) {
+      console.log('check id')
       let assignVal = (switchBene, val) => {
         if (switchBene === 'bene') this.beneOk = val
         else this.benerOk = val
@@ -224,12 +225,17 @@ export default {
       } else {
         const paramsBeneDef = { 'id': idBene, 'tmp_db': false }
         const paramsBeneTmp = { 'id': idBene, 'tmp_db': true, 'id_Utente': idUtente }
-        const resp1 = await fetchBene(this, paramsBeneDef)
-        // !!resp poichè controlla che non sia ne null ne undefined
-        if (resp1) assignVal(switchBene, !!resp1)
-        else {
-          const resp2 = await fetchBene(this, paramsBeneTmp)
-          assignVal(switchBene, !!resp2)
+        try {
+          // se fetchBene da un errore (es: id del bene un intero troppo lungo) si interrompe tutto
+          const resp1 = await fetchBene(this, paramsBeneDef)
+          // !!resp poichè controlla che non sia ne null ne undefined
+          if (resp1) assignVal(switchBene, !!resp1)
+          else {
+            const resp2 = await fetchBene(this, paramsBeneTmp)
+            assignVal(switchBene, !!resp2)
+          }
+        } catch (error) {
+          assignVal(switchBene, false)
         }
       }
     }

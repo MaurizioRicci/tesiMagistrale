@@ -11,13 +11,13 @@ export const errorHandlerResponse = (error, vueApp) => {
   if (isHandlerEnabled(error.config)) {
     // Handle errors
     if (error.response) {
+      let msg = error.response.data.msg
       switch (error.response.status) {
         case 401:
           vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore', 'Credenziali invalide'])
           break
         case 422:
           const defaultTxt = 'Richiesta non processabile dal server.'
-          let msg = error.response.data.msg
           vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore',
             msg || defaultTxt])
           break
@@ -26,7 +26,7 @@ export const errorHandlerResponse = (error, vueApp) => {
             'Il sistema è offline, si prega di riprovare più tardi.'])
           break
         default:
-          vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore', error])
+          vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore', msg || error])
       }
     } else vueApp.$vueEventBus.$emit('master-page-show-msg', ['Errore', error])
   }

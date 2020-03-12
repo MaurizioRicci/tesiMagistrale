@@ -55,6 +55,7 @@ export default {
         'tmp_db': cercaInArchivioTemp
       }
       postData = Object.assign(postData, this.$store.getters.getUserData)
+      // se fetchBene ha un errore non fa niente perchè .then non viene eseguito
       return fetchBene(this, postData)
         .then(data => {
           if (!data) {
