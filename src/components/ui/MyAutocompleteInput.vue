@@ -29,8 +29,8 @@
 
       <b-list-group class="my-list border border-primary"
         v-if="!state.listClosed && arr.length > 0">
-        <b-list-group-item button v-for="sugg in arr"
-          v-bind:key="sugg.id" class="suggestion-row"
+        <b-list-group-item button v-for="(sugg, index) in arr"
+          :key="index" class="suggestion-row"
           v-on:click="updateValue(sugg); onSuggestionPicked(); hide();">
           <slot name="suggestion-row" :curr-suggestion="sugg">
             {{sugg.value}}
@@ -45,6 +45,10 @@
 import IconMsg from '@/components/ui/IconMsg'
 import { mixin as clickaway } from 'vue-clickaway'
 
+// Input che mostra dei suggerimenti presi da un array o da una funzione che restituisce una promessa;
+// tale promessa renderà poi un array di suggerimenti.
+// L'array di suggerimenti deve essere di questa forma:
+// [ {value: 'Sugg1'}, {value: 'Sugg2'}, ..., {value: 'SuggN'} ]
 export default {
   name: 'MyAutocompleteInput',
   mixins: [ clickaway ],
