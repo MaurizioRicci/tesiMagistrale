@@ -82,7 +82,9 @@
           <div v-else>
             <span @click="setEditing(true)" v-if="!isEditing()" key="msgValRead"
               style="cursor:pointer;">
-              <a class="d-inline-block w-100">{{row.msg_validatore}}</a>
+              <a class="d-inline-block w-100">
+                {{row.msg_validatore | ellipsizeLongText()}}
+              </a>
             </span>
             <span v-else key="msgValEdit">
               <b-form-textarea trim @input="msg => update(msg)"

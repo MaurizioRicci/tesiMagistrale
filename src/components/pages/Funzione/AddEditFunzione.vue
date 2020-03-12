@@ -8,7 +8,8 @@
         <LoadingOverlay ref="loadingOverlay"/>
         <h2 v-if="!noTitle">{{title || 'Aggiungi/Modifica una funzione'}}</h2>
         <LoginWarning/>
-        <b-alert show v-if="form.msg_validatore" variant="primary">
+        <b-alert show v-if="form.msg_validatore" variant="primary"
+          style="max-height:30vh; overflow:auto;">
           Da rivedere: {{form.msg_validatore}}
         </b-alert>
       </b-col>
