@@ -186,7 +186,6 @@
 <script>
 import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
-import { deleteCookie } from '@/assets/js/cookie'
 import axios from 'axios'
 import qs from 'qs'
 
@@ -227,10 +226,8 @@ export default {
       }.bind(this))
     },
     logout () {
-      // cancello il cookie con i dati utente (se presente)
-      deleteCookie('userData')
       // dico a Vuex di cancellare i dati utente
-      this.$store.commit('registerUser', {})
+      this.$store.commit('logoutUser')
       // mando l'utente alla pagina di login
       this.$router.push('/')
     }

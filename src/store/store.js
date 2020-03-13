@@ -15,3 +15,9 @@ export const store = new Vuex.Store({
     copiaIncolla: copiaIncolla
   }
 })
+
+/* / Se si danno delle impostazioni di default negli store (es: userStore)
+occorre ricordare di fare una deep clone, si veda userStore. Altrimenti c'è
+il rischio di andare a sovrascrivere le impostazioni di default. Sarà cosi impossibile
+ritornare alle impostazioni di default senza un rilancio dell'app
+/ */

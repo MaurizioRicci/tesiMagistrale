@@ -6,7 +6,6 @@ import RoutesFunzioni from '@/router/routesFunzioni'
 const Error404 = () => import('@/components/pages/Errors/Error404')
 const Login = () => import('@/components/pages/Login/Login')
 const Home = () => import('@/components/pages/Home/Home')
-const MyMap = () => import('@/components/pages/Map/MapPage')
 const MyMapOptions = () => import('@/components/pages/Options/MapOptions')
 const manageUsers = () => import('@/components/pages/Utente/GestisciUtenti')
 const Aiuto = () => import('@/components/pages/Aiuto/Aiuto')

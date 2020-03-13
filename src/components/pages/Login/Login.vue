@@ -37,10 +37,7 @@
           <b-form-checkbox v-if="true"
             id="checkbox-1"
             v-model="rememberMe"
-            name="checkbox-1"
-            value="si"
-            unchecked-value="no"
-            >
+            name="checkbox-1">
             Remember me
           </b-form-checkbox>
         </b-form>
@@ -50,7 +47,6 @@
 </template>
 
 <script>
-import { setCookie, getCookie, existCookie, deleteCookie } from '@/assets/js/cookie'
 import qs from 'qs'
 import axios from 'axios'
 
@@ -61,7 +57,7 @@ export default {
     return {
       errorMsg: '',
       formData: this.getUserModel(),
-      rememberMe: 'no',
+      rememberMe: false,
       // previus page wich linked to login page
       prevPagePath: ''
     }
@@ -101,28 +97,21 @@ export default {
       evt.preventDefault()
       axios.post(this.$store.getters.loginURL, qs.stringify(this.formData))
         .then(function (resp) {
-          // in ogni caso elimino il vecchio cookie (se presente)
-          deleteCookie('userData')
           // acquisisco ruolo & id
           this.formData.role = resp.data.role
           this.formData.id = resp.data.id
+          // inserisco tutti i dati utente dentro options (per i tre puntini cerca online spread operator)
+          let options = { ...this.formData }
           // se c'è il flag salviamo un cookie con username e password
-          if (this.rememberMe === 'si') {
-            // imposto un cookie di 6 mesi circa
-            setCookie('userData', JSON.stringify(this.formData), 31 * 6)
-          }
-          this.$store.commit('registerUser', this.formData)
+          options.rememberUser = this.rememberMe
+          this.$store.commit('registerUser', options)
           this.$router.push(this.prevPagePath)
         }.bind(this))
     }
   },
   mounted () {
-    // setto username e password vuoti
-    this.formData = this.getUserModel()
-    // controllo se è stato lasciato un cookie con username e password
-    if (existCookie('userData')) {
-      this.formData = JSON.parse(getCookie('userData'))
-    }
+    // recupero username & password se esistenti, sennò tutto stringa vuota
+    this.formData = this.$store.getters.getUserData
   }
 }
 </script>
