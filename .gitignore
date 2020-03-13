@@ -3,7 +3,7 @@ node_modules
 /dist
 .history/
 # docs folder
-website/
+website_docs/
 
 # local env files
 .env.local

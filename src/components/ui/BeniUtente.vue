@@ -156,8 +156,13 @@ export default {
     }
   },
   props: {
+    // vero se deve cercare i beni in archivio temp dell'utente
+    // altrimenti cerca i suoi beni approvati o quelli che ha modificato e che sono definitivi
     cercaInArchivioTemp: Boolean,
+    // Vero se deve partire un agggiornamento della tabella (da usare con .sync)
+    // .sync fa in modo di rimettere update=false dopo che è stato effettuato l'aggiornamento
     update: Boolean,
+    // etichetta associata alla tabella
     caption: { type: String, default: 'Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.' }
   },
   methods: {

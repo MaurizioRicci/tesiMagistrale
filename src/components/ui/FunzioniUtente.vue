@@ -151,8 +151,13 @@ export default {
     }
   },
   props: {
+    // vero se deve cercare funzioni in archivio temp dell'utente
+    // altrimenti cerca le sue funzioni approvate o quelle che ha modificato e che sono definitive
     cercaInArchivioTemp: Boolean,
+    // Vero se deve partire un agggiornamento della tabella (da usare con .sync)
+    // .sync fa in modo di rimettere update=false dopo che è stato effettuato l'aggiornamento
     update: Boolean,
+    // etichetta per la tabella
     caption: { type: String, default: 'Qua ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incomplete.' }
   },
   methods: {

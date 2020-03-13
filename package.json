@@ -1,12 +1,12 @@
 {
-  "name": "my-project",
-  "version": "0.1.0",
+  "name": "luni-acquisizione-dati",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "showDoc": "vuese gen | vuese serve --open"
+    "showDoc": "vuese gen --outDir=website_docs | vuese serve --outDir=website_docs --open"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",

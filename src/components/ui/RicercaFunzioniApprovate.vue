@@ -52,6 +52,7 @@ export default {
   mixins: [FunzioneTableMixin],
   filters: { ellipsizeLongText: ellipsize },
   props: {
+    // etichetta associata alla tabella
     caption: { type: String, default: 'Questa tabella contiene tutte le funzioni approvate.' },
     // se è vero non si possono compiere azioni (visualizza/modifica) sugli elementi
     noActions: Boolean

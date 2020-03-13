@@ -8,13 +8,14 @@ import { LWMSTileLayer } from 'vue2-leaflet'
 import axios from 'axios'
 
 // codice riadattato da https://gist.github.com/rclark/6908938
-// Crea un later WMS basato su leaflet con il supporto a richieste di tipo
+// Crea un layer WMS basato su leaflet con il supporto a richieste di tipo
 // GetFeatureInfo
 export default {
   name: 'BetterWMS',
   components: { LWMSTileLayer },
   data () {
     return {
+      // contiene l'istanza di Leaflet. Viene estratta da Vue2Leaflet come indicato nelle docs della libreria.
       leafletObject: null
     }
   },
@@ -31,6 +32,7 @@ export default {
     name: { type: String, default: 'benigeo' },
     layerType: { type: String, default: 'base' },
     // parametri addizionali per la URL specificati dall'utente
+    // il formato atteso è JSON es: { params1: 'value1', params2='value2' }
     URLParams: { type: Object, default: () => {} }
   },
   computed: {
@@ -95,6 +97,7 @@ export default {
           return str.charAt(0).toUpperCase() + str.substring(1)
         }
         let keys = Object.keys(tableObj)
+        // creo la tabella con gli attributi (la tabella è verticale non orizzontale)
         var result = '<table border=1>'
         for (var i = 0; i < keys.length; i++) {
           result += '<tr>'
