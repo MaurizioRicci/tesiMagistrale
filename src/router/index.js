@@ -32,12 +32,6 @@ const router = new Router({
     // path per le funzioni
     RoutesFunzioni,
     {
-      path: '/mappa/:id?',
-      name: 'mappaPage',
-      component: MyMap,
-      props: true
-    },
-    {
       path: '/gestisci_utenti',
       name: 'manageUsersPage',
       component: manageUsers
