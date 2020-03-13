@@ -9,6 +9,7 @@ const Home = () => import('@/components/pages/Home/Home')
 const MyMapOptions = () => import('@/components/pages/Options/MapOptions')
 const manageUsers = () => import('@/components/pages/Utente/GestisciUtenti')
 const Aiuto = () => import('@/components/pages/Aiuto/Aiuto')
+const ShowLog = () => import('@/components/pages/MostraLog')
 // solo per il debug OR true
 const isAuthenticated = () => store.getters.loggedIn || true
 
@@ -52,6 +53,11 @@ const router = new Router({
       path: '/aiuto',
       name: 'aiutoPage',
       component: Aiuto
+    },
+    {
+      path: '/showLog',
+      name: 'logPage',
+      component: ShowLog
     },
     {
       path: '*',

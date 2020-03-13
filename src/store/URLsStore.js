@@ -9,6 +9,7 @@ const serverURLsStore = {
     elencoProvince: '/options/map/elencoProvince.php', // per settare il centro della mappa di default
     getNewID: '/getNewID.php',
     shapeFile: '/downloadShapeFile.php',
+    getLog: '/getLog.php',
     // URL per i beni
     aggiungiBene: '/inserisci/beni/crea.php',
     checkDist: '/inserisci/beni/checkDistance.php',
@@ -43,6 +44,7 @@ const serverURLsStore = {
     elencoProvinceURL: state => state.serverURL + state.elencoProvince,
     getNewIDURL: state => state.serverURL + state.getNewID,
     shapeFileURL: state => state.serverURL + state.shapeFile,
+    getLogURL: state => state.serverURL + state.getLog,
     // URL per i beni
     aggiungiBeneURL: state => state.serverURL + state.aggiungiBene,
     checkDistURL: state => state.serverURL + state.checkDist,
