@@ -117,7 +117,7 @@ export default {
       evt.preventDefault()
       if (!this.ternaValida) {
         this.$vueEventBus.$emit('master-page-show-msg',
-          ['Attenzione', 'Data anteriore, data posteriore e tipo data non tornano tra loro.'])
+          ['Attenzione', 'Data anteriore, data posteriore e tipo data non coerenti tra loro.'])
       } else {
         if (this.$refs.form_funzione.checkValidity()) {
           this.sendData()

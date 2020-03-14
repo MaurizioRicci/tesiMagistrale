@@ -14,7 +14,7 @@
         <b-tabs pills card align="center">
           <b-tab title="Beni tuoi archivio definitivo">
             <BeniUtente :update.sync="triggerUpdate"
-             caption="Qua ci sono i tuoi beni in archivio definitivo"
+             caption="Qui ci sono i tuoi beni in archivio definitivo"
               @loading="loading=true" @loaded="loading=false"
               @loadingFailed="loading=false"/>
           </b-tab>
@@ -61,8 +61,8 @@ export default {
     role: function () { return this.$store.getters.getUserData.role },
     caption: function () {
       return this.role === 'schedatore'
-        ? 'Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.'
-        : 'Qua ci sono i beni da revisionare'
+        ? 'Qui ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.'
+        : 'Qui ci sono i beni da revisionare'
     }
   },
   data: function () {

@@ -14,7 +14,7 @@
         <b-tabs pills card align="center">
           <b-tab title="Funzioni tue archivio definitivo">
             <FunzioniUtente :update.sync="triggerUpdate"
-              caption="Qua ci sono le tue funzioni in archivio definitivo"
+              caption="Qui ci sono le tue funzioni in archivio definitivo"
               @loading="loading=true" @loaded="loading=false"
               @loadingFailed="loading=false"/>
           </b-tab>
@@ -61,8 +61,8 @@ export default {
     role: function () { return this.$store.getters.getUserData.role },
     caption: function () {
       return this.role === 'schedatore'
-        ? 'Qua ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incomplete.'
-        : 'Qua ci sono le funzioni da revisionare.'
+        ? 'Qui ci sono le funzioni utente che sono o in revisione, o da rivedere o che sono incomplete.'
+        : 'Qui ci sono le funzioni da revisionare.'
     }
   },
   data: function () {

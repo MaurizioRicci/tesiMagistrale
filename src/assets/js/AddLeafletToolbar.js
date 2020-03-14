@@ -15,7 +15,6 @@ export default {
   // moduli che lo importano
   initToolbar: function (store, map, callbacks, disabledToolbar) {
     const L = window.L
-    console.log(L.drawLocal)
     L.drawLocal.draw.toolbar.actions.text = 'Annulla'
     L.drawLocal.draw.toolbar.finish.text = 'Crea poligono'
     L.drawLocal.draw.toolbar.undo.text = 'Cancella ultimo vertice'

@@ -163,7 +163,7 @@ export default {
     // .sync fa in modo di rimettere update=false dopo che è stato effettuato l'aggiornamento
     update: Boolean,
     // etichetta associata alla tabella
-    caption: { type: String, default: 'Qua ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.' }
+    caption: { type: String, default: 'Qui ci sono i beni utente che sono o in revisione, o da rivedere o che sono incompleti.' }
   },
   methods: {
     getData: function () {

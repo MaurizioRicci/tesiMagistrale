@@ -71,9 +71,11 @@ export default function dataVera (DS) {
     / */
 
     for (let secolo of RomToArab) {
-      for (let frazione of RomDett) {
-        let ipotesi = (secolo + frazione).toLowerCase()
-        if (ipotesi === sin.toLowerCase()) return true
+      if ((typeof secolo).toLowerCase() === 'string') {
+        for (let frazione of RomDett) {
+          let ipotesi = (secolo + frazione).toLowerCase()
+          if (ipotesi === sin.toLowerCase()) return true
+        }
       }
     }
     return false

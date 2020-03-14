@@ -1,5 +1,6 @@
 <template>
-    <LWMSTileLayer v-bind="$props" :baseUrl="URLWithUserParams" ref="myLayer">
+    <LWMSTileLayer v-bind="$props" :baseUrl="URLWithUserParams" ref="myLayer"
+     :tileSize="tileSize">
     </LWMSTileLayer>
 </template>
 
@@ -16,7 +17,8 @@ export default {
   data () {
     return {
       // contiene l'istanza di Leaflet. Viene estratta da Vue2Leaflet come indicato nelle docs della libreria.
-      leafletObject: null
+      leafletObject: null,
+      tileSize: 1024
     }
   },
   props: {
@@ -86,6 +88,7 @@ export default {
     },
     formatResult (res) {
       let unwantedKey = []
+      if (res.data.features.length <= 0) return
       let tableData = Object.assign({}, res.data.features[0].properties) // shallow copy
       for (let k of unwantedKey) {
         delete tableData[k]

@@ -117,11 +117,10 @@ export default {
       let url = storeGetters.approvaBeneURL
       axios.post(url, qs.stringify(postData))
         .then(ok => {
-          this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok', 'sendData'])
-          if (this.leavePage) {
-            this.$vueEventBus.$once('master-page-show-msg-ok-sendData',
-              () => this.goBack())
-          }
+          // dopo aver cliccato ok torno alla pagina indietro
+          this.$vueEventBus.$once('master-page-show-msg-ok-sendData',
+            () => this.goBack())
+          this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Bene inserito in archivio definitivo', 'sendData'])
         })
     },
     checkPolygonDist () {

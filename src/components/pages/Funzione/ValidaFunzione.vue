@@ -90,7 +90,7 @@ export default {
     sendData () {
       if (!this.ternaValida) {
         this.$vueEventBus.$emit('master-page-show-msg',
-          ['Attenzione', 'Data anteriore, data posteriore e tipo data non tornano tra loro.'])
+          ['Attenzione', 'Data anteriore, data posteriore e tipo data non coerenti tra loro.'])
       } else {
         let postData = lodashclonedeep(
           Object.assign({}, this.form, this.$store.getters.getUserData))
@@ -98,10 +98,11 @@ export default {
         let url = storeGetters.approvaFunzioneURL
         axios.post(url, qs.stringify(postData))
           .then(ok => {
-            this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Ok', 'sendData'])
+            // dopo aver cliccato ok torno alla pagina indietro
+            this.$vueEventBus.$once('master-page-show-msg-ok-sendData',
+              () => this.goBack())
+            this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Funzione inserita in archivio definitivo', 'sendData'])
             if (this.leavePage) {
-              this.$vueEventBus.$once('master-page-show-msg-ok-sendData',
-                () => this.goBack())
             }
           })
       }
