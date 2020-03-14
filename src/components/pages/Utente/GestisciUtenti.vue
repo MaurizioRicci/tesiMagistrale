@@ -23,7 +23,7 @@
               <ul>
                   <li>Username e Password devono essere unici, non possono esistere due utenti con stesso username
                     e stessa password. Altrimenti non è possibile discriminare un utente da un altro.</li>
-                  <li>Le iniziali vanno scritte tutte in maiuscolo.</li>
+                  <li>Le iniziali vanno scritte tutte in maiuscolo e devono essere uniche.</li>
                   <li>Tutti i campi sono richiesti. In rosso quelli da riempire</li>
               </ul>
               <p>La violazione delle regole sopra citate comporterà necessariamente il fallimento dell'operazione di convalida.</p>
@@ -167,7 +167,8 @@ export default {
               this.userCollide(row, colName, row[colName]) ||
                 this.checkIniziali(row, colName, row[colName]) ||
                   this.idsCollide(row, colName, row[colName]) ||
-                  !this.isValidEmail(row, colName, row[colName])
+                  !this.isValidEmail(row, colName, row[colName]) ||
+                  Number(row.id_min) > Number(row.id_max)
     },
     retriveUsers: function () {
       axios.post(this.$store.getters.gestioneUtentiURL, qs.stringify({
@@ -353,8 +354,14 @@ export default {
       addEdit.forEach(el => {
         copy.forEach(el2 => {
           // id utente diversi e almeno uno dei due id deve sovrapporsi
-          if (el.uid !== el2.uid && (overlapID(el.id_min, el2.id_min, el2.id_max) ||
-            overlapID(el.id_max, el2.id_min, el2.id_max))) {
+          if (el.uid !== el2.uid &&
+          (// id min compreso nel range di un altro utente
+            overlapID(el.id_min, el2.id_min, el2.id_max) ||
+            // oppure id max compreso nel range di un altro utente
+            overlapID(el.id_max, el2.id_min, el2.id_max) ||
+            // oppure il range dell'utente comprende direttamente il range di altri utenti
+            (Number(el.id_min) !== -1 && el.id_min <= el2.id_min && el.id_max >= el2.id_max)
+          )) {
             overlapping.push(el.uid)
             overlapping.push(el2.uid)
           }

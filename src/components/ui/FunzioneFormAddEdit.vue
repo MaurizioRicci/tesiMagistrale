@@ -214,7 +214,7 @@ export default {
       return dict.loadFunc(this)
         .then(res => this.dict2BsSelect(res.data))
     },
-    async checkIDBene (idBene, idUtente, switchBene) {
+    async checkIDBene (idBene, userData, switchBene) {
       console.log('check id')
       let assignVal = (switchBene, val) => {
         if (switchBene === 'bene') this.beneOk = val
@@ -224,7 +224,11 @@ export default {
         assignVal(switchBene, null)
       } else {
         const paramsBeneDef = { 'id': idBene, 'tmp_db': false }
-        const paramsBeneTmp = { 'id': idBene, 'tmp_db': true, 'id_Utente': idUtente }
+        const paramsBeneTmp = { 'id': idBene,
+          'tmp_db': true,
+          'id_utente': userData.userID,
+          'username': userData.username,
+          'password': userData.password }
         try {
           // se fetchBene da un errore (es: id del bene un intero troppo lungo) si interrompe tutto
           const resp1 = await fetchBene(this, paramsBeneDef)
@@ -242,14 +246,15 @@ export default {
   },
   computed: {
     dataAnteValida () { return dataVera(this.form.data_ante) },
-    dataPosteValida () { return dataVera(this.form.data_poste) }
+    dataPosteValida () { return dataVera(this.form.data_poste) },
+    userData () { return this.$store.getters.getUserData }
   },
   mounted () {
     this.getTipoDataOptions().then(options => { this.tipoDataOptions = options })
     this.getFunzioneOptions().then(options => { this.funzioneOptions = options })
     // inizializzo le debounced function
-    this.debounceF1 = debounce(() => this.checkIDBene(this.form.id_bene, this.form.id_utente_bene, 'bene'), 2000)
-    this.debounceF2 = debounce(() => this.checkIDBene(this.form.id_bener, this.form.id_utente_bener, 'bener'), 2000)
+    this.debounceF1 = debounce(() => this.checkIDBene(this.form.id_bene, this.userData, 'bene'), 2000)
+    this.debounceF2 = debounce(() => this.checkIDBene(this.form.id_bener, this.userData, 'bener'), 2000)
   }
 }
 </script>
