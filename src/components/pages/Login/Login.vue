@@ -85,12 +85,14 @@ export default {
       evt.preventDefault()
       axios.post(this.$store.getters.loginURL, qs.stringify(this.formData))
         .then(function (resp) {
+          // cancello anche le credenziali salvate nel browser. Se l'utente le rivuole c'è il flag apposito
+          this.$store.commit('logoutUser')
           // acquisisco ruolo & id
           this.formData.role = resp.data.role
           this.formData.id = resp.data.id
           // inserisco tutti i dati utente dentro options (per i tre puntini cerca online spread operator)
           let options = { ...this.formData }
-          // se c'è il flag salviamo un cookie con username e password
+          // se c'è il flag salviamo nel browser le credenziali
           options.rememberUser = this.rememberMe
           this.$store.commit('registerUser', options)
           this.$router.push(this.prevPagePath)
