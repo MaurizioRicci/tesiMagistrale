@@ -25,7 +25,7 @@ export default {
       // addEditBene
       component: AddEditBene,
       props: (route) => ({
-        title: 'Modifica Bene',
+        title: 'Modifica un bene',
         idBene: route.params.id,
         editMode: true
       })

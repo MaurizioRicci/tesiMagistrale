@@ -39,6 +39,10 @@ export default {
       columns: ['date', 'title', 'txt'],
       data: [],
       options: {
+        headings: {
+          date: 'Locale date',
+          txt: 'Message'
+        },
         perPage: 100,
         perPageValues: [],
         filterable: true,
@@ -53,7 +57,13 @@ export default {
           limit: this.maxLog
         }
       })
-        .then(res => { this.data = res.data })
+        .then(res => {
+          this.data = res.data.map(row => {
+            let date = new Date(row.date)
+            row.date = date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
+            return row
+          })
+        })
     }
   },
   created () {

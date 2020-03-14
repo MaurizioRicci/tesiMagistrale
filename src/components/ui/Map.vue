@@ -132,7 +132,12 @@ export default {
     addFullScreen (map) {
       if (this.controls.zoom) {
         const L = window.L
-        map.addControl(new L.Control.Fullscreen())
+        map.addControl(new L.Control.Fullscreen({
+          title: {
+            'false': 'Vedi a schermo intero',
+            'true': 'Esci da schermo intero'
+          }
+        }))
       }
     },
     addPolygonToToolbar () {

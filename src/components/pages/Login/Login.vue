@@ -31,14 +31,14 @@
               placeholder=""
               ></b-form-input>
           </b-form-group>
-          <b-button type="submit" variant="primary">Submit</b-button>
+          <b-button type="submit" variant="primary">Login</b-button>
           <b-button type="reset" variant="danger">Reset</b-button>
           <!-- si passa sempre dal login lato server a ogni lancio dell'applicazione -->
           <b-form-checkbox v-if="true"
             id="checkbox-1"
             v-model="rememberMe"
             name="checkbox-1">
-            Remember me
+            Ricordami
           </b-form-checkbox>
         </b-form>
       </b-col>

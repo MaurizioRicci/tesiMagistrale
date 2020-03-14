@@ -15,11 +15,19 @@ export default {
   // moduli che lo importano
   initToolbar: function (store, map, callbacks, disabledToolbar) {
     const L = window.L
-
-    L.drawLocal.edit.toolbar.buttons.edit = 'Edit polygon'
-    L.drawLocal.edit.toolbar.buttons.editDisabled = 'No polygons to edit'
-    L.drawLocal.edit.toolbar.buttons.remove = 'Delete polygon'
-    L.drawLocal.edit.toolbar.buttons.removeDisabled = 'No polygons to delete'
+    console.log(L.drawLocal)
+    L.drawLocal.draw.toolbar.actions.text = 'Annulla'
+    L.drawLocal.draw.toolbar.finish.text = 'Crea poligono'
+    L.drawLocal.draw.toolbar.undo.text = 'Cancella ultimo vertice'
+    L.drawLocal.draw.toolbar.buttons.polygon = 'Crea poligono'
+    L.drawLocal.draw.handlers.polygon.tooltip.start = 'Fai click per aggiungere un vertice'
+    L.drawLocal.draw.handlers.polygon.tooltip.cont = 'Fai click per continuare a aggiungere vertici'
+    L.drawLocal.draw.handlers.polygon.tooltip.end = 'Fai click sul primo vertice per chiudere il poligono'
+    L.drawLocal.draw.handlers.polygon.tooltip.start = 'Fai click per aggiungere un vertice'
+    L.drawLocal.edit.toolbar.buttons.edit = 'Modifica poligono'
+    L.drawLocal.edit.toolbar.buttons.editDisabled = 'Nessun poligono da modificare'
+    L.drawLocal.edit.toolbar.buttons.remove = 'Cancella poligono'
+    L.drawLocal.edit.toolbar.buttons.removeDisabled = 'Nessun poligono da cancellare'
 
     callbacks = Object.assign(defaultCallbacks, callbacks)
     store.drawnItems = L.featureGroup().addTo(map)
