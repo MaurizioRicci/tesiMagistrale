@@ -59,20 +59,8 @@ export default {
       formData: this.getUserModel(),
       rememberMe: false,
       // previus page wich linked to login page
-      prevPagePath: ''
+      prevPagePath: '/home'
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // access to component instance via `vm`
-      // controllo che from non sia uguale alla route corrente
-      // controllo che from sia una pagina esistente => loop altrimenti
-      // se from==to utente ha navigato direttamente a /login => si manda alla home
-      // altrimenti sarebbe andato alla pagina precedente al login
-      vm.prevPagePath = from.path === to.path || from.name === 'PageNotFound' ? '/home' : from
-      // l'utente va sempre alla home
-      vm.prevPagePath = '/home'
-    })
   },
   computed: {
     showError () {
@@ -109,10 +97,7 @@ export default {
         }.bind(this))
     }
   },
-  mounted () {
-    // recupero username & password se esistenti, sennò tutto stringa vuota
-    this.formData = this.$store.getters.getUserData
-  }
+  mounted () {}
 }
 </script>
 

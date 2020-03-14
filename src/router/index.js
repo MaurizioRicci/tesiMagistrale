@@ -11,7 +11,7 @@ const manageUsers = () => import('@/components/pages/Utente/GestisciUtenti')
 const Aiuto = () => import('@/components/pages/Aiuto/Aiuto')
 const ShowLog = () => import('@/components/pages/MostraLog')
 // solo per il debug OR true
-const isAuthenticated = () => store.getters.loggedIn || true
+const isAuthenticated = () => store.getters.loggedIn
 
 Vue.use(Router)
 

@@ -25,11 +25,12 @@ const userDataStore = {
   },
   getters: {
     getUserData: state => state.currUserData,
-    loggedIn: state => state.currUserData.id !== ''
+    loggedIn: state => state.currUserData.username.trim() !== '' &&
+                          state.currUserData.password.trim() !== ''
   },
   mutations: {
     logoutUser (state, options) {
-      state.currUserData = DEFAULT_USER_DATA
+      state.currUserData = { ...cloneDeep(DEFAULT_USER_DATA) }
       saveToLocalStorage(state.currUserData)
     },
     registerUser (state, options) {
