@@ -1,6 +1,6 @@
 import { Polygon } from '@/assets/js/Models/multiPolygonModel'
 
-// piccola scorciatoia
+// piccola scorciatoia per dire se è settato lo stato
 const exist = el => (typeof el === 'string' && el.trim() !== '') || typeof el === 'number'
 
 // è una funzione perchè cosi è facilmente clonabile il modello

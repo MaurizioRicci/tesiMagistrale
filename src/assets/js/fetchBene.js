@@ -5,11 +5,16 @@ import lodashclonedeep from 'lodash.clonedeep'
 import axios from 'axios'
 import qs from 'qs'
 
+// Recupera i dettagli di un bene. Rende null se non trova niente.
+// Se la richiesta fallisce si può catturare o con try/catch o catch
+// Si veda try/catch & Promise.cat
 export default function fetchBene (This, URLdata) {
   let URL = This.$store.getters.dettagliBeneURL
-  let data = { form: getModelloBene(),
+  let data = {
+    form: getModelloBene(),
     formRetrived: getModelloBene(),
-    mapCenter: This.$store.getters.getDefaultMapCenter }
+    mapCenter: This.$store.getters.getDefaultMapCenter
+  }
   return axios.post(URL, qs.stringify(URLdata))
     .then(ok => {
       if (ok.data.length <= 0) {

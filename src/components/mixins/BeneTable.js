@@ -3,6 +3,7 @@ import { loadMacroEpocaCar, loadMacroEpocaOrig, loadEsistenza } from '@/assets/j
 export default {
   data () {
     return {
+      // opzioni per VueTables2
       options: {
         caption: 'd',
         filterable: [

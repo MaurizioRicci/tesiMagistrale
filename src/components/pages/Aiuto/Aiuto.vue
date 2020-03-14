@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <b-container fluid>
     <b-row>
       <b-col cols="12" v-if="!noMenu">
@@ -14,7 +14,7 @@
         <!-- aiuto beni -->
         <b-tab title="Beni" active>
           <b-row>
-            <!-- d-flex perchè flex hanno la stessa altezza tutti -->
+            <!-- d-flex perchè con flexbox hanno la stessa altezza tutti -->
             <b-col cols="12" md="6" xl class="d-flex">
               <b-card title="Aggiungi bene" tag="article" class="mb-2">
                In questa pagina è possibile aggiungere un bene, ovvero una entità geografica. Tale entità potrà
@@ -86,7 +86,7 @@
 import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
 
-// Io sono solo un componente da cui copiare il template ogni volta.
+// Mostra una pagina di aiuto suddivisa per beni, funzioni, il lavoro
 export default {
   name: 'AiutoPage',
   components: { Menu },

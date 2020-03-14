@@ -3,6 +3,7 @@ import { loadRuolo, loadTipoData, loadFunc } from '@/assets/js/loadDict'
 export default {
   data () {
     return {
+      // opzioni per VueTables2
       options: {
         filterable: [
           'id',

@@ -26,17 +26,19 @@ export default {
   },
   methods: {
     resetData () {
+      // dettaglio del bene
       this.form = getModelloBene()
+      // dettaglio del bene cosi come scaricato dal server
       this.formRetrived = getModelloBene()
+      // centroide del bene
       this.mapCenter = this.$store.getters.getDefaultMapCenter
     },
     getModel () {
       return getModelloBene()
     },
     // @vuese
-    // Restituisce una promessa in ogni caso, il valore dipende:
-    // null se non viene eseguita la richiesta o il valore d'errore non va a buon fine
-    // I dettagli del bene se la richiesta va a buon fine
+    // Restituisce una promessa in ogni caso.
+    // I dettagli del bene sono salvati in form & formRetrived & mapCenter se la richiesta va a buon fine
     fetchBeneDataByID (requiredID, idUtente, cercaInArchivioTemp, options = {}) {
       let { noResultsMsg } = options
       if (cercaInArchivioTemp && !idUtente) {

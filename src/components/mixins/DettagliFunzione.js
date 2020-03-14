@@ -26,17 +26,17 @@ export default {
   },
   methods: {
     resetData () {
+      // dettagli della funzioni
       this.form = getModelloFunzione()
+      // dettagli della funzione cosi come è stata scaricata dal server
       this.formRetrived = getModelloFunzione()
-      this.mapCenter = this.$store.getters.getDefaultMapCenter
     },
     getModel () {
       return getModelloFunzione()
     },
     // @vuese
-    // Restituisce una promessa in ogni caso, il valore dipende:
-    // null se non viene eseguita la richiesta o il valore d'errore non va a buon fine
-    // I dettagli del bene se la richiesta va a buon fine
+    // Restituisce una promessa in ogni caso.
+    // I dettagli della funzione sono salvati in form & formRetrived se la richiesta va a buon fine
     fetchFunzioneDataByID (requiredID, idUtente, cercaInArchivioTemp, options = {}) {
       let { noResultsMsg } = options
       if (cercaInArchivioTemp && typeof idUtente === 'undefined') {
@@ -61,7 +61,6 @@ export default {
           if (!data) {
             this.$vueEventBus.$emit('master-page-show-msg', ['Info', noResultsMsg || 'Nessun risultato trovato'])
           } else {
-            T.mapCenter = data.mapCenter
             T.form = data.form
             T.formRetrived = data.formRetrived
             return T.form

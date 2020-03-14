@@ -1,4 +1,4 @@
-// piccola scorciatoia
+// piccola scorciatoia per dire se è settato lo stato
 const exist = el => (typeof el !== 'undefined' &&
   typeof el === 'string' && el.trim() !== '') || typeof el === 'number'
 
