@@ -18,7 +18,7 @@ export default {
     return {
       // contiene l'istanza di Leaflet. Viene estratta da Vue2Leaflet come indicato nelle docs della libreria.
       leafletObject: null,
-      tileSize: 1024
+      tileSize: 512
     }
   },
   props: {
@@ -26,7 +26,6 @@ export default {
     baseUrl: { type: String, required: true },
     styles: { type: String, default: '' },
     transparent: { type: Boolean, default: true },
-    version: String,
     format: { typr: String, default: 'image/png' },
     attribution: { type: String, default: '' },
     // livelli da recuperare
@@ -54,7 +53,7 @@ export default {
       let url = this.getFeatureInfoUrl(evt.latlng)
       axios.get(url).then(resp => {
         let dataReceived = typeof resp === 'string' ? null : resp.data
-        this.emitResults({ latlng: evt.latlng, data: dataReceived })
+        if (dataReceived) { this.emitResults({ latlng: evt.latlng, data: dataReceived }) }
       }, fail => { console.log(fail) })
     },
     getFeatureInfoUrl: function (latlng) {
@@ -69,7 +68,7 @@ export default {
         srs: 'EPSG:4326',
         styles: this.styles,
         transparent: this.transparent,
-        version: this.version,
+        version: '1.0.0',
         format: this.format,
         bbox: this.leafletObject._map.getBounds().toBBoxString(),
         height: size.y,
@@ -115,7 +114,8 @@ export default {
       return res
     },
     emitResults (res) {
-      this.$emit('getFeatureInfo', this.formatResult(res))
+      let formatted = this.formatResult(res)
+      if (formatted) { this.$emit('getFeatureInfo', formatted) }
     }
   },
   mounted () {
