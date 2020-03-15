@@ -15,11 +15,11 @@
         <b-alert variant="warning" :show="beneOverlap.length > 0">
           Il bene è molto vicino ai seguenti beni:
           <b-button-group class="justify-content-center" style="flex-wrap: wrap;">
-            <b-button v-for="bene in beneOverlap" :key="bene.id"
+            <b-button v-for="(bene,index) in beneOverlap" :key="index"
               variant="light" class="btn-outline-info"
               title="Click per dettagli" v-b-modal.modal-bene-overview
-              @click="$refs.beneOverview.showBeneDetails(bene.id)">
-             ID {{bene.id}} ({{ Math.round(Number(bene.dist)) }}m)
+              @click="$refs.beneOverview.showBeneDetails(bene.id, bene.id_utente)">
+             ID {{bene.id}}{{bene.id_utente?' (temp)' : ' '}}({{ Math.round(Number(bene.dist)) }}m)
             </b-button>
           </b-button-group>
         </b-alert>
