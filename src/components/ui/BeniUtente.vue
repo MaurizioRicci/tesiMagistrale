@@ -87,15 +87,15 @@
           </div>
         </div>
 
-        <template v-slot:bibliografia="{row}">
-          <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
-          {{row.bibliografia | ellipsizeLongText()}}
-        </template>
+      <template v-slot:bibliografia="{row}">
+        <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
+        <span :title="row.bibliografia">{{row.bibliografia | ellipsizeLongText()}}</span>
+      </template>
 
-        <template v-slot:note="{row}">
-          <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
-          {{row.note | ellipsizeLongText()}}
-        </template>
+      <template v-slot:note="{row}">
+        <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
+        <span :title="row.note">{{row.note | ellipsizeLongText()}}</span>
+      </template>
 
         <template slot="child_row" slot-scope="props">
         <b-button @click="() => openChildRow(props)" class="m-1">Mostra sulla mappa</b-button>
@@ -134,10 +134,9 @@ import IconMsg from '@/components/ui/IconMsg'
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 import Map from '@/components/ui/Map'
 import fetchBene from '@/assets/js/fetchBene'
-// eslint-disable-next-line no-unused-vars
-import { Event } from 'vue-tables-2'
 import qs from 'qs'
 import axios from 'axios'
+import sortByID from '@/assets/js/sortNumberAsString'
 
 // Beni Aggiunti o In Revisione, mostra i beni aggiunti dall'utente
 // oppure quelli che ha in revisione
@@ -201,7 +200,7 @@ export default {
         .then(ok => {
           this.$vueEventBus.$emit('master-page-show-msg',
             ['Info', 'Bene temporaneo cancellato correttamente'])
-          this.waitUserConfirmationDelete = true
+          this.waitUserConfirmationDelete = false
           this.getData()
         })
     },
@@ -280,6 +279,9 @@ export default {
               return res
             }
           }
+        },
+        customSorting: {
+          id: sortByID('id')
         },
         editableColumns: ['msg_validatore'],
         hiddenColumns: this.getHiddenColums()

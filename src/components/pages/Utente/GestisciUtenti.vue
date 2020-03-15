@@ -99,20 +99,12 @@ import Menu from '@/components/ui/Menu'
 import qs from 'qs'
 import axios from 'axios'
 import FileSaver from 'file-saver'
+import sortByID from '@/assets/js/sortNumberAsString'
 const _mapValues = require('lodash.mapvalues') // è come Array.map() solo con i dizionari
 const _values = require('lodash.values') // rende una array contenenti tutti i valori in un dizionario
 // regex presa da https://stackoverflow.com/questions/9572254/validate-email-with-regex-jquery
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i
 // usato per sortare le colonne di id che sono numerici
-const sortByID = function (ascending) {
-  return function (a, b) {
-    a = Number(a.id_min)
-    b = Number(b.id_min)
-    a = isNaN(a) ? Number.MAX_SAFE_INTEGER : a
-    b = isNaN(b) ? Number.MAX_SAFE_INTEGER : b
-    return ascending ? a - b : b - a
-  }
-}
 
 // @group Pages
 // Consente di aggiungere o modificare gli utenti, lascia la possibilità di assegnare tutti i dati.
@@ -146,8 +138,8 @@ export default {
         filterable: true,
         filterByColumn: true,
         customSorting: {
-          id_min: sortByID,
-          id_max: sortByID
+          id_min: sortByID('id_min'),
+          id_max: sortByID('id_max')
         }
       },
       users: {

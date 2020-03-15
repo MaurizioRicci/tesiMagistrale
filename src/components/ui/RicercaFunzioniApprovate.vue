@@ -28,12 +28,12 @@
 
       <template v-slot:bibliografia="{row}">
         <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
-        {{row.bibliografia | ellipsizeLongText()}}
+        <span :title="row.bibliografia">{{row.bibliografia | ellipsizeLongText()}}</span>
       </template>
 
       <template v-slot:note="{row}">
         <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
-        {{row.note | ellipsizeLongText()}}
+        <span :title="row.note">{{row.note | ellipsizeLongText()}}</span>
       </template>
     </v-server-table>
 </div>

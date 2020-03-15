@@ -100,15 +100,15 @@
           </div>
         </div>
 
-        <template v-slot:bibliografia="{row}">
-          <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
-          {{row.bibliografia | ellipsizeLongText()}}
-        </template>
+      <template v-slot:bibliografia="{row}">
+        <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
+        <span :title="row.bibliografia">{{row.bibliografia | ellipsizeLongText()}}</span>
+      </template>
 
-        <template v-slot:note="{row}">
-          <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
-          {{row.note | ellipsizeLongText()}}
-        </template>
+      <template v-slot:note="{row}">
+        <!-- oltre i 50 caratteri (valore di default) tronco la stringa con i puntini -->
+        <span :title="row.note">{{row.note | ellipsizeLongText()}}</span>
+      </template>
 
     </v-client-table>
 
@@ -134,6 +134,7 @@ import IconMsg from '@/components/ui/IconMsg'
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 import qs from 'qs'
 import axios from 'axios'
+import sortByID from '@/assets/js/sortNumberAsString'
 
 // Beni Aggiunti o In Revisione, mostra i beni aggiunti dall'utente
 // oppure quelli che ha in revisione
@@ -262,6 +263,10 @@ export default {
           'schedatori_iniziali',
           'msg_validatore'
         ],
+        customSorting: {
+          id_bene: sortByID('id_bene'),
+          id_bener: sortByID('id_bener')
+        },
         editableColumns: ['msg_validatore'],
         hiddenColumns: this.getHiddenColums()
       }

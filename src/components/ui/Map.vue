@@ -25,7 +25,7 @@ la proprietà locked; se presente disabilita la modifica -->
             <IconMsg icon_name="info-circle" icon_color="white"
               icon_msg="Mostra dettagli dei beni"/>
           </b-button>
-          <b-button key="zoomToPoly" @click="() => zoomToPolygon()">
+          <b-button key="zoomToPoly" v-if="polygon" @click="() => zoomToPolygon()">
             <IconMsg icon_name="search-location" icon_color="white"
               icon_msg="Zoom alla geometria"/>
           </b-button>

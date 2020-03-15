@@ -88,10 +88,9 @@
       <ruoli-form-tag v-model="form.ruolo" label="Ruoli" inputID="input-ruolo"/>
       <!-- funzione -->
       <b-form-group id="input-group-1" label="Funzione:"
-        label-for="input-funzione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2"
-        class="required-field">
+        label-for="input-funzione" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
         <b-form-select id="input-funzione" v-model="form.funzione"
-         :options="funzioneOptions" required></b-form-select>
+         :options="funzioneOptions"></b-form-select>
       </b-form-group>
       <!-- id bene 2 -->
       <b-form-group id="input-group-id_bener" label="ID rif:" label-for="input-id_bener"
@@ -215,7 +214,6 @@ export default {
         .then(res => this.dict2BsSelect(res.data))
     },
     async checkIDBene (idBene, userData, switchBene) {
-      console.log('check id')
       let assignVal = (switchBene, val) => {
         if (switchBene === 'bene') this.beneOk = val
         else this.benerOk = val

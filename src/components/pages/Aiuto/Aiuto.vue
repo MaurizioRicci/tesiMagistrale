@@ -1,4 +1,4 @@
-<template functional>
+<template>
   <b-container fluid>
     <b-row>
       <b-col cols="12" v-if="!noMenu">
