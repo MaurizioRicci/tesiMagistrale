@@ -39,10 +39,10 @@ export default {
     // I dettagli della funzione sono salvati in form & formRetrived se la richiesta va a buon fine
     fetchFunzioneDataByID (requiredID, idUtente, cercaInArchivioTemp, options = {}) {
       let { noResultsMsg } = options
-      if (cercaInArchivioTemp && typeof idUtente === 'undefined') {
+      if (cercaInArchivioTemp && !idUtente) {
         throw new Error('Per cercare una funzione in archivio temporaneo serve anche id utente')
       }
-      if (!cercaInArchivioTemp && typeof idUtente !== 'undefined') {
+      if (!cercaInArchivioTemp && idUtente) {
         throw new Error('Hai specificato un id utente ma non il flag per cercare in archivio temporaneo')
       }
 
