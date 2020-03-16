@@ -12,6 +12,8 @@
       <h5 class="col-12">
         Benvenuto
         <b-badge variant="info">{{$store.getters.getUserData.username}}</b-badge>
+        La tua sigla è
+        <b-badge variant="info">{{data.iniziali}}</b-badge>
       </h5>
       <!-- Breve descrizione + Collegamenti rapidi -->
       <b-col class="text-left mt-1" cols="12" md="10" lg="6">
@@ -222,7 +224,7 @@ export default {
           username: this.$store.getters.getUserData.username,
           password: this.$store.getters.getUserData.password
         })).then(function (resp) {
-        this.data = resp.data
+        this.$set(this, 'data', resp.data)
       }.bind(this))
     },
     logout () {
