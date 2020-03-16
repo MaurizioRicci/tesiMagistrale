@@ -100,7 +100,6 @@ export default {
     }
   },
   mounted () {
-    if (this.$store.getters.loggedIn) this.$router.push('/home')
   }
 }
 </script>

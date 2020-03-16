@@ -11,7 +11,7 @@ const manageUsers = () => import('@/components/pages/Utente/GestisciUtenti')
 const Aiuto = () => import('@/components/pages/Aiuto/Aiuto')
 const ShowLog = () => import('@/components/pages/MostraLog')
 // solo per il debug OR true
-const isAuthenticated = () => store.getters.loggedIn || true
+const isAuthenticated = () => store.getters.loggedIn
 
 Vue.use(Router)
 
@@ -71,6 +71,8 @@ router.beforeEach(function (to, from, next) {
   let { path } = to
   // se vengo già dalla pagina di login si ha un loop
   if (path !== '/' && !isAuthenticated()) next('/')
+  // se vado alla root e sono autenticato vado alla home
+  else if (path === '/' && isAuthenticated())next('/home')
   else next()
 })
 
