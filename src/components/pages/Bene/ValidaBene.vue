@@ -94,7 +94,7 @@ export default {
   methods: {
     onReset (evt) {
       evt.preventDefault()
-      this.form = this.formRetrived
+      this.init()
     },
     onSubmit (evt) {
       // serve a innescare la validazione del form. Vedi <form...> a inizio
@@ -140,8 +140,8 @@ export default {
       this.beneOverlap = []
       // resetto il modello dati scaricato in precedenza (se c'è)
       this.resetData()
-      // scarico il bene definitivo se esiste
-      this.fetchBeneDataByID(this.idBene, null, false, {
+      // scarico il bene definitivo se esiste e rendo una promessa
+      return this.fetchBeneDataByID(this.idBene, null, false, {
         noResultsMsg: 'Bene in archivio definitivo non trovato. Quindi il bene in verifica è nuovo.'
       })
         .then(data => {
@@ -161,7 +161,7 @@ export default {
     }
   },
   mounted () {
-    this.init()
+    this.init().then(() => this.checkPolygonDist())
   },
   watch: {
     // ascolto cambiamenti nella url

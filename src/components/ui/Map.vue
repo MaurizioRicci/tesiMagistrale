@@ -144,12 +144,12 @@ export default {
       this.invalidateSize()
       LeafletToolbar.addPoly(this.toolbarStore, this.currPolygon)
     },
-    zoomToPolygon (polygon = this.currPolygon, zoom = 18) {
+    zoomToPolygon (polygon = this.currPolygon) {
       const L = window.L
       if (polygon && polygon.countVertex() > 0) {
         let poly = L.polygon(polygon.getLatLngs())
         let lalo = poly.getBounds().getCenter()
-        if (this.leafletMapObject) { this.leafletMapObject.setView(lalo, zoom) }
+        if (this.leafletMapObject) { this.leafletMapObject.setView(lalo) }
       }
     }
   },

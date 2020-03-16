@@ -75,7 +75,7 @@
             </span>
             <span v-else key="msgValEdit">
                 <b-form-textarea trim @input="msg => update(msg)"
-                  placeholder="Messaggio per schedatore">
+                  placeholder="Messaggio per schedatore" :value="row.msg_validatore">
                 </b-form-textarea>
                 <b-button type="button" size="sm" variant="primary"
                   :disabled="row.msg_validatore === ''"
@@ -189,8 +189,11 @@ export default {
       }
       let postData = Object.assign(row, this.$store.getters.getUserData)
       axios.post(this.$store.getters.segnalaBeneURL, qs.stringify(postData))
-        .then(ok => this.$vueEventBus.$emit('master-page-show-msg',
-          ['Info', 'Bene segnalato correttamente']))
+        .then(ok => {
+          this.$vueEventBus.$emit('master-page-show-msg',
+            ['Info', 'Bene segnalato correttamente'])
+          this.BeneModel.setIncorrect.call(row)
+        })
     },
     cancellaTmp (row) {
       let userData = this.$store.getters.getUserData

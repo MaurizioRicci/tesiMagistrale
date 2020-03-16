@@ -65,8 +65,6 @@ export default {
           } else {
             T.mapCenter = data.mapCenter
             T.form = data.form
-            // faccio una deep copy dei valori resi dal server
-            // salvo cosi due copie: originale e versione modificabile da utente
             T.formRetrived = data.formRetrived
             return T.form
           }

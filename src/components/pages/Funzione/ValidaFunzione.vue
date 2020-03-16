@@ -19,6 +19,10 @@
         <span>Mostra la funzione da approvare, è possibile apportare modifiche.</span>
         <FunzioneFormAddEdit ref="form_funzione" v-model="form" no-draft
             :validated="sendBtnClicked"/>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
         <MyMap ref="myMap2" :zoom="17"/>
       </b-col>
     </b-row>
@@ -73,7 +77,7 @@ export default {
   methods: {
     onReset (evt) {
       evt.preventDefault()
-      this.form = this.formRetrived
+      this.init()
     },
     onSubmit (evt) {
       // serve a innescare la validazione del form. Vedi <form...> a inizio
@@ -115,7 +119,7 @@ export default {
       // resetto il modello dati scaricato in precedenza (se c'è)
       this.resetData()
       // scarico la funzione definitiva se esiste
-      this.fetchFunzioneDataByID(this.idFunzione, null, false, {
+      return this.fetchFunzioneDataByID(this.idFunzione, null, false, {
         noResultsMsg: 'Funzione in archivio definitivo non trovata. Quindi la funzione in verifica è nuova.'
       })
         .then(data => {
