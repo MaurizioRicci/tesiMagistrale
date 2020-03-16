@@ -79,7 +79,11 @@ export default {
       let url = storeGetters.funzioniMettiInRevisioneURL
       axios.post(url, qs.stringify(postData))
         .then(ok => {
-          this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Funzioni inviate al revisore.'])
+          let beniDaApprovare = ok.data && ok.data.msg ? ok.data.msg : ''
+          let msg = 'Funzione inviate al revisore.'
+          msg += (beniDaApprovare ? ' Alcune funzioni non possono essere inviate al controllo' +
+          ' finchè non vengono inviati al controllo anche i seguenti beni che referenziano: ' + beniDaApprovare : '')
+          this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', msg])
           this.$vueEventBus.$once('master-page-show-msg-ok',
             () => {
               // se tutto va bene nascondo la finestra di conferma
