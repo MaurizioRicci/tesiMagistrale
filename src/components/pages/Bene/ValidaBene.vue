@@ -49,7 +49,7 @@
         <b-button type="button" @click="goBack">Indietro</b-button>
         <b-button type="reset" variant="danger" v-on:click="onReset">Reset</b-button>
         <b-button type="submit" variant="warning"
-            @click="evt => onSubmit(evt)">Valida</b-button>
+            @click="waitUserConfirmation=true;">Valida</b-button>
         </b-col>
     </b-row>
     <b-row>
@@ -57,6 +57,20 @@
         <RicercaBeniApprovati noActions/>
       </b-col>
     </b-row>
+
+    <b-toast id="confirm-toastApprova" title="Richiesta conferma" solid no-auto-hide
+      toaster="b-toaster-bottom-center" variant="secondary" v-model="waitUserConfirmation">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <p>Sei sicuro di volere approvare?
+          </p>
+        </div>
+        <div class="col-auto">
+          <b-button variant="warning" @click="onSubmit">Conferma</b-button>
+        </div>
+      </div>
+    </b-toast>
+
   </b-container>
 </template>
 
@@ -88,7 +102,9 @@ export default {
       mapCenterArchDef: [0, 0],
       mapControls: { zoom: true, settings: false },
       // array di eventuali beni sovrapposti a quello che si sta creando
-      beneOverlap: []
+      beneOverlap: [],
+      // usato per aprire il messaggio di conferma di validazione
+      waitUserConfirmation: false
     }
   },
   methods: {
@@ -96,10 +112,9 @@ export default {
       evt.preventDefault()
       this.init()
     },
-    onSubmit (evt) {
+    onSubmit () {
       // serve a innescare la validazione del form. Vedi <form...> a inizio
       this.sendBtnClicked = true
-      evt.preventDefault()
       if (this.$refs.form_bene.checkValidity()) {
         this.sendData()
       } else {
@@ -121,6 +136,7 @@ export default {
           this.$vueEventBus.$once('master-page-show-msg-ok-sendData',
             () => this.goBack())
           this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Bene inserito in archivio definitivo', 'sendData'])
+          this.waitUserConfirmation = false
         })
     },
     checkPolygonDist () {
