@@ -253,6 +253,13 @@ export default {
     // inizializzo le debounced function
     this.debounceF1 = debounce(() => this.checkIDBene(this.form.id_bene, this.userData, 'bene'), 2000)
     this.debounceF2 = debounce(() => this.checkIDBene(this.form.id_bener, this.userData, 'bener'), 2000)
+    // lancio le debounced function per controllare gli id se sono già stati scritti nel caso di una modifica
+    // altrimenti se si modifica una funzione senza scrivere gli id non partono le funzioni ed è segnato errore negli id
+    // perchè non sono stati controllati.
+    // se per caso l'utente preme invia prima che gli id siano stati controllati la validazione è anche lato server!
+    // don't worry comparirà => Il bene XXX non esiste.
+    this.debounceF1()
+    this.debounceF2()
   }
 }
 </script>
