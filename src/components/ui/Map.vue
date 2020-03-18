@@ -1,23 +1,15 @@
 <!-- Una mappa che mostra un poligono, l'utente può essere abilitato o meno alla modifica di tale poligono con
 la proprietà locked; se presente disabilita la modifica -->
 <template>
-      <l-map :zoom="zoom" :center="center" @click="mapClick"
+      <l-map :zoom="zoom" :center="center"
         v-bind:style="{ width, height, cursor }" ref="myMap">
-      <!-- Controlla quali layer vedere -->
-      <l-control-layers position="topright"  ></l-control-layers>
 
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
 
-        <!-- Mappa beni definitivi -->
+        <!-- Mappa beni -->
        <BetterWMS base-url="http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi"
-        :attribution="attribution" ref="betterWMS" name="Beni approvati"
-        @getFeatureInfo="evt => openPopUp(evt.latlng, evt.data)"/>
-
-      <!-- Mappa bene temporanei utente -->
-      <BetterWMS base-url="http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi"
-        layers="benigeo" :URLParams="paramsTmpLayer" layer-type="overlay"
-        :attribution="attribution" ref="betterWMS2" name="Beni temporanei"
-        @getFeatureInfo="evt => openPopUp(evt.latlng, evt.data)"/>
+        ref="betterWMS" :leafletMap="leafletMapObject" :infoOnClick="state.watch"
+        :URLParamssss="paramsTmpLayer"/>
 
       <l-control position="bottomleft">
         <b-button-group>
@@ -41,7 +33,7 @@ la proprietà locked; se presente disabilita la modifica -->
 
 <script>
 // Leaflet nonostante usi EPSG3857 accetta anche punti in 4326 facendo la conversione automatica
-import { LMap, LTileLayer, LControl, LControlLayers } from 'vue2-leaflet'
+import { LMap, LTileLayer, LControl } from 'vue2-leaflet'
 import { Polygon } from '@/assets/js/Models/multiPolygonModel'
 import BetterWMS from '@/components/ui/BetterWMS'
 import IconMsg from '@/components/ui/IconMsg'
@@ -56,8 +48,7 @@ export default {
     LTileLayer,
     LControl,
     BetterWMS,
-    IconMsg,
-    LControlLayers
+    IconMsg
   },
   model: {
     // imposto v-model collegato alla proprietà polygon
@@ -91,23 +82,6 @@ export default {
     polygon_color: { type: String, default: 'green' }
   },
   methods: {
-    mapClick (evt) {
-      // se l'utente sta guarndando (ottiene info sui beni)
-      // mostro i dettagli di dove clicca
-      if (this.state.watch) {
-        this.$refs.betterWMS.getFeatureInfo(evt)
-      }
-    },
-    ingrandisci: function (evt) {
-      this.state.mappaIngrandita = true
-      // quando si preme ingrandisci mappa
-      this.$emit('ingrandisci-mappa')
-    },
-    rimpicciolisci: function (evt) {
-      this.state.mappaIngrandita = false
-      // quando si preme rimpicciolisci mappa
-      this.$emit('rimpicciolisci-mappa')
-    },
     // @vuese
     // chiama invalidateSize() di Leaflet
     invalidateSize: function () {
@@ -116,7 +90,7 @@ export default {
     },
     openPopUp (latlng, content) {
       const L = window.L
-      L.popup({ maxWidth: '200', maxHeight: Number(this.height) * 0.8 })
+      L.popup({ maxHeight: Number(this.height) * 0.8 })
         .setLatLng(latlng)
         .setContent(content)
         .openOn(this.leafletMapObject)

@@ -1,125 +1,77 @@
 <template>
-    <LWMSTileLayer v-bind="$props" :baseUrl="URLWithUserParams" ref="myLayer"
-     :tileSize="tileSize">
-    </LWMSTileLayer>
+  <div></div>
 </template>
 
 <script>
-import { LWMSTileLayer } from 'vue2-leaflet'
-import axios from 'axios'
+import WMS from 'leaflet.wms'
 
-// codice riadattato da https://gist.github.com/rclark/6908938
 // Crea un layer WMS basato su leaflet con il supporto a richieste di tipo
-// GetFeatureInfo
+// GetFeatureInfo. Utilizza il plugin leaflet.wms
 export default {
   name: 'BetterWMS',
-  components: { LWMSTileLayer },
+  components: {},
   data () {
-    return {
-      // contiene l'istanza di Leaflet. Viene estratta da Vue2Leaflet come indicato nelle docs della libreria.
-      leafletObject: null,
-      tileSize: 512
-    }
+    return {}
   },
   props: {
+    // mappa a cui agganciare il livello WMS
+    leafletMap: { required: true },
+    // vero se deve mostrare i dettagli della mapppa dopo aver fatto click
+    // questa opzione è settata a false durante editing di geometria
+    infoOnClick: Boolean,
     // URL dal quale recuperare il layer WMS
     baseUrl: { type: String, required: true },
     styles: { type: String, default: '' },
     transparent: { type: Boolean, default: true },
     format: { typr: String, default: 'image/png' },
     attribution: { type: String, default: '' },
-    // livelli da recuperare
-    layers: { type: [String, Array], default: 'benigeo' },
-    name: { type: String, default: 'benigeo' },
-    layerType: { type: String, default: 'base' },
     // parametri addizionali per la URL specificati dall'utente
     // il formato atteso è JSON es: { params1: 'value1', params2='value2' }
     URLParams: { type: Object, default: () => {} }
   },
-  computed: {
-    // mette insieme la URL base per la mappa con i parametri addizionali specificati dall'utente
-    URLWithUserParams: function () {
+  methods: {
+    init () {
+      if (!this.leafletMap) return
       const L = window.L
-      return this.baseUrl + L.Util.getParamString(this.URLParams, this.baseUrl, true)
+      const vueInstance = this
+      var MySource = WMS.Source.extend({
+        'getIdentifyLayers': function () {
+          if (vueInstance.infoOnClick) {
+            // Hook to determine which layers to identify
+            if (this.options.identifyLayers) { return this.options.identifyLayers }
+            return Object.keys(this._subLayers)
+          } else return []
+        },
+        'onRemove': function () {}
+      })
+      let source = new MySource(
+        'http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi',
+        {
+          'format': this.format,
+          'styles': this.styles,
+          'transparent': this.transparent,
+          'attribution': "<a href='https://www.unipi.it/'>UniPi</a>",
+          'info_format': 'text/html',
+          'tiled': false,
+          'FEATURE_COUNT': 50,
+          ...this.URLParams
+        })
+      let basemaps = {
+        'Benigeo': source.getLayer('benigeo').addTo(this.leafletMap)
+      }
+      let overlay = {
+        'Benigeo_temp': source.getLayer('benigeo').addTo(this.leafletMap)
+      }
+      L.control.layers(basemaps, overlay).addTo(this.leafletMap)
     }
   },
-  methods: {
-    // @vuese
-    // Riceve come parametro l'evento leaflet da cui estrae le coordinate;
-    // tali coordinate sono usate per la richiesta getFeatureInfo
-    // se la richiesta va a buon fine i dati sono emessi tramite l'evento 'getFeatureInfo'
-    getFeatureInfo: function (evt) {
-      // Make an AJAX request to the server and hope for the best
-      let url = this.getFeatureInfoUrl(evt.latlng)
-      axios.get(url).then(resp => {
-        let dataReceived = typeof resp === 'string' ? null : resp.data
-        if (dataReceived) { this.emitResults({ latlng: evt.latlng, data: dataReceived }) }
-      }, fail => { console.log(fail) })
-    },
-    getFeatureInfoUrl: function (latlng) {
-    // Construct a GetFeatureInfo request URL given a point
-      let point = this.leafletObject._map.latLngToContainerPoint(
-        latlng, this.leafletObject._map.getZoom())
-      let size = this.leafletObject._map.getSize()
-      const L = window.L
-      let params = {
-        request: 'GetFeatureInfo',
-        service: 'WMS',
-        srs: 'EPSG:4326',
-        styles: this.styles,
-        transparent: this.transparent,
-        version: '1.0.0',
-        format: this.format,
-        bbox: this.leafletObject._map.getBounds().toBBoxString(),
-        height: size.y,
-        width: size.x,
-        layers: this.layers,
-        query_layers: this.layers,
-        info_format: 'application/json'
-      }
-      // faccio il merge tra parametri della url, includendo alcuni parametri extra specificati dall'utente
-      params = Object.assign(params, this.URLParams)
-      params[params.version === '1.3.0' ? 'i' : 'x'] = Math.round(point.x)
-      params[params.version === '1.3.0' ? 'j' : 'y'] = Math.round(point.y)
-
-      return 'https://cors-anywhere.herokuapp.com/' +
-        this.baseUrl + L.Util.getParamString(params, this.baseUrl, true)
-    },
-    formatResult (res) {
-      let unwantedKey = []
-      if (res.data.features.length <= 0) return
-      let tableData = Object.assign({}, res.data.features[0].properties) // shallow copy
-      for (let k of unwantedKey) {
-        delete tableData[k]
-      }
-      let makeTableHTML = function (tableObj) {
-        // maiuscolo prima lettera; se la stringa è vuota da stringa vuota
-        const capLetter = (str) => {
-          str = str ? str.toString() : ''
-          return str.charAt(0).toUpperCase() + str.substring(1)
-        }
-        let keys = Object.keys(tableObj)
-        // creo la tabella con gli attributi (la tabella è verticale non orizzontale)
-        var result = '<table border=1>'
-        for (var i = 0; i < keys.length; i++) {
-          result += '<tr>'
-          result += '<th>' + capLetter(keys[i]) + '</th>' // chiave
-          result += '<td>' + capLetter(tableObj[keys[i]]) + '</td>' // valore
-          result += '</tr>'
-        }
-        result += '</table>'
-        return result
-      }
-      res.data = makeTableHTML(tableData)
-      return res
-    },
-    emitResults (res) {
-      let formatted = this.formatResult(res)
-      if (formatted) { this.$emit('getFeatureInfo', formatted) }
+  watch: {
+    leafletMap: function (newVal) {
+      this.init()
     }
   },
   mounted () {
-    this.$nextTick(() => { this.leafletObject = this.$refs.myLayer.mapObject })
+    this.init()
   }
 }
 </script>
