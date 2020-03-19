@@ -5,6 +5,7 @@ la proprietà locked; se presente disabilita la modifica -->
         v-bind:style="{ width, height, cursor }" ref="myMap">
 
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+      <v-geosearch :options="geosearchOptions" ></v-geosearch>
 
         <!-- Mappa beni -->
        <BetterWMS base-url="http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi"
@@ -40,7 +41,10 @@ import IconMsg from '@/components/ui/IconMsg'
 import LeafletToolbar from '@/assets/js/AddLeafletToolbar'
 import 'leaflet-fullscreen'
 import 'leaflet-fullscreen/dist/leaflet.fullscreen.css'
-
+import { OpenStreetMapProvider } from 'leaflet-geosearch'
+import VGeosearch from 'vue2-leaflet-geosearch'
+import 'leaflet-geosearch/dist/style.css'
+import 'leaflet-geosearch/assets//css/leaflet.css'
 export default {
   name: 'Map',
   components: {
@@ -48,7 +52,8 @@ export default {
     LTileLayer,
     LControl,
     BetterWMS,
-    IconMsg
+    IconMsg,
+    VGeosearch
   },
   model: {
     // imposto v-model collegato alla proprietà polygon
@@ -137,7 +142,17 @@ export default {
       currPolygon: this.polygon ? this.polygon.clone() : new Polygon(),
       // serve al leaflet toolbar per salvare dentro il suo stato
       toolbarStore: {},
-      paramsTmpLayer: { filter: 'benigeo:"id" = 1' }
+      paramsTmpLayer: { filter: 'benigeo:"id" = 1' },
+      // opzioni per leaflet geosearch
+      geosearchOptions: { // Important part Here
+        provider: new OpenStreetMapProvider(),
+        style: 'button',
+        autoClose: true,
+        keepResult: true,
+        autoComplete: true, // optional: true|false  - default true
+        autoCompleteDelay: 250,
+        searchLabel: 'Cerca indirizzo'
+      }
     }
   },
   computed: {
@@ -201,5 +216,8 @@ export default {
   margin-left: -7px !important;
   margin-top: -7px !important;
   border-radius: 5px;
+}
+.leaflet-control-geosearch.active form {
+  max-width: 300px;
 }
 </style>
