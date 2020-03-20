@@ -65,8 +65,9 @@
         <div slot="msg_validatore" slot-scope="{row, update, setEditing, isEditing, revertValue}">
           <!-- class="d-inline-block w-100" da spessore per la modifica della cella
            anche se la cella ha come contenuto stringa vuota (utente appena aggiunto) -->
-          <span v-if="!sonoRevisore">{{row.msg_validatore}}</span>
-          <div v-else>
+           <!-- se sono schedatore vedo un campo semplice. Se sono revisore vedo un campo con una manina al mouse hover -->
+          <span v-if="!sonoRevisore" key="msg_sono_sched">{{row.msg_validatore | ellipsizeLongText()}}</span>
+          <div v-else key="msg_sono_revisore">
             <span @click="setEditing(true)" v-if="!isEditing()" key="msgValRead"
               style="cursor:pointer;">
               <a class="d-inline-block w-100">

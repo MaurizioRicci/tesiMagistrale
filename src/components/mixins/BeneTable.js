@@ -56,6 +56,11 @@ export default {
       }
     }
   },
+  computed: {
+    sonoRevisore () {
+      return this.$store.getters.getUserData.role === 'revisore'
+    }
+  },
   methods: {
     getMac: function () {
       return loadMacroEpocaCar(this)
@@ -75,5 +80,9 @@ export default {
     this.getMac().then(arr => { this.options.listColumns.macroEpocaCar = arr })
     this.getMeo().then(arr => { this.options.listColumns.macroEpocaOrig = arr })
     this.getEsistenza().then(arr => { this.options.listColumns.esistenza = arr })
+    if (this.sonoRevisore) {
+      // i revisori vedono solo cose da approvare o che sono marcate come da correggere da loro stessi
+      this.options.listColumns.status = this.options.listColumns.status.filter(el => el.id <= 1)
+    }
   }
 }

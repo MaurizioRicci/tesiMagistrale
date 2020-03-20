@@ -60,6 +60,11 @@ export default {
       }
     }
   },
+  computed: {
+    sonoRevisore () {
+      return this.$store.getters.getUserData.role === 'revisore'
+    }
+  },
   methods: {
     getRuolo: function () {
       return loadRuolo(this)
@@ -81,5 +86,9 @@ export default {
     })
     this.getTipoData().then(arr => { this.options.listColumns.tipodata = arr })
     this.getFunc().then(arr => { this.options.listColumns.funzione = arr })
+    if (this.sonoRevisore) {
+      // i revisori vedono solo cose da approvare o che sono marcate come da correggere da loro stessi
+      this.options.listColumns.status = this.options.listColumns.status.filter(el => el.id <= 1)
+    }
   }
 }

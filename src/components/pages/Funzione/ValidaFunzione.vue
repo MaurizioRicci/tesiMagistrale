@@ -166,7 +166,7 @@ export default {
     let resp = true
     if (!this.sendBtnClicked) {
       // se il server non ha dato responso OK o se proprio non gli è stato mandato
-      let formClone = Object.assign({}, this.form)
+      let formClone = lodashclonedeep(this.form)
       if (JSON.stringify(formClone) !== JSON.stringify(this.formRetrived)) {
         resp = window.confirm('Hai modifiche in sospeso, abbandonare la pagina?')
       }

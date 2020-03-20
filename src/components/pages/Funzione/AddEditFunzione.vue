@@ -187,7 +187,7 @@ export default {
       // se il server non ha dato responso OK o se proprio non gli è stato mandato
     // devo escludere il campo id dal confronto poichè è sicuramente diverso da
     // quello restituito dal server dato che non c'è proprio
-      let formClone = Object.assign({}, this.form)
+      let formClone = lodashclonedeep(this.form)
       formClone.id = this.formRetrived.id
       if (JSON.stringify(formClone) !== JSON.stringify(this.formRetrived)) {
         resp = window.confirm('Hai modifiche in sospeso, abbandonare la pagina?')
