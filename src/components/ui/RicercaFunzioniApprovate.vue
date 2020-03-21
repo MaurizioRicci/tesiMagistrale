@@ -66,7 +66,7 @@ export default {
         'id',
         'azioni',
         'data_ante',
-        'data_poste',
+        'data_post',
         'tipodata',
         'id_bene',
         'denominazione',

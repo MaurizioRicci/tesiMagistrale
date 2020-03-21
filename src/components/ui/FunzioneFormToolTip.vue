@@ -17,7 +17,7 @@
    >Data della funzione</b-tooltip>
   <b-tooltip :target="prefix + 'input-data_ante'" triggers="hover"
    >Primo estremo della data della funzione</b-tooltip>
-  <b-tooltip :target="prefix + 'input-data_poste'" triggers="hover"
+  <b-tooltip :target="prefix + 'input-data_post'" triggers="hover"
    >Secondo estremo della data della funzione</b-tooltip>
   <b-tooltip :target="prefix + 'input-tipodata'" triggers="hover">
    <span>Tipo data della funzione può assumere i seguenti valori.</span>

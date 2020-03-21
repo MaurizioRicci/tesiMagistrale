@@ -61,19 +61,19 @@
         </b-col>
         <b-col cols="12" md>
           <b-form-group id="input-group-1" label="A:"
-            label-for="input-data_poste" label-cols="2" label-cols-sm="6"
+            label-for="input-data_post" label-cols="2" label-cols-sm="6"
             label-cols-md="3" label-cols-xl="2"
             :state="dataPosteValida">
             <b-form-input
-              id="input-data_poste"
+              id="input-data_post"
               type="text"
-              v-model="form.data_poste"
+              v-model="form.data_post"
               placeholder=""
               autocomplete="off"
               v-setcustomvalidity="dataPosteValida"
               ></b-form-input>
               <b-form-invalid-feedback :state="dataPosteValida">
-                <span id="data_poste-help">Data invalida. Vedi date supportate</span>
+                <span id="data_post-help">Data invalida. Vedi date supportate</span>
               </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
@@ -137,7 +137,7 @@
       </b-form-group>
     </b-form>
     <HelpDate target="data_ante-help"/>
-    <HelpDate target="data_poste-help"/>
+    <HelpDate target="data_post-help"/>
   </div>
 </template>
 
@@ -244,7 +244,7 @@ export default {
   },
   computed: {
     dataAnteValida () { return dataVera(this.form.data_ante) },
-    dataPosteValida () { return dataVera(this.form.data_poste) },
+    dataPosteValida () { return dataVera(this.form.data_post) },
     userData () { return this.$store.getters.getUserData }
   },
   mounted () {

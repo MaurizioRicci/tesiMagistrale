@@ -87,7 +87,7 @@ export default {
   },
   computed: {
     ternaValida () {
-      return ternaVera(this.form.data_ante, this.form.data_poste, this.form.tipodata)
+      return ternaVera(this.form.data_ante, this.form.data_post, this.form.tipodata)
     }
   },
   methods: {

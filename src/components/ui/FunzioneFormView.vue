@@ -48,11 +48,11 @@
         </b-col>
         <b-col cols="12" md>
           <b-form-group id="input-group-1" label="A:"
-            label-for="funzione_form_view_input-data_poste" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
+            label-for="funzione_form_view_input-data_post" label-cols-sm="6" label-cols-md="3" label-cols-xl="2">
             <b-form-input
-              id="funzione_form_view_input-data_poste"
+              id="funzione_form_view_input-data_post"
               type="text"
-              v-model="form.data_poste"
+              v-model="form.data_post"
               disabled
               placeholder=""
               autocomplete="off"

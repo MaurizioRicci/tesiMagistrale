@@ -50,7 +50,7 @@ export default {
         'id_bener': 'ID bene rif.',
         'data': 'Data',
         'data_ante': 'Data anteriore',
-        'data_poste': 'Data posteriore',
+        'data_post': 'Data posteriore',
         'tipodata': 'Tipo data',
         'bibliografia': 'Bibliografia',
         'note': 'Note',

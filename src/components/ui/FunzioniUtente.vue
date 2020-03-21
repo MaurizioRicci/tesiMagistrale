@@ -230,7 +230,7 @@ export default {
         'status',
         'azioni',
         'data_ante',
-        'data_poste',
+        'data_post',
         'tipodata',
         'id_bene',
         'denominazione',
@@ -253,7 +253,7 @@ export default {
         sortable: [
           'id',
           'data_ante',
-          'data_poste',
+          'data_post',
           'tipodata',
           'id_bene',
           'denominazione',

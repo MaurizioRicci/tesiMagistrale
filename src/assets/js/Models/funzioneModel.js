@@ -12,7 +12,7 @@ export default () => {
     denominazione: '',
     denominazioner: '',
     data_ante: '',
-    data_poste: '',
+    data_post: '',
     tipodata: '',
     funzione: '',
     id_bene: '',

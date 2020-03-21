@@ -11,7 +11,7 @@ export default {
           'denominazione',
           'denominazioner',
           'data_ante',
-          'data_poste',
+          'data_post',
           'tipodata',
           'funzione',
           'id_bene',
@@ -24,7 +24,7 @@ export default {
         ],
         headings: {
           data_ante: 'DataDa',
-          data_poste: 'DataA',
+          data_post: 'DataA',
           denominazioner: 'DenominazioneR',
           id_bener: 'Id beneR',
           ruolor: 'RuoloR',
