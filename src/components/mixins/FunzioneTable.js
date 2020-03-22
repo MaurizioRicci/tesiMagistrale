@@ -6,7 +6,6 @@ export default {
       // opzioni per VueTables2
       options: {
         filterable: [
-          'id',
           'status',
           'denominazione',
           'denominazioner',
@@ -32,7 +31,6 @@ export default {
         },
         columnsDropdown: true,
         columnsDisplay: {
-          id: 'mobileP',
           schedatori_iniziali: 'mobileP'
         },
         listColumns: {

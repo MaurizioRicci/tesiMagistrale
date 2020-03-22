@@ -63,7 +63,6 @@ export default {
       modalShowView: false,
       modalShowEdit: false,
       columns: [
-        'id',
         'azioni',
         'data_ante',
         'data_post',

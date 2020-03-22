@@ -226,7 +226,6 @@ export default {
       // riga che l'utente vorrebbe cancellare
       rigaDaCancellare: {},
       columns: [
-        'id',
         'status',
         'azioni',
         'data_ante',
@@ -251,7 +250,6 @@ export default {
         caption: this.caption,
         filterByColumn: true,
         sortable: [
-          'id',
           'data_ante',
           'data_post',
           'tipodata',
