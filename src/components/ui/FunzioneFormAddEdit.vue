@@ -251,8 +251,8 @@ export default {
     this.getTipoDataOptions().then(options => { this.tipoDataOptions = options })
     this.getFunzioneOptions().then(options => { this.funzioneOptions = options })
     // inizializzo le debounced function
-    this.debounceF1 = debounce(() => this.checkIDBene(this.form.id_bene, this.userData, 'bene'), 2000)
-    this.debounceF2 = debounce(() => this.checkIDBene(this.form.id_bener, this.userData, 'bener'), 2000)
+    this.debounceF1 = debounce(() => this.checkIDBene(this.form.id_bene, this.userData, 'bene'), 250)
+    this.debounceF2 = debounce(() => this.checkIDBene(this.form.id_bener, this.userData, 'bener'), 250)
     // lancio le debounced function per controllare gli id se sono già stati scritti nel caso di una modifica
     // altrimenti se si modifica una funzione senza scrivere gli id non partono le funzioni ed è segnato errore negli id
     // perchè non sono stati controllati.
