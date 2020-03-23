@@ -10,6 +10,7 @@
     </b-row>
     <b-row>
       <b-col>
+          <LoadingOverlay ref="loadingOverlay"/>
           <b-alert variant="warning" :show="beneOverlap.length > 0">
           Il bene è molto vicino ai seguenti beni:
           <b-button-group class="justify-content-center" style="flex-wrap: wrap;">
@@ -81,6 +82,7 @@ import Menu from '@/components/ui/Menu'
 import BeneFormView from '@/components/ui/BeneFormView'
 import BeneFormAddEdit from '@/components/ui/BeneFormAddEdit'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
+import LoadingOverlay from '@/components/ui/LoadingOverlay'
 import lodashclonedeep from 'lodash.clonedeep'
 import getModelloBene from '@/assets/js/Models/beneModel'
 import BeneOverview from '@/components/ui/BeneOverview'
@@ -92,7 +94,7 @@ import qs from 'qs'
 // Valida un bene mostrando il confronto con la versione in archivio definitivo
 export default {
   name: 'ValidaBene',
-  components: { Menu, BeneFormView, BeneFormAddEdit, MyMap, BeneOverview, RicercaBeniApprovati },
+  components: { Menu, BeneFormView, BeneFormAddEdit, MyMap, BeneOverview, RicercaBeniApprovati, LoadingOverlay },
   mixins: [commonPageMixin, dettagliBeneMixin],
   data () {
     return {
@@ -124,6 +126,8 @@ export default {
       }
     },
     sendData () {
+      // mostro la schermata di caricamento
+      this.$refs.loadingOverlay.show()
       let postData = lodashclonedeep(
         Object.assign({}, this.form, this.$store.getters.getUserData))
       // PostGIS vuole i punti come longitudine-latitudine
@@ -138,6 +142,8 @@ export default {
           this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Bene inserito in archivio definitivo', 'sendData'])
           this.waitUserConfirmation = false
         })
+        // nascondo la schermata di caricamento
+        .finally(() => this.$refs.loadingOverlay.hide())
     },
     checkPolygonDist () {
       // controllo la distanza da altri beni

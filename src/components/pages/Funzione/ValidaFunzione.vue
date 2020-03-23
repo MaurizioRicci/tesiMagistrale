@@ -10,6 +10,7 @@
     </b-row>
     <b-row>
       <b-col>
+        <LoadingOverlay ref="loadingOverlay"/>
         <h4 class="mb-0">Funzione in archivio definitivo</h4>
         <span>Nel caso in cui una funzione venga modificata mostra lo stato della funzione in analisi prima della modifica.</span>
         <FunzioneFormView :form="formFunzioneArchDef" :disallowIDChange="true"/>
@@ -63,6 +64,7 @@ import Menu from '@/components/ui/Menu'
 import FunzioneFormView from '@/components/ui/FunzioneFormView'
 import FunzioneFormAddEdit from '@/components/ui/FunzioneFormAddEdit'
 import RicercaFunzioniApprovate from '@/components/ui/RicercaFunzioniApprovate'
+import LoadingOverlay from '@/components/ui/LoadingOverlay'
 import lodashclonedeep from 'lodash.clonedeep'
 import getModelloFunzione from '@/assets/js/Models/funzioneModel'
 import MyMap from '@/components/ui/Map'
@@ -74,7 +76,7 @@ import qs from 'qs'
 // Valida una funzione mostrando il confronto con la versione in archivio definitivo
 export default {
   name: 'ValidaFunzione',
-  components: { Menu, FunzioneFormView, FunzioneFormAddEdit, MyMap, RicercaFunzioniApprovate },
+  components: { Menu, FunzioneFormView, FunzioneFormAddEdit, MyMap, RicercaFunzioniApprovate, LoadingOverlay },
   mixins: [commonPageMixin, dettagliFunzioneMixin],
   data () {
     return {
@@ -111,6 +113,8 @@ export default {
         this.$vueEventBus.$emit('master-page-show-msg',
           ['Attenzione', 'Data anteriore, data posteriore e tipo data non coerenti tra loro.'])
       } else {
+        // mostro la schermata di caricamento
+        this.$refs.loadingOverlay.show()
         let postData = lodashclonedeep(
           Object.assign({}, this.form, this.$store.getters.getUserData))
         let storeGetters = this.$store.getters
@@ -123,6 +127,8 @@ export default {
             this.$vueEventBus.$emit('master-page-show-msg', ['Risposta', 'Funzione inserita in archivio definitivo', 'sendData'])
             this.waitUserConfirmation = false
           })
+        // nascondo la schermata di caricamento
+          .finally(() => this.$refs.loadingOverlay.hide())
       }
     },
     init () {
