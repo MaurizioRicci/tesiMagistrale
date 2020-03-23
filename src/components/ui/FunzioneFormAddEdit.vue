@@ -21,8 +21,7 @@
           min="1"
           required
           placeholder=""
-          @input="debounceF1"
-          v-setcustomvalidity="beneOk">
+          @input="debounceF1">
         </b-form-input>
       </b-form-group>
       <!-- denominazione -->
@@ -104,7 +103,6 @@
           type="number"
           min="1"
           placeholder=""
-          v-setcustomvalidity="benerOk"
           @input="debounceF2">
         </b-form-input>
       </b-form-group>
@@ -196,8 +194,7 @@ export default {
     // @vuese
     // dice se il form è valido
     checkValidity () {
-      return this.$refs.form_bene.checkValidity() &&
-        (this.beneOk || this.benerOk)
+      return this.$refs.form_bene.checkValidity()
     },
     dict2BsSelect (dict) {
       let options = [{ value: '', text: 'Seleziona un\'opzione' }]
@@ -251,8 +248,8 @@ export default {
     this.getTipoDataOptions().then(options => { this.tipoDataOptions = options })
     this.getFunzioneOptions().then(options => { this.funzioneOptions = options })
     // inizializzo le debounced function
-    this.debounceF1 = debounce(() => this.checkIDBene(this.form.id_bene, this.userData, 'bene'), 250)
-    this.debounceF2 = debounce(() => this.checkIDBene(this.form.id_bener, this.userData, 'bener'), 250)
+    this.debounceF1 = debounce(() => this.checkIDBene(this.form.id_bene, this.userData, 'bene'), 1000)
+    this.debounceF2 = debounce(() => this.checkIDBene(this.form.id_bener, this.userData, 'bener'), 1000)
     // lancio le debounced function per controllare gli id se sono già stati scritti nel caso di una modifica
     // altrimenti se si modifica una funzione senza scrivere gli id non partono le funzioni ed è segnato errore negli id
     // perchè non sono stati controllati.
