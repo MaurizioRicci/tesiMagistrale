@@ -3,6 +3,16 @@
 // Custom Bootstrap variable overrides go first
 @import './myVariables';
 
+// Riscrivo alcune variabili di Bootstrap
+$navbar-dark-color: white;
+$dropdown-link-hover-bg: #00000012;
+$table-border-color: gray;
+$input-border-color: #6c757d;
+// input un po' più bassi
+$input-btn-padding-y: .3rem;
+// il padding del bottone non deve seguire quello di input
+$btn-padding-y: .35rem;
+
 // Then include the following
 @import 'bootstrap/scss/bootstrap.scss';
 @import 'bootstrap-vue/src/index.scss';
