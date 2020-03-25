@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-server-table :columns="columns" :options="options" class="myTable table-sm"
+  <v-server-table :columns="columns" :options="options" class="myTable table-sm" ref="myTable"
     :url="$store.getters.funzioniAggiunteApprovateURL" name="ricercaFunzioniApprovate">
 
         <template v-slot:azioni="{row}">
@@ -12,6 +12,11 @@
             <b-button :to="'/funzione/modifica/'.concat(row.id)" row.id class="pt-1"
               variant="light">
               <icon-msg icon_name="edit" icon_msg="Modifica"/>
+            </b-button>
+            <b-button v-if="sonoRevisore"
+              @click="cancellaDef(row.id)"
+              key="cancellaDef" variant="light" class="pt-1">
+              <icon-msg icon_name="trash" icon_msg="Elimina" icon_color="red"/>
             </b-button>
           </b-button-group>
         </template>
@@ -43,6 +48,8 @@
 import IconMsg from '@/components/ui/IconMsg'
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 import FunzioneTableMixin from '@/components/mixins/FunzioneTable'
+import axios from 'axios'
+import qs from 'qs'
 window.axios = require('axios')
 
 // Mostra una tabella con tutti i beni approvati di tutti gli utenti
@@ -57,7 +64,25 @@ export default {
     // se è vero non si possono compiere azioni (visualizza/modifica) sugli elementi
     noActions: Boolean
   },
-  methods: {},
+  computed: {
+    sonoRevisore () {
+      return this.$store.getters.getUserData.role === 'revisore'
+    }
+  },
+  methods: {
+    cancellaDef (id) {
+      axios.post(this.$store.getters.cancellaFunzioneDefURL,
+        qs.stringify({
+          username: this.$store.getters.getUserData.username,
+          password: this.$store.getters.getUserData.password,
+          id: id
+        })).then(resp => {
+        this.$refs.myTable.refresh()
+        this.$vueEventBus.$emit('master-page-show-msg',
+          ['Info', 'Bene eliminato correttamente'])
+      })
+    }
+  },
   data: function () {
     return {
       modalShowView: false,

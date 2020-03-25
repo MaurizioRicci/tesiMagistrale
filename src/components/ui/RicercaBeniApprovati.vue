@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-server-table :columns="columns" :options="options" class="myTable table-sm"
+  <v-server-table :columns="columns" :options="options" class="myTable table-sm" ref="myTable"
     :url="$store.getters.beniAggiuntiApprovatiURL" name="ricercaBeniApprovati"
     @click="e => openChildRow(e)">
 
@@ -13,6 +13,11 @@
             <b-button :to="'/bene/modifica/'.concat(row.id)" row.id class="pt-1"
               variant="light">
               <icon-msg icon_name="edit" icon_msg="Modifica"/>
+            </b-button>
+            <b-button v-if="sonoRevisore"
+              @click="cancellaDef(row.id)"
+              key="cancellaDef" variant="light" class="pt-1">
+              <icon-msg icon_name="trash" icon_msg="Elimina" icon_color="red"/>
             </b-button>
           </b-button-group>
         </template>
@@ -54,6 +59,8 @@ import '@/assets/styles/hugeModal.css'
 import BeneTableMixin from '@/components/mixins/BeneTable' // serve per vue-tables 2 non cancellare
 import Map from '@/components/ui/Map'
 import fetchBene from '@/assets/js/fetchBene'
+import axios from 'axios'
+import qs from 'qs'
 window.axios = require('axios')
 
 // Mostra una tabella con tutti i beni approvati di tutti gli utenti
@@ -67,6 +74,11 @@ export default {
     caption: { type: String, default: 'Questa tabella contiene tutti i beni approvati.' },
     // se è vero non si possono compiere azioni (visualizza/modifica) sugli elementi
     noActions: Boolean
+  },
+  computed: {
+    sonoRevisore () {
+      return this.$store.getters.getUserData.role === 'revisore'
+    }
   },
   methods: {
     openModalEdit (idBene, idUtente) {
@@ -86,6 +98,18 @@ export default {
         'tmp_db': false
       }).then(resp => {
         this.$set(this.currBeni, row.id, resp)
+      })
+    },
+    cancellaDef (id) {
+      axios.post(this.$store.getters.cancellaBeneDefURL,
+        qs.stringify({
+          username: this.$store.getters.getUserData.username,
+          password: this.$store.getters.getUserData.password,
+          id: id
+        })).then(resp => {
+        this.$refs.myTable.refresh()
+        this.$vueEventBus.$emit('master-page-show-msg',
+          ['Info', 'Bene eliminato correttamente'])
       })
     }
   },
@@ -140,17 +164,5 @@ export default {
     display: block;
     margin: auto;
     text-align: center;
-}
-
-.VueTables__child-row-toggler--closed::before {
-    content: "+";
-    color: blue;
-    font-size: 1.1em;
-}
-
-.VueTables__child-row-toggler--open::before {
-    content: "-";
-    color: blue;
-    font-size: 1.1em;
 }
 </style>
