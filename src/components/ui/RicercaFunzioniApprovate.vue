@@ -14,7 +14,7 @@
               <icon-msg icon_name="edit" icon_msg="Modifica"/>
             </b-button>
             <b-button v-if="sonoRevisore"
-              @click="cancellaDef(row.id)"
+              @click="waitUserConfirmationDelete=true;rigaDaCancellare=row"
               key="cancellaDef" variant="light" class="pt-1">
               <icon-msg icon_name="trash" icon_msg="Elimina" icon_color="red"/>
             </b-button>
@@ -41,6 +41,19 @@
         <span :title="row.note">{{row.note | ellipsizeLongText()}}</span>
       </template>
     </v-server-table>
+
+    <b-toast id="confirm-toastDelete" title="Richiesta conferma" solid no-auto-hide
+      toaster="b-toaster-bottom-center" variant="secondary" v-model="waitUserConfirmationDelete">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <p>Eliminare funzione <b>approvata</b>?
+          </p>
+        </div>
+        <div class="col-auto">
+          <b-button variant="danger" @click="cancellaDef(rigaDaCancellare)">Conferma</b-button>
+        </div>
+      </div>
+    </b-toast>
 </div>
 </template>
 
@@ -70,12 +83,13 @@ export default {
     }
   },
   methods: {
-    cancellaDef (id) {
+    // cancella funzione approvata
+    cancellaDef (row) {
       axios.post(this.$store.getters.cancellaFunzioneDefURL,
         qs.stringify({
           username: this.$store.getters.getUserData.username,
           password: this.$store.getters.getUserData.password,
-          id: id
+          id: row.id // id funzione
         })).then(resp => {
         this.$refs.myTable.refresh()
         this.$vueEventBus.$emit('master-page-show-msg',
@@ -85,8 +99,10 @@ export default {
   },
   data: function () {
     return {
-      modalShowView: false,
-      modalShowEdit: false,
+      // innesca la finestra di conferma eliminazione
+      waitUserConfirmationDelete: false,
+      // riga che l'utente vorrebbe cancellare
+      rigaDaCancellare: {},
       columns: [
         'azioni',
         'data_ante',

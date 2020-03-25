@@ -15,7 +15,7 @@
               <icon-msg icon_name="edit" icon_msg="Modifica"/>
             </b-button>
             <b-button v-if="sonoRevisore"
-              @click="cancellaDef(row.id)"
+              @click="waitUserConfirmationDelete=true;rigaDaCancellare=row"
               key="cancellaDef" variant="light" class="pt-1">
               <icon-msg icon_name="trash" icon_msg="Elimina" icon_color="red"/>
             </b-button>
@@ -41,21 +41,24 @@
 
     </v-server-table>
 
-  <b-modal title="Dettagli" size="huge"
-  :cancel-disabled="true" v-model="modalShowView">
-    <Dettagli-bene :idBene="idBene" no-menu/>
-  </b-modal>
-  <b-modal title="Modifica" size="huge"
-    :cancel-disabled="true" v-model="modalShowEdit">
-        <EditBene :idBene="idBene" no-menu :editMode="true"/>
-  </b-modal>
+    <b-toast id="confirm-toastDelete" title="Richiesta conferma" solid no-auto-hide
+      toaster="b-toaster-bottom-center" variant="secondary" v-model="waitUserConfirmationDelete">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <p>Eliminare bene <b>approvato</b>?
+          </p>
+        </div>
+        <div class="col-auto">
+          <b-button variant="danger" @click="cancellaDef(rigaDaCancellare)">Conferma</b-button>
+        </div>
+      </div>
+    </b-toast>
 </div>
 </template>
 
 <script>
 import IconMsg from '@/components/ui/IconMsg'
 import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
-import '@/assets/styles/hugeModal.css'
 import BeneTableMixin from '@/components/mixins/BeneTable' // serve per vue-tables 2 non cancellare
 import Map from '@/components/ui/Map'
 import fetchBene from '@/assets/js/fetchBene'
@@ -100,12 +103,13 @@ export default {
         this.$set(this.currBeni, row.id, resp)
       })
     },
-    cancellaDef (id) {
+    // cancella bene approvato
+    cancellaDef (row) {
       axios.post(this.$store.getters.cancellaBeneDefURL,
         qs.stringify({
           username: this.$store.getters.getUserData.username,
           password: this.$store.getters.getUserData.password,
-          id: id
+          id: row.id // id bene da cancellare
         })).then(resp => {
         this.$refs.myTable.refresh()
         this.$vueEventBus.$emit('master-page-show-msg',
@@ -119,8 +123,10 @@ export default {
       currBeni: { },
       idBene: '',
       idUtente: '',
-      modalShowView: false,
-      modalShowEdit: false,
+      // innesca la finestra di conferma eliminazione
+      waitUserConfirmationDelete: false,
+      // riga che l'utente vorrebbe cancellare
+      rigaDaCancellare: {},
       columns: [
         'id',
         'azioni',
