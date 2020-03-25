@@ -49,6 +49,11 @@ $btn-padding-y: .35rem;
 .VueTables__columns-dropdown-wrapper .dropdown-menu {
     left: -100%;
 }
+.VueTables__child-row-toggler--open::before,
+.VueTables__child-row-toggler--closed::before {
+    color: #00e800 !important;
+    font-size: 1.9em !important;
+}
 
 // etichetta tabella in alto
 .myTable caption { 
