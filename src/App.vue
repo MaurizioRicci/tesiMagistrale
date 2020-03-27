@@ -48,4 +48,7 @@ export default {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+.modal-body {
+  overflow-x: auto;
+}
 </style>

@@ -91,10 +91,13 @@ export default {
           password: this.$store.getters.getUserData.password,
           id: row.id // id funzione
         })).then(resp => {
+        // aggiorno la tabella se va tutto bene
         this.$refs.myTable.refresh()
         this.$vueEventBus.$emit('master-page-show-msg',
-          ['Info', 'Bene eliminato correttamente'])
+          ['Info', 'Funzione eliminata correttamente'])
       })
+      // nascondo il promp
+        .finally(() => { this.waitUserConfirmationDelete = false })
     }
   },
   data: function () {
