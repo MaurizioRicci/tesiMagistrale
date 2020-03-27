@@ -11,7 +11,7 @@
               <b-button class="mb-1" @click="addUser">Aggiungi utente</b-button>
               <b-button variant="warning" class="mb-1" @click="convalida">Convalida</b-button>
               <!-- 25/02/2020 sembra andare su IE, Firefox ma stranamento non su Chrome -->
-              <b-button class="mb-1" @click="downloadUsersFile">Scarica schedatori</b-button>
+              <b-button class="mb-1" v-b-modal.modal-esporta-utenti>Scarica schedatori</b-button>
           </b-col>
             <b-col cols="12" xl="6" class="text-left">
               <p>Premere aggiungi utente per un nuovo utente, poi cliccare sui campi da modificare.</p>
@@ -29,7 +29,7 @@
               <p>La violazione delle regole sopra citate comporterà necessariamente il fallimento dell'operazione di convalida.</p>
           </b-col>
           <b-col cols="12">
-                <v-client-table :columns="columns" v-model="tableData" :options="options"
+            <v-client-table :columns="columns" v-model="tableData" :options="options"
                     @update="updateRow" ref="myTable" class="table-sm">
                     <template v-for="colName in columns"
                         v-slot:[colName]="{row, update, setEditing, isEditing, revertValue}">
@@ -87,9 +87,21 @@
                             </b-tooltip>
                         </div>
                     </template>
-                </v-client-table>
+            </v-client-table>
           </b-col>
       </b-row>
+
+    <b-modal id="modal-esporta-utenti" title="Scegli gli attributi da esportare"
+      @ok="downloadUsersFile">
+      <b-form-group label="Attributi degli utenti">
+        <b-form-checkbox-group
+          v-model="selectedAttrsUtenti"
+          :options="optionsAttrsUtenti"
+          name="attributi-utente"
+          stacked
+        ></b-form-checkbox-group>
+      </b-form-group>
+    </b-modal>
   </b-container>
 </template>
 
@@ -115,11 +127,19 @@ export default {
   data () {
     return {
       errors: {
+        // vero se viola vincolo di unicità di qualche tipo
         unique: false,
+        // vero se le iniziali sono duplicate
         iniziali: false,
+        // vero se c'è una colonna da riempire
         empty: false,
+        // vero se ci sono degli id che si sovrappongono
         overlappingIDs: false
       },
+      // attributi utente da esportare
+      selectedAttrsUtenti: [],
+      // elenco degli attributi utente esportabili
+      optionsAttrsUtenti: [],
       tableData: [],
       columns: ['uid', 'username', 'password', 'email', 'role', 'iniziali',
         'nome', 'cognome', 'id_min', 'id_max'],
@@ -163,12 +183,15 @@ export default {
                   Number(row.id_min) > Number(row.id_max)
     },
     retriveUsers: function () {
-      axios.post(this.$store.getters.gestioneUtentiURL, qs.stringify({
+      return axios.post(this.$store.getters.gestioneUtentiURL, qs.stringify({
         username: this.$store.getters.getUserData.username,
         password: this.$store.getters.getUserData.password,
         usersList: true
       }))
-        .then((resp) => { this.tableData = resp.data })
+        .then((resp) => {
+          this.tableData = resp.data
+          return this.tableData
+        })
     },
     updateRow: function (row, column, oldVal, newVal) {
       let rowData = row.row
@@ -307,10 +330,19 @@ export default {
       const data = this.tableData
       var txt = data.filter(el => el.role === 'schedatore') // solo schedatori
         // per ogni utente, ne prendo i valori e li rendo una stringa
-        .map(el => JSON.stringify(el))
+        .map(el => {
+          let newEl = {}
+          // prendo solo le chiavi/valori scelti dall'utente per l'esportazione
+          for (let k of Object.keys(el)) {
+            if (this.selectedAttrsUtenti.includes(k))newEl[k] = el[k]
+          }
+          return JSON.stringify(newEl)
+        })
         .join('\n') // metto gli a capo, viene una stringa <utente1> \n <utente2> \n ... <utenteN>
       var blob = new Blob([txt], { type: 'application/json;charset=utf-8' })
       FileSaver.saveAs(blob, 'usersList.txt')
+      this.$vueEventBus.$emit('master-page-show-msg',
+        ['Lista utenti', txt, 'listaUtenti'])
     }
   },
   computed: {
@@ -381,6 +413,16 @@ export default {
   },
   mounted () {
     this.retriveUsers()
+    // assegno le opzioni per l'esportazione dei dati degli utenti
+    // recupero tali opzioni dalle colonne della tabella e le trasformo
+    // come richiesto da BootstrapVue
+    this.optionsAttrsUtenti = this.columns.map(
+      el => {
+        // il campo uid lo rinomino in id_utente
+        let text = el === 'uid' ? 'id_utente' : el
+        return { text: text, value: el }
+      }
+    )
   },
   beforeRouteLeave (to, from, next) {
     // called when the route that renders this component is about to
