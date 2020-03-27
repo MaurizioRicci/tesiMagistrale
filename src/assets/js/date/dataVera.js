@@ -29,7 +29,7 @@ export default function dataVera (DS) {
         if (Number(sin) > annomax) return false // # anno futuro = false
         else return true
       } else if (sin.length > 8) return false // # 5,6,7,8 cifre - se più di 8 cifre false
-      let anno = pythonSlice(null, -4) // # ricorda - sono stringhe
+      let anno = pythonSlice(null, -4, sin) // # ricorda - sono stringhe
       // sin[:-4];
       let mese = pythonSlice(-4, -2, sin)
       // sin[-4:-2];
