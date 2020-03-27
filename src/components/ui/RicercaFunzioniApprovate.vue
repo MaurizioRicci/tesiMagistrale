@@ -63,7 +63,7 @@ import ellipsize from '@/assets/js/Filters/ellipsizeLongText'
 import FunzioneTableMixin from '@/components/mixins/FunzioneTable'
 import axios from 'axios'
 import qs from 'qs'
-window.axios = require('axios')
+window.axios = axios // serve per vueTables
 
 // Mostra una tabella con tutti i beni approvati di tutti gli utenti
 export default {

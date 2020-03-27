@@ -64,7 +64,7 @@ import Map from '@/components/ui/Map'
 import fetchBene from '@/assets/js/fetchBene'
 import axios from 'axios'
 import qs from 'qs'
-window.axios = require('axios')
+window.axios = axios // serve per vueTables
 
 // Mostra una tabella con tutti i beni approvati di tutti gli utenti
 export default {
