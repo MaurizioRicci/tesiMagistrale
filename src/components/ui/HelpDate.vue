@@ -20,6 +20,7 @@
       <b-list-group-item>XV prima metà</b-list-group-item>
       <b-list-group-item>XV seconda metà</b-list-group-item>
       <b-list-group-item>XV fine</b-list-group-item>
+      <b-list-group-item>13001231 (31 dicembre 1300)</b-list-group-item>
     </b-list-group>
 
     </b-popover>
@@ -30,7 +31,7 @@
 export default {
   name: 'HelpDate',
   props: {
-    target: { type: String }
+    target: { type: String, required: true }
   },
   data () {
     return {
