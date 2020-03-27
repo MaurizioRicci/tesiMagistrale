@@ -34,13 +34,14 @@ export default function dataVera (DS) {
       let mese = pythonSlice(-4, -2, sin)
       // sin[-4:-2];
       let giorno = pythonSlice(-2, null, sin)
+      console.log(anno, mese, giorno)
       // sin[-2:]
       if (Number(anno) > annomax) return false
       let bisesto
       if (Number(anno) % 4 === 0 && ![2000, 1600, 1200, 800, 400].includes(Number(anno))) bisesto = true
       else bisesto = false
-      if (Number(mese) in [1, 3, 5, 7, 8, 10, 12] && Number(giorno) <= 31) return true
-      else if (Number(mese) in [4, 6, 9, 11] && Number(giorno) <= 30) return true
+      if ([1, 3, 5, 7, 8, 10, 12].includes(Number(mese)) && Number(giorno) <= 31) return true
+      else if ([4, 6, 9, 11].includes(Number(mese)) && Number(giorno) <= 30) return true
       else if (Number(mese) === 2 && bisesto && Number(giorno) <= 29) return true
       else if (Number(mese) === 2 && !bisesto && Number(giorno) <= 28) return true
       else return false
