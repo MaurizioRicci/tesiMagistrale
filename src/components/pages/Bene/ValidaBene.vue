@@ -11,10 +11,10 @@
     <b-row>
       <b-col>
           <LoadingOverlay ref="loadingOverlay"/>
-          <b-alert variant="warning" :show="beneOverlap.length > 0">
+          <b-alert variant="warning" :show="beniVicini.length > 0">
           Il bene è molto vicino ai seguenti beni:
           <b-button-group class="justify-content-center" style="flex-wrap: wrap;">
-            <b-button v-for="(bene,index) in beneOverlap" :key="index"
+            <b-button v-for="(bene,index) in beniVicini" :key="index"
               variant="light" class="btn-outline-info"
               title="Click per dettagli" v-b-modal.modal-bene-overview
               @click="$refs.beneOverview.showBeneDetails(bene.id, bene.id_utente)">
@@ -104,7 +104,7 @@ export default {
       mapCenterArchDef: [0, 0],
       mapControls: { zoom: true, settings: false },
       // array di eventuali beni sovrapposti a quello che si sta creando
-      beneOverlap: [],
+      beniVicini: [],
       // usato per aprire il messaggio di conferma di validazione
       waitUserConfirmation: false
     }
@@ -152,14 +152,14 @@ export default {
       // PostGIS vuole i punti come longitudine-latitudine
       postData.polygon = postData.polygon.flipCoordinates()
       axios.post(this.$store.getters.checkDistURL, qs.stringify(postData))
-        .then(resp => { this.beneOverlap = resp.data || [] })
+        .then(resp => { this.beniVicini = resp.data || [] })
     },
     init () {
       // resetto le variabili
       this.sendBtnClicked = false
       this.formBeneArchDef = getModelloBene()
       this.mapCenterArchDef = [0, 0]
-      this.beneOverlap = []
+      this.beniVicini = []
       // resetto il modello dati scaricato in precedenza (se c'è)
       this.resetData()
       // scarico il bene definitivo se esiste e rendo una promessa
@@ -183,6 +183,8 @@ export default {
     }
   },
   mounted () {
+    // mettere l'inizializzazione dentro init poichè non si può invocare nuovamente mounted
+    // controllo la distanza tra la geometria data e quella nei vari archivi
     this.init().then(() => this.checkPolygonDist())
   },
   watch: {

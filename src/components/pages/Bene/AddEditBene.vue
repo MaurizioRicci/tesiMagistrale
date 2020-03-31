@@ -12,10 +12,10 @@
           style="max-height:30vh; overflow:auto;">
           Da rivedere: {{form.msg_validatore}}
         </b-alert>
-        <b-alert variant="warning" :show="beneOverlap.length > 0">
+        <b-alert variant="warning" :show="beniVicini.length > 0">
           Il bene è molto vicino ai seguenti beni:
           <b-button-group class="justify-content-center" style="flex-wrap: wrap;">
-            <b-button v-for="(bene,index) in beneOverlap" :key="index"
+            <b-button v-for="(bene,index) in beniVicini" :key="index"
               variant="light" class="btn-outline-info"
               title="Click per dettagli" v-b-modal.modal-bene-overview
               @click="$refs.beneOverview.showBeneDetails(bene.id, bene.id_utente)">
@@ -85,7 +85,7 @@ export default {
       // decide se lasciare la pagina dopo aggiunta/modifica o se rimanere
       leavePage: true,
       // array di eventuali beni sovrapposti a quello che si sta creando
-      beneOverlap: []
+      beniVicini: []
     }
   },
   props: {
@@ -152,19 +152,19 @@ export default {
       this.sendBtnClicked = false
       this.serverRespOk = false
       this.leavePage = true
-      this.beneOverlap = []
+      this.beniVicini = []
       if (!this.editMode) {
         // se non si modifica allora si aggiunge e quindi diamo noi l'id del bene da creare
         // chiudo tutti i buchi di id di un certo utente
         let storeGetters = this.$store.getters
-        axios.post(storeGetters.getNewIDURL, qs.stringify(storeGetters.getUserData))
+        return axios.post(storeGetters.getNewIDURL, qs.stringify(storeGetters.getUserData))
           .then(resp => {
             let id = resp.data.id
             this.formRetrived.id = id
             this.form.id = id
           })
       } else if (this.idBene && this.editMode) {
-        this.fetchBeneDataByID(this.idBene, this.idUtente, this.cercaInArchivioTemp)
+        return this.fetchBeneDataByID(this.idBene, this.idUtente, this.cercaInArchivioTemp)
       }
     },
     checkPolygonDist () {
@@ -174,12 +174,13 @@ export default {
       // PostGIS vuole i punti come longitudine-latitudine
       postData.polygon = postData.polygon.flipCoordinates()
       axios.post(this.$store.getters.checkDistURL, qs.stringify(postData))
-        .then(resp => { this.beneOverlap = resp.data || [] })
+        .then(resp => { this.beniVicini = resp.data || [] })
     }
   },
   mounted () {
-    // metterer tutto dentro init poichè non si può invocare nuovamente mounted
-    this.init()
+    // mettere l'inizializzazione dentro init poichè non si può invocare nuovamente mounted
+    // controllo la distanza tra la geometria data e quella nei vari archivi
+    this.init().then(() => this.checkPolygonDist())
   },
   watch: {
     $route (to, from) {
