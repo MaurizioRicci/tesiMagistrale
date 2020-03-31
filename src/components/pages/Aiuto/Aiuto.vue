@@ -42,17 +42,38 @@
         <!-- aiuto Funzioni -->
         <b-tab title="Funzioni">
             <b-row align-h="center">
-            <b-col cols="12" md="6" xl="4" class="d-flex">
+            <b-col cols="12" md="6" xl class="d-flex">
               <b-card title="Aggiungi una funzione" tag="article" class="mb-2">
               In questa pagina è possibile aggiungere una funzione, ovvero una relazione tra due entità geografiche. La funzione aggiunta dovra essere prima approvata da un revisore; nel caso un revisore aggiunga una funzione, essa
                verrà aggiunto subito alla lista di tutte le funzioni comuni a tutti gli utenti (dette funzioni definitive, vedi ricerca una funzione).
                 <div slot="footer"><b-button to="funzione/aggiungi" variant="primary">Visita pagina</b-button></div>
               </b-card>
             </b-col>
-            <b-col cols="12" md="6" xl="4" class="d-flex">
+            <b-col cols="12" md="6" xl class="d-flex">
               <b-card title="Ricerca una funzione" tag="article" class="mb-2">
                 Puoi ricercare, visualizzare e modificare una funzione approvata per mezzo di questa pagina. Utilizza i filtri della tabella per ricercare.
                 <div slot="footer"><b-button to="/funzione/ricerca" variant="primary">Visita pagina</b-button></div>
+              </b-card>
+            </b-col>
+            <b-col cols="12" md="6" xl class="d-flex">
+              <b-card title="Aiuto date" tag="article" class="mb-2">
+                <p>DataP non indica la fine di un’azione o di una proprietà, ma solo il limite più
+                recente di un periodo. Cioè “nel XV sec inizio A paga un tributo a B” vuol dire che si ha notizia che
+                in un certo anno tra 1401 e 1425 A pagava un tributo a B. NON vuol dire che nel 1401 A inizia a
+                pagare un tributo a B e che nel 1425 finisce. Questo si presta a ambiguità: la frase “nel XV secolo A
+                paga un tributo a B” è ambigua e ancora più ambigua è la frase “tra il 1289 e il 1332 A paga un
+                tributo a B”. Quest’ultima frase in particolare (se così compare in un documento) va interpretata
+                dall’operatore: se vuol dire “ho notizia che in un certo anno tra il 1289 e il 1332 A paga B” è una
+                cosa; se vuol dire che “dal 1289 A inizia a pagare B e finisce nel 1332” la cosa è diversa e sono
+                necessari due record distinti.</p>
+                <p>In conclusione i 2 parametri DataA e DataP a servono a definire un anno o un periodo in cui vale una
+                proprietà (Ruolo, Paga un tributo, ecc.) e il parametro Tipo specifica cosa accade prima e dopo
+                DataA e DataB.</p>
+                <p>Se si tratta di un anno si acquisisce solo DataA e se DataTipo = ‘niente prima’, prima di DataA la
+                proprietà è zero; se DataTipo = ‘niente dopo’, dopo DataA la proprietà è zero.
+                Se si tratta di un periodo di acquisiscono DataA e DataP e se DataTipo = ‘niente prima’, prima di
+                DataA la proprietà è zero; se DataTipo = ‘niente dopo’, dopo DataP la proprietà è zero. Se il periodo
+                è espresso in formato Latino è come se si acquisissero i due anni che indicano il periodo.</p>
               </b-card>
             </b-col>
           </b-row>
