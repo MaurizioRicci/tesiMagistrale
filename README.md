@@ -1,4 +1,4 @@
-# Beni Lunigiana
+# Beni Lunigiana - client
 
 ## Project setup
 Prima di tutto scaricare Node.js, assicurarsi di selezionare l'installazione di npm. Poi aprire il terminale, piazzarsi nella directory di questo progetto e impartire:
@@ -34,6 +34,10 @@ npm run showDoc
   * store. File per memorizzare lo stato della web application mentre è in esecuzione. Si rimanda a [Vuex](https://vuex.vuejs.org/)
 
 La creazione dell'interfaccia utente è fortemente legata a [Vue Bootstrap](https://bootstrap-vue.js.org/), si consiglia di capirne il funzionamento. Per la gestione delle tabelle è stata usata la libreria [Vue Tables 2](https://github.com/matfish2/vue-tables-2#readme), si rimanda alla documentazione. Per le mappe [Leaflet](https://leafletjs.com/) e [Vue Leaflet](https://github.com/vue-leaflet/Vue2Leaflet) sono stati usati. Mentre per le icone è stata usata [Vue-FontAwesome](https://github.com/FortAwesome/vue-fontawesome).
+
+## Impostare l'indirizzo del server a cui fare le richieste
+Recarsi in src/store/URLsStore.js e modificare 'serverURL'. Questa variabile rappresenta l'indirizzo base del server a cui fare le richieste. Tale indirizzo può essere diverso in base al fatto se si stia eseguendo l'applicazione in modalità di test o se si stia rilasciando al pubblico (production). 
+Sempre nello stesso file sono inoltre dichiarati i percorsi relativi a 'serverURL' per le varie operazioni (crea bene, modifica bene, etc.) 
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
