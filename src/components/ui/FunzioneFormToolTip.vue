@@ -24,7 +24,7 @@
    <ul class="text-left">
     <li>Campo vuoto: non si sa niente circa la validità della relazione al di fuori dell'intervallo specificato</li>
     <li>Niente prima: la relazione vale dalla data specificata in poi</li>
-    <li>Niente dopo: la relazione è valida fino ala data specificata</li>
+    <li>Niente dopo: la relazione è valida fino alla data specificata</li>
     <li>Niente prima e dopo: la relazione vale solo in quel preciso periodo</li>
    </ul>
    <span

@@ -12,8 +12,12 @@
       <h5 class="col-12">
         Benvenuto
         <b-badge variant="info">{{$store.getters.getUserData.username}}</b-badge>
+        <icon-msg icon_name="question-circle" icon_msg="Il tuo nome utente"></icon-msg>
         La tua sigla è
         <b-badge variant="info">{{data.iniziali}}</b-badge>
+        <icon-msg icon_name="question-circle"
+        icon_msg="La sigla è ciò che permette agli altri di capire chi sia un determinato utente.
+        Viene utilizzata per elencare tutti gli utenti cha abbiano lavorato a un determinato elemento."></icon-msg>
       </h5>
       <!-- Breve descrizione + Collegamenti rapidi -->
       <b-col class="text-left mt-1" cols="12" md="10" lg="6">
@@ -89,6 +93,9 @@
             <b-badge variant="info">{{data.id_min}}</b-badge>
             a
             <b-badge variant="info">{{data.id_max}}</b-badge>
+            <icon-msg icon_name="question-circle" icon_msg="Ogni bene è identificato in maniera univoca da un numero.
+            Quindi ogni utente ha un proprio intervallo di numeri da associare ai beni
+            che inserisce nel sistema."></icon-msg>
           </p>
           <p>
             Il tuo ultimo ID usato per un Bene è
@@ -176,13 +183,14 @@
 <script>
 import commonPageMixin from '@/components/mixins/CommonPage'
 import Menu from '@/components/ui/Menu'
+import IconMsg from '@/components/ui/IconMsg'
 import axios from 'axios'
 import qs from 'qs'
 
 // @group Pages
 export default {
   name: 'Home',
-  components: { Menu },
+  components: { Menu, IconMsg },
   mixins: [commonPageMixin],
   data () {
     return {
