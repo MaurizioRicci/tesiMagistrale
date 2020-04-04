@@ -59,10 +59,15 @@ export default {
       let basemaps = {
         'Benigeo': source.getLayer('benigeo').addTo(this.leafletMap)
       }
+      /* /
+      Al momento non c'è un layer di beni temporanei. Scommentare quando ci sarà.
       let overlay = {
         'Benigeo_temp': source.getLayer('benigeo').addTo(this.leafletMap)
       }
       L.control.layers(basemaps, overlay).addTo(this.leafletMap)
+      / */
+      // aggiungo solo il layer dei beni definitivi
+      L.control.layers(basemaps).addTo(this.leafletMap)
     }
   },
   watch: {
