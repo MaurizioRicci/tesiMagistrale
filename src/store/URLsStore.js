@@ -3,7 +3,7 @@ const serverURLsStore = {
   state: {
     // indirizzo del server. Se siamo in produzione (rilascio agli utenti finali) si usa un indirizzo
     // se stiamo sviluppando l'app si usa un'altro indirizzo.
-    serverURL: process.env.NODE_ENV === 'production' ? 'http://myserverapp' : 'http://myserverapp',
+    serverURL: process.env.NODE_ENV === 'production' ? 'http://beniinlunigiana.labcd.unipi.it' : 'http://myserverapp',
     login: '/login.php',
     gestioneUtenti: '/manageUsers.php',
     userStats: '/userStats.php',
