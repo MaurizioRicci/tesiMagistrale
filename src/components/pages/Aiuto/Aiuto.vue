@@ -17,9 +17,9 @@
             <!-- d-flex perchè con flexbox hanno la stessa altezza tutti -->
             <b-col cols="12" md="6" xl class="d-flex">
               <b-card title="Aggiungi bene" tag="article" class="mb-2">
-               In questa pagina è possibile aggiungere un bene, ovvero una entità geografica. Tale entità potrà
+               In questa pagina è possibile aggiungere un bene. Tale entità potrà
                essere collegata a un'altra per mezzo di una funzione (a tal proposito vedi aiuto funzioni).
-               Il bene aggiunto dovra essere prima approvato da un revisore; nel caso un revisore aggiunga un bene, esso
+               Il bene aggiunto deve essere prima approvato da un revisore. Nel caso un revisore aggiunga un bene, esso
                verrà aggiunto subito alla lista dei beni comuni a tutti gli utenti (detti beni definitivi).
                 <div slot="footer"><b-button to="/bene/aggiungi" variant="primary">Visita pagina</b-button></div>
               </b-card>
@@ -44,7 +44,9 @@
             <b-row align-h="center">
             <b-col cols="12" md="6" xl class="d-flex">
               <b-card title="Aggiungi una funzione" tag="article" class="mb-2">
-              In questa pagina è possibile aggiungere una funzione, ovvero una relazione tra due entità geografiche. La funzione aggiunta dovra essere prima approvata da un revisore; nel caso un revisore aggiunga una funzione, essa
+              In questa pagina è possibile aggiungere una funzione, ovvero una relazione tra uno o due beni. Essa permette di specificare informazioni
+              come: il Bene nr. 1 nel 1600 possiede il ruolo di chiesa, il Bene nr. 1 nel 1600 possiede il ruolo di chiesa e dipende dal Bene nr. 2.
+              La funzione aggiunta deve essere prima approvata da un revisore. Nel caso un revisore aggiunga una funzione, essa
                verrà aggiunto subito alla lista di tutte le funzioni comuni a tutti gli utenti (dette funzioni definitive, vedi ricerca una funzione).
                 <div slot="footer"><b-button to="funzione/aggiungi" variant="primary">Visita pagina</b-button></div>
               </b-card>
