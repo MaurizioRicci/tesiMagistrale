@@ -17,7 +17,7 @@ import { store } from './store/store'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faLock, faExclamationCircle, faSort, faSortUp, faSortDown, faCog,
   faPlusSquare, faMinusSquare, faInfoCircle, faCopy, faClipboard, faTrash,
-  faEdit, faCheckCircle, faHome, faSearchLocation, faQuestionCircle }
+  faEdit, faCheckCircle, faHome, faSearchLocation, faQuestionCircle, faRemoveFormat }
   from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -37,7 +37,7 @@ import MyChildRowToggler from '@/components/ui/MyChildRowToggler'
 // Icone FontAwesome
 library.add(faLock, faExclamationCircle, faSort, faSortUp, faSortDown, faCog,
   faPlusSquare, faMinusSquare, faInfoCircle, faCopy, faClipboard, faTrash,
-  faEdit, faCheckCircle, faHome, faSearchLocation, faQuestionCircle)
+  faEdit, faCheckCircle, faHome, faSearchLocation, faQuestionCircle, faRemoveFormat)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

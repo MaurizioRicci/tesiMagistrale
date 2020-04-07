@@ -11,7 +11,12 @@ export default {
   name: 'BetterWMS',
   components: {},
   data () {
-    return {}
+    return {
+      // salvo il layer control della mappa creata
+      layerscontrol: {},
+      // salvo i layers della mappa creata
+      layers: []
+    }
   },
   props: {
     // mappa a cui agganciare il livello WMS
@@ -53,25 +58,44 @@ export default {
           'attribution': "<a href='https://www.unipi.it/'>UniPi</a>",
           'info_format': 'text/html',
           'tiled': false,
-          'FEATURE_COUNT': 50,
           ...this.URLParams
         })
+      this.removeControls()
+      this.removeLayers()
       let basemaps = {
-        'Benigeo': source.getLayer('benigeo').addTo(this.leafletMap)
+        'Benigeo': this.addLayer(source.getLayer('benigeo'))
       }
       /* /
       Al momento non c'è un layer di beni temporanei. Scommentare quando ci sarà.
       let overlay = {
-        'Benigeo_temp': source.getLayer('benigeo').addTo(this.leafletMap)
+        'Benigeo_temp': this.addLayer(source.getLayer('benigeo_temp'))
       }
       L.control.layers(basemaps, overlay).addTo(this.leafletMap)
       / */
       // aggiungo solo il layer dei beni definitivi
-      L.control.layers(basemaps).addTo(this.leafletMap)
+      this.layerscontrol = L.control.layers(basemaps).addTo(this.leafletMap)
+    },
+    // rimuovo i controlli per la mappa aggiunta
+    removeControls () {
+      // controllo se c'è qualche chiave dentro l'oggetto
+      if (Object.keys(this.layerscontrol).length > 0) { this.layerscontrol.remove(this.leafletMap) }
+    },
+    // rimuovo i layer dalla mappa aggiunta e cancello i layer creati
+    removeLayers () {
+      for (let layer of this.layers) this.leafletMap.removeLayer(layer)
+      this.layers = []
+    },
+    // aggiungo un layer alla mappa
+    addLayer (layer) {
+      this.layers.push(layer)
+      return layer.addTo(this.leafletMap)
     }
   },
   watch: {
     leafletMap: function (newVal) {
+      this.init()
+    },
+    styles: function (newVal) {
       this.init()
     }
   },

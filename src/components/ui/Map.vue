@@ -10,10 +10,14 @@ la proprietà locked; se presente disabilita la modifica -->
         <!-- Mappa beni -->
        <BetterWMS base-url="http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi"
         ref="betterWMS" :leafletMap="leafletMapObject" :infoOnClick="state.watch"
-        :URLParamssss="paramsTmpLayer"/>
+        :styles="style" :URLParamssss="paramsTmpLayer"/>
 
       <l-control position="bottomleft">
         <b-button-group>
+          <b-button :pressed.sync="state.toggle_label" key="toggle_label">
+            <IconMsg icon_name="remove-format" icon_color="white"
+              icon_msg="Attiva/Disattiva etichette elementi"/>
+          </b-button>
           <b-button v-if="controls.watch" :pressed.sync="state.watch" key="watch">
             <IconMsg icon_name="info-circle" icon_color="white"
               icon_msg="Mostra dettagli dei beni"/>
@@ -137,7 +141,10 @@ export default {
       leafletMapObject: null,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      state: { mappaIngrandita: false, watch: false },
+      // salvano lo stato della mappa: es: la mappa è fullscreen?
+      // Stiamo richiedendo info per gli elementi sulla mappa?
+      // abbiamo rimosso le etichette dalla mappa?
+      state: { mappaIngrandita: false, watch: false, toggle_label: false },
       // serve poi se l'utente vuole modificarlo
       currPolygon: this.polygon ? this.polygon.clone() : new Polygon(),
       // serve al leaflet toolbar per salvare dentro il suo stato
@@ -158,7 +165,9 @@ export default {
   computed: {
     cursor () {
       return this.state.watch ? 'help' : 'crosshair'
-    }
+    },
+    // style per la mappa, Può assumere valori: stringa vuota (default), no_label (senza etichette)
+    style () { return this.state.toggle_label ? 'no_label' : '' }
   },
   watch: {
     polygon: {
@@ -219,5 +228,11 @@ export default {
 }
 .leaflet-control-geosearch.active form {
   max-width: 300px;
+}
+</style>
+
+<style scoped>
+.btn-secondary:not(:disabled):not(.disabled).active{
+  background-color: #518bb5;
 }
 </style>
