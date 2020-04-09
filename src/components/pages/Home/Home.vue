@@ -175,6 +175,7 @@
         <b-button to="/gestisci_utenti" variant="warning"
           v-if="isRevisore">Aggiungi / Modifica utenti</b-button>
         <b-button @click="logout">Logout</b-button>
+        <b-button to="/showLog">Mostra log (DEBUG)</b-button>
       </b-col>
     </b-row>
   </b-container>

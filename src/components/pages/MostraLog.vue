@@ -6,6 +6,19 @@
       </b-col>
       <b-col>
         <h2>Mostra log</h2>
+        <div class="row col-12 col-lg-6 text-left">
+          <p>
+            <span class="bg-warning">Questa pagina serve solo per monitorare lo stato del sistema a scopo di debug.
+              Mostra le varie operazioni che sono state svolte.</span>
+            <br/>
+            Es: Modifica bene: ID utente: 1, ID bene: 900, ID utente bene: 1
+            <br/>
+            Significa ID utente: 1 modifica il bene nr. 900; tale bene è associato all'utente 1.<br/>
+            In generale "ID utente" può essere diverso da "ID utente bene" nel caso un revisore approvi un bene o ad esempio lo cancelli.
+            <br/>
+            Vengono registrati anche i tentativi falliti con il relativo messaggio. Per tentativi falliti si intendono
+            sia casi con esito negativo gestiti dal sistema sia possibile casi non gestiti (crash/bug).</p>
+        </div>
         <p class="m-0">
             Ultimi
             <b-form-input type="number" v-model="maxLog"

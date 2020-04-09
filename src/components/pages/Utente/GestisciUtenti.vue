@@ -24,7 +24,7 @@
                   <li>Username e Password devono essere unici, non possono esistere due utenti con stesso username
                     e stessa password. Altrimenti non è possibile discriminare un utente da un altro.</li>
                   <li>Le iniziali vanno scritte tutte in maiuscolo e devono essere uniche.</li>
-                  <li>Tutti i campi sono richiesti. In rosso quelli da riempire</li>
+                  <li>I campi da riempire sono mostrati in rosso.</li>
               </ul>
               <p>La violazione delle regole sopra citate comporterà necessariamente il fallimento dell'operazione di convalida.</p>
           </b-col>
