@@ -16,6 +16,8 @@
             Significa ID utente: 1 modifica il bene nr. 900; tale bene è associato all'utente 1.<br/>
             In generale "ID utente" può essere diverso da "ID utente bene" nel caso un revisore approvi un bene o ad esempio lo cancelli.
             <br/>
+            Se ID utente non c'è significa che l'oggetto non è associato a nessun utente particolare e quindi è di tutt; in altre parole è approvato.
+            <br/>
             Vengono registrati anche i tentativi falliti con il relativo messaggio. Per tentativi falliti si intendono
             sia casi con esito negativo gestiti dal sistema sia possibile casi non gestiti (crash/bug).</p>
         </div>
