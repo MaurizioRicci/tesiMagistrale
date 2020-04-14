@@ -7,6 +7,18 @@ Polygon.prototype.addVertex = function (lat = 0, lng = 0) {
   this.latlngArr.push([lat, lng])
 }
 
+Polygon.prototype.removeVertexIndex = function (index) {
+  if (index >= 0) {
+    this.latlngArr.splice(index, 1)
+  }
+}
+
+Polygon.prototype.getVertexAtIndex = function (index) {
+  if (index >= 0 && index < this.latlngArr.length) {
+    return this.latlngArr[index]
+  }
+}
+
 Polygon.prototype.filter = function (filterF) {
   return new Polygon(
     this.latlngArr.filter(latlng => filterF(latlng[0], latlng[1])), this.id
