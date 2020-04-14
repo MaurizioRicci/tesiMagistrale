@@ -14,7 +14,8 @@
       </template>
 
     <b-list-group>
-      <b-list-group-item>1500</b-list-group-item>
+      <b-list-group-item>1400</b-list-group-item>
+      <b-list-group-item>XV</b-list-group-item>
       <b-list-group-item>XV inizio</b-list-group-item>
       <b-list-group-item>XV metà</b-list-group-item>
       <b-list-group-item>XV prima metà</b-list-group-item>

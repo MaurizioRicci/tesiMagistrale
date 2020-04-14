@@ -79,6 +79,13 @@ export default function dataVera (DS) {
         }
       }
     }
+    // modifica di MAU 14/4/2020 accetto date solo secolo, es: VIII
+    // solo numeri romani, senza i numeri in cifra
+    let RomToArabStrOnly = RomToArab.filter(x => (typeof x).toLowerCase() === 'string')
+    // se sin è inclusa tra i numeri romani rendo true
+    if (RomToArabStrOnly.includes(sin)) return true
+    // fine modifica di MAU 14/4/2020
+
     return false
   } catch (error) {
     console.warn('eccezione in dataVera', error)
