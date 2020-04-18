@@ -54,6 +54,12 @@
                                 <!-- email -->
                                   <b-form-input type="email" v-model="row[colName]"
                                   v-else-if="colName === 'email'" key="emailInput"/>
+                                <!-- numero beni -->
+                                  <b-form-input type="number" v-model="row[colName]" readonly
+                                  v-else-if="colName === 'nbeni_tmp'" key="nBeniTmpInputReadOnly"/>
+                                <!-- numero funzioni -->
+                                  <b-form-input type="number" v-model="row[colName]" readonly
+                                  v-else-if="colName === 'nfunzioni_tmp'" key="nFunzioniTmpInputReadOnly"/>
                                 <!-- select -->
                                 <b-form-input type="text" v-model="row[colName]" key="textInput"
                                   v-else-if="colName !== 'role'" :formatter="e => formatter(e, colName)"/>
@@ -142,15 +148,21 @@ export default {
       optionsAttrsUtenti: [],
       tableData: [],
       columns: ['uid', 'username', 'password', 'email', 'role', 'iniziali',
-        'nome', 'cognome', 'id_min', 'id_max'],
+        'nome', 'cognome', 'id_min', 'id_max', 'nbeni_tmp', 'nfunzioni_tmp'],
       options: {
+        headingsTooltips: {
+          nbeni_tmp: 'Numero di beni temporanei per l\'utente',
+          nfunzioni_tmp: 'Numero di funzioni temporanee per l\'utente'
+        },
         perPage: 30,
         perPageValues: [],
         headings: {
           uid: 'ID utente',
           id_min: 'ID minimo',
           id_max: 'ID massimo',
-          role: 'Ruolo'
+          role: 'Ruolo',
+          nbeni_tmp: 'N° beni temp',
+          nfunzioni_tmp: 'N° funzioni temp'
         },
         uniqueKey: 'uid',
         editableColumns: ['username', 'password', 'email', 'role', 'iniziali',
@@ -285,7 +297,8 @@ export default {
     // dice se la colonna corrente è vuota o no
     colonnaVuota: function (row, colName, valoreCella) {
       // il campo email non è segnato come da riempire è facoltativo
-      if (colName === 'email') return false
+      // numero beni/funzioni sono read only
+      if (['email', 'nbeni_tmp', 'nfunzioni_tmp'].includes(colName)) return false
       let res = !valoreCella
       this.errors.empty = this.errors.empty || res
       return res
