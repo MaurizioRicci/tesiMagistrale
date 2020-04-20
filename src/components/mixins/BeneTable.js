@@ -26,6 +26,11 @@ export default {
           macroEpocaCar: 'Mec',
           macroEpocaOrig: 'Meo'
         },
+        headingsTooltips: {
+          macroEpocaCar: 'Macro epoca caratteristica',
+          macroEpocaOrig: 'Macro epoca originaria',
+          msg_validatore: 'Messaggio del validatore'
+        },
         columnsDropdown: true,
         columnsDisplay: {
           macroEpocaCar: 'mobileP',

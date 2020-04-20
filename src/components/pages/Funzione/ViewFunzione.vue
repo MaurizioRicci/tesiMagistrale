@@ -15,8 +15,6 @@
     <b-row align-h="center">
       <b-col cols="8">
 
-        <FunzioneCopiaIncolla :funzioneModel="form" no-paste/>
-
           <FunzioneFormView :form="form"/>
           <b-button type="button" @click="goBack">Indietro</b-button>
           <!-- si modificano solo beni definitivi -->
@@ -26,9 +24,7 @@
       </b-col>
 
       <b-col cols="4">
-        <MyMap ref="myMap" locked
-          :center="mapCenter" :zoom="17" @ingrandisci-mappa="ingrandisciMappa"
-          @rimpicciolisci-mappa="rimpicciolisciMappa"/>
+        <MyMap ref="myMap" locked :center="mapCenter" :zoom="17"/>
       </b-col>
     </b-row>
       <b-col>
@@ -44,25 +40,16 @@ import FunzioneFormView from '@/components/ui/FunzioneFormView'
 import commonPageMixin from '@/components/mixins/CommonPage'
 import dettagliFunzioneMixin from '@/components/mixins/DettagliFunzione'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
-import FunzioneCopiaIncolla from '@/components/ui/FunzioneCopyPaste'
 
 // @group Pages
 export default {
   name: 'VisualizzaFunzione',
-  components: { Menu, MyMap, FunzioneFormView, RicercaBeniApprovati, FunzioneCopiaIncolla },
+  components: { Menu, MyMap, FunzioneFormView, RicercaBeniApprovati },
   mixins: [commonPageMixin, dettagliFunzioneMixin],
   data () {
     return {}
   },
   methods: {
-    ingrandisciMappa () {
-      this.mapCols = 12
-      this.$nextTick(() => this.$refs.myMap.invalidateSize())
-    },
-    rimpicciolisciMappa () {
-      this.mapCols = 4
-      this.$nextTick(() => this.$refs.myMap.invalidateSize())
-    },
     onEdit () {
       this.$router.push('/funzione/modifica/' + this.formRetrived.id)
     },

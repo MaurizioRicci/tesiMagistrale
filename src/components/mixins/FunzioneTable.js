@@ -29,6 +29,9 @@ export default {
           ruolor: 'RuoloR',
           schedatori_iniziali: 'Sched.'
         },
+        headingsTooltips: {
+          msg_validatore: 'Messaggio del validatore'
+        },
         columnsDropdown: true,
         columnsDisplay: {
           schedatori_iniziali: 'mobileP'

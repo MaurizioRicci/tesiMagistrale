@@ -79,7 +79,7 @@
                 Data_Da e Data_A.</p>
                 <p>Se si tratta di un anno si acquisisce solo Data_Da e se DataTipo = ‘niente prima’, prima di Data_Da la
                 proprietà è zero; se DataTipo = ‘niente dopo’, dopo Data_Da la proprietà è zero.
-                Se si tratta di un periodo di acquisiscono Data_Da e Data_A e se DataTipo = ‘niente prima’, prima di
+                Se si tratta di un periodo si acquisiscono Data_Da e Data_A e se DataTipo = ‘niente prima’, prima di
                 Data_Da la proprietà è zero; se DataTipo = ‘niente dopo’, dopo Data_A la proprietà è zero. Se il periodo
                 è espresso in formato Latino è come se si acquisissero i due anni che indicano il periodo.</p>
                 </b-card-text>

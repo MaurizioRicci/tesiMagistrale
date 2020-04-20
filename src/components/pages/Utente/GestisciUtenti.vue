@@ -117,7 +117,7 @@ import Menu from '@/components/ui/Menu'
 import qs from 'qs'
 import axios from 'axios'
 import FileSaver from 'file-saver'
-import sortByID from '@/assets/js/sortNumberAsString'
+import sortNumericStrings from '@/assets/js/sortNumberAsString'
 const _mapValues = require('lodash.mapvalues') // è come Array.map() solo con i dizionari
 const _values = require('lodash.values') // rende una array contenenti tutti i valori in un dizionario
 // regex presa da https://stackoverflow.com/questions/9572254/validate-email-with-regex-jquery
@@ -170,8 +170,10 @@ export default {
         filterable: true,
         filterByColumn: true,
         customSorting: {
-          id_min: sortByID('id_min'),
-          id_max: sortByID('id_max')
+          id_min: sortNumericStrings('id_min'),
+          id_max: sortNumericStrings('id_max'),
+          nbeni_tmp: sortNumericStrings('nbeni_tmp'),
+          nfunzioni_tmp: sortNumericStrings('nfunzioni_tmp')
         }
       },
       users: {

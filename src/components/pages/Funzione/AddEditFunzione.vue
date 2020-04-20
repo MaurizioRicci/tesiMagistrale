@@ -17,8 +17,6 @@
     <b-row align-h="center">
       <b-col cols="8">
 
-          <FunzioneCopiaIncolla :funzioneModel="form"/>
-
           <FunzioneFormAddEdit ref="form_funzione" v-model="form"
             :validated="sendBtnClicked"/>
           <b-button type="button" @click="goBack">Indietro</b-button>
@@ -31,9 +29,8 @@
       </b-col>
 
       <b-col cols="4">
-        <MyMap ref="myMap" locked @ingrandisci-mappa="ingrandisciMappa"
-          v-model="form.polygon" :zoom="editMode ? 17 : 10" :center="mapCenter"
-          @rimpicciolisci-mappa="rimpicciolisciMappa"/>
+        <MyMap ref="myMap" locked v-model="form.polygon"
+        :zoom="editMode ? 17 : 10" :center="mapCenter"/>
       </b-col>
     </b-row>
     <b-row>
@@ -59,7 +56,6 @@ import LoginWarning from '@/components/ui/LoginWarning'
 import MyMap from '@/components/ui/Map'
 import RicercaBeniApprovati from '@/components/ui/RicercaBeniApprovati'
 import BeniUtente from '@/components/ui/BeniUtente'
-import FunzioneCopiaIncolla from '@/components/ui/FunzioneCopyPaste'
 import LoadingOverlay from '@/components/ui/LoadingOverlay'
 import lodashclonedeep from 'lodash.clonedeep'
 import { ternaVera } from '@/assets/js/date/dateF'
@@ -77,7 +73,6 @@ export default {
     MyMap,
     RicercaBeniApprovati,
     BeniUtente,
-    FunzioneCopiaIncolla,
     LoadingOverlay
   },
   mixins: [commonPageMixin, dettagliFunzioneMixin],
@@ -149,14 +144,6 @@ export default {
         })
       // nascondo la schermata di caricamento
         .finally(() => this.$refs.loadingOverlay.hide())
-    },
-    ingrandisciMappa () {
-      this.mapCols = 12
-      this.$nextTick(() => this.$refs.myMap.invalidateSize())
-    },
-    rimpicciolisciMappa () {
-      this.mapCols = 4
-      this.$nextTick(() => this.$refs.myMap.invalidateSize())
     },
     init () {
       // reset variabili
