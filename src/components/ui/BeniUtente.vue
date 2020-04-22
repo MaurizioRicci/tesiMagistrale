@@ -68,13 +68,13 @@
            <!-- se sono schedatore vedo un campo semplice. Se sono revisore vedo un campo con una manina al mouse hover -->
           <span v-if="!sonoRevisore" key="msg_sono_sched">{{row.msg_validatore | ellipsizeLongText()}}</span>
           <div v-else key="msg_sono_revisore">
-            <span @click="setEditing(true)" v-if="!isEditing()" key="msgValRead"
+            <div @click="setEditing(true)" v-if="!isEditing()" key="msgValRead"
               style="cursor:pointer;">
               <a class="d-inline-block w-100">
                 {{row.msg_validatore | ellipsizeLongText()}}
               </a>
-            </span>
-            <span v-else key="msgValEdit">
+            </div>
+            <div v-else key="msgValEdit">
                 <b-form-textarea trim @input="msg => update(msg)"
                   placeholder="Messaggio per schedatore" :value="row.msg_validatore">
                 </b-form-textarea>
@@ -84,7 +84,7 @@
                   Submit</b-button>
                 <b-button type="button" size="sm"
                   @click="revertValue(); setEditing(false)">Cancel</b-button>
-            </span>
+            </div>
           </div>
         </div>
 
