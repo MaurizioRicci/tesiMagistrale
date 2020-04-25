@@ -399,7 +399,11 @@ export default {
             // oppure id max compreso nel range di un altro utente
             overlapID(el.id_max, el2.id_min, el2.id_max) ||
             // oppure il range dell'utente comprende direttamente il range di altri utenti
-            (Number(el.id_min) !== -1 && el.id_min <= el2.id_min && el.id_max >= el2.id_max)
+            (
+              Number(el.id_min) !== -1 &&
+              Number(el.id_min) <= Number(el2.id_min) &&
+              Number(el.id_max) >= Number(el2.id_max)
+            )
           )) {
             overlapping.push(el.uid)
             overlapping.push(el2.uid)
