@@ -42,8 +42,7 @@
                               v-if="!options.editableColumns.includes(colName) || !isEditing()">
                                 <!-- class="d-inline-block w-100" da spessore per la modifica della cella
                                 anche se la cella ha come contenuto stringa vuota (utente appena aggiunto) -->
-                                <a class="d-inline-block"
-                                  :class="{'w-100': row[colName] === ''}">{{row[colName]}}</a>
+                                <a class="d-inline-block w-100">{{row[colName]}}</a>
                             </span>
                             <!-- Se sto editando in base al nome della colonna cambio tra select, input text/number/email -->
                             <span :id="colName + row.uid" v-else>
@@ -60,9 +59,10 @@
                                 <!-- numero funzioni -->
                                   <b-form-input type="number" v-model="row[colName]" readonly
                                   v-else-if="colName === 'nfunzioni_tmp'" key="nFunzioniTmpInputReadOnly"/>
-                                <!-- select -->
-                                <b-form-input type="text" v-model="row[colName]" key="textInput"
+                                <!-- text -->
+                                <b-form-input type="text" v-model="row[colName]" key="textInput" trim
                                   v-else-if="colName !== 'role'" :formatter="e => formatter(e, colName)"/>
+                                <!-- select -->
                                 <b-form-select v-else v-model="row[colName]" :options="rolesOption" key="selectInput"/>
 
                                 <b-button variant="primary"
@@ -151,6 +151,8 @@ export default {
         'nome', 'cognome', 'id_min', 'id_max', 'nbeni_tmp', 'nfunzioni_tmp'],
       options: {
         headingsTooltips: {
+          id_min: 'Min ID da utilizzare per schedare Beni',
+          id_max: 'Max ID da utilizzare per schedare Beni',
           nbeni_tmp: 'Numero di beni temporanei per l\'utente',
           nfunzioni_tmp: 'Numero di funzioni temporanee per l\'utente'
         },
