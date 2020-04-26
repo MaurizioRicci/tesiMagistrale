@@ -1,8 +1,12 @@
 <template>
 <div>
   <v-server-table :columns="columns" :options="options" class="myTable table-sm" ref="myTable"
-    :url="$store.getters.funzioniAggiunteApprovateURL" name="ricercaFunzioniApprovate">
-
+    :url="$store.getters.funzioniAggiunteApprovateURL" name="ricercaFunzioniApprovate"
+    @filter="updateFiltersCount('myTable')">
+        <template v-slot:beforeTable>
+          <h5 style="margin-bottom:-1em;">Numero di filtri applicati
+            <b-badge variant="info">{{filtersCount}}</b-badge></h5>
+        </template>
         <template v-slot:azioni="{row}">
           <b-button-group horizontal>
             <b-button :to="'/funzione/dettagli_funzione/'.concat(row.id)" class="pt-1"
@@ -139,6 +143,9 @@ export default {
       let newCols = this.columns.filter(el => el !== 'azioni')
       this.$set(this, 'columns', newCols)
     }
+  },
+  mounted () {
+    this.updateFiltersCount('myTable')
   }
 }
 </script>

@@ -3,6 +3,8 @@ import { loadMacroEpocaCar, loadMacroEpocaOrig, loadEsistenza } from '@/assets/j
 export default {
   data () {
     return {
+      // numero di filtri applicati alla tabella
+      filtersCount: 0,
       // opzioni per VueTables2
       options: {
         caption: 'd',
@@ -78,6 +80,9 @@ export default {
     getEsistenza: function () {
       return loadEsistenza(this)
         .then(resp => resp.data.map(el => { return { id: el.id, text: el.value } }))
+    },
+    updateFiltersCount (tableRef) {
+      this.filtersCount = this.$refs[tableRef].filtersCount
     }
   },
   mounted () {

@@ -1,8 +1,11 @@
 <template>
 <div>
   <v-client-table ref="myTable" :columns="columns" v-model="tableData" :options="options"
-  class="myTable table-sm" name="beniUtente">
-
+  class="myTable table-sm" name="beniUtente" @filter="updateFiltersCount('myTable')">
+        <template v-slot:beforeTable>
+          <h5 style="margin-bottom:-1em;">Numero di filtri applicati
+            <b-badge variant="info">{{filtersCount}}</b-badge></h5>
+        </template>
         <template v-slot:status="{row}">
           <div :class="{
             'bg-warning': BeneModel.isIncomplete.call(row),
@@ -294,6 +297,7 @@ export default {
   },
   mounted () {
     this.getData()
+    this.updateFiltersCount('myTable')
   },
   watch: {
     update: function (val) {

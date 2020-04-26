@@ -2,8 +2,11 @@
 <div>
   <v-server-table :columns="columns" :options="options" class="myTable table-sm" ref="myTable"
     :url="$store.getters.beniAggiuntiApprovatiURL" name="ricercaBeniApprovati"
-    @click="e => openChildRow(e)">
-
+    @click="e => openChildRow(e)" @filter="updateFiltersCount('myTable')">
+        <template v-slot:beforeTable>
+          <h5 style="margin-bottom:-1em;">Numero di filtri applicati
+            <b-badge variant="info">{{filtersCount}}</b-badge></h5>
+        </template>
         <template v-slot:azioni="{row}">
           <b-button-group horizontal>
             <b-button :to="'/bene/dettagli_bene/'.concat(row.id)" class="pt-1"
@@ -161,6 +164,9 @@ export default {
       let newCols = this.columns.filter(el => el !== 'azioni')
       this.$set(this, 'columns', newCols)
     }
+  },
+  mounted () {
+    this.updateFiltersCount('myTable')
   }
 }
 </script>

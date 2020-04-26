@@ -3,6 +3,8 @@ import { loadRuolo, loadTipoData, loadFunc } from '@/assets/js/loadDict'
 export default {
   data () {
     return {
+      // numero di filtri applicati alla tabella
+      filtersCount: 0,
       // opzioni per VueTables2
       options: {
         filterable: [
@@ -78,6 +80,9 @@ export default {
     getFunc: function () {
       return loadFunc(this)
         .then(resp => resp.data.map(el => { return { id: el.id, text: el.value } }))
+    },
+    updateFiltersCount (tableRef) {
+      this.filtersCount = this.$refs[tableRef].filtersCount
     }
   },
   mounted () {
