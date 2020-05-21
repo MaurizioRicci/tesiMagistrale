@@ -4,6 +4,8 @@ const serverURLsStore = {
     // indirizzo del server. Se siamo in produzione (rilascio agli utenti finali) si usa un indirizzo
     // se stiamo sviluppando l'app si usa un'altro indirizzo.
     serverURL: process.env.NODE_ENV === 'production' ? 'http://beniinlunigiana.labcd.unipi.it' : 'http://myserverapp',
+    // indirizzo del qgis server
+    mapServerURL: 'http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi',
     login: '/login.php',
     gestioneUtenti: '/manageUsers.php',
     userStats: '/userStats.php',
@@ -41,6 +43,7 @@ const serverURLsStore = {
   },
   getters: {
     serverURL: state => state.serverURL,
+    mapServerURL: state => state.mapServerURL,
     loginURL: state => state.serverURL + state.login,
     gestioneUtentiURL: state => state.serverURL + state.gestioneUtenti,
     userStatsURL: state => state.serverURL + state.userStats,

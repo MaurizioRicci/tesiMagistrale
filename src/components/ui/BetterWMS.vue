@@ -50,7 +50,7 @@ export default {
         'onRemove': function () {}
       })
       let source = new MySource(
-        'http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi',
+        this.baseUrl,
         {
           'format': this.format,
           'styles': this.styles,

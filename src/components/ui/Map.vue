@@ -8,7 +8,7 @@ la proprietà locked; se presente disabilita la modifica -->
       <v-geosearch :options="geosearchOptions" ></v-geosearch>
 
         <!-- Mappa beni -->
-       <BetterWMS base-url="http://quegis.labcd.unipi.it/cgi-bin/qgis_mapserv.fcgi"
+       <BetterWMS :base-url="$store.getters.mapServerURL"
         ref="betterWMS" :leafletMap="leafletMapObject" :infoOnClick="state.watch"
         :styles="style" :URLParamssss="paramsTmpLayer"/>
 
