@@ -31,7 +31,7 @@ export default {
     format: { typr: String, default: 'image/png' },
     attribution: { type: String, default: '' },
     // parametri addizionali per la URL specificati dall'utente
-    // il formato atteso è JSON es: { params1: 'value1', params2='value2' }
+    // il formato atteso è JSON es: { params1: 'value1', params2: 'value2' }
     URLParams: { type: Object, default: () => {} }
   },
   methods: {

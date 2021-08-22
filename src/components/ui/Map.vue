@@ -10,7 +10,7 @@ la proprietà locked; se presente disabilita la modifica -->
         <!-- Mappa beni -->
        <BetterWMS :base-url="$store.getters.mapServerURL"
         ref="betterWMS" :leafletMap="leafletMapObject" :infoOnClick="state.watch"
-        :styles="style" :URLParamssss="paramsTmpLayer"/>
+        :styles="style" :URLParamssss="paramsTmpLayer" :URLParams="{'MAP': '/home/qgis/qgis_beniinlunigiana/projects/beniLunigiana.qgs'}"/>
 
       <l-control position="bottomleft">
         <b-button-group>
