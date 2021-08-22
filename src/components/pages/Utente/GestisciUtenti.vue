@@ -25,6 +25,7 @@
                     e stessa password. Altrimenti non è possibile discriminare un utente da un altro.</li>
                   <li>Le iniziali vanno scritte tutte in maiuscolo e devono essere uniche.</li>
                   <li>I campi da riempire sono mostrati in rosso.</li>
+                  <li>Il range di Id per ogni utente non pùò avere sovrapposizioni con quello di un altro utente.</li>
               </ul>
               <p>La violazione delle regole sopra citate comporterà necessariamente il fallimento dell'operazione di convalida.</p>
           </b-col>
